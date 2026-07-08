@@ -1,0 +1,8 @@
+{
+  "corsOrigins": [
+    "http://localhost:5173",
+    "http://localhost:5175"
+  ],
+  "processEnv": "http://localhost:5173,http://localhost:5175",
+  "cwd": "C:\\Users\\USER\\Downloads\\Monpolymet-WEB 1\\Monpolymet-API"
+}

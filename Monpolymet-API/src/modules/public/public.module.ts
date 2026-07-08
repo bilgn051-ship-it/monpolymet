@@ -1,0 +1,27 @@
+import { Module } from '@nestjs/common';
+import { NewsModule } from '../news/news.module';
+import { CareersModule } from '../careers/careers.module';
+import { AboutModule } from '../about/about.module';
+import { HomeModule } from '../home/home.module';
+import { SectorsModule } from '../sectors/sectors.module';
+import { CsrModule } from '../csr/csr.module';
+import { HseModule } from '../hse/hse.module';
+import { TourModule } from '../tour/tour.module';
+import { SettingsModule } from '../settings/settings.module';
+import { PublicController } from './public.controller';
+
+@Module({
+  imports: [
+    NewsModule,
+    CareersModule,
+    AboutModule,
+    HomeModule,
+    SectorsModule,
+    CsrModule,
+    HseModule,
+    TourModule,
+    SettingsModule,
+  ],
+  controllers: [PublicController],
+})
+export class PublicModule {}
