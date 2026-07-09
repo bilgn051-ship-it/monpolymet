@@ -88,7 +88,7 @@ export default function Header({
             ))}
           </nav>
 
-          {/* Action Buttons (Language, Admin, and Mobile Menu Toggle) */}
+          {/* Action Buttons (Language and Mobile Menu Toggle) */}
           <div className="header-actions">
             {/* Language Switcher */}
             <button

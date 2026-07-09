@@ -12,7 +12,6 @@ import ContactPage from './pages/contact/ContactPage';
 import HsePage from './pages/hse/HsePage';
 import VirtualTourPage from './pages/tour/VirtualTourPage';
 import ProcurementPage from './pages/ProcurementPage';
-import AdminPage from './pages/admin/AdminPage';
 import { useLocalStorageState } from './hooks/useLocalStorageState';
 import { useDarkMode } from './hooks/useDarkMode';
 import { useHideHeaderOnScroll } from './hooks/useHideHeaderOnScroll';
@@ -89,22 +88,6 @@ function App() {
         return <VirtualTourPage lang={lang} t={t} />;
       case 'procurement':
         return <ProcurementPage lang={lang} t={t} />;
-      case 'admin':
-        return (
-          <AdminPage
-            lang={lang}
-            t={t}
-            news={news}
-            setNews={setNews}
-            jobs={jobs}
-            setJobs={setJobs}
-            submissions={submissions}
-            settings={settings}
-            setSettings={setSettings}
-            timeline={timeline}
-            setTimeline={setTimeline}
-          />
-        );
       default:
         return <HomePage lang={lang} t={t} news={news} setCurrentPage={setCurrentPage} />;
     }
