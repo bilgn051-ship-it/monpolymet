@@ -89,26 +89,6 @@ export const LIST_RESOURCES = {
     ],
   },
 
-  timeline: {
-    path: '/timeline',
-    title: t.nav.timeline,
-    subtitle: 'Компанийн түүхэн замнал',
-    addLabel: 'Он нэмэх',
-    createLabel: 'Шинэ он',
-    editLabel: 'Түүх засах',
-    columns: [
-      { label: 'Он', render: plain('year') },
-      { label: 'Гарчиг', render: mn('title') },
-      { label: 'Дараалал', render: plain('order') },
-    ],
-    fields: [
-      { name: 'year', type: 'text', label: 'Он (жишээ: 1993)', required: true },
-      { name: 'title', type: 'localized', label: 'Гарчиг', required: true },
-      { name: 'description', type: 'localizedArea', label: 'Тайлбар', required: true },
-      { name: 'imageUrl', type: 'url', label: 'Зураг (URL)', required: true, placeholder: 'https://...' },
-      { name: 'order', type: 'number', label: 'Дараалал' },
-    ],
-  },
 
   'stat-cards': {
     path: '/stat-cards',
@@ -172,6 +152,7 @@ export const LIST_RESOURCES = {
       { name: 'year', type: 'text', label: 'Он (жишээ: 1993)', required: true },
       { name: 'title', type: 'localized', label: 'Гарчиг', required: true },
       { name: 'description', type: 'localizedArea', label: 'Тайлбар', required: true },
+      { name: 'imageUrl', type: 'url', label: 'Зураг (URL)', required: true, placeholder: 'https://...' },
       { name: 'order', type: 'number', label: 'Дараалал' },
     ],
   },
