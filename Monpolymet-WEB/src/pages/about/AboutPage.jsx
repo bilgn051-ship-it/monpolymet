@@ -382,35 +382,30 @@ function HistoryTimelineInteractive({ historyData }) {
   // Sync activeYear for rendering the content
   const activeContent = historyData[activeIndex] || historyData[0];
 
-  // Calculate the blue line width based on the active node's position
+  // Calculate the blue line width AND auto-scroll based on the active node's position
   useEffect(() => {
     const activeNode = nodeRefs.current[activeIndex];
+    const container = scrollRef.current;
+    
     if (activeNode) {
       // 16 is half the width of the node or just an offset to center the line on the dot
       setProgressWidth(activeNode.offsetLeft + (activeNode.offsetWidth / 2));
+
+      // Auto scroll to make sure the active node is visible (centered)
+      if (container && !isDragging) {
+        const scrollPos = activeNode.offsetLeft - (container.clientWidth / 2) + (activeNode.offsetWidth / 2);
+        container.scrollTo({ left: scrollPos, behavior: 'smooth' });
+      }
     }
-  }, [activeIndex, historyData]);
+  }, [activeIndex, historyData, isDragging]);
 
   // Auto-play interval
   useEffect(() => {
-    if (isPaused || isDragging) return;
+    if (isPaused || isDragging || !historyData.length) return;
     
     const interval = setInterval(() => {
-      setActiveIndex((prev) => {
-        const nextIndex = (prev + 1) % historyData.length;
-        
-        // Auto scroll to make sure the next node is visible
-        const nextNode = nodeRefs.current[nextIndex];
-        const container = scrollRef.current;
-        if (nextNode && container) {
-          // Scroll so the node is roughly centered in the viewport
-          const scrollPos = nextNode.offsetLeft - (container.clientWidth / 2) + (nextNode.offsetWidth / 2);
-          container.scrollTo({ left: scrollPos, behavior: 'smooth' });
-        }
-
-        return nextIndex;
-      });
-    }, 4000); // changes every 4 seconds
+      setActiveIndex((prev) => (prev + 1) % historyData.length);
+    }, 3000); // changes every 3 seconds
 
     return () => clearInterval(interval);
   }, [isPaused, isDragging, historyData.length]);
