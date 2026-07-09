@@ -8,6 +8,7 @@ import JobsPage from './pages/careers/JobsPage';
 import ApplicationsPage from './pages/careers/ApplicationsPage';
 import ResourcePage from './components/resource/ResourcePage';
 import SingletonPage from './components/resource/SingletonPage';
+import NavigationPage from './pages/settings/NavigationPage';
 import { LIST_RESOURCES, SINGLETON_RESOURCES } from './pages/resources';
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="news" element={<NewsPage />} />
           <Route path="jobs" element={<JobsPage />} />
           <Route path="applications" element={<ApplicationsPage />} />
+          <Route path="navigation-settings" element={<NavigationPage />} />
 
           {/* Config-driven list collections */}
           {Object.entries(LIST_RESOURCES).map(([routePath, config]) => (

@@ -29,6 +29,25 @@ export class BrandAsset {
 }
 const BrandAssetSchema = SchemaFactory.createForClass(BrandAsset);
 
+@Schema({ _id: false })
+export class NavigationItem {
+  @Prop({ required: true })
+  id!: string;
+
+  @Prop({ type: LocalizedStringSchema, required: true })
+  label!: LocalizedString;
+
+  @Prop({ required: true })
+  target!: string;
+
+  @Prop({ default: 0 })
+  order!: number;
+
+  @Prop({ default: true })
+  isActive!: boolean;
+}
+const NavigationItemSchema = SchemaFactory.createForClass(NavigationItem);
+
 /**
  * Singleton (key = 'site'): global chrome content — logo, footer text,
  * contact details, social links, and brand downloads.
@@ -65,6 +84,12 @@ export class SiteSettings {
   /** Name shown in the copyright line, e.g. "MONPOLYMET GROUP". */
   @Prop({ required: true, default: 'MONPOLYMET GROUP' })
   copyrightName!: string;
+
+  @Prop({ type: [NavigationItemSchema], default: [] })
+  navigation!: NavigationItem[];
+
+  @Prop({ type: [NavigationItemSchema], default: [] })
+  footerNavigation!: NavigationItem[];
 }
 
 export const SiteSettingsSchema = SchemaFactory.createForClass(SiteSettings);

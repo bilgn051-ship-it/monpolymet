@@ -70,6 +70,7 @@ const GROUPS = [
     label: t.nav.groupSystem,
     items: [
       { to: '/pages', label: t.nav.pages, icon: FileText },
+      { to: '/navigation-settings', label: 'Цэсний тохиргоо', icon: ListOrdered },
       { to: '/settings', label: t.nav.settings, icon: Settings },
       { to: '/users', label: t.nav.users, icon: UserCog },
     ],

@@ -127,6 +127,13 @@ export default function AdminPage({
           <Users size={18} />
           <span>{t.admin.submissionsTab} ({submissions.length})</span>
         </button>
+        <button
+          className={`admin-tab-btn ${activeTab === 'navigation' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('navigation'); setShowAddForm(false); }}
+        >
+          <Menu size={18} />
+          <span>{lang === 'mn' ? 'Цэсний тохиргоо' : 'Navigation'}</span>
+        </button>
       </div>
 
       {/* News Management Tab */}

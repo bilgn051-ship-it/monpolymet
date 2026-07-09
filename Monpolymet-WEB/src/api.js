@@ -342,11 +342,23 @@ const mapSettings = (d) => ({
   brandAssetsDescriptionEn: d.brandAssetsDescription?.en ?? '',
   brandAssets: d.brandAssets ?? [],
   copyrightName: d.copyrightName,
+  navigation: d.navigation ?? [],
+  footerNavigation: d.footerNavigation ?? [],
 });
 
 export async function fetchSettings() {
   const data = await getJson('/public/settings');
   return mapSettings(data);
+}
+
+export async function updateSettings(settingsData) {
+  const res = await fetch(`${BASE_URL}/dashboard/settings`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(settingsData),
+  });
+  if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+  return mapSettings(await res.json());
 }
 
 export async function submitApplication(sub) {

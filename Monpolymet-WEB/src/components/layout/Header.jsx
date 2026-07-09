@@ -26,20 +26,35 @@ export default function Header({
     return () => window.removeEventListener('scroll', handleScrollTop);
   }, []);
 
-  const navItems = [
-    { id: 'about', label: t.nav.about },
-    { id: 'companies', label: t.nav.companies },
-    { id: 'csr', label: t.nav.csr },
-    { id: 'news', label: t.nav.news },
-    { id: 'tour', label: t.nav.tour },
-    { id: 'careers', label: t.nav.careers },
-    { id: 'contact', label: t.nav.contact }
+  const defaultNavItems = [
+    { id: 'about', label: t.nav.about, target: 'about' },
+    { id: 'companies', label: t.nav.companies, target: 'companies' },
+    { id: 'csr', label: t.nav.csr, target: 'csr' },
+    { id: 'news', label: t.nav.news, target: 'news' },
+    { id: 'tour', label: t.nav.tour, target: 'tour' },
+    { id: 'careers', label: t.nav.careers, target: 'careers' },
+    { id: 'contact', label: t.nav.contact, target: 'contact' }
   ];
 
-  const handleNavClick = (id) => {
+  const navItems = settings?.navigation?.length > 0
+    ? [...settings.navigation]
+        .filter(n => n.isActive !== false)
+        .sort((a, b) => a.order - b.order)
+        .map(item => ({
+          id: item.id,
+          label: lang === 'mn' ? item.label?.mn : item.label?.en,
+          target: item.target
+        }))
+    : defaultNavItems;
+
+  const handleNavClick = (target) => {
     setMenuOpen(false);
-    setCurrentPage(id);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (target && target.startsWith('http')) {
+      window.open(target, '_blank');
+    } else if (target) {
+      setCurrentPage(target);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   // Determine if header should be transparent (at top of home page)
@@ -65,8 +80,8 @@ export default function Header({
             {navItems.map((item) => (
               <button
                 key={item.id}
-                className={`nav-link ${currentPage === item.id ? 'active' : ''}`}
-                onClick={() => handleNavClick(item.id)}
+                className={`nav-link ${currentPage === item.target ? 'active' : ''}`}
+                onClick={() => handleNavClick(item.target)}
               >
                 {item.label}
               </button>
@@ -85,14 +100,6 @@ export default function Header({
               <span>{lang === 'mn' ? 'EN' : 'MN'}</span>
             </button>
 
-            {/* Admin Access Panel Icon */}
-            <button
-              className={`action-btn admin-btn ${currentPage === 'admin' ? 'active' : ''}`}
-              onClick={() => handleNavClick('admin')}
-              title={t.nav.admin}
-            >
-              <Settings size={16} />
-            </button>
 
             {/* Hamburger Menu Toggle (Visible on mobile/tablet) */}
             <button
@@ -118,21 +125,13 @@ export default function Header({
             {navItems.map((item) => (
               <button
                 key={item.id}
-                className={`mobile-nav-link ${currentPage === item.id ? 'active' : ''}`}
-                onClick={() => handleNavClick(item.id)}
+                className={`mobile-nav-link ${currentPage === item.target ? 'active' : ''}`}
+                onClick={() => handleNavClick(item.target)}
               >
                 {item.label}
               </button>
             ))}
-            
-            <button
-              className={`mobile-nav-link admin-mobile-link ${currentPage === 'admin' ? 'active' : ''}`}
-              onClick={() => handleNavClick('admin')}
-              style={{ borderTop: '1px solid var(--border-color)', marginTop: '8px', paddingTop: '12px' }}
-            >
-              <Settings size={16} style={{ marginRight: 8, display: 'inline', verticalAlign: 'middle' }} />
-              <span style={{ verticalAlign: 'middle' }}>{t.nav.admin}</span>
-            </button>
+
           </nav>
         </div>
       )}

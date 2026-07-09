@@ -72,12 +72,24 @@ export default function Footer({ lang, t, setCurrentPage, settings }) {
         <div className="footer-links-col">
           <h3>{lang === 'mn' ? 'Холбоосууд' : 'Quick Links'}</h3>
           <ul>
-            <li onClick={() => { setCurrentPage('about'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{t.nav.about}</li>
-            <li onClick={() => { setCurrentPage('companies'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{t.nav.companies}</li>
-            <li onClick={() => { setCurrentPage('csr'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{t.nav.csr}</li>
-            <li onClick={() => { setCurrentPage('hse'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{t.nav.hse}</li>
-            <li onClick={() => { setCurrentPage('careers'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{t.nav.careers}</li>
-            <li onClick={() => { setCurrentPage('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{t.nav.contact}</li>
+            {(settings?.footerNavigation || []).filter(item => item.isActive !== false).map((item) => {
+              const label = lang === 'mn' ? item.label?.mn : item.label?.en;
+              return (
+                <li
+                  key={item.id}
+                  onClick={() => {
+                    if (item.target.startsWith('http')) {
+                      window.open(item.target, '_blank', 'noopener,noreferrer');
+                    } else {
+                      setCurrentPage(item.target);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  {label}
+                </li>
+              );
+            })}
           </ul>
         </div>
 

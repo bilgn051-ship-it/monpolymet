@@ -212,14 +212,16 @@ h2::after {
 /* Desktop Links */
 .desktop-nav {
   display: flex;
-  gap: 4px;
+  gap: 24px;
+  margin-left: auto;
+  margin-right: 48px; /* adds some breathing room before the actions */
 }
 
 .nav-link {
   background: none;
   border: none;
   font-family: inherit;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-color);
   padding: 8px 14px;
@@ -827,17 +829,22 @@ h2::after {
   color: #ffffff;
 }
 
-/* Vertical connector dropping from the parent to the children bus.
-   Solid gray rail with a blue pulse that flows downward toward the cards. */
-.org-parent::after {
+/* Vertical connector from the parent node down to the children bus.
+   Anchored to .org-children — the SAME box the horizontal bus lives on — and
+   centred with the same left:50%, so the T-junction is pixel-locked to the bus
+   centre at any browser zoom. (Hanging it off .org-parent instead let the
+   parent's own centring round to a different device pixel than the bus's,
+   nudging the drop off-centre and stepping the line when zoomed.) Spans from
+   ~4px inside the parent down to ~4px past the bus so both joins stay gap-free.
+   On mobile the bus is hidden and this same rail connects the parent straight
+   to the first stacked card. */
+.org-children::after {
   content: "";
   position: absolute;
-  top: 100%;
+  top: -38px;
   left: 50%;
   width: 2px;
-  /* Overlaps the children bus by ~4px so the T-junction never shows a
-     sub-pixel gap (visible when the page is zoomed). */
-  height: 38px;
+  height: 42px;
   transform: translateX(-50%);
   background-color: var(--org-line);
   background-image: linear-gradient(180deg, transparent, var(--primary-color), transparent);
@@ -1138,7 +1145,7 @@ h2::after {
     transform: none;
   }
   /* Hold the connector rails still and plain gray */
-  .org-parent::after,
+  .org-children::after,
   .org-children::before,
   .org-child-card::before {
     animation: none;
@@ -1155,346 +1162,326 @@ h2::after {
 }
 
 /* ========================================
-   PickPack-inspired Values/Mission/Vision
+   Pickpack Exact Layout
    ======================================== */
-.values-mission-vision-section {
-  margin-bottom: 70px;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-}
 
-.values-mission-vision-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 20px;
-}
-
-/* Shared premium card base */
-.premium-about-card {
+.pickpack-exact-section {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding: 80px 5%;
   background-color: #ffffff;
-  border-radius: 24px;
-  padding: 32px;
-  box-shadow: 0 8px 32px rgba(6, 76, 173, 0.06);
-  border: 1px solid rgba(6, 76, 173, 0.08);
-  transition:
-    opacity 0.6s ease calc(var(--reveal-index, 0) * 120ms),
-    translate 0.6s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--reveal-index, 0) * 120ms);
 }
 
-.premium-about-card h3 {
+.pickpack-exact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Badge (Үнэт зүйлс) */
+.pickpack-badge-wrapper {
   display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+.pickpack-badge {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #002C7A;
-  margin-bottom: 22px;
+  gap: 8px;
+  padding: 8px 24px;
+  border-radius: 40px;
+  border: 1px solid #D1D5DB;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  background: white;
+}
+.pickpack-badge-star {
+  color: #0048C7;
+  font-size: 1.2rem;
 }
 
-.premium-about-card h3 svg {
-  color: #002C7A;
-  flex-shrink: 0;
+/* Values Grid */
+.pickpack-values-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 40px;
 }
 
-/* Row 1 Left — Values card */
-.card-values {
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
-}
-
-/* Row 1 Right — Blue gradient graphic card */
-.card-val-graphic {
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
-  position: relative;
+.pickpack-values-card-white {
+  background: #ffffff;
+  border: 1px solid #F3F4F6;
   border-radius: 24px;
-  background: linear-gradient(135deg, #002C7A 0%, #1066C2 100%);
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+}
+
+.pickpack-values-inner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.pickpack-value-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pickpack-value-dot {
+  width: 48px;
+  height: 48px;
+  background-color: #0048C7;
+  border-radius: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  min-height: 260px;
-  transition:
-    opacity 0.6s ease calc(var(--reveal-index, 0) * 120ms),
-    translate 0.6s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--reveal-index, 0) * 120ms);
+}
+.pickpack-value-dot::after {
+  content: "✦";
+  color: white;
+  font-size: 1.2rem;
 }
 
-.graphic-glow-circle {
+.pickpack-value-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+  text-transform: uppercase;
+}
+.pickpack-value-desc {
+  font-size: 0.95rem;
+  color: #6B7280;
+  line-height: 1.5;
+}
+
+.pickpack-values-card-blue {
+  background: linear-gradient(135deg, #002c7a 0%, #0048c7 100%);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Mission & Vision */
+.pickpack-mv-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.pickpack-mission-card,
+.pickpack-vision-card {
+  background: #ffffff;
+  border: 1px solid #F3F4F6;
+  border-radius: 24px;
+  padding: 60px 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+}
+
+.pickpack-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.pickpack-card-text {
+  font-size: 1rem;
+  color: #6B7280;
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
+}
+
+/* Subtle concentric circles background for Mission */
+.pickpack-mission-bg-circles {
   position: absolute;
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  animation: graphicPulse 4s ease-in-out infinite;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
-@keyframes graphicPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
-  50% { transform: translate(-50%, -50%) scale(1.18); opacity: 1; }
+.pickpack-mission-bg-circles .circle-1 {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px solid #EFF6FF;
+  background: #F8FAFC;
 }
-
-.graphic-floating-content {
-  position: relative;
+.pickpack-mission-bg-circles .circle-2 {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  border: 1px solid #EFF6FF;
+}
+.pickpack-mission-bg-circles .circle-3 {
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  border: 1px solid #EFF6FF;
+}
+.mission-bg-icon {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background: #3B82F6;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 2;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Subtle dot background for Vision */
+.pickpack-vision-bg-dots {
+  position: absolute;
+  top: -20%;
+  right: -20%;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(#93C5FD 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.15;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .pickpack-values-layout,
+  .pickpack-mv-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   History Timeline (Vertical spine, horizontal cards)
+   ======================================== */
+.pickpack-history-exact {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding: 80px 0;
+  background-color: #F8FAFC;
+  overflow: hidden;
+}
+
+.pickpack-history-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.pickpack-history-row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  min-height: 400px;
+}
+
+/* Left side: Year and Vertical Line */
+.pickpack-history-left {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  padding-right: 20px;
+}
+
+.pickpack-history-year-text {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #E5E7EB; /* Default gray for non-active */
+  margin-bottom: 20px;
+  transition: color 0.3s ease;
+}
+.pickpack-history-year-text.active {
+  color: #0048C7; /* Blue for active year */
+}
+
+.pickpack-history-spine-line-bg {
+  flex-grow: 1;
+  width: 2px;
+  background-color: rgba(0, 72, 199, 0.15);
+  position: relative;
+  border-radius: 2px;
+}
+
+.pickpack-history-spine-line-fill {
+  width: 100%;
+  background-color: #0048C7;
+  border-radius: 2px;
+  transform-origin: top;
+}
+
+/* Right side: Horizontal Scrolling Cards */
+.pickpack-history-right-scroll {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  padding-bottom: 40px;
+  scrollbar-width: none;
+}
+.pickpack-history-right-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.pickpack-history-event-card {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 
-/* Row 2 Left — Mission */
-.card-mission {
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
+.pickpack-history-event-img {
+  width: 100%;
+  height: 200px;
+  border-radius: 16px;
+  object-fit: cover;
 }
 
-/* Row 2 Right — Vision */
-.card-vision {
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
-}
-
-/* Inner values sub-grid inside the values card */
-.values-subgrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
-}
-
-.value-subitem {
+.pickpack-history-event-info {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.value-subitem-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background-color: rgba(6, 76, 173, 0.08);
-  color: #002C7A;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 4px;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+.pickpack-history-event-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
 }
 
-.value-subitem:hover .value-subitem-icon {
-  transform: scale(1.1) rotate(-5deg);
-}
-
-.value-subitem h4 {
+.pickpack-history-event-desc {
   font-size: 0.95rem;
-  font-weight: 700;
-  color: #040C29;
-  margin: 0;
-}
-
-.value-subitem p {
-  font-size: 0.82rem;
-  color: #454545;
+  color: #4B5563;
   line-height: 1.5;
-  margin: 0;
 }
 
-/* Reveal animations */
-.values-mission-vision-section.reveal-group .premium-about-card,
-.values-mission-vision-section.reveal-group .card-val-graphic {
-  opacity: 0;
-  translate: 0 28px;
-}
-
-.values-mission-vision-section.reveal-group.is-revealed .premium-about-card,
-.values-mission-vision-section.reveal-group.is-revealed .card-val-graphic {
-  opacity: 1;
-  translate: 0 0;
-}
-
-/* Mobile responsiveness */
 @media (max-width: 900px) {
-  .values-mission-vision-grid {
-    grid-template-columns: 1fr;
+  .pickpack-history-row {
+    grid-template-columns: 100px 1fr;
   }
-  .card-values,
-  .card-val-graphic,
-  .card-mission,
-  .card-vision {
-    grid-column: 1 / 2;
-    grid-row: auto;
-  }
-  .card-val-graphic {
-    min-height: 200px;
-  }
-}
-
-/* ========================================
-   PickPack-inspired Vertical Timeline
-   ======================================== */
-.history-timeline-section {
-  margin-bottom: 80px;
-}
-
-.pickpack-timeline-container {
-  position: relative;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-/* Vertical spine line on the left-centre */
-.pickpack-timeline-spine {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 120px;
-  width: 3px;
-  background-color: rgba(6, 76, 173, 0.10);
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.pickpack-timeline-progress {
-  position: absolute;
-  inset: 0;
-  transform-origin: top;
-  transform: scaleY(var(--tl-progress, 0));
-  background: linear-gradient(180deg, #002C7A 0%, #1066C2 55%, var(--accent-gold) 100%);
-  border-radius: inherit;
-  will-change: transform;
-}
-
-.timeline-items-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-/* Each timeline row: year | spine | content */
-.timeline-row-item {
-  display: grid;
-  grid-template-columns: 120px 60px 1fr;
-  align-items: flex-start;
-  min-height: 120px;
-  padding: 24px 0;
-  opacity: 0;
-  translate: 0 30px;
-  transition: opacity 0.7s ease, translate 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.timeline-row-item.is-visible {
-  opacity: 1;
-  translate: 0 0;
-}
-
-/* Year column */
-.timeline-year-col {
-  padding-right: 16px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
-  padding-top: 4px;
-}
-
-.timeline-large-year {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #002C7A;
-  font-family: 'Montserrat', sans-serif;
-  line-height: 1;
-}
-
-/* Spine column: dot in the centre over the spine */
-.timeline-spine-col {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 8px;
-  position: relative;
-}
-
-.timeline-dot {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background-color: #ffffff;
-  border: 3px solid rgba(6, 76, 173, 0.25);
-  position: relative;
-  z-index: 2;
-  flex-shrink: 0;
-  transition: border-color 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
-}
-
-.timeline-row-item.is-visible .timeline-dot {
-  border-color: #002C7A;
-  background-color: #002C7A;
-  box-shadow: 0 0 0 5px rgba(0, 44, 122, 0.12), 0 0 16px rgba(16, 102, 194, 0.45);
-}
-
-/* Content column */
-.timeline-content-col {
-  padding-left: 12px;
-  padding-top: 2px;
-}
-
-.timeline-item-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #040C29;
-  margin-bottom: 6px;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.timeline-item-desc {
-  font-size: 0.88rem;
-  color: #454545;
-  line-height: 1.6;
-  margin: 0;
-}
-
-/* Divider between rows */
-.timeline-row-item + .timeline-row-item {
-  border-top: 1px solid rgba(6, 76, 173, 0.06);
-}
-
-@media (max-width: 768px) {
-  .pickpack-timeline-spine {
-    left: 80px;
-  }
-  .timeline-row-item {
-    grid-template-columns: 80px 44px 1fr;
-  }
-  .timeline-large-year {
-    font-size: 1.65rem;
-  }
-}
-
-@media (max-width: 560px) {
-  .pickpack-timeline-spine {
-    left: 56px;
-  }
-  .timeline-row-item {
-    grid-template-columns: 56px 36px 1fr;
-  }
-  .timeline-large-year {
-    font-size: 1.3rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .timeline-row-item {
-    opacity: 1;
-    translate: none;
-    transition: none;
-  }
-  .pickpack-timeline-progress {
-    transform: scaleY(1);
+  .pickpack-history-event-card {
+    width: 280px;
   }
 }
 
@@ -3645,7 +3632,7 @@ h2::after {
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-auto-rows: 1fr;
   gap: 22px;
 }
@@ -3993,7 +3980,7 @@ h2::after {
 /* Stats bento — tablet: two columns, tall card keeps its span */
 @media (max-width: 1024px) {
   .stats-grid-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
   }
 }

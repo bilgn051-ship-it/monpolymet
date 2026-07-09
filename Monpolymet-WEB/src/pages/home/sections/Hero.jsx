@@ -79,7 +79,7 @@ export default function Hero({ lang }) {
             <div
               key={index}
               className={`hero-slide ${index === activeSlide ? 'active' : ''}`}
-              style={slide.video ? { backgroundColor: '#000' } : { backgroundImage: `linear-gradient(rgba(12, 16, 14, 0.4), rgba(12, 16, 14, 0.7)), url(${slide.image})` }}
+              style={slide.video ? { backgroundColor: '#000' } : { backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url(${slide.image})` }}
             >
               {slide.video && (
                 <video

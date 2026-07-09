@@ -201,74 +201,149 @@ export default function AboutPage({ lang, t }) {
         </div>
       </div>
 
-      {/* Values, Mission & Vision Grid */}
-      <section
-        ref={valuesRef}
-        className={`values-mission-vision-section reveal-group ${valuesInView ? 'is-revealed' : ''}`}
-        style={{ marginTop: '60px' }}
-      >
-        <div className="values-mission-vision-grid">
+      {/* Pickpack-style Exact Layout */}
+      <section className="pickpack-exact-section" ref={valuesRef}>
+        <div className="pickpack-exact-container">
           
-          {/* Row 1 Left: Core Values card (takes 2/3 width) */}
-          <div className="premium-about-card card-values" style={{ '--reveal-index': 0 }}>
-            <h3>
-              <Award size={24} />
+          {/* Section Badge */}
+          <motion.div 
+            className="pickpack-badge-wrapper"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="pickpack-badge">
+              <span className="pickpack-badge-star">✦</span>
               {valuesTitle}
-            </h3>
-            <div className="values-subgrid">
-              {valuesData.map((val, idx) => (
-                <div key={idx} className="value-subitem">
-                  <div className="value-subitem-icon">
-                    {getValIcon(idx)}
+            </div>
+          </motion.div>
+
+          {/* Values Grid */}
+          <motion.div 
+            className="pickpack-values-layout"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="pickpack-values-card-white">
+              {/* Optional: Pickpack has a diagram here, we'll put the 4 values in a clean grid */}
+              <div className="pickpack-values-inner-grid">
+                {valuesData.map((val, idx) => (
+                  <div key={idx} className="pickpack-value-item">
+                    <div className="pickpack-value-dot"></div>
+                    <div className="pickpack-value-content">
+                      <h4 className="pickpack-value-title">{val.title}</h4>
+                      <p className="pickpack-value-desc">{val.desc}</p>
+                    </div>
                   </div>
-                  <h4>{val.title}</h4>
-                  <p>{val.desc}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-
-          {/* Row 1 Right: Blue gradient graphics card (takes 1/3 width) */}
-          <div className="card-val-graphic" style={{ '--reveal-index': 1 }}>
-            <div className="graphic-glow-circle"></div>
-            <div className="graphic-floating-content">
-              <Building2 size={64} color="#ffffff" style={{ opacity: 0.9 }} />
+            <div className="pickpack-values-card-blue">
+              <div className="pickpack-blue-box-graphic">
+                <Building2 size={120} color="rgba(255,255,255,0.1)" />
+              </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Row 2 Left: Mission card (takes 5/12 width) */}
-          <div className="premium-about-card card-mission" style={{ '--reveal-index': 2 }}>
-            <h3>
-              <Target size={24} />
-              {missionTitle}
-            </h3>
-            <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: '#454545' }}>{missionText}</p>
-          </div>
-
-          {/* Row 2 Right: Vision card (takes 7/12 width) */}
-          <div className="premium-about-card card-vision" style={{ '--reveal-index': 3 }}>
-            <h3>
-              <Eye size={24} />
-              {visionTitle}
-            </h3>
-            <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: '#454545' }}>{visionText}</p>
+          {/* Mission & Vision Grid */}
+          <div className="pickpack-mv-layout">
+            <motion.div 
+              className="pickpack-mission-card"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <div className="pickpack-mission-bg-circles">
+                <div className="circle-1"></div>
+                <div className="circle-2"></div>
+                <div className="circle-3"></div>
+                <div className="mission-bg-icon"><Target size={24} /></div>
+              </div>
+              <h3 className="pickpack-card-title">{missionTitle}</h3>
+              <p className="pickpack-card-text">{missionText}</p>
+            </motion.div>
+            
+            <motion.div 
+              className="pickpack-vision-card"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div className="pickpack-vision-bg-dots"></div>
+              <h3 className="pickpack-card-title">{visionTitle}</h3>
+              <p className="pickpack-card-text">{visionText}</p>
+            </motion.div>
           </div>
 
         </div>
       </section>
 
-      {/* History Timeline */}
-      <section className="history-timeline-section">
-        <h3 className="section-subtitle" style={{ textAlign: 'center', marginBottom: '40px' }}>{historyTitle}</h3>
-        <div className="pickpack-timeline-container">
-          <div className="pickpack-timeline-spine" ref={timelineRef}>
-            <span className="pickpack-timeline-progress"></span>
-          </div>
-          <div className="timeline-items-list">
-            {historyData.map((hist, idx) => (
-              <TimelineItem key={idx} hist={hist} />
-            ))}
-          </div>
+      {/* Pickpack-style History Timeline (Vertical spine, horizontal cards) */}
+      <section className="pickpack-history-exact">
+        <div className="pickpack-history-container">
+          {historyData.map((hist, idx) => (
+            <div key={idx} className="pickpack-history-row">
+              
+              {/* Left Column: Year & Spine */}
+              <div className="pickpack-history-left">
+                <motion.div 
+                  className={`pickpack-history-year-text`}
+                  initial={{ opacity: 0.4, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1, color: '#0048C7' }}
+                  viewport={{ once: false, amount: 0.5 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  {hist.year}
+                </motion.div>
+                
+                {/* Flowing animated line using Framer Motion */}
+                <div className="pickpack-history-spine-line-bg">
+                  <motion.div 
+                    className="pickpack-history-spine-line-fill"
+                    initial={{ height: "0%" }}
+                    whileInView={{ height: "100%" }}
+                    viewport={{ once: false, amount: "some" }}
+                    transition={{ duration: 1, ease: "easeInOut" }}
+                  />
+                </div>
+              </div>
+              
+              {/* Right Column: Horizontal Scrolling Cards */}
+              <motion.div 
+                className="pickpack-history-right-scroll"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                onWheel={(e) => {
+                  if (e.deltaY !== 0) {
+                    e.currentTarget.scrollLeft += e.deltaY;
+                    e.preventDefault();
+                  }
+                }}
+              >
+                {[hist].map((item, subIdx) => (
+                  <div key={subIdx} className="pickpack-history-event-card">
+                    <img 
+                      src={item.imageUrl || ABOUT_MARQUEE_IMAGES[(idx + subIdx) % ABOUT_MARQUEE_IMAGES.length]} 
+                      alt={item.title} 
+                      loading="lazy" 
+                      className="pickpack-history-event-img"
+                    />
+                    <div className="pickpack-history-event-info">
+                      <h4 className="pickpack-history-event-title">{item.title}</h4>
+                      <p className="pickpack-history-event-desc">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+
+            </div>
+          ))}
         </div>
       </section>
 

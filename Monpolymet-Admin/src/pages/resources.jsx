@@ -519,4 +519,24 @@ export const SINGLETON_RESOURCES = {
       { name: 'copyrightName', type: 'text', label: 'Зохиогчийн эрхийн нэр', required: true },
     ],
   },
+
+  'navigation-settings': {
+    path: '/settings',
+    title: 'Толгой цэсний удирдлага',
+    subtitle: 'Вэбсайтын толгой цэсийг удирдах',
+    fields: [
+      {
+        name: 'navigation',
+        type: 'objectList',
+        label: 'Толгой цэс (Navigation)',
+        fields: [
+          { name: 'id', type: 'text', label: 'ID (давхцахгүй утга)', required: true, placeholder: 'about' },
+          { name: 'label', type: 'localized', label: 'Цэсний нэр', required: true },
+          { name: 'target', type: 'text', label: 'Үсрэх хуудас / Линк', required: true, placeholder: 'about, news, https://...' },
+          { name: 'order', type: 'number', label: 'Дараалал', default: 0 },
+          { name: 'isActive', type: 'switch', label: 'Идэвхтэй эсэх', default: true },
+        ],
+      },
+    ],
+  },
 };
