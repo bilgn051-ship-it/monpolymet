@@ -1378,26 +1378,30 @@ h2::after {
 .pickpack-history-exact {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  padding: 100px 0;
-  background-color: #FAFBFC;
+  padding: 80px 30px;
+  background-color: #fafafa;
   overflow: hidden;
 }
 
 .pickpack-history-container {
-  max-width: 1100px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .pickpack-timeline-header {
-  margin-bottom: 60px;
+  margin-bottom: 100px;
+  text-align: center;
 }
 
 .pickpack-history-row {
   display: flex;
-  gap: 60px;
-  min-height: 280px;
+  gap: 48px;
+  width: 100%;
+  max-width: 820px; /* 150px left + 48px gap + 610px right ≈ 808px */
+  margin: 0 auto;
 }
 
 /* Left side: Year and Vertical Line */
@@ -1406,78 +1410,82 @@ h2::after {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align left exactly like Pickpack */
+  align-items: center; /* Exactly aligned to center of 150px col */
+  gap: 20px;
 }
 
 .pickpack-history-year-text {
-  font-size: 3rem;
-  font-weight: 800;
-  color: #E5E7EB; /* Faded light gray for non-active */
-  margin-bottom: 12px;
+  font-size: 36px;
+  font-weight: 600;
+  color: #0040ad;
   line-height: 1;
-  transition: color 0.4s ease;
-  letter-spacing: -0.02em;
-}
-.pickpack-history-year-text.active {
-  color: #0048C7; /* Blue for active year */
+  margin: 0;
+  text-align: center;
 }
 
 .pickpack-history-spine-line-bg {
-  flex-grow: 1;
   width: 3px;
-  background-color: #E5E7EB;
+  min-height: 400px;
+  background-color: rgba(0, 55, 255, 0.05);
   position: relative;
-  border-radius: 3px;
-  margin-left: 8px; /* Slightly indented from the text */
+  overflow: hidden;
 }
 
 .pickpack-history-spine-line-fill {
   width: 100%;
-  background-color: #0048C7;
-  border-radius: 3px;
+  background-color: #0040ad;
+  position: absolute;
+  top: 0;
+  left: 0;
   transform-origin: top;
 }
 
 /* Right side: Cards Content */
 .pickpack-history-right-content {
+  width: 610px; /* Exactly 610px as in Pickpack */
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  padding-bottom: 80px;
-  flex-grow: 1;
+  padding-bottom: 60px;
 }
 
 .pickpack-history-cards-wrapper {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
-  flex-wrap: wrap; /* Allows multiple cards to wrap nicely */
+  width: 100%;
 }
 
 .pickpack-history-event-card {
-  width: 280px; /* Small fixed width matching screenshot exactly */
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .pickpack-history-event-img {
   width: 100%;
-  height: 180px;
-  border-radius: 12px;
+  height: 200px;
+  border-radius: 16px;
   object-fit: cover;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.pickpack-history-event-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .pickpack-history-event-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #111827;
-  line-height: 1.4;
+  font-size: 20px;
+  font-weight: 500;
+  color: #040c29;
+  line-height: 24px;
   margin: 0;
 }
 
 .pickpack-history-event-desc {
-  font-size: 0.9rem;
-  color: #4B5563;
+  font-size: 15px;
+  color: #666b7d;
   line-height: 1.5;
   margin: 0;
 }
@@ -1491,21 +1499,16 @@ h2::after {
     width: 100%;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-start;
     gap: 20px;
   }
   .pickpack-history-spine-line-bg {
     width: 100%;
     height: 3px;
-    margin-left: 0;
+    min-height: 3px;
   }
-  .pickpack-history-year-text {
-    margin-bottom: 0;
-  }
-  .pickpack-history-event-card {
+  .pickpack-history-right-content {
     width: 100%;
-  }
-  .pickpack-history-event-img {
-    height: 220px;
   }
 }
 

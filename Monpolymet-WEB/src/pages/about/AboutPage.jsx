@@ -298,10 +298,10 @@ export default function AboutPage({ lang, t }) {
               {/* Left Column: Year & Spine */}
               <div className="pickpack-history-left">
                 <motion.div 
-                  className={`pickpack-history-year-text`}
-                  initial={{ opacity: 0.3 }}
-                  whileInView={{ opacity: 1, color: '#0048C7' }}
-                  viewport={{ once: false, amount: 0.5 }}
+                  className="pickpack-history-year-text"
+                  initial={{ opacity: 0.2 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: false, amount: 0.8 }}
                   transition={{ duration: 0.4 }}
                 >
                   {hist.year}
@@ -314,7 +314,7 @@ export default function AboutPage({ lang, t }) {
                     initial={{ height: "0%" }}
                     whileInView={{ height: "100%" }}
                     viewport={{ once: false, amount: "some" }}
-                    transition={{ duration: 1, ease: "easeInOut" }}
+                    transition={{ duration: 1.5, ease: "easeInOut" }}
                   />
                 </div>
               </div>
