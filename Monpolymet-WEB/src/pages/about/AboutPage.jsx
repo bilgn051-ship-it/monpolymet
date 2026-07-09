@@ -369,18 +369,49 @@ export default function AboutPage({ lang, t }) {
 function HistoryTimelineInteractive({ historyData }) {
   // Set the first year as active by default
   const [activeYear, setActiveYear] = useState(historyData[0]?.year || "2021");
+  const [isHovered, setIsHovered] = useState(false);
+  const scrollRef = useRef(null);
+
+  // Infinite auto-scroll effect
+  useEffect(() => {
+    let animationId;
+    const scrollContainer = scrollRef.current;
+
+    const scrollStep = () => {
+      if (scrollContainer && !isHovered) {
+        scrollContainer.scrollLeft += 0.5; // Scroll speed
+
+        // If we scrolled past the first half (the original list), reset to 0 to loop seamlessly
+        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
+          scrollContainer.scrollLeft = 0;
+        }
+      }
+      animationId = requestAnimationFrame(scrollStep);
+    };
+
+    animationId = requestAnimationFrame(scrollStep);
+    return () => cancelAnimationFrame(animationId);
+  }, [isHovered]);
 
   // Find the content for the currently active year
   const activeContent = historyData.find(h => h.year === activeYear);
 
+  // Duplicate data to create a seamless infinite loop
+  const extendedHistory = [...historyData, ...historyData];
+
   return (
     <div className="horizontal-history-interactive">
-      {/* 1. Horizontal Years Navigation */}
-      <div className="horizontal-timeline-nav">
+      {/* 1. Horizontal Years Navigation (Auto-Scrolling Marquee) */}
+      <div 
+        className="horizontal-timeline-nav" 
+        ref={scrollRef}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <div className="horizontal-timeline-line"></div>
-        {historyData.map((hist) => (
+        {extendedHistory.map((hist, index) => (
           <div 
-            key={hist.year}
+            key={`${hist.year || hist.id}-${index}`}
             className={`horizontal-timeline-node ${activeYear === hist.year ? 'active' : ''}`}
             onMouseEnter={() => setActiveYear(hist.year)}
           >
@@ -391,7 +422,11 @@ function HistoryTimelineInteractive({ historyData }) {
       </div>
 
       {/* 2. Dynamic Content Area */}
-      <div className="horizontal-timeline-content-area">
+      <div 
+        className="horizontal-timeline-content-area"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         {activeContent && (
           <motion.div 
             key={activeYear} // Re-mounts and animates when activeYear changes
@@ -402,21 +437,18 @@ function HistoryTimelineInteractive({ historyData }) {
             style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}
           >
             <div className="pickpack-history-cards-wrapper">
-              {/* Render the card(s) using the exact PickPack layout we created */}
-              {[activeContent].map((item, subIdx) => (
-                <div key={subIdx} className="pickpack-history-event-card">
-                  <img 
-                    src={item.imageUrl || "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800"} 
-                    alt={item.title} 
-                    loading="lazy" 
-                    className="pickpack-history-event-img"
-                  />
-                  <div className="pickpack-history-event-info">
-                    <h4 className="pickpack-history-event-title">{item.title}</h4>
-                    <p className="pickpack-history-event-desc">{item.desc}</p>
-                  </div>
+              <div className="pickpack-history-event-card">
+                <img 
+                  src={activeContent.imageUrl || "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800"} 
+                  alt={activeContent.titleMn || activeContent.title} 
+                  loading="lazy" 
+                  className="pickpack-history-event-img"
+                />
+                <div className="pickpack-history-event-info">
+                  <h4 className="pickpack-history-event-title">{activeContent.titleMn || activeContent.title}</h4>
+                  <p className="pickpack-history-event-desc">{activeContent.descMn || activeContent.desc}</p>
                 </div>
-              ))}
+              </div>
             </div>
           </motion.div>
         )}
