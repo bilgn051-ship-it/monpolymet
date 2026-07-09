@@ -369,64 +369,66 @@ export default function AboutPage({ lang, t }) {
 function HistoryTimelineInteractive({ historyData }) {
   // Set the first year as active by default
   const [activeYear, setActiveYear] = useState(historyData[0]?.year || "2021");
-  const [isHovered, setIsHovered] = useState(false);
   const scrollRef = useRef(null);
-
-  // Infinite auto-scroll effect
-  useEffect(() => {
-    let animationId;
-    const scrollContainer = scrollRef.current;
-
-    const scrollStep = () => {
-      if (scrollContainer && !isHovered) {
-        scrollContainer.scrollLeft += 0.5; // Scroll speed
-
-        // If we scrolled past the first half (the original list), reset to 0 to loop seamlessly
-        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
-          scrollContainer.scrollLeft = 0;
-        }
-      }
-      animationId = requestAnimationFrame(scrollStep);
-    };
-
-    animationId = requestAnimationFrame(scrollStep);
-    return () => cancelAnimationFrame(animationId);
-  }, [isHovered]);
+  
+  // Drag to scroll state
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   // Find the content for the currently active year
   const activeContent = historyData.find(h => h.year === activeYear);
 
-  // Duplicate data to create a seamless infinite loop
-  const extendedHistory = [...historyData, ...historyData];
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // scroll-fast multiplier
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
 
   return (
     <div className="horizontal-history-interactive">
-      {/* 1. Horizontal Years Navigation (Auto-Scrolling Marquee) */}
+      {/* 1. Horizontal Years Navigation (Drag to Scroll) */}
       <div 
-        className="horizontal-timeline-nav" 
+        className="horizontal-timeline-viewport"
         ref={scrollRef}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
       >
-        <div className="horizontal-timeline-line"></div>
-        {extendedHistory.map((hist, index) => (
-          <div 
-            key={`${hist.year || hist.id}-${index}`}
-            className={`horizontal-timeline-node ${activeYear === hist.year ? 'active' : ''}`}
-            onMouseEnter={() => setActiveYear(hist.year)}
-          >
-            <div className="horizontal-timeline-dot"></div>
-            <span className="horizontal-timeline-year-text">{hist.year}</span>
-          </div>
-        ))}
+        <div className="horizontal-timeline-nav">
+          <div className="horizontal-timeline-line"></div>
+          {historyData.map((hist) => (
+            <div 
+              key={hist.id || hist.year}
+              className={`horizontal-timeline-node ${activeYear === hist.year ? 'active' : ''}`}
+              onMouseEnter={() => !isDragging && setActiveYear(hist.year)}
+            >
+              <div className="horizontal-timeline-dot"></div>
+              <span className="horizontal-timeline-year-text">{hist.year}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* 2. Dynamic Content Area */}
-      <div 
-        className="horizontal-timeline-content-area"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+      <div className="horizontal-timeline-content-area">
         {activeContent && (
           <motion.div 
             key={activeYear} // Re-mounts and animates when activeYear changes
@@ -443,6 +445,7 @@ function HistoryTimelineInteractive({ historyData }) {
                   alt={activeContent.titleMn || activeContent.title} 
                   loading="lazy" 
                   className="pickpack-history-event-img"
+                  draggable={false}
                 />
                 <div className="pickpack-history-event-info">
                   <h4 className="pickpack-history-event-title">{activeContent.titleMn || activeContent.title}</h4>
