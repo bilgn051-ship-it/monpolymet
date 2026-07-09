@@ -1373,107 +1373,139 @@ h2::after {
 }
 
 /* ========================================
-   Pickpack-style Horizontal Sticky Scroll Timeline
+   Pickpack Exact Layout for History (Vertical)
    ======================================== */
-.pickpack-timeline-scroll-section {
-  position: relative;
-  height: 300vh; /* gives enough scrolling room */
-  background: #ffffff;
+.pickpack-history-exact {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding: 100px 0;
+  background-color: #FAFBFC;
+  overflow: hidden;
 }
 
-.pickpack-timeline-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+.pickpack-history-container {
+  max-width: 1100px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
-  padding-top: 60px;
 }
 
 .pickpack-timeline-header {
-  position: absolute;
-  top: 15%;
-  left: 5%;
+  margin-bottom: 60px;
 }
 
-.pickpack-timeline-overflow {
-  width: 100%;
-  overflow: visible; 
-  padding-top: 100px;
-}
-
-.pickpack-timeline-track {
+.pickpack-history-row {
   display: flex;
-  padding-left: 5%; 
-  gap: 100px;
-  align-items: flex-start;
+  gap: 60px;
+  min-height: 280px;
 }
 
-.pickpack-timeline-group {
-  display: flex;
-  gap: 40px;
-  min-height: 400px; /* gives the vertical line room to grow */
-}
-
-.pickpack-timeline-year-col {
+/* Left side: Year and Vertical Line */
+.pickpack-history-left {
+  width: 150px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  width: 120px;
-  flex-shrink: 0;
+  align-items: flex-start; /* Align left exactly like Pickpack */
 }
 
-.pickpack-timeline-year-text {
-  font-size: 3.5rem;
-  font-weight: 700;
-  color: #0048C7;
+.pickpack-history-year-text {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #E5E7EB; /* Faded light gray for non-active */
+  margin-bottom: 12px;
   line-height: 1;
-  margin-bottom: 24px;
+  transition: color 0.4s ease;
+  letter-spacing: -0.02em;
+}
+.pickpack-history-year-text.active {
+  color: #0048C7; /* Blue for active year */
 }
 
-.pickpack-timeline-year-line {
+.pickpack-history-spine-line-bg {
   flex-grow: 1;
-  width: 2px;
-  background: #0048C7;
-  opacity: 0.3;
-  margin-left: 6px;
+  width: 3px;
+  background-color: #E5E7EB;
+  position: relative;
+  border-radius: 3px;
+  margin-left: 8px; /* Slightly indented from the text */
 }
 
-.pickpack-timeline-cards {
+.pickpack-history-spine-line-fill {
+  width: 100%;
+  background-color: #0048C7;
+  border-radius: 3px;
+  transform-origin: top;
+}
+
+/* Right side: Cards Content */
+.pickpack-history-right-content {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 80px;
+  flex-grow: 1;
+}
+
+.pickpack-history-cards-wrapper {
   display: flex;
   gap: 24px;
+  flex-wrap: wrap; /* Allows multiple cards to wrap nicely */
 }
 
-.pickpack-timeline-card {
-  width: 320px;
-  flex-shrink: 0;
+.pickpack-history-event-card {
+  width: 280px; /* Small fixed width matching screenshot exactly */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.pickpack-timeline-card-img {
+.pickpack-history-event-img {
   width: 100%;
-  height: 240px;
-  border-radius: 16px;
+  height: 180px;
+  border-radius: 12px;
   object-fit: cover;
-  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
 
-.pickpack-timeline-card-title {
-  font-size: 1.25rem;
+.pickpack-history-event-title {
+  font-size: 1rem;
   font-weight: 700;
   color: #111827;
-  margin-bottom: 12px;
+  line-height: 1.4;
+  margin: 0;
 }
 
-.pickpack-timeline-card-desc {
-  font-size: 1rem;
+.pickpack-history-event-desc {
+  font-size: 0.9rem;
   color: #4B5563;
-  line-height: 1.6;
+  line-height: 1.5;
+  margin: 0;
 }
 
 @media (max-width: 900px) {
-  .pickpack-timeline-card {
-    width: 280px;
+  .pickpack-history-row {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .pickpack-history-left {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+  .pickpack-history-spine-line-bg {
+    width: 100%;
+    height: 3px;
+    margin-left: 0;
+  }
+  .pickpack-history-year-text {
+    margin-bottom: 0;
+  }
+  .pickpack-history-event-card {
+    width: 100%;
+  }
+  .pickpack-history-event-img {
+    height: 220px;
   }
 }
 

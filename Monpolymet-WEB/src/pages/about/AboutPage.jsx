@@ -283,8 +283,72 @@ export default function AboutPage({ lang, t }) {
         </div>
       </section>
 
-      {/* Pickpack-style Horizontal Scrolling Timeline */}
-      <HorizontalTimeline historyData={historyData} lang={lang} t={t} />
+         {/* Pickpack-style Exact Layout for History */}
+      <section className="pickpack-history-exact">
+        <div className="pickpack-history-container">
+          <div className="pickpack-timeline-header">
+            <h2 className="pickpack-section-title">
+              {t.about.historyTitle}
+            </h2>
+          </div>
+
+          {historyData.map((hist, idx) => (
+            <div key={idx} className="pickpack-history-row">
+              
+              {/* Left Column: Year & Spine */}
+              <div className="pickpack-history-left">
+                <motion.div 
+                  className={`pickpack-history-year-text`}
+                  initial={{ opacity: 0.3 }}
+                  whileInView={{ opacity: 1, color: '#0048C7' }}
+                  viewport={{ once: false, amount: 0.5 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  {hist.year}
+                </motion.div>
+                
+                {/* Flowing animated line using Framer Motion */}
+                <div className="pickpack-history-spine-line-bg">
+                  <motion.div 
+                    className="pickpack-history-spine-line-fill"
+                    initial={{ height: "0%" }}
+                    whileInView={{ height: "100%" }}
+                    viewport={{ once: false, amount: "some" }}
+                    transition={{ duration: 1, ease: "easeInOut" }}
+                  />
+                </div>
+              </div>
+              
+              {/* Right Column: Cards (Horizontal layout if multiple) */}
+              <div className="pickpack-history-right-content">
+                <motion.div 
+                  className="pickpack-history-cards-wrapper"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                >
+                  {[hist].map((item, subIdx) => (
+                    <div key={subIdx} className="pickpack-history-event-card">
+                      <img 
+                        src={item.imageUrl || ABOUT_MARQUEE_IMAGES[(idx + subIdx) % ABOUT_MARQUEE_IMAGES.length]} 
+                        alt={item.title} 
+                        loading="lazy" 
+                        className="pickpack-history-event-img"
+                      />
+                      <div className="pickpack-history-event-info">
+                        <h4 className="pickpack-history-event-title">{item.title}</h4>
+                        <p className="pickpack-history-event-desc">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
+
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Leadership greeting & profiles */}
       <section className="leadership-section">
@@ -337,63 +401,6 @@ export default function AboutPage({ lang, t }) {
           ))}
         </div>
       </section>
-        </div>
-      </section>
     </div>
-  );
-}
-
-function HorizontalTimeline({ historyData, lang, t }) {
-  const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-  });
-
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]);
-
-  return (
-    <section ref={targetRef} className="pickpack-timeline-scroll-section">
-      <div className="pickpack-timeline-sticky">
-        <div className="pickpack-timeline-header">
-          <h2 className="pickpack-section-title">
-            {lang === 'mn' ? 'Түүхэн замнал' : 'History'}
-          </h2>
-        </div>
-
-        <div className="pickpack-timeline-overflow">
-          <motion.div style={{ x }} className="pickpack-timeline-track">
-            
-            {historyData.map((hist, idx) => (
-              <div key={idx} className="pickpack-timeline-group">
-                <div className="pickpack-timeline-year-col">
-                  <div className="pickpack-timeline-year-text">{hist.year}</div>
-                  <div className="pickpack-timeline-year-line"></div>
-                </div>
-                
-                <div className="pickpack-timeline-cards">
-                  {[hist].map((item, subIdx) => (
-                    <div key={subIdx} className="pickpack-timeline-card">
-                      <img 
-                        src={item.imageUrl || ABOUT_MARQUEE_IMAGES[(idx + subIdx) % ABOUT_MARQUEE_IMAGES.length]} 
-                        alt={item.title} 
-                        loading="lazy" 
-                        className="pickpack-timeline-card-img"
-                      />
-                      <div className="pickpack-timeline-card-info">
-                        <h4 className="pickpack-timeline-card-title">{item.title}</h4>
-                        <p className="pickpack-timeline-card-desc">{item.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-
-            <div style={{ width: '10vw', flexShrink: 0 }} />
-
-          </motion.div>
-        </div>
-      </div>
-    </section>
   );
 }
