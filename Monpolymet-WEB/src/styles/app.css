@@ -1384,7 +1384,7 @@ h2::after {
 }
 
 .pickpack-history-container {
-  max-width: 1400px;
+  max-width: 900px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -1402,11 +1402,11 @@ h2::after {
   flex-direction: column;
   align-items: center;
   position: relative;
-  padding-right: 20px;
+  padding-right: 40px;
 }
 
 .pickpack-history-year-text {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: #E5E7EB; /* Default gray for non-active */
   margin-bottom: 20px;
@@ -1431,30 +1431,23 @@ h2::after {
   transform-origin: top;
 }
 
-/* Right side: Horizontal Scrolling Cards */
-.pickpack-history-right-scroll {
+/* Right side: Cards Content */
+.pickpack-history-right-content {
   display: flex;
-  gap: 24px;
-  overflow-x: auto;
-  padding-bottom: 40px;
-  scrollbar-width: none;
-}
-.pickpack-history-right-scroll::-webkit-scrollbar {
-  display: none;
+  padding-bottom: 60px;
 }
 
 .pickpack-history-event-card {
-  width: 320px;
-  flex-shrink: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
 .pickpack-history-event-img {
   width: 100%;
-  height: 200px;
-  border-radius: 16px;
+  height: 360px;
+  border-radius: 24px;
   object-fit: cover;
 }
 

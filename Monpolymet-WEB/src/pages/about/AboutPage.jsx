@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Target, Eye, ShieldAlert, Award, Building2 } from 'lucide-react';
 import { fetchTimeline, fetchAboutContent, fetchCoreValues, fetchTeam } from '../../api';
 import { useInView } from '../../hooks/useInView';
@@ -312,19 +313,13 @@ export default function AboutPage({ lang, t }) {
                 </div>
               </div>
               
-              {/* Right Column: Horizontal Scrolling Cards */}
+              {/* Right Column: Cards */}
               <motion.div 
-                className="pickpack-history-right-scroll"
+                className="pickpack-history-right-content"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
-                onWheel={(e) => {
-                  if (e.deltaY !== 0) {
-                    e.currentTarget.scrollLeft += e.deltaY;
-                    e.preventDefault();
-                  }
-                }}
               >
                 {[hist].map((item, subIdx) => (
                   <div key={subIdx} className="pickpack-history-event-card">
