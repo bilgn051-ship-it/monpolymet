@@ -36,6 +36,7 @@ function App() {
   const [news, setNews] = useState(initialNews);
   const [jobs, setJobs] = useState(initialJobs);
   const [settings, setSettings] = useState(null);
+  const [timeline, setTimeline] = useState([]);
   const [submissions, setSubmissions] = useLocalStorageState('submissions', initialSubmissions);
 
   useEffect(() => {
@@ -48,6 +49,11 @@ function App() {
     fetchSettings()
       .then((data) => setSettings(data))
       .catch(() => {});
+    import('./api').then(({ fetchTimeline }) => {
+      fetchTimeline()
+        .then((data) => setTimeline(data))
+        .catch(() => {});
+    });
   }, []);
 
   const showHeader = useHideHeaderOnScroll();
@@ -95,6 +101,8 @@ function App() {
             submissions={submissions}
             settings={settings}
             setSettings={setSettings}
+            timeline={timeline}
+            setTimeline={setTimeline}
           />
         );
       default:

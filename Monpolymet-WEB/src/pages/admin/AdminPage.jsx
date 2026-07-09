@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Newspaper, Briefcase, Users, Plus, Trash2, CheckCircle } from 'lucide-react';
+import { Newspaper, Briefcase, Users, Plus, Trash2, CheckCircle, Menu, Clock } from 'lucide-react';
 import SectionHeader from '../../components/ui/SectionHeader';
 
 export default function AdminPage({
@@ -9,7 +9,11 @@ export default function AdminPage({
   setNews,
   jobs,
   setJobs,
-  submissions
+  submissions,
+  settings,
+  setSettings,
+  timeline,
+  setTimeline
 }) {
   const [activeTab, setActiveTab] = useState('news');
   const [showAddForm, setShowAddForm] = useState(false);
@@ -29,6 +33,10 @@ export default function AdminPage({
     locationMn: '', locationEn: '',
     typeMn: '', typeEn: '',
     descMn: '', descEn: ''
+  });
+
+  const [timelineForm, setTimelineForm] = useState({
+    year: '', titleMn: '', titleEn: '', descMn: '', descEn: ''
   });
 
   const handleAddNews = (e) => {
@@ -73,6 +81,40 @@ export default function AdminPage({
     triggerSuccess();
   };
 
+  const handleAddTimeline = async (e) => {
+    e.preventDefault();
+    const newItem = {
+      id: Date.now().toString(),
+      year: timelineForm.year,
+      titleMn: timelineForm.titleMn,
+      titleEn: timelineForm.titleEn,
+      descMn: timelineForm.descMn,
+      descEn: timelineForm.descEn,
+      order: timeline ? timeline.length : 0
+    };
+
+    setTimeline([newItem, ...(timeline || [])]);
+    setTimelineForm({ year: '', titleMn: '', titleEn: '', descMn: '', descEn: '' });
+    setShowAddForm(false);
+    triggerSuccess();
+    
+    // Attempt to persist to API
+    try {
+      await fetch('http://localhost:4000/api/timeline', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          year: newItem.year,
+          title: { mn: newItem.titleMn, en: newItem.titleEn },
+          description: { mn: newItem.descMn, en: newItem.descEn },
+          order: newItem.order
+        })
+      });
+    } catch (err) {
+      console.error('API update failed', err);
+    }
+  };
+
   const handleDeleteNews = (id) => {
     if (window.confirm(lang === 'mn' ? 'Та устгахдаа итгэлтэй байна уу?' : 'Are you sure you want to delete?')) {
       setNews(news.filter(item => item.id !== id));
@@ -84,6 +126,16 @@ export default function AdminPage({
     if (window.confirm(lang === 'mn' ? 'Та устгахдаа итгэлтэй байна уу?' : 'Are you sure you want to delete?')) {
       setJobs(jobs.filter(item => item.id !== id));
       triggerSuccess();
+    }
+  };
+
+  const handleDeleteTimeline = async (id) => {
+    if (window.confirm(lang === 'mn' ? 'Та устгахдаа итгэлтэй байна уу?' : 'Are you sure you want to delete?')) {
+      setTimeline((timeline || []).filter(item => item.id !== id));
+      triggerSuccess();
+      try {
+        await fetch(`http://localhost:4000/api/timeline/${id}`, { method: 'DELETE' });
+      } catch (err) {}
     }
   };
 
@@ -134,7 +186,95 @@ export default function AdminPage({
           <Menu size={18} />
           <span>{lang === 'mn' ? 'Цэсний тохиргоо' : 'Navigation'}</span>
         </button>
+        <button
+          className={`admin-tab-btn ${activeTab === 'timeline' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('timeline'); setShowAddForm(false); }}
+        >
+          <Clock size={18} />
+          <span>{lang === 'mn' ? 'Түүх' : 'Timeline'}</span>
+        </button>
       </div>
+
+      {/* Timeline Management Tab */}
+      {activeTab === 'timeline' && (
+        <div className="admin-content-section animate-fade-in">
+          <div className="admin-section-header">
+            <h3>{lang === 'mn' ? 'Хөгжлийн түүх' : 'Company History'}</h3>
+            <button className="admin-action-btn-primary" onClick={() => setShowAddForm(!showAddForm)}>
+              <Plus size={16} />
+              <span>{lang === 'mn' ? 'Түүх нэмэх' : 'Add Event'}</span>
+            </button>
+          </div>
+
+          {showAddForm && (
+            <form onSubmit={handleAddTimeline} className="admin-form-card animate-slide-down">
+              <h4>{lang === 'mn' ? 'Шинэ түүх нэмэх' : 'Add New Event'}</h4>
+              <div className="form-grid">
+                <div className="form-group">
+                  <label>Он (Year) *</label>
+                  <input type="text" required value={timelineForm.year} onChange={(e) => setTimelineForm({...timelineForm, year: e.target.value})} />
+                </div>
+                <div className="form-group full-width"></div>
+                <div className="form-group">
+                  <label>Гарчиг (Монгол) *</label>
+                  <input type="text" required value={timelineForm.titleMn} onChange={(e) => setTimelineForm({...timelineForm, titleMn: e.target.value})} />
+                </div>
+                <div className="form-group">
+                  <label>Title (English)</label>
+                  <input type="text" value={timelineForm.titleEn} onChange={(e) => setTimelineForm({...timelineForm, titleEn: e.target.value})} />
+                </div>
+                <div className="form-group full-width">
+                  <label>Тайлбар (Монгол) *</label>
+                  <textarea rows="3" required value={timelineForm.descMn} onChange={(e) => setTimelineForm({...timelineForm, descMn: e.target.value})}></textarea>
+                </div>
+                <div className="form-group full-width">
+                  <label>Description (English)</label>
+                  <textarea rows="3" value={timelineForm.descEn} onChange={(e) => setTimelineForm({...timelineForm, descEn: e.target.value})}></textarea>
+                </div>
+              </div>
+              <div className="form-actions">
+                <button type="button" className="btn-secondary" onClick={() => setShowAddForm(false)}>{t.admin.cancelBtn}</button>
+                <button type="submit" className="btn-primary">{t.admin.saveBtn}</button>
+              </div>
+            </form>
+          )}
+
+          <div className="admin-table-wrapper">
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Он</th>
+                  <th>Гарчиг (MN / EN)</th>
+                  <th>Тайлбар</th>
+                  <th>Үйлдэл</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(timeline || []).map((item) => (
+                  <tr key={item.id}>
+                    <td><strong>{item.year}</strong></td>
+                    <td>
+                      <div className="table-double-title">
+                        <strong>{item.titleMn}</strong>
+                        <span>{item.titleEn}</span>
+                      </div>
+                    </td>
+                    <td><div className="table-truncate-text">{item.descMn}</div></td>
+                    <td>
+                      <button className="table-action-delete" onClick={() => handleDeleteTimeline(item.id)}>
+                        <Trash2 size={16} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+                {(!timeline || timeline.length === 0) && (
+                  <tr><td colSpan="4" style={{textAlign: 'center', padding: '20px'}}>Мэдээлэл олдсонгүй</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* News Management Tab */}
       {activeTab === 'news' && (
