@@ -1475,7 +1475,14 @@ h2::after {
   color: #94a3b8;
   transition: all 0.3s ease;
   position: absolute;
+}
+
+.horizontal-timeline-node.node-bottom .horizontal-timeline-year-text {
   top: 36px;
+}
+
+.horizontal-timeline-node.node-top .horizontal-timeline-year-text {
+  bottom: 36px;
 }
 
 .horizontal-timeline-node:hover .horizontal-timeline-dot {

@@ -490,12 +490,13 @@ function HistoryTimelineInteractive({ historyData }) {
             const isActive = originalIndex === activeIndex;
             // A node is considered passed if its original index is <= activeIndex, OR if it's in the first loop and we're in the second loop
             const isPassed = index <= (activeIndex + (index >= historyData.length ? historyData.length : 0));
+            const positionClass = index % 2 === 0 ? 'node-bottom' : 'node-top';
             
             return (
               <div 
                 key={`${hist.id || hist.year}-${index}`}
                 ref={(el) => (nodeRefs.current[index] = el)}
-                className={`horizontal-timeline-node ${isActive ? 'active' : ''} ${isPassed && !isActive ? 'passed' : ''}`}
+                className={`horizontal-timeline-node ${positionClass} ${isActive ? 'active' : ''} ${isPassed && !isActive ? 'passed' : ''}`}
                 onMouseEnter={() => !isDragging && setActiveIndex(originalIndex)}
               >
                 <div className="horizontal-timeline-dot"></div>
