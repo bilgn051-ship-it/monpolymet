@@ -36,7 +36,7 @@ export default function AdminPage({
   });
 
   const [timelineForm, setTimelineForm] = useState({
-    year: '', titleMn: '', titleEn: '', descMn: '', descEn: ''
+    year: '', titleMn: '', titleEn: '', descMn: '', descEn: '', imageUrl: ''
   });
 
   const handleAddNews = (e) => {
@@ -90,11 +90,12 @@ export default function AdminPage({
       titleEn: timelineForm.titleEn,
       descMn: timelineForm.descMn,
       descEn: timelineForm.descEn,
+      imageUrl: timelineForm.imageUrl || '',
       order: timeline ? timeline.length : 0
     };
 
     setTimeline([newItem, ...(timeline || [])]);
-    setTimelineForm({ year: '', titleMn: '', titleEn: '', descMn: '', descEn: '' });
+    setTimelineForm({ year: '', titleMn: '', titleEn: '', descMn: '', descEn: '', imageUrl: '' });
     setShowAddForm(false);
     triggerSuccess();
     
@@ -107,6 +108,7 @@ export default function AdminPage({
           year: newItem.year,
           title: { mn: newItem.titleMn, en: newItem.titleEn },
           description: { mn: newItem.descMn, en: newItem.descEn },
+          imageUrl: newItem.imageUrl,
           order: newItem.order
         })
       });
@@ -230,6 +232,10 @@ export default function AdminPage({
                 <div className="form-group full-width">
                   <label>Description (English)</label>
                   <textarea rows="3" value={timelineForm.descEn} onChange={(e) => setTimelineForm({...timelineForm, descEn: e.target.value})}></textarea>
+                </div>
+                <div className="form-group full-width">
+                  <label>Зургийн URL хаяг (Image URL)</label>
+                  <input type="url" placeholder="https://images.unsplash.com/..." value={timelineForm.imageUrl || ''} onChange={(e) => setTimelineForm({...timelineForm, imageUrl: e.target.value})} />
                 </div>
               </div>
               <div className="form-actions">
