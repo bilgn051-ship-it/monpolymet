@@ -438,11 +438,7 @@ function HistoryTimelineInteractive({ historyData }) {
   };
 
   return (
-    <div 
-      className="horizontal-history-interactive"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
+    <div className="horizontal-history-interactive">
       {/* 1. Horizontal Years Navigation (Drag to Scroll & Auto-Scroll) */}
       <div 
         className="horizontal-timeline-viewport"
@@ -474,7 +470,11 @@ function HistoryTimelineInteractive({ historyData }) {
       </div>
 
       {/* 2. Dynamic Content Area */}
-      <div className="horizontal-timeline-content-area">
+      <div 
+        className="horizontal-timeline-content-area"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
         {activeContent && (
           <motion.div 
             key={activeIndex} // Re-mounts and animates when activeIndex changes
