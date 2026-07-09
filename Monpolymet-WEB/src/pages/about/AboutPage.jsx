@@ -470,11 +470,7 @@ function HistoryTimelineInteractive({ historyData }) {
       </div>
 
       {/* 2. Dynamic Content Area */}
-      <div 
-        className="horizontal-timeline-content-area"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
+      <div className="horizontal-timeline-content-area">
         {activeContent && (
           <motion.div 
             key={activeIndex} // Re-mounts and animates when activeIndex changes
