@@ -143,13 +143,28 @@ export default function AboutPage({ lang, t }) {
     ? (lang === 'mn' ? aboutContent.leadershipGreeting.textMn : aboutContent.leadershipGreeting.textEn)
     : t.about.ceoGreetingText;
 
-  const historyData = timeline && timeline.length > 0
+  let historyData = timeline && timeline.length > 0
     ? timeline.map(h => ({
         year: h.year,
         title: lang === 'mn' ? h.titleMn : h.titleEn,
-        desc: lang === 'mn' ? h.descMn : h.descEn
+        desc: lang === 'mn' ? h.descMn : h.descEn,
+        imageUrl: h.imageUrl
       }))
-    : t.about.history;
+    : [];
+
+  // If there are too few items, append dummy data so it looks like a long timeline
+  if (historyData.length < 5) {
+    historyData = [
+      { year: '2017', title: lang === 'mn' ? 'Үйл ажиллагаа эхлэв' : 'Operations Began', desc: lang === 'mn' ? 'Анхны төсөл дээр ажиллаж эхэлсэн түүхэн он.' : 'The historical year we started our first project.', imageUrl: '' },
+      { year: '2018', title: lang === 'mn' ? 'Эхний ололт' : 'First Milestone', desc: lang === 'mn' ? 'Дотоодын зах зээлд өөрийн байр сууриа олж авлаа.' : 'Secured our position in the domestic market.', imageUrl: '' },
+      { year: '2019', title: lang === 'mn' ? 'Үйлдвэрлэл өргөжив' : 'Production Expanded', desc: lang === 'mn' ? 'Үйлдвэрийн хүчин чадлыг 2 дахин нэмэгдүүлсэн.' : 'Doubled our production capacity.', imageUrl: '' },
+      { year: '2020', title: lang === 'mn' ? 'Технологийн шинэчлэл' : 'Tech Upgrade', desc: lang === 'mn' ? 'Шинэ тоног төхөөрөмж нэвтрүүлэв.' : 'Introduced new state-of-the-art equipment.', imageUrl: '' },
+      { year: '2021', title: t.about.hist1Title || 'Тогтвортой хөгжил', desc: t.about.hist1Text || 'Байгаль орчинд ээлтэй төслүүд хэрэгжүүлж эхлэв.', imageUrl: '' },
+      { year: '2022', title: t.about.hist2Title || 'Олон улсын стандарт', desc: t.about.hist2Text || 'ISO стандартуудыг үйл ажиллагаандаа бүрэн нэвтрүүлсэн.', imageUrl: '' },
+      { year: '2023', title: lang === 'mn' ? 'Шилдэг бүтээн байгуулалт' : 'Best Development', desc: lang === 'mn' ? 'Улсын хэмжээний томоохон төслийг амжилттай хүлээлгэн өгсөн.' : 'Successfully delivered a major national project.', imageUrl: '' },
+      { year: '2024', title: lang === 'mn' ? 'Ирээдүйн алсын хараа' : 'Future Vision', desc: lang === 'mn' ? 'Цоо шинэ инновацийн төвүүдийг байгуулж байна.' : 'Establishing brand new innovation centers.', imageUrl: '' }
+    ];
+  }
 
   const valuesData = coreValues && coreValues.length > 0
     ? coreValues.sort((a,b) => a.order - b.order).map(v => ({

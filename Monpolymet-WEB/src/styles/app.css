@@ -1404,20 +1404,26 @@ h2::after {
 /* 1. Navigation (The horizontal line with dots) */
 .horizontal-timeline-nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 100px; /* Forces items to spread out so it can scroll */
   align-items: center;
   position: relative;
-  padding: 20px 0;
-  max-width: 900px;
+  padding: 20px 40px;
+  max-width: 1000px;
   margin: 0 auto;
   width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.horizontal-timeline-nav::-webkit-scrollbar {
+  display: none;
 }
 
 .horizontal-timeline-line {
   position: absolute;
   top: 50%;
   left: 0;
-  right: 0;
+  min-width: 1500px; /* Ensures the line runs all the way across */
   height: 2px;
   background-color: #e2e8f0;
   z-index: 1;
