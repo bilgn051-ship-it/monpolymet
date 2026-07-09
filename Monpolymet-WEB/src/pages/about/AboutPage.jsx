@@ -369,10 +369,8 @@ export default function AboutPage({ lang, t }) {
 function HistoryTimelineInteractive({ historyData }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollRef = useRef(null);
-  const navRef = useRef(null);
   const nodeRefs = useRef([]);
   const [progressWidth, setProgressWidth] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
 
   // Drag to scroll state
   const [isDragging, setIsDragging] = useState(false);
@@ -382,33 +380,71 @@ function HistoryTimelineInteractive({ historyData }) {
   // Sync activeYear for rendering the content
   const activeContent = historyData[activeIndex] || historyData[0];
 
-  // Calculate the blue line width AND auto-scroll based on the active node's position
+  // Infinite Marquee Auto-Scroll
   useEffect(() => {
-    const activeNode = nodeRefs.current[activeIndex];
+    if (isDragging) return;
+    
+    let animationId;
     const container = scrollRef.current;
     
-    if (activeNode) {
-      // 16 is half the width of the node or just an offset to center the line on the dot
-      setProgressWidth(activeNode.offsetLeft + (activeNode.offsetWidth / 2));
-
-      // Auto scroll to make sure the active node is visible (centered)
-      if (container && !isDragging) {
-        const scrollPos = activeNode.offsetLeft - (container.clientWidth / 2) + (activeNode.offsetWidth / 2);
-        container.scrollTo({ left: scrollPos, behavior: 'smooth' });
+    const scrollStep = () => {
+      if (container) {
+        container.scrollLeft += 0.8; // Smooth continuous flowing speed
+        
+        // Loop seamlessly if we reach the end (assuming we duplicated the content)
+        if (container.scrollLeft >= container.scrollWidth / 2) {
+          container.scrollLeft = 0;
+        }
       }
-    }
-  }, [activeIndex, historyData, isDragging]);
+      animationId = requestAnimationFrame(scrollStep);
+    };
 
-  // Auto-play interval
+    animationId = requestAnimationFrame(scrollStep);
+    return () => cancelAnimationFrame(animationId);
+  }, [isDragging]);
+
+  // Continuously track which node is closest to the left side of the viewport to update activeIndex
   useEffect(() => {
-    if (isPaused || isDragging || !historyData.length) return;
-    
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % historyData.length);
-    }, 3000); // changes every 3 seconds
+    const container = scrollRef.current;
+    if (!container) return;
 
-    return () => clearInterval(interval);
-  }, [isPaused, isDragging, historyData.length]);
+    const handleScroll = () => {
+      const containerLeft = container.scrollLeft;
+      
+      // Find the node whose offsetLeft is closest to containerLeft + (viewportWidth / 3)
+      let closestIndex = 0;
+      let minDistance = Infinity;
+      const targetPos = containerLeft + (container.clientWidth / 3);
+
+      nodeRefs.current.forEach((node, index) => {
+        if (!node) return;
+        // Since we duplicate the data, we only care about the original indices for activeIndex
+        const originalIndex = index % historyData.length;
+        const distance = Math.abs(node.offsetLeft - targetPos);
+        
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIndex = originalIndex;
+        }
+      });
+
+      if (closestIndex !== activeIndex) {
+        setActiveIndex(closestIndex);
+      }
+    };
+
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [activeIndex, historyData.length]);
+
+  // Update progress blue line
+  useEffect(() => {
+    // The line should stretch up to the current closest node
+    const activeNode = nodeRefs.current[activeIndex];
+    if (activeNode) {
+      setProgressWidth(activeNode.offsetLeft + (activeNode.offsetWidth / 2));
+    }
+  }, [activeIndex, historyData.length]);
 
   const handleMouseDown = (e) => {
     setIsDragging(true);
@@ -432,9 +468,12 @@ function HistoryTimelineInteractive({ historyData }) {
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
+  // Duplicate the history data to make it infinitely scrollable
+  const extendedHistory = [...historyData, ...historyData];
+
   return (
     <div className="horizontal-history-interactive">
-      {/* 1. Horizontal Years Navigation (Drag to Scroll & Auto-Scroll) */}
+      {/* 1. Horizontal Years Navigation (Continuous Flow) */}
       <div 
         className="horizontal-timeline-viewport"
         ref={scrollRef}
@@ -443,18 +482,21 @@ function HistoryTimelineInteractive({ historyData }) {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        <div className="horizontal-timeline-nav" ref={navRef}>
+        <div className="horizontal-timeline-nav">
           <div className="horizontal-timeline-line"></div>
           <div className="horizontal-timeline-progress-line" style={{ width: `${progressWidth}px` }}></div>
-          {historyData.map((hist, index) => {
-            const isActive = index === activeIndex;
-            const isPassed = index <= activeIndex;
+          {extendedHistory.map((hist, index) => {
+            const originalIndex = index % historyData.length;
+            const isActive = originalIndex === activeIndex;
+            // A node is considered passed if its original index is <= activeIndex, OR if it's in the first loop and we're in the second loop
+            const isPassed = index <= (activeIndex + (index >= historyData.length ? historyData.length : 0));
+            
             return (
               <div 
-                key={hist.id || hist.year}
+                key={`${hist.id || hist.year}-${index}`}
                 ref={(el) => (nodeRefs.current[index] = el)}
                 className={`horizontal-timeline-node ${isActive ? 'active' : ''} ${isPassed && !isActive ? 'passed' : ''}`}
-                onMouseEnter={() => !isDragging && setActiveIndex(index)}
+                onMouseEnter={() => !isDragging && setActiveIndex(originalIndex)}
               >
                 <div className="horizontal-timeline-dot"></div>
                 <span className="horizontal-timeline-year-text">{hist.year}</span>
