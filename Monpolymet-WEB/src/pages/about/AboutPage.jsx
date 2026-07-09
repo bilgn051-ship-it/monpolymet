@@ -367,17 +367,53 @@ export default function AboutPage({ lang, t }) {
 }
 
 function HistoryTimelineInteractive({ historyData }) {
-  // Set the first year as active by default
-  const [activeYear, setActiveYear] = useState(historyData[0]?.year || "2021");
+  const [activeIndex, setActiveIndex] = useState(0);
   const scrollRef = useRef(null);
-  
+  const navRef = useRef(null);
+  const nodeRefs = useRef([]);
+  const [progressWidth, setProgressWidth] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
   // Drag to scroll state
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
-  // Find the content for the currently active year
-  const activeContent = historyData.find(h => h.year === activeYear);
+  // Sync activeYear for rendering the content
+  const activeContent = historyData[activeIndex] || historyData[0];
+
+  // Calculate the blue line width based on the active node's position
+  useEffect(() => {
+    const activeNode = nodeRefs.current[activeIndex];
+    if (activeNode) {
+      // 16 is half the width of the node or just an offset to center the line on the dot
+      setProgressWidth(activeNode.offsetLeft + (activeNode.offsetWidth / 2));
+    }
+  }, [activeIndex, historyData]);
+
+  // Auto-play interval
+  useEffect(() => {
+    if (isPaused || isDragging) return;
+    
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => {
+        const nextIndex = (prev + 1) % historyData.length;
+        
+        // Auto scroll to make sure the next node is visible
+        const nextNode = nodeRefs.current[nextIndex];
+        const container = scrollRef.current;
+        if (nextNode && container) {
+          // Scroll so the node is roughly centered in the viewport
+          const scrollPos = nextNode.offsetLeft - (container.clientWidth / 2) + (nextNode.offsetWidth / 2);
+          container.scrollTo({ left: scrollPos, behavior: 'smooth' });
+        }
+
+        return nextIndex;
+      });
+    }, 4000); // changes every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [isPaused, isDragging, historyData.length]);
 
   const handleMouseDown = (e) => {
     setIsDragging(true);
@@ -397,13 +433,17 @@ function HistoryTimelineInteractive({ historyData }) {
     if (!isDragging) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // scroll-fast multiplier
+    const walk = (x - startX) * 2; 
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
   return (
-    <div className="horizontal-history-interactive">
-      {/* 1. Horizontal Years Navigation (Drag to Scroll) */}
+    <div 
+      className="horizontal-history-interactive"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      {/* 1. Horizontal Years Navigation (Drag to Scroll & Auto-Scroll) */}
       <div 
         className="horizontal-timeline-viewport"
         ref={scrollRef}
@@ -412,18 +452,24 @@ function HistoryTimelineInteractive({ historyData }) {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        <div className="horizontal-timeline-nav">
+        <div className="horizontal-timeline-nav" ref={navRef}>
           <div className="horizontal-timeline-line"></div>
-          {historyData.map((hist) => (
-            <div 
-              key={hist.id || hist.year}
-              className={`horizontal-timeline-node ${activeYear === hist.year ? 'active' : ''}`}
-              onMouseEnter={() => !isDragging && setActiveYear(hist.year)}
-            >
-              <div className="horizontal-timeline-dot"></div>
-              <span className="horizontal-timeline-year-text">{hist.year}</span>
-            </div>
-          ))}
+          <div className="horizontal-timeline-progress-line" style={{ width: `${progressWidth}px` }}></div>
+          {historyData.map((hist, index) => {
+            const isActive = index === activeIndex;
+            const isPassed = index <= activeIndex;
+            return (
+              <div 
+                key={hist.id || hist.year}
+                ref={(el) => (nodeRefs.current[index] = el)}
+                className={`horizontal-timeline-node ${isActive ? 'active' : ''} ${isPassed && !isActive ? 'passed' : ''}`}
+                onMouseEnter={() => !isDragging && setActiveIndex(index)}
+              >
+                <div className="horizontal-timeline-dot"></div>
+                <span className="horizontal-timeline-year-text">{hist.year}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -431,7 +477,7 @@ function HistoryTimelineInteractive({ historyData }) {
       <div className="horizontal-timeline-content-area">
         {activeContent && (
           <motion.div 
-            key={activeYear} // Re-mounts and animates when activeYear changes
+            key={activeIndex} // Re-mounts and animates when activeIndex changes
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
