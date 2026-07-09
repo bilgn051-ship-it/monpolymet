@@ -283,70 +283,16 @@ export default function AboutPage({ lang, t }) {
         </div>
       </section>
 
-         {/* Pickpack-style Exact Layout for History */}
-      <section className="pickpack-history-exact">
-        <div className="pickpack-history-container">
+      {/* Horizontal Interactive History Timeline */}
+      <section className="horizontal-history-section">
+        <div className="horizontal-history-container">
           <div className="pickpack-timeline-header">
-            <h2 className="pickpack-section-title">
+            <h2 className="pickpack-section-title text-center">
               {t.about.historyTitle}
             </h2>
           </div>
 
-          {historyData.map((hist, idx) => (
-            <div key={idx} className="pickpack-history-row">
-              
-              {/* Left Column: Year & Spine */}
-              <div className="pickpack-history-left">
-                <motion.div 
-                  className="pickpack-history-year-text"
-                  initial={{ opacity: 0.2 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: false, amount: 0.8 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  {hist.year}
-                </motion.div>
-                
-                {/* Flowing animated line using Framer Motion */}
-                <div className="pickpack-history-spine-line-bg">
-                  <motion.div 
-                    className="pickpack-history-spine-line-fill"
-                    initial={{ height: "0%" }}
-                    whileInView={{ height: "100%" }}
-                    viewport={{ once: false, amount: "some" }}
-                    transition={{ duration: 1.5, ease: "easeInOut" }}
-                  />
-                </div>
-              </div>
-              
-              {/* Right Column: Cards (Horizontal layout if multiple) */}
-              <div className="pickpack-history-right-content">
-                <motion.div 
-                  className="pickpack-history-cards-wrapper"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                >
-                  {[hist].map((item, subIdx) => (
-                    <div key={subIdx} className="pickpack-history-event-card">
-                      <img 
-                        src={item.imageUrl || ABOUT_MARQUEE_IMAGES[(idx + subIdx) % ABOUT_MARQUEE_IMAGES.length]} 
-                        alt={item.title} 
-                        loading="lazy" 
-                        className="pickpack-history-event-img"
-                      />
-                      <div className="pickpack-history-event-info">
-                        <h4 className="pickpack-history-event-title">{item.title}</h4>
-                        <p className="pickpack-history-event-desc">{item.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </motion.div>
-              </div>
-
-            </div>
-          ))}
+          <HistoryTimelineInteractive historyData={historyData} />
         </div>
       </section>
 
@@ -401,6 +347,65 @@ export default function AboutPage({ lang, t }) {
           ))}
         </div>
       </section>
+    </div>
+  );
+}
+
+function HistoryTimelineInteractive({ historyData }) {
+  // Set the first year as active by default
+  const [activeYear, setActiveYear] = useState(historyData[0]?.year || "2021");
+
+  // Find the content for the currently active year
+  const activeContent = historyData.find(h => h.year === activeYear);
+
+  return (
+    <div className="horizontal-history-interactive">
+      {/* 1. Horizontal Years Navigation */}
+      <div className="horizontal-timeline-nav">
+        <div className="horizontal-timeline-line"></div>
+        {historyData.map((hist) => (
+          <div 
+            key={hist.year}
+            className={`horizontal-timeline-node ${activeYear === hist.year ? 'active' : ''}`}
+            onMouseEnter={() => setActiveYear(hist.year)}
+          >
+            <div className="horizontal-timeline-dot"></div>
+            <span className="horizontal-timeline-year-text">{hist.year}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* 2. Dynamic Content Area */}
+      <div className="horizontal-timeline-content-area">
+        {activeContent && (
+          <motion.div 
+            key={activeYear} // Re-mounts and animates when activeYear changes
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="pickpack-history-right-content"
+            style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}
+          >
+            <div className="pickpack-history-cards-wrapper">
+              {/* Render the card(s) using the exact PickPack layout we created */}
+              {[activeContent].map((item, subIdx) => (
+                <div key={subIdx} className="pickpack-history-event-card">
+                  <img 
+                    src={item.imageUrl || "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800"} 
+                    alt={item.title} 
+                    loading="lazy" 
+                    className="pickpack-history-event-img"
+                  />
+                  <div className="pickpack-history-event-info">
+                    <h4 className="pickpack-history-event-title">{item.title}</h4>
+                    <p className="pickpack-history-event-desc">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 }
