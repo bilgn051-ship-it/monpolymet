@@ -17,7 +17,7 @@ import { useDarkMode } from './hooks/useDarkMode';
 import { useHideHeaderOnScroll } from './hooks/useHideHeaderOnScroll';
 import { translations } from './i18n/translations';
 import { initialNews, initialJobs, initialSubmissions } from './data/mockData';
-import { fetchNews, fetchJobs, fetchSettings, submitApplication } from './api';
+import { fetchNews, fetchJobs, fetchSettings, fetchPages, fetchProcurementContent, submitApplication } from './api';
 import './styles/app.css';
 
 function App() {
@@ -36,6 +36,8 @@ function App() {
   const [jobs, setJobs] = useState(initialJobs);
   const [settings, setSettings] = useState(null);
   const [timeline, setTimeline] = useState([]);
+  const [pages, setPages] = useState([]);
+  const [procurementContent, setProcurementContent] = useState(null);
   const [submissions, setSubmissions] = useLocalStorageState('submissions', initialSubmissions);
 
   useEffect(() => {
@@ -48,12 +50,33 @@ function App() {
     fetchSettings()
       .then((data) => setSettings(data))
       .catch(() => {});
+    fetchPages()
+      .then((data) => setPages(data))
+      .catch(() => {});
+    fetchProcurementContent()
+      .then((data) => setProcurementContent(data))
+      .catch(() => {});
     import('./api').then(({ fetchTimeline }) => {
       fetchTimeline()
         .then((data) => setTimeline(data))
         .catch(() => {});
     });
   }, []);
+
+  useEffect(() => {
+    const pageMeta = pages.find(p => p.key === currentPage);
+    const siteTitle = lang === 'mn' ? 'Монполимет Групп' : 'Monpolymet Group';
+    if (pageMeta && pageMeta.seo) {
+      const seoTitle = lang === 'mn' ? pageMeta.seo.titleMn : pageMeta.seo.titleEn;
+      document.title = seoTitle ? `${seoTitle} | ${siteTitle}` : siteTitle;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute('content', lang === 'mn' ? pageMeta.seo.descriptionMn : pageMeta.seo.descriptionEn);
+      }
+    } else {
+      document.title = siteTitle;
+    }
+  }, [currentPage, pages, lang]);
 
   const showHeader = useHideHeaderOnScroll();
 
@@ -67,29 +90,31 @@ function App() {
   };
 
   const renderPage = () => {
+    const pageMetadata = pages.find(p => p.key === currentPage) || null;
+
     switch (currentPage) {
       case 'home':
-        return <HomePage lang={lang} t={t} news={news} setCurrentPage={setCurrentPage} />;
+        return <HomePage lang={lang} t={t} news={news} setCurrentPage={setCurrentPage} pageMetadata={pageMetadata} />;
       case 'about':
-        return <AboutPage lang={lang} t={t} />;
+        return <AboutPage lang={lang} t={t} pageMetadata={pageMetadata} />;
       case 'companies':
-        return <CompaniesPage lang={lang} t={t} />;
+        return <CompaniesPage lang={lang} t={t} pageMetadata={pageMetadata} />;
       case 'csr':
-        return <CsrPage lang={lang} t={t} />;
+        return <CsrPage lang={lang} t={t} pageMetadata={pageMetadata} />;
       case 'news':
-        return <NewsPage lang={lang} t={t} news={news} />;
+        return <NewsPage lang={lang} t={t} news={news} pageMetadata={pageMetadata} />;
       case 'careers':
-        return <CareersPage lang={lang} t={t} jobs={jobs} onApply={handleApply} />;
+        return <CareersPage lang={lang} t={t} jobs={jobs} onApply={handleApply} pageMetadata={pageMetadata} />;
       case 'contact':
-        return <ContactPage lang={lang} t={t} />;
+        return <ContactPage lang={lang} t={t} settings={settings} pageMetadata={pageMetadata} />;
       case 'hse':
-        return <HsePage lang={lang} t={t} />;
+        return <HsePage lang={lang} t={t} pageMetadata={pageMetadata} />;
       case 'tour':
-        return <VirtualTourPage lang={lang} t={t} />;
+        return <VirtualTourPage lang={lang} t={t} pageMetadata={pageMetadata} />;
       case 'procurement':
-        return <ProcurementPage lang={lang} t={t} />;
+        return <ProcurementPage lang={lang} t={t} procurementContent={procurementContent} pageMetadata={pageMetadata} />;
       default:
-        return <HomePage lang={lang} t={t} news={news} setCurrentPage={setCurrentPage} />;
+        return <HomePage lang={lang} t={t} news={news} setCurrentPage={setCurrentPage} pageMetadata={pageMetadata} />;
     }
   };
 

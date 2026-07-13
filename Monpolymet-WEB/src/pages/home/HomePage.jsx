@@ -23,7 +23,7 @@ export default function HomePage({ lang, t, news, setCurrentPage }) {
 
   return (
     <div className="home-view animate-fade-in">
-      <Hero lang={lang} />
+      <Hero lang={lang} setCurrentPage={setCurrentPage} />
       <HomeStatsGrid lang={lang} setCurrentPage={setCurrentPage} statCards={statCards} />
       <CEOGreeting lang={lang} t={t} homeContent={homeContent} />
       <NewsPreview news={news} lang={lang} t={t} setCurrentPage={setCurrentPage} />

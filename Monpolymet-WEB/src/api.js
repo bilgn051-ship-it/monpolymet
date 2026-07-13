@@ -96,6 +96,9 @@ const mapStatCard = (d) => ({
   descriptionEn: d.description?.en ?? '',
   colorTheme: d.colorTheme,
   order: d.order ?? 0,
+  targetPage: d.targetPage,
+  imageUrl: d.imageUrl,
+  ticker: d.ticker,
 });
 
 export async function fetchStatCards() {
@@ -158,6 +161,7 @@ export async function fetchTeam() {
 }
 
 const mapAboutContent = (d) => ({
+  collageImages: (d.collageImages || []).map(img => img.url),
   intro: {
     titleMn: d.intro?.title?.mn ?? '',
     titleEn: d.intro?.title?.en ?? '',
@@ -375,4 +379,63 @@ export async function submitApplication(sub) {
   });
   if (!res.ok) throw new Error(`Request failed: ${res.status}`);
   return res.json();
+}
+
+const mapPage = (d) => ({
+  id: d._id,
+  key: d.key,
+  navLabelMn: d.navLabel?.mn ?? '',
+  navLabelEn: d.navLabel?.en ?? '',
+  header: {
+    tagMn: d.header?.tag?.mn ?? '',
+    tagEn: d.header?.tag?.en ?? '',
+    titleMn: d.header?.title?.mn ?? '',
+    titleEn: d.header?.title?.en ?? '',
+    subtitleMn: d.header?.subtitle?.mn ?? '',
+    subtitleEn: d.header?.subtitle?.en ?? '',
+  },
+  seo: {
+    titleMn: d.seo?.title?.mn ?? '',
+    titleEn: d.seo?.title?.en ?? '',
+    descriptionMn: d.seo?.description?.mn ?? '',
+    descriptionEn: d.seo?.description?.en ?? '',
+  }
+});
+
+export async function fetchPages() {
+  try {
+    const data = await getJson('/public/pages');
+    return data.map(mapPage);
+  } catch (err) {
+    return [];
+  }
+}
+
+const mapProcurementContent = (d) => ({
+  header: {
+    titleMn: d.header?.title?.mn ?? '',
+    titleEn: d.header?.title?.en ?? '',
+    subtitleMn: d.header?.subtitle?.mn ?? '',
+    subtitleEn: d.header?.subtitle?.en ?? '',
+    imageUrl: d.header?.imageUrl ?? '',
+  },
+  intro: {
+    titleMn: d.intro?.title?.mn ?? '',
+    titleEn: d.intro?.title?.en ?? '',
+    textMn: d.intro?.text?.mn ?? '',
+    textEn: d.intro?.text?.en ?? '',
+  },
+  contactInfo: {
+    phone: d.contactInfo?.phone ?? '',
+    email: d.contactInfo?.email ?? '',
+  }
+});
+
+export async function fetchProcurementContent() {
+  try {
+    const data = await getJson('/public/procurement-content');
+    return mapProcurementContent(data);
+  } catch (err) {
+    return null;
+  }
 }

@@ -21,7 +21,7 @@ npm run start:dev        # http://localhost:4000/api
 # Admin dashboard
 cd Monpolymet-Admin
 npm install
-npm run dev              # http://localhost:5174 (or next free port)
+npm run dev              # http://localhost:5175 (or next free port)
 
 # Public website
 cd Monpolymet-WEB

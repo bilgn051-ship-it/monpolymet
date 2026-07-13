@@ -3,7 +3,7 @@ import { Trees, HeartHandshake, Leaf } from 'lucide-react';
 import SectionHeader from '../../components/ui/SectionHeader';
 import { fetchCsr } from '../../api';
 
-export default function CsrPage({ lang, t }) {
+export default function CsrPage({ lang, t, pageMetadata }) {
   const [csrItems, setCsrItems] = useState([]);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function CsrPage({ lang, t }) {
 
   return (
     <div className="csr-page-container container-padding">
-      <SectionHeader tag={t.nav.csr} title={t.csr.title} subtitle={t.csr.subtitle} />
+      <SectionHeader tag={t.nav.csr} title={t.csr.title} subtitle={t.csr.subtitle} pageMetadata={pageMetadata} lang={lang} />
 
       {/* Main CSR Grid */}
       <div className="csr-grid">

@@ -10,6 +10,7 @@ import { HseDocumentsService, HseContentService } from '../hse/hse.crud';
 import { TourService } from '../tour/tour.crud';
 import { FaqsService, CareersContentService } from '../careers/careers-content.crud';
 import { SettingsService } from '../settings/settings.crud';
+import { PagesService, ProcurementContentService } from '../pages/pages.crud';
 
 /**
  * Unauthenticated read API consumed by the public website. Only returns
@@ -35,6 +36,8 @@ export class PublicController {
     private readonly faqs: FaqsService,
     private readonly careersContent: CareersContentService,
     private readonly settings: SettingsService,
+    private readonly pages: PagesService,
+    private readonly procurementContent: ProcurementContentService,
   ) {}
 
   @Public()
@@ -148,5 +151,18 @@ export class PublicController {
   @Get('settings')
   settingsGet() {
     return this.settings.get();
+  }
+
+  @Public()
+  @Get('pages')
+  async pagesList() {
+    const pages = await this.pages.findAll();
+    return pages.filter(p => p.isActive !== false);
+  }
+
+  @Public()
+  @Get('procurement-content')
+  procurementContentGet() {
+    return this.procurementContent.get();
   }
 }

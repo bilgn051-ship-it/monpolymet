@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Building2, Factory, HardHat, Truck, CheckCircle } from 'lucide-react';
+import { Building2, CheckCircle } from 'lucide-react';
 import { fetchSectors } from '../../api';
 import { useInView } from '../../hooks/useInView';
+import DynamicIcon from './DynamicIcon';
 
 /**
  * Group company-structure org chart: the Monpolymet Group parent node connected
@@ -10,13 +11,6 @@ import { useInView } from '../../hooks/useInView';
  * comes from the sectors collection (managed from the admin dashboard, logo
  * included); a lucide icon stands in when no logo has been uploaded yet.
  */
-
-function structureIcon(slug, icon) {
-  const key = `${slug || ''} ${icon || ''}`.toLowerCase();
-  if (key.includes('narurt') || key.includes('toson') || key.includes('hardhat')) return <HardHat size={26} />;
-  if (key.includes('ann') || key.includes('truck')) return <Truck size={26} />;
-  return <Factory size={26} />;
-}
 
 export default function GroupStructure({ lang, t }) {
   const [ref, inView] = useInView();
@@ -47,7 +41,7 @@ export default function GroupStructure({ lang, t }) {
     projects: lang === 'mn' ? s.projectsMn : s.projectsEn,
     websiteUrl: s.websiteUrl || 'https://monpolymet.mn/',
     logoUrl: s.logoUrl || null,
-    icon: structureIcon(s.slug, s.icon),
+    icon: s.icon || 'Factory',
     metrics: (s.metrics || []).map((m) => ({
       value: lang === 'mn' ? (m.valMn || m.value) : (m.valEn || m.value),
       label: lang === 'mn' ? m.labelMn : m.labelEn,
@@ -66,7 +60,7 @@ export default function GroupStructure({ lang, t }) {
       <div className="org-chart">
         <div className="org-parent">
           <div className="org-parent-icon"><Building2 size={30} /></div>
-          <span>{lang === 'mn' ? 'МОНПОЛИМЕТ ГРУПП' : 'MONPOLYMET GROUP'}</span>
+          <span>{lang === 'mn' ? (t.common?.monpolymetGroupMn || 'МОНПОЛИМЕТ ГРУПП') : (t.common?.monpolymetGroupEn || 'MONPOLYMET GROUP')}</span>
         </div>
         <div className="org-children">
           {companies.map((company, idx) => (
@@ -75,7 +69,7 @@ export default function GroupStructure({ lang, t }) {
                 {company.logoUrl ? (
                   <img src={company.logoUrl} alt={company.title} className="org-card-logo" loading="lazy" />
                 ) : (
-                  <div className="org-card-icon">{company.icon}</div>
+                  <div className="org-card-icon"><DynamicIcon name={company.icon} size={26} /></div>
                 )}
               </div>
 

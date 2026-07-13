@@ -406,6 +406,14 @@ export const SINGLETON_RESOURCES = {
     subtitle: 'Бидний тухай хуудасны бүтэцтэй агуулга',
     fields: [
       {
+        name: 'collageImages',
+        type: 'objectList',
+        label: 'Нүүрний дээд талд урсдаг зургууд',
+        fields: [
+          { name: 'url', type: 'url', label: 'Зургийн URL' }
+        ]
+      },
+      {
         name: 'intro',
         type: 'group',
         label: 'Танилцуулга',
@@ -486,6 +494,42 @@ export const SINGLETON_RESOURCES = {
         ],
       },
       { name: 'faqTitle', type: 'localized', label: 'Асуулт хариултын гарчиг', required: true },
+    ],
+  },
+
+  'procurement-content': {
+    path: '/procurement-content',
+    title: t.nav.procurement || 'Худалдан авалт',
+    subtitle: 'Худалдан авалт хуудасны агуулга',
+    fields: [
+      {
+        name: 'header',
+        type: 'group',
+        label: 'Толгой хэсэг',
+        fields: [
+          { name: 'title', type: 'localized', label: 'Гарчиг', required: true },
+          { name: 'subtitle', type: 'localizedArea', label: 'Дэд гарчиг', required: true },
+          { name: 'imageUrl', type: 'url', label: 'Зураг (URL)' },
+        ],
+      },
+      {
+        name: 'intro',
+        type: 'group',
+        label: 'Танилцуулга',
+        fields: [
+          { name: 'title', type: 'localized', label: 'Гарчиг', required: true },
+          { name: 'text', type: 'localizedArea', label: 'Текст', required: true },
+        ],
+      },
+      {
+        name: 'contactInfo',
+        type: 'group',
+        label: 'Холбоо барих мэдээлэл',
+        fields: [
+          { name: 'phone', type: 'text', label: 'Утас' },
+          { name: 'email', type: 'text', label: 'И-мэйл' },
+        ],
+      },
     ],
   },
 

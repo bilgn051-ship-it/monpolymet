@@ -3,7 +3,7 @@ import { fetchHeroSlides } from '../../../api';
 
 const SLIDE_INTERVAL = 6000;
 
-export default function Hero({ lang }) {
+export default function Hero({ lang, setCurrentPage }) {
   const [activeSlide, setActiveSlide] = useState(0);
 
   const defaultSlides = [
@@ -104,6 +104,7 @@ export default function Hero({ lang }) {
             <p className="hero-subtitle">
               {lang === 'mn' ? activeSlideData.subtitleMn : activeSlideData.subtitleEn}
             </p>
+
           </div>
         </div>
 

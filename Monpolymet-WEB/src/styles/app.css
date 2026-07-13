@@ -355,6 +355,42 @@ h2::after {
   text-align: left;
 }
 
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.hero-cta-btn {
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--sans);
+  border: 2px solid transparent;
+}
+
+.hero-cta-btn.primary {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.hero-cta-btn.primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.hero-cta-btn.secondary {
+  background-color: transparent;
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+.hero-cta-btn.secondary:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
 /* Stats Board */
 .hero-stats-panel {
   position: absolute;
@@ -3934,20 +3970,27 @@ h2::after {
 .stats-tab-header {
   display: flex;
   gap: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   padding-bottom: 10px;
   margin-bottom: 26px;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 1px;
+  color: rgba(0, 0, 0, 0.42);
+}
+.bg-dark .stats-tab-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.42);
 }
 
 .stats-tab-header .tab-active {
-  color: #ffffff;
+  color: var(--primary-color);
   border-bottom: 2px solid var(--accent-gold);
   padding-bottom: 8px;
   margin-bottom: -11px;
+}
+.bg-dark .stats-tab-header .tab-active {
+  color: #ffffff;
 }
 
 .stats-stock-value {
@@ -3964,20 +4007,30 @@ h2::after {
   line-height: 1;
   letter-spacing: -1.5px;
   font-family: 'Montserrat', sans-serif;
+  color: var(--primary-color);
+}
+.bg-dark .stock-number {
+  color: #ffffff;
 }
 
 .stock-unit {
   font-size: 0.95rem;
   font-weight: 700;
+  color: rgba(0, 0, 0, 0.6);
+}
+.bg-dark .stock-unit {
   color: rgba(255, 255, 255, 0.6);
 }
 
 .stats-stock-desc {
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.58);
+  color: rgba(0, 0, 0, 0.58);
   margin-bottom: 18px;
   line-height: 1.5;
   font-weight: 500;
+}
+.bg-dark .stats-stock-desc {
+  color: rgba(255, 255, 255, 0.58);
 }
 
 .stats-change-label {

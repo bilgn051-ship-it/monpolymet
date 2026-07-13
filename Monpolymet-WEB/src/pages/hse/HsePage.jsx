@@ -3,7 +3,7 @@ import { ShieldAlert, Download, FileText, CheckCircle2 } from 'lucide-react';
 import SectionHeader from '../../components/ui/SectionHeader';
 import { fetchHseContent, fetchHseDocuments } from '../../api';
 
-export default function HsePage({ lang, t }) {
+export default function HsePage({ lang, t, pageMetadata }) {
   const [hseContent, setHseContent] = useState(null);
   const [hseDocs, setHseDocs] = useState([]);
 
@@ -44,7 +44,7 @@ export default function HsePage({ lang, t }) {
 
   return (
     <div className="hse-page-container container-padding">
-      <SectionHeader tag={t.nav.hse} title={t.hse.title} subtitle={t.hse.subtitle} />
+      <SectionHeader tag={t.nav.hse} title={t.hse.title} subtitle={t.hse.subtitle} pageMetadata={pageMetadata} lang={lang} />
 
       <div className="hse-grid">
         {/* Policies & Commitment */}

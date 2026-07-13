@@ -3,7 +3,7 @@ import { Compass, Eye, RefreshCw } from 'lucide-react';
 import SectionHeader from '../../components/ui/SectionHeader';
 import { fetchTour } from '../../api';
 
-export default function VirtualTourPage({ lang, t }) {
+export default function VirtualTourPage({ lang, t, pageMetadata }) {
   const [activeScene, setActiveScene] = useState('toson');
   const [pannellumLoaded, setPannellumLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -116,7 +116,7 @@ export default function VirtualTourPage({ lang, t }) {
 
   return (
     <div className="virtual-tour-container container-padding">
-      <SectionHeader tag={t.nav.tour} title={t.tour.title} subtitle={t.tour.subtitle} />
+      <SectionHeader tag={t.nav.tour} title={t.tour.title} subtitle={t.tour.subtitle} pageMetadata={pageMetadata} lang={lang} />
 
       {/* Scene Selectors */}
       <div className="scene-selectors">

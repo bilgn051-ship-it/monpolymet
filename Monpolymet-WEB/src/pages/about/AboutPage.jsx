@@ -1,19 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Target, Eye, ShieldAlert, Award, Building2 } from 'lucide-react';
-import { fetchTimeline, fetchAboutContent, fetchCoreValues, fetchTeam } from '../../api';
+import { Building2, Target } from 'lucide-react';
+import DynamicIcon from '../../components/ui/DynamicIcon';
 import { useInView } from '../../hooks/useInView';
-
-/** Decorative photo strip that scrolls across the top of the About page. */
-const ABOUT_MARQUEE_IMAGES = [
-  'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&auto=format&fit=crop&q=60',
-  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=60',
-  'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&auto=format&fit=crop&q=60',
-  'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&auto=format&fit=crop&q=60',
-  'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=400&auto=format&fit=crop&q=60',
-  'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&auto=format&fit=crop&q=60',
-  'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&auto=format&fit=crop&q=60',
-];
+import { fetchTimeline, fetchAboutContent, fetchCoreValues, fetchTeam } from '../../api';
 
 /** One history entry that reveals itself on scroll. */
 function TimelineItem({ hist }) {
@@ -34,7 +24,7 @@ function TimelineItem({ hist }) {
   );
 }
 
-export default function AboutPage({ lang, t }) {
+export default function AboutPage({ lang, t, pageMetadata }) {
   const timelineRef = useRef(null);
   const [valuesRef, valuesInView] = useInView();
   const [timeline, setTimeline] = useState([]);
@@ -98,14 +88,7 @@ export default function AboutPage({ lang, t }) {
     };
   }, []);
 
-  const getValIcon = (index) => {
-    switch (index) {
-      case 0: return <ShieldAlert size={28} className="val-icon" />;
-      case 1: return <Award size={28} className="val-icon" />;
-      case 2: return <Target size={28} className="val-icon" />;
-      default: return <Eye size={28} className="val-icon" />;
-    }
-  };
+  // Remove getValIcon
 
   const visionTitle = aboutContent?.vision
     ? (lang === 'mn' ? aboutContent.vision.titleMn : aboutContent.vision.titleEn)
@@ -145,46 +128,49 @@ export default function AboutPage({ lang, t }) {
 
   let historyData = timeline && timeline.length > 0
     ? timeline.map(h => ({
-        year: h.year,
-        title: lang === 'mn' ? h.titleMn : h.titleEn,
-        desc: lang === 'mn' ? h.descMn : h.descEn,
-        imageUrl: h.imageUrl
-      }))
+      year: h.year,
+      title: lang === 'mn' ? h.titleMn : h.titleEn,
+      desc: lang === 'mn' ? h.descMn : h.descEn,
+      imageUrl: h.imageUrl
+    }))
     : [];
 
-  // If there are too few items, append dummy data so it looks like a long timeline
-  if (historyData.length < 5) {
-    historyData = [
-      { year: '2017', title: lang === 'mn' ? 'Үйл ажиллагаа эхлэв' : 'Operations Began', desc: lang === 'mn' ? 'Анхны төсөл дээр ажиллаж эхэлсэн түүхэн он.' : 'The historical year we started our first project.', imageUrl: '' },
-      { year: '2018', title: lang === 'mn' ? 'Эхний ололт' : 'First Milestone', desc: lang === 'mn' ? 'Дотоодын зах зээлд өөрийн байр сууриа олж авлаа.' : 'Secured our position in the domestic market.', imageUrl: '' },
-      { year: '2019', title: lang === 'mn' ? 'Үйлдвэрлэл өргөжив' : 'Production Expanded', desc: lang === 'mn' ? 'Үйлдвэрийн хүчин чадлыг 2 дахин нэмэгдүүлсэн.' : 'Doubled our production capacity.', imageUrl: '' },
-      { year: '2020', title: lang === 'mn' ? 'Технологийн шинэчлэл' : 'Tech Upgrade', desc: lang === 'mn' ? 'Шинэ тоног төхөөрөмж нэвтрүүлэв.' : 'Introduced new state-of-the-art equipment.', imageUrl: '' },
-      { year: '2021', title: t.about.hist1Title || 'Тогтвортой хөгжил', desc: t.about.hist1Text || 'Байгаль орчинд ээлтэй төслүүд хэрэгжүүлж эхлэв.', imageUrl: '' },
-      { year: '2022', title: t.about.hist2Title || 'Олон улсын стандарт', desc: t.about.hist2Text || 'ISO стандартуудыг үйл ажиллагаандаа бүрэн нэвтрүүлсэн.', imageUrl: '' },
-      { year: '2023', title: lang === 'mn' ? 'Шилдэг бүтээн байгуулалт' : 'Best Development', desc: lang === 'mn' ? 'Улсын хэмжээний томоохон төслийг амжилттай хүлээлгэн өгсөн.' : 'Successfully delivered a major national project.', imageUrl: '' },
-      { year: '2024', title: lang === 'mn' ? 'Ирээдүйн алсын хараа' : 'Future Vision', desc: lang === 'mn' ? 'Цоо шинэ инновацийн төвүүдийг байгуулж байна.' : 'Establishing brand new innovation centers.', imageUrl: '' }
-    ];
-  }
+  // Dummy data removed. Just use the actual historyData.
 
   const valuesData = coreValues && coreValues.length > 0
-    ? coreValues.sort((a,b) => a.order - b.order).map(v => ({
-        title: lang === 'mn' ? v.titleMn : v.titleEn,
-        desc: lang === 'mn' ? v.descMn : v.descEn
-      }))
+    ? coreValues.sort((a, b) => a.order - b.order).map(v => ({
+      title: lang === 'mn' ? v.titleMn : v.titleEn,
+      desc: lang === 'mn' ? v.descMn : v.descEn,
+      icon: v.icon,
+    }))
     : t.about.values;
 
   const teamData = team && team.length > 0
-    ? team.sort((a,b) => a.order - b.order).map(m => ({
-        name: lang === 'mn' ? m.nameMn : m.nameEn,
-        role: lang === 'mn' ? m.roleMn : m.roleEn,
-        bio: lang === 'mn' ? m.bioMn : m.bioEn,
-        edu: lang === 'mn' ? m.eduMn : m.eduEn,
-        imageUrl: m.imageUrl,
-      }))
+    ? team.sort((a, b) => a.order - b.order).map(m => ({
+      name: lang === 'mn' ? m.nameMn : m.nameEn,
+      role: lang === 'mn' ? m.roleMn : m.roleEn,
+      bio: lang === 'mn' ? m.bioMn : m.bioEn,
+      edu: lang === 'mn' ? m.eduMn : m.eduEn,
+      imageUrl: m.imageUrl,
+    }))
     : t.about.team;
 
   const founder = teamData[0] || {};
   const restTeam = teamData.slice(1);
+
+  const defaultMarquee = [
+    'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&auto=format&fit=crop&q=60',
+    'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=60',
+    'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&auto=format&fit=crop&q=60',
+  ];
+  const marqueeImages = aboutContent?.collageImages?.length > 0 ? aboutContent.collageImages : defaultMarquee;
+
+  const introTitle = aboutContent?.intro
+    ? (lang === 'mn' ? aboutContent.intro.titleMn : aboutContent.intro.titleEn)
+    : '';
+  const introText = aboutContent?.intro
+    ? (lang === 'mn' ? aboutContent.intro.textMn : aboutContent.intro.textEn)
+    : '';
 
   return (
     <div className="about-page-container container-padding">
@@ -193,7 +179,7 @@ export default function AboutPage({ lang, t }) {
         <div className="collage-row" aria-hidden="true">
           <div className="collage-track collage-track-a">
             {[0, 1, 2, 3].flatMap((rep) =>
-              ABOUT_MARQUEE_IMAGES.map((src, i) => (
+              marqueeImages.map((src, i) => (
                 <div className="collage-cell" key={`t-${rep}-${i}`}>
                   <img src={src} alt="" loading="lazy" />
                 </div>
@@ -204,7 +190,7 @@ export default function AboutPage({ lang, t }) {
         <div className="collage-row" aria-hidden="true">
           <div className="collage-track collage-track-b">
             {[0, 1, 2, 3].flatMap((rep) =>
-              ABOUT_MARQUEE_IMAGES.map((src, i) => (
+              marqueeImages.map((src, i) => (
                 <div className="collage-cell" key={`b-${rep}-${i}`}>
                   <img src={src} alt="" loading="lazy" />
                 </div>
@@ -217,12 +203,25 @@ export default function AboutPage({ lang, t }) {
         </div>
       </div>
 
+      {/* Intro Section */}
+      {introTitle && introText && (
+        <section className="about-intro-section container-padding" style={{ padding: '4rem 0', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontWeight: 600 }}>{introTitle}</h2>
+          <p style={{ fontSize: '1.1rem', lineHeight: 1.8, opacity: 0.8 }}>{introText}</p>
+          {aboutContent?.intro?.imageUrl && (
+            <div style={{ marginTop: '3rem', borderRadius: '16px', overflow: 'hidden' }}>
+              <img src={aboutContent.intro.imageUrl} alt={introTitle} style={{ width: '100%', height: 'auto', display: 'block' }} loading="lazy" />
+            </div>
+          )}
+        </section>
+      )}
+
       {/* Pickpack-style Exact Layout */}
       <section className="pickpack-exact-section" ref={valuesRef}>
         <div className="pickpack-exact-container">
-          
+
           {/* Section Badge */}
-          <motion.div 
+          <motion.div
             className="pickpack-badge-wrapper"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -235,7 +234,7 @@ export default function AboutPage({ lang, t }) {
           </motion.div>
 
           {/* Values Grid */}
-          <motion.div 
+          <motion.div
             className="pickpack-values-layout"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -247,10 +246,12 @@ export default function AboutPage({ lang, t }) {
               <div className="pickpack-values-inner-grid">
                 {valuesData.map((val, idx) => (
                   <div key={idx} className="pickpack-value-item">
-                    <div className="pickpack-value-dot"></div>
+                    <div className="pickpack-value-dot">
+                      {val.icon && <DynamicIcon name={val.icon} size={20} />}
+                    </div>
                     <div className="pickpack-value-content">
-                      <h4 className="pickpack-value-title">{val.title}</h4>
-                      <p className="pickpack-value-desc">{val.desc}</p>
+                      <h4 className="pickpack-value-title">{val.title || val.titleMn}</h4>
+                      <p className="pickpack-value-desc">{val.desc || val.descMn}</p>
                     </div>
                   </div>
                 ))}
@@ -265,7 +266,7 @@ export default function AboutPage({ lang, t }) {
 
           {/* Mission & Vision Grid */}
           <div className="pickpack-mv-layout">
-            <motion.div 
+            <motion.div
               className="pickpack-mission-card"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -281,8 +282,8 @@ export default function AboutPage({ lang, t }) {
               <h3 className="pickpack-card-title">{missionTitle}</h3>
               <p className="pickpack-card-text">{missionText}</p>
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               className="pickpack-vision-card"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -383,14 +384,14 @@ function HistoryTimelineInteractive({ historyData }) {
   // Infinite Marquee Auto-Scroll
   useEffect(() => {
     if (isDragging) return;
-    
+
     let animationId;
     const container = scrollRef.current;
-    
+
     const scrollStep = () => {
       if (container) {
         container.scrollLeft += 0.8; // Smooth continuous flowing speed
-        
+
         // Loop seamlessly if we reach the end (assuming we duplicated the content)
         if (container.scrollLeft >= container.scrollWidth / 2) {
           container.scrollLeft = 0;
@@ -410,7 +411,7 @@ function HistoryTimelineInteractive({ historyData }) {
 
     const handleScroll = () => {
       const containerLeft = container.scrollLeft;
-      
+
       // Find the node whose offsetLeft is closest to containerLeft + (viewportWidth / 3)
       let closestIndex = 0;
       let minDistance = Infinity;
@@ -421,7 +422,7 @@ function HistoryTimelineInteractive({ historyData }) {
         // Since we duplicate the data, we only care about the original indices for activeIndex
         const originalIndex = index % historyData.length;
         const distance = Math.abs(node.offsetLeft - targetPos);
-        
+
         if (distance < minDistance) {
           minDistance = distance;
           closestIndex = originalIndex;
@@ -464,7 +465,7 @@ function HistoryTimelineInteractive({ historyData }) {
     if (!isDragging) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2; 
+    const walk = (x - startX) * 2;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -474,7 +475,7 @@ function HistoryTimelineInteractive({ historyData }) {
   return (
     <div className="horizontal-history-interactive">
       {/* 1. Horizontal Years Navigation (Continuous Flow) */}
-      <div 
+      <div
         className="horizontal-timeline-viewport"
         ref={scrollRef}
         onMouseDown={handleMouseDown}
@@ -491,9 +492,9 @@ function HistoryTimelineInteractive({ historyData }) {
             // A node is considered passed if its original index is <= activeIndex, OR if it's in the first loop and we're in the second loop
             const isPassed = index <= (activeIndex + (index >= historyData.length ? historyData.length : 0));
             const positionClass = index % 2 === 0 ? 'node-bottom' : 'node-top';
-            
+
             return (
-              <div 
+              <div
                 key={`${hist.id || hist.year}-${index}`}
                 ref={(el) => (nodeRefs.current[index] = el)}
                 className={`horizontal-timeline-node ${positionClass} ${isActive ? 'active' : ''} ${isPassed && !isActive ? 'passed' : ''}`}
@@ -510,7 +511,7 @@ function HistoryTimelineInteractive({ historyData }) {
       {/* 2. Dynamic Content Area */}
       <div className="horizontal-timeline-content-area">
         {activeContent && (
-          <motion.div 
+          <motion.div
             key={activeIndex} // Re-mounts and animates when activeIndex changes
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -520,10 +521,10 @@ function HistoryTimelineInteractive({ historyData }) {
           >
             <div className="pickpack-history-cards-wrapper">
               <div className="pickpack-history-event-card">
-                <img 
-                  src={activeContent.imageUrl || "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800"} 
-                  alt={activeContent.titleMn || activeContent.title} 
-                  loading="lazy" 
+                <img
+                  src={activeContent.imageUrl || "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800"}
+                  alt={activeContent.titleMn || activeContent.title}
+                  loading="lazy"
                   className="pickpack-history-event-img"
                   draggable={false}
                 />

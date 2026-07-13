@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { Leaf, Award, TrendingUp, Users, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import DynamicIcon from '../../../components/ui/DynamicIcon';
 
 export default function HomeStatsGrid({ lang, setCurrentPage, statCards = [] }) {
   const gridRef = useRef(null);
-  // Fall back to immediately-revealed where IntersectionObserver is unavailable.
   const [revealed, setRevealed] = useState(() => typeof IntersectionObserver === 'undefined');
 
-  // Reveal the cards once the grid scrolls into view (staggered via CSS).
   useEffect(() => {
     const node = gridRef.current;
     if (!node || typeof IntersectionObserver === 'undefined') return;
@@ -24,141 +23,100 @@ export default function HomeStatsGrid({ lang, setCurrentPage, statCards = [] }) 
   }, []);
 
   const handleNavigate = (page) => {
+    if (!page) return;
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Clickable + keyboard-accessible card behaviour.
-  const cardNav = (page) => ({
-    role: 'button',
-    tabIndex: 0,
-    onClick: () => handleNavigate(page),
-    onKeyDown: (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        handleNavigate(page);
-      }
-    },
-  });
-
-  const cardReclaimed = statCards.find(c => c.icon?.toLowerCase() === 'leaf') || {
-    statValue: '1,000+ га',
-    titleMn: 'Нөхөн сэргээсэн талбай (га)',
-    titleEn: 'Reclaimed Area (hectares)',
-    descriptionMn: 'Бид олборлосон талбай бүртээ 100% биологийн нөхөн сэргээлт хийж, байгалийн унаган төрхийг сэргээн ойжуулж байна.',
-    descriptionEn: 'We perform 100% biological reclamation on all mined areas, reforesting and restoring natural ecosystems.'
+  const cardNav = (page) => {
+    if (!page) return {};
+    return {
+      role: 'button',
+      tabIndex: 0,
+      onClick: () => handleNavigate(page),
+      onKeyDown: (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleNavigate(page);
+        }
+      },
+    };
   };
 
-  const cardExperience = statCards.find(c => c.icon?.toLowerCase() === 'award') || {
-    statValue: '30+',
-    titleMn: 'Үйл ажиллагаа явуулсан жил',
-    titleEn: 'Years of Operation',
-    descriptionMn: 'Монполимет Группийн тогтвортой хөгжил, эх орныхоо бүтээн байгуулалтад оруулсан түүхэн хувь нэмэр.',
-    descriptionEn: 'Over three decades of active contributions to sustainable development and national production.'
-  };
-
-  const cardEmployees = statCards.find(c => c.icon?.toLowerCase() === 'users' || c.icon?.toLowerCase() === 'hardhat') || {
-    statValue: '1,200+',
-    titleMn: 'Нийт ажилчид',
-    titleEn: 'Total Employees',
-    descriptionMn: 'Группийн хэмжээнд тогтвортой ажлын байраар хангагдаж, хамтдаа хөгжиж буй чадварлаг баг хамт олон.',
-    descriptionEn: 'A skilled and growing workforce provided with stable jobs and long-term career growth.'
-  };
+  const displayCards = statCards && statCards.length > 0 
+    ? [...statCards].sort((a, b) => a.order - b.order) 
+    : [
+      { variant: 'tall', colorTheme: 'light-blue', icon: 'Leaf', statValue: '1,000+ га', titleMn: 'Нөхөн сэргээсэн талбай (га)', titleEn: 'Reclaimed Area (hectares)', descriptionMn: 'Бид олборлосон талбай бүртээ 100% биологийн нөхөн сэргээлт хийж байна.', descriptionEn: 'We perform 100% biological reclamation.', targetPage: 'csr', imageUrl: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800' },
+      { variant: 'standard', colorTheme: 'orange', icon: 'Award', statValue: '30+', titleMn: 'Үйл ажиллагаа явуулсан жил', titleEn: 'Years of Operation', descriptionMn: 'Түүхэн хувь нэмэр.', descriptionEn: 'Historical contribution.', targetPage: 'about' },
+      { variant: 'standard', colorTheme: 'white', icon: 'Users', statValue: '1,200+', titleMn: 'Нийт ажилчид', titleEn: 'Total Employees', descriptionMn: 'Тогтвортой ажлын байр.', descriptionEn: 'Stable jobs.', targetPage: 'careers' },
+      { variant: 'standard', colorTheme: 'beige', icon: 'TrendingUp', statValue: '', titleMn: 'Интерактив бүтэц', titleEn: 'Group Structure', descriptionMn: 'Салбар компаниудын үйл ажиллагаа.', descriptionEn: 'Operations of subsidiaries.', targetPage: 'companies' },
+      { variant: 'ticker', colorTheme: 'dark', icon: '', statValue: '1.0M', titleMn: 'Монцемент хүчин чадал', titleEn: 'Moncement Capacity', descriptionMn: 'хуурай аргын цементийн үйлдвэр.', descriptionEn: 'Dry process plant.', targetPage: '' },
+    ];
 
   return (
     <section className="home-stats-grid-section container-padding">
       <div ref={gridRef} className={`stats-grid-container ${revealed ? 'is-revealed' : ''}`}>
-
-        {/* Card 1: Tall Card — Ecological Reclamation */}
-        <article
-          className="stats-grid-card tall-card bg-light-blue"
-          style={{ '--reveal-index': 0 }}
-          {...cardNav('csr')}
-        >
-          <div className="card-top-content">
-            <span className="grid-card-icon-wrap"><Leaf size={22} strokeWidth={2} /></span>
-            <div className="grid-card-stat text-primary">{cardReclaimed.statValue}</div>
-            <h3 className="grid-card-title">{lang === 'mn' ? cardReclaimed.titleMn : cardReclaimed.titleEn}</h3>
-            <p className="grid-card-desc">
-              {lang === 'mn' ? cardReclaimed.descriptionMn : cardReclaimed.descriptionEn}
-            </p>
-            <span className="grid-card-link"><ArrowRight size={18} /></span>
-          </div>
-          <div className="card-bottom-image">
-            <img
-              src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&auto=format&fit=crop&q=60"
-              alt="Reclamation"
-              className="tall-card-img"
-              loading="lazy"
-            />
-          </div>
-        </article>
-
-        {/* Card 2: Orange Card — Years of Experience */}
-        <article
-          className="stats-grid-card bg-orange"
-          style={{ '--reveal-index': 1 }}
-          {...cardNav('about')}
-        >
-          <span className="grid-card-icon-wrap on-accent"><Award size={22} strokeWidth={2} /></span>
-          <div className="grid-card-stat text-white">{cardExperience.statValue}</div>
-          <h3 className="grid-card-title text-white">{lang === 'mn' ? cardExperience.titleMn : cardExperience.titleEn}</h3>
-          <p className="grid-card-desc text-white-muted">
-            {lang === 'mn' ? cardExperience.descriptionMn : cardExperience.descriptionEn}
-          </p>
-          <span className="grid-card-link"><ArrowRight size={18} /></span>
-        </article>
-
-        {/* Card 3: White Card — Careers / Employees */}
-        <article
-          className="stats-grid-card bg-white border-card"
-          style={{ '--reveal-index': 2 }}
-          {...cardNav('careers')}
-        >
-          <span className="grid-card-icon-wrap"><Users size={22} strokeWidth={2} /></span>
-          <div className="grid-card-stat text-primary">{cardEmployees.statValue}</div>
-          <h3 className="grid-card-title">{lang === 'mn' ? cardEmployees.titleMn : cardEmployees.titleEn}</h3>
-          <p className="grid-card-desc">
-            {lang === 'mn' ? cardEmployees.descriptionMn : cardEmployees.descriptionEn}
-          </p>
-          <span className="grid-card-link"><ArrowRight size={18} /></span>
-        </article>
-
-        {/* Card 4: Beige Card — Group Structure */}
-        <article
-          className="stats-grid-card bg-beige"
-          style={{ '--reveal-index': 3 }}
-          {...cardNav('companies')}
-        >
-          <span className="grid-card-icon-wrap"><TrendingUp size={22} strokeWidth={2} /></span>
-          <h3 className="grid-card-title">{lang === 'mn' ? 'Интерактив бүтэц' : 'Group Structure'}</h3>
-          <p className="grid-card-desc">
-            {lang === 'mn'
-              ? 'Уул уурхай, барилга, үйлдвэрлэлийн салбарт тэргүүлэгч салбар компаниудын үйл ажиллагаа.'
-              : 'Explore the operations of our leading subsidiary companies in mining, construction, and manufacturing.'}
-          </p>
-          <span className="grid-card-link"><ArrowRight size={18} /></span>
-        </article>
-
-        {/* Card 5: Dark Card — Cement Capacity */}
-        <article className="stats-grid-card bg-dark text-white" style={{ '--reveal-index': 4 }}>
-          <div className="stats-tab-header">
-            <span className="tab-active">MONCEMENT</span>
-            <span>OPC 42.5</span>
-            <span>CPC 32.5</span>
-          </div>
-          <div className="stats-stock-value">
-            <span className="stock-number">1.0M</span>
-            <span className="stock-unit">{lang === 'mn' ? 'тонн / жил' : 'tons / year'}</span>
-          </div>
-          <p className="stats-stock-desc">
-            {lang === 'mn' ? 'Монцемент хуурай аргын цементийн үйлдвэрийн жилийн хүчин чадал.' : 'Annual production capacity of Moncement dry-process plant.'}
-          </p>
-          <div className="stats-change-label">
-            <span className="label-arrow">▲</span>
-            <span>100% {lang === 'mn' ? 'Дотоодын үйлдвэр' : 'Domestic'}</span>
-          </div>
-        </article>
+        
+        {displayCards.map((card, idx) => {
+          const title = lang === 'mn' ? (card.titleMn || '') : (card.titleEn || '');
+          const desc = lang === 'mn' ? (card.descriptionMn || '') : (card.descriptionEn || '');
+          const isDark = card.colorTheme === 'dark';
+          const textClass = isDark ? 'text-white' : '';
+          
+          if (card.variant === 'ticker') {
+            return (
+              <article key={idx} className={`stats-grid-card bg-${card.colorTheme} ${textClass}`} style={{ '--reveal-index': idx }} {...cardNav(card.targetPage)}>
+                <div className="stats-tab-header">
+                  <span className="tab-active">{title}</span>
+                </div>
+                <div className="stats-stock-value">
+                  <span className="stock-number">{card.statValue}</span>
+                </div>
+                <p className="stats-stock-desc">{desc}</p>
+                <div className="stats-chart-placeholder">
+                  <svg viewBox="0 0 100 40" preserveAspectRatio="none">
+                    <path d="M0,40 Q10,20 20,25 T40,15 T60,20 T80,5 T100,10 L100,40 Z" fill={isDark ? "rgba(255,255,255,0.1)" : "rgba(6,76,173,0.1)"}/>
+                    <polyline points="0,40 10,20 20,25 40,15 60,20 80,5 100,10" fill="none" stroke={isDark ? "currentColor" : "var(--primary-color)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </article>
+            );
+          }
+          
+          return (
+            <article 
+              key={idx}
+              className={`stats-grid-card bg-${card.colorTheme || 'white'} ${card.variant === 'tall' ? 'tall-card' : ''} ${card.colorTheme === 'white' ? 'border-card' : ''}`}
+              style={{ '--reveal-index': idx }}
+              {...cardNav(card.targetPage)}
+            >
+              {card.variant === 'tall' ? (
+                <>
+                  <div className="card-top-content">
+                    {card.icon && <span className="grid-card-icon-wrap"><DynamicIcon name={card.icon} size={22} strokeWidth={2} /></span>}
+                    {card.statValue && <div className={`grid-card-stat ${isDark ? 'text-white' : 'text-primary'}`}>{card.statValue}</div>}
+                    <h3 className={`grid-card-title ${textClass}`}>{title}</h3>
+                    <p className={`grid-card-desc ${isDark ? 'text-white-muted' : ''}`}>{desc}</p>
+                    {card.targetPage && <span className="grid-card-link"><ArrowRight size={18} /></span>}
+                  </div>
+                  {card.imageUrl && (
+                    <div className="card-bottom-image">
+                      <img src={card.imageUrl} alt={title} className="tall-card-img" loading="lazy" />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  {card.icon && <span className={`grid-card-icon-wrap ${card.colorTheme === 'orange' ? 'on-accent' : ''}`}><DynamicIcon name={card.icon} size={22} strokeWidth={2} /></span>}
+                  {card.statValue && <div className={`grid-card-stat ${textClass || 'text-primary'}`}>{card.statValue}</div>}
+                  <h3 className={`grid-card-title ${textClass}`}>{title}</h3>
+                  <p className={`grid-card-desc ${isDark ? 'text-white-muted' : ''}`}>{desc}</p>
+                  {card.targetPage && <span className="grid-card-link"><ArrowRight size={18} /></span>}
+                </>
+              )}
+            </article>
+          );
+        })}
 
       </div>
     </section>

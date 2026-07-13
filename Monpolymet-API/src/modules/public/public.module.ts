@@ -8,6 +8,7 @@ import { CsrModule } from '../csr/csr.module';
 import { HseModule } from '../hse/hse.module';
 import { TourModule } from '../tour/tour.module';
 import { SettingsModule } from '../settings/settings.module';
+import { PagesModule } from '../pages/pages.module';
 import { PublicController } from './public.controller';
 
 @Module({
@@ -21,6 +22,7 @@ import { PublicController } from './public.controller';
     HseModule,
     TourModule,
     SettingsModule,
+    PagesModule,
   ],
   controllers: [PublicController],
 })

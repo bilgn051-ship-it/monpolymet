@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Mail, MapPin, Phone, CheckCircle } from 'lucide-react';
 import SectionHeader from '../../components/ui/SectionHeader';
 
-export default function ContactPage({ lang, t }) {
+export default function ContactPage({ lang, t, settings }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -22,7 +22,7 @@ export default function ContactPage({ lang, t }) {
 
   return (
     <div className="contact-page-container container-padding">
-      <SectionHeader tag={t.nav.contact} title={t.contact.title} subtitle={t.contact.subtitle} />
+      <SectionHeader tag={t.nav.contact} title={t.contact.title} subtitle={t.contact.subtitle} pageMetadata={pageMetadata} lang={lang} />
 
       <div className="contact-grid">
         {/* Contact Information */}
@@ -33,7 +33,7 @@ export default function ContactPage({ lang, t }) {
             <div className="contact-info-icon"><MapPin size={22} /></div>
             <div>
               <h4>{t.common.address}</h4>
-              <p>{t.contact.address}</p>
+              <p>{settings ? (lang === 'mn' ? settings.addressMn : settings.addressEn) : t.contact.address}</p>
             </div>
           </div>
 
@@ -41,7 +41,7 @@ export default function ContactPage({ lang, t }) {
             <div className="contact-info-icon"><Phone size={22} /></div>
             <div>
               <h4>{t.common.phone}</h4>
-              <p><a href="tel:+97670118012">+976 7011 8012</a></p>
+              <p><a href={`tel:${settings?.phone || '+97670118012'}`}>{settings?.phone || '+976 7011 8012'}</a></p>
             </div>
           </div>
 
@@ -49,7 +49,7 @@ export default function ContactPage({ lang, t }) {
             <div className="contact-info-icon"><Mail size={22} /></div>
             <div>
               <h4>{t.common.email}</h4>
-              <p><a href="mailto:info@monpolymet.mn">info@monpolymet.mn</a></p>
+              <p><a href={`mailto:${settings?.email || 'info@monpolymet.mn'}`}>{settings?.email || 'info@monpolymet.mn'}</a></p>
             </div>
           </div>
         </div>

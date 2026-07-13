@@ -3,7 +3,7 @@ import { Briefcase, HelpCircle, ChevronDown, CheckCircle } from 'lucide-react';
 import SectionHeader from '../../components/ui/SectionHeader';
 import { fetchCareersContent, fetchFaqs } from '../../api';
 
-export default function CareersPage({ lang, t, jobs, onApply }) {
+export default function CareersPage({ lang, t, jobs = [], onApply, pageMetadata }) {
   const [activeFaq, setActiveFaq] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -87,7 +87,7 @@ export default function CareersPage({ lang, t, jobs, onApply }) {
 
   return (
     <div className="careers-page-container container-padding">
-      <SectionHeader tag={t.nav.careers} title={t.careers.title} />
+      <SectionHeader tag={t.nav.careers} title={t.careers.title} pageMetadata={pageMetadata} lang={lang} />
 
       {/* Why Us Section */}
       <section className="why-us-section animate-fade-in">
