@@ -1,36 +1,46 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Building2, Target } from 'lucide-react';
-import DynamicIcon from '../../components/ui/DynamicIcon';
+import { motion, AnimatePresence } from 'framer-motion';
+import { User, X } from 'lucide-react';
 import { useInView } from '../../hooks/useInView';
 import { fetchTimeline, fetchAboutContent, fetchCoreValues, fetchTeam } from '../../api';
-
-/** One history entry that reveals itself on scroll. */
-function TimelineItem({ hist }) {
-  const [ref, inView] = useInView({ threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
-  return (
-    <div ref={ref} className={`timeline-row-item ${inView ? 'is-visible' : ''}`}>
-      <div className="timeline-year-col">
-        <span className="timeline-large-year">{hist.year}</span>
-      </div>
-      <div className="timeline-spine-col">
-        <span className="timeline-dot"></span>
-      </div>
-      <div className="timeline-content-col">
-        <h4 className="timeline-item-title">{hist.title}</h4>
-        <p className="timeline-item-desc">{hist.desc}</p>
-      </div>
-    </div>
-  );
-}
+import CEOGreeting from '../home/sections/CEOGreeting';
 
 export default function AboutPage({ lang, t, pageMetadata }) {
   const timelineRef = useRef(null);
-  const [valuesRef, valuesInView] = useInView();
+  const { ref: valuesRef } = useInView({ threshold: 0.1 });
+  // eslint-disable-next-line no-unused-vars
   const [timeline, setTimeline] = useState([]);
   const [aboutContent, setAboutContent] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [coreValues, setCoreValues] = useState([]);
   const [team, setTeam] = useState([]);
+  const [selectedMember, setSelectedMember] = useState(null);
+
+  const fallbackImages = [
+    "/Ц.Гарамжав.jpg",
+    "/Н.Мөнхнасан.jpg",
+    "/Б.Дэлгэр.jpg",
+    "/Ц.Халиун.jpg",
+    "/2.jpg"
+  ];
+
+  const fallbackByNames = {
+    "Ц.Гарамжав": "/garamjav.png",
+    "Ts.Garamjav": "/garamjav.png",
+    "Н.Мөнхнасан": "/munkhnasan.png",
+    "N.Munkhnasan": "/munkhnasan.png",
+    "Б.Дэлгэр": "/delger.png",
+    "B.Delger": "/delger.png",
+    "Ц.Халиун": "/1.png",
+    "Ts.Haliun": "/1.png",
+    "Б.Гандөш": "/2.png",
+    "B.Gandush": "/2.png"
+  };
+
+  const getValidImageUrl = (member, idx) => {
+    // FORCE local images regardless of what is in the database!
+    return fallbackByNames[member.name] || fallbackImages[idx % 5];
+  };
 
   useEffect(() => {
     fetchTimeline()
@@ -106,13 +116,15 @@ export default function AboutPage({ lang, t, pageMetadata }) {
     ? (lang === 'mn' ? aboutContent.mission.textMn : aboutContent.mission.textEn)
     : t.about.missionText;
 
+
+
   const valuesTitle = aboutContent
     ? (lang === 'mn' ? aboutContent.valuesTitleMn : aboutContent.valuesTitleEn)
     : t.about.valuesTitle;
 
-  const historyTitle = aboutContent
+  /* const historyTitle = aboutContent
     ? (lang === 'mn' ? aboutContent.historyTitleMn : aboutContent.historyTitleEn)
-    : t.about.historyTitle;
+    : t.about.historyTitle; */
 
   const leadershipTitle = aboutContent
     ? (lang === 'mn' ? aboutContent.leadershipTitleMn : aboutContent.leadershipTitleEn)
@@ -126,24 +138,24 @@ export default function AboutPage({ lang, t, pageMetadata }) {
     ? (lang === 'mn' ? aboutContent.leadershipGreeting.textMn : aboutContent.leadershipGreeting.textEn)
     : t.about.ceoGreetingText;
 
-  let historyData = timeline && timeline.length > 0
+  /* let historyData = timeline && timeline.length > 0
     ? timeline.map(h => ({
       year: h.year,
       title: lang === 'mn' ? h.titleMn : h.titleEn,
       desc: lang === 'mn' ? h.descMn : h.descEn,
       imageUrl: h.imageUrl
     }))
-    : [];
+    : []; */
 
   // Dummy data removed. Just use the actual historyData.
 
-  const valuesData = coreValues && coreValues.length > 0
+  /* const valuesData = coreValues && coreValues.length > 0
     ? coreValues.sort((a, b) => a.order - b.order).map(v => ({
       title: lang === 'mn' ? v.titleMn : v.titleEn,
       desc: lang === 'mn' ? v.descMn : v.descEn,
       icon: v.icon,
     }))
-    : t.about.values;
+    : t.about.values; */
 
   const teamData = team && team.length > 0
     ? team.sort((a, b) => a.order - b.order).map(m => ({
@@ -158,28 +170,52 @@ export default function AboutPage({ lang, t, pageMetadata }) {
   const founder = teamData[0] || {};
   const restTeam = teamData.slice(1);
 
-  const defaultMarquee = [
-    'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&auto=format&fit=crop&q=60',
-    'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=60',
-    'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&auto=format&fit=crop&q=60',
+  const marqueeTop = [
+    'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=60',
+    'https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=600&auto=format&fit=crop&q=60',
+    'https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=600&auto=format&fit=crop&q=60',
+    'https://images.unsplash.com/photo-1428366890462-dd4baecf492b?w=600&auto=format&fit=crop&q=60',
+    'https://images.unsplash.com/photo-1506146332389-18140dc7b2fb?w=600&auto=format&fit=crop&q=60',
+    'https://images.unsplash.com/photo-1421757350652-9f65a35effc7?w=600&auto=format&fit=crop&q=60'
   ];
-  const marqueeImages = aboutContent?.collageImages?.length > 0 ? aboutContent.collageImages : defaultMarquee;
+  const marqueeBottom = [
+    'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=600&auto=format&fit=crop&q=60',
+    'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&auto=format&fit=crop&q=60',
+    'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&auto=format&fit=crop&q=60',
+    'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format&fit=crop&q=60',
+    'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=600&auto=format&fit=crop&q=60',
+    'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=600&auto=format&fit=crop&q=60'
+  ];
 
-  const introTitle = aboutContent?.intro
+  /* const introTitle = aboutContent?.intro
     ? (lang === 'mn' ? aboutContent.intro.titleMn : aboutContent.intro.titleEn)
     : '';
   const introText = aboutContent?.intro
     ? (lang === 'mn' ? aboutContent.intro.textMn : aboutContent.intro.textEn)
-    : '';
+    : ''; */
 
   return (
-    <div className="about-page-container container-padding">
-      {/* Two-row photo collage hero: edge-to-edge images scrolling right → left */}
-      <div className="about-hero-collage">
-        <div className="collage-row" aria-hidden="true">
+    <>
+      <div className="about-page-container">
+        {/* Two-row photo collage hero: edge-to-edge images scrolling right → left */}
+        <div className="about-hero-collage">
+        {/* Overlay and Title */}
+        <div className="full-bleed-banner-overlay" style={{ zIndex: 1 }}></div>
+        <div className="full-bleed-banner-container" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 2, margin: 'auto' }}>
+          <div className="full-bleed-banner-content animate-slide-up">
+            <h1 className="hero-title">
+              {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.titleMn : pageMetadata.header.titleEn) : (lang === 'mn' ? 'Бидний тухай' : 'About Us')}
+            </h1>
+            <p className="hero-subtitle">
+              {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.subtitleMn : pageMetadata.header.subtitleEn) : ''}
+            </p>
+          </div>
+        </div>
+
+        <div className="collage-row" aria-hidden="true" style={{ position: 'relative', zIndex: 0 }}>
           <div className="collage-track collage-track-a">
             {[0, 1, 2, 3].flatMap((rep) =>
-              marqueeImages.map((src, i) => (
+              marqueeTop.map((src, i) => (
                 <div className="collage-cell" key={`t-${rep}-${i}`}>
                   <img src={src} alt="" loading="lazy" />
                 </div>
@@ -187,10 +223,10 @@ export default function AboutPage({ lang, t, pageMetadata }) {
             )}
           </div>
         </div>
-        <div className="collage-row" aria-hidden="true">
+        <div className="collage-row" aria-hidden="true" style={{ position: 'relative', zIndex: 0 }}>
           <div className="collage-track collage-track-b">
             {[0, 1, 2, 3].flatMap((rep) =>
-              marqueeImages.map((src, i) => (
+              marqueeBottom.map((src, i) => (
                 <div className="collage-cell" key={`b-${rep}-${i}`}>
                   <img src={src} alt="" loading="lazy" />
                 </div>
@@ -198,26 +234,10 @@ export default function AboutPage({ lang, t, pageMetadata }) {
             )}
           </div>
         </div>
-        <div className="collage-title">
-          <span>{lang === 'mn' ? 'БИДНИЙ ТУХАЙ' : 'ABOUT US'}</span>
-        </div>
       </div>
 
-      {/* Intro Section */}
-      {introTitle && introText && (
-        <section className="about-intro-section container-padding" style={{ padding: '4rem 0', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontWeight: 600 }}>{introTitle}</h2>
-          <p style={{ fontSize: '1.1rem', lineHeight: 1.8, opacity: 0.8 }}>{introText}</p>
-          {aboutContent?.intro?.imageUrl && (
-            <div style={{ marginTop: '3rem', borderRadius: '16px', overflow: 'hidden' }}>
-              <img src={aboutContent.intro.imageUrl} alt={introTitle} style={{ width: '100%', height: 'auto', display: 'block' }} loading="lazy" />
-            </div>
-          )}
-        </section>
-      )}
-
       {/* Pickpack-style Exact Layout */}
-      <section className="pickpack-exact-section" ref={valuesRef}>
+      <section id="values" className="pickpack-exact-section" ref={valuesRef}>
         <div className="pickpack-exact-container">
 
           {/* Section Badge */}
@@ -229,7 +249,7 @@ export default function AboutPage({ lang, t, pageMetadata }) {
           >
             <div className="pickpack-badge">
               <span className="pickpack-badge-star">✦</span>
-              {valuesTitle}
+              <span className="pickpack-badge-text">{valuesTitle}</span>
             </div>
           </motion.div>
 
@@ -241,302 +261,296 @@ export default function AboutPage({ lang, t, pageMetadata }) {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="pickpack-values-card-white">
-              {/* Optional: Pickpack has a diagram here, we'll put the 4 values in a clean grid */}
-              <div className="pickpack-values-inner-grid">
-                {valuesData.map((val, idx) => (
-                  <div key={idx} className="pickpack-value-item">
-                    <div className="pickpack-value-dot">
-                      {val.icon && <DynamicIcon name={val.icon} size={20} />}
-                    </div>
-                    <div className="pickpack-value-content">
-                      <h4 className="pickpack-value-title">{val.title || val.titleMn}</h4>
-                      <p className="pickpack-value-desc">{val.desc || val.descMn}</p>
-                    </div>
-                  </div>
-                ))}
+            <div className="pickpack-values-card-white pickpack-top-left-card">
+              <div className="pickpack-values-network-graphic" style={{ minHeight: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg viewBox="0 0 600 350" width="100%" height="100%" className="network-svg">
+                  <defs>
+                    <linearGradient id="pillGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#3B82F6" />
+                      <stop offset="100%" stopColor="#1E3A8A" />
+                    </linearGradient>
+                    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="8" stdDeviation="12" floodColor="#1E3A8A" floodOpacity="0.25" />
+                    </filter>
+                    <filter id="dotGlow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur stdDeviation="3" result="blur" />
+                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                  </defs>
+
+                  {/* Network Lines */}
+                  <path d="M 140 40 L 140 280" fill="none" stroke="#E0E7FF" strokeWidth="2" />
+                  <path d="M 40 180 L 320 180" fill="none" stroke="#E0E7FF" strokeWidth="2" />
+                  <path d="M 320 60 L 320 280" fill="none" stroke="#E0E7FF" strokeWidth="2" />
+                  <path d="M 320 100 L 520 100" fill="none" stroke="#E0E7FF" strokeWidth="2" />
+                  <path d="M 520 40 L 520 280 L 560 280 L 600 200" fill="none" stroke="#E0E7FF" strokeWidth="2" strokeLinejoin="round" />
+
+                  {/* Nodes */}
+                  {/* Top Left */}
+                  <g transform="translate(140, 80)">
+                    <circle cx="0" cy="0" r="10" fill="#EEF2FF" />
+                    <circle cx="0" cy="0" r="5" fill="#93C5FD" />
+                  </g>
+                  {/* Middle Intersection */}
+                  <g transform="translate(320, 180)">
+                    <circle cx="0" cy="0" r="10" fill="#EEF2FF" />
+                    <circle cx="0" cy="0" r="5" fill="#93C5FD" />
+                  </g>
+                  {/* Top Right Solid */}
+                  <g transform="translate(320, 100)">
+                    <circle cx="0" cy="0" r="12" fill="#DBEAFE" />
+                    <circle cx="0" cy="0" r="7" fill="#2563EB" />
+                  </g>
+                  {/* Bottom Right */}
+                  <g transform="translate(520, 280)">
+                    <circle cx="0" cy="0" r="10" fill="#EEF2FF" />
+                    <circle cx="0" cy="0" r="5" fill="#93C5FD" />
+                  </g>
+
+                  {/* Pills */}
+                  {/* Инновац */}
+                  <g transform="translate(110, 155)">
+                    <rect x="0" y="0" width="140" height="46" rx="23" fill="url(#pillGrad)" filter="url(#shadow)" stroke="#EEF2FF" strokeWidth="3" />
+                    <text x="30" y="28" fill="white" fontSize="16" fontFamily="sans-serif" fontWeight="500">Инновац</text>
+                    <circle cx="112" cy="23" r="13" fill="white" />
+                    <path d="M 112 13 Q 112 23 122 23 Q 112 23 112 33 Q 112 23 102 23 Q 112 23 112 13 Z" fill="#1E3A8A" />
+                  </g>
+
+                  {/* Хэрэглэгч */}
+                  <g transform="translate(380, 75)">
+                    <rect x="0" y="0" width="150" height="46" rx="23" fill="url(#pillGrad)" filter="url(#shadow)" stroke="#EEF2FF" strokeWidth="3" />
+                    <text x="25" y="28" fill="white" fontSize="16" fontFamily="sans-serif" fontWeight="500">Хэрэглэгч</text>
+                    <circle cx="122" cy="23" r="13" fill="white" />
+                    <path d="M 122 13 Q 122 23 132 23 Q 122 23 122 33 Q 122 23 112 23 Q 122 23 122 13 Z" fill="#1E3A8A" />
+                  </g>
+
+                  {/* Технологи */}
+                  <g transform="translate(290, 240)">
+                    <rect x="0" y="0" width="150" height="46" rx="23" fill="url(#pillGrad)" filter="url(#shadow)" stroke="#EEF2FF" strokeWidth="3" />
+                    <text x="25" y="28" fill="white" fontSize="16" fontFamily="sans-serif" fontWeight="500">Технологи</text>
+                    <circle cx="122" cy="23" r="13" fill="white" />
+                    <path d="M 122 13 Q 122 23 132 23 Q 122 23 122 33 Q 122 23 112 23 Q 122 23 122 13 Z" fill="#1E3A8A" />
+                  </g>
+
+                  {/* Mouse Cursor Arrow pointing to Инновац */}
+                  <g transform="translate(195, 200) rotate(-15)">
+                    <path d="M0,0 L0,32 L8,24 L16,40 L22,37 L14,21 L24,21 Z" fill="#1E3A8A" stroke="white" strokeWidth="2" filter="url(#shadow)" />
+                  </g>
+                </svg>
               </div>
+              <h3 className="pickpack-card-title">{valuesTitle}</h3>
+              <p className="pickpack-card-text">
+                {lang === 'mn' 
+                  ? "Инновац, технологи, хэрэглэгч төвтэй хандлагад тулгуурлан, дэлхий даяар саадгүй, найдвартай үйлчилгээг санал болгодог онцгой логистикийн шийдлүүдийг хүргэх." 
+                  : "Delivering exceptional logistics solutions worldwide, driven by innovation, technology, and a customer-centric approach."}
+              </p>
             </div>
-            <div className="pickpack-values-card-blue">
-              <div className="pickpack-blue-box-graphic">
-                <Building2 size={120} color="rgba(255,255,255,0.1)" />
+            
+            <div className="pickpack-values-card-blue pickpack-top-right-card">
+              <div className="isometric-graphic">
+                <svg viewBox="0 0 200 200" width="100%" height="100%" style={{ opacity: 0.9 }}>
+                  <g transform="translate(100, 50)">
+                    {/* Top Face */}
+                    <path d="M 0 0 L 60 30 L 0 60 L -60 30 Z" fill="#3b82f6" opacity="0.5"/>
+                    {/* Left Face */}
+                    <path d="M -60 30 L 0 60 L 0 130 L -60 100 Z" fill="#1d4ed8" opacity="0.8"/>
+                    {/* Right Face */}
+                    <path d="M 0 60 L 60 30 L 60 100 L 0 130 Z" fill="#1e40af" opacity="0.95"/>
+                    
+                    {/* Cutout/Inner shape trick */}
+                    <path d="M 0 60 L 40 40 L 40 80 L 0 100 Z" fill="#172554" opacity="0.3"/>
+
+                    {/* Small box bottom right */}
+                    <g transform="translate(75, 75)">
+                      <path d="M 0 0 L 25 12.5 L 0 25 L -25 12.5 Z" fill="#3b82f6" opacity="0.6"/>
+                      <path d="M -25 12.5 L 0 25 L 0 55 L -25 42.5 Z" fill="#1d4ed8" opacity="0.8"/>
+                      <path d="M 0 25 L 25 12.5 L 25 42.5 L 0 55 Z" fill="#1e40af" opacity="1"/>
+                    </g>
+                  </g>
+                </svg>
               </div>
             </div>
           </motion.div>
 
           {/* Mission & Vision Grid */}
-          <div className="pickpack-mv-layout">
+          <div id="vision" className="pickpack-mv-layout">
             <motion.div
-              className="pickpack-mission-card"
+              className="pickpack-mission-card pickpack-bottom-left-card"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <div className="pickpack-mission-bg-circles">
-                <div className="circle-1"></div>
-                <div className="circle-2"></div>
-                <div className="circle-3"></div>
-                <div className="mission-bg-icon"><Target size={24} /></div>
+              <div className="pickpack-card-text-content">
+                <h3 className="pickpack-card-title">{missionTitle}</h3>
+                <p className="pickpack-card-text">{missionText}</p>
               </div>
-              <h3 className="pickpack-card-title">{missionTitle}</h3>
-              <p className="pickpack-card-text">{missionText}</p>
+              <div className="pickpack-mission-bg-circles">
+                <div className="circle-3"></div>
+                <div className="circle-2"></div>
+                <div className="circle-1"></div>
+                <div className="mission-bg-icon"><User size={24} /></div>
+              </div>
             </motion.div>
 
             <motion.div
-              className="pickpack-vision-card"
+              className="pickpack-vision-card pickpack-bottom-right-card"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <div className="pickpack-vision-bg-dots"></div>
-              <h3 className="pickpack-card-title">{visionTitle}</h3>
-              <p className="pickpack-card-text">{visionText}</p>
+              <div className="pickpack-card-text-content">
+                <h3 className="pickpack-card-title">{visionTitle}</h3>
+                <p className="pickpack-card-text">{visionText}</p>
+              </div>
             </motion.div>
           </div>
 
         </div>
       </section>
 
-      {/* Horizontal Interactive History Timeline */}
-      <section className="horizontal-history-section">
-        <div className="horizontal-history-container">
-          <div className="pickpack-timeline-header">
-            <h2 className="pickpack-section-title text-center">
-              {t.about.historyTitle}
-            </h2>
-          </div>
+      {/* CEO Greeting Section moved outside of leadership padded section */}
+      <CEOGreeting lang={lang} t={t} />
 
-          <HistoryTimelineInteractive historyData={historyData} />
-        </div>
-      </section>
-
-      {/* Leadership greeting & profiles */}
-      <section className="leadership-section">
-        <h3 className="section-subtitle">{leadershipTitle}</h3>
-
-        {/* CEO Greeting */}
-        {founder.name && (
-          <div className="ceo-greeting-block">
-            <div className="ceo-avatar-col">
-              <img
-                src={founder.imageUrl || "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=60"}
-                alt={founder.name}
-                className="ceo-avatar"
-              />
-              <div className="ceo-name-badge">
-                <h4>{founder.name}</h4>
-                <span>{founder.role}</span>
-              </div>
-            </div>
-            <div className="ceo-greeting-text-col">
-              <h4>{ceoGreeting}</h4>
-              <p className="greeting-text">&ldquo;{ceoGreetingText}&rdquo;</p>
-            </div>
-          </div>
-        )}
+      <section id="leadership" style={{ padding: '80px 5%', backgroundColor: '#ffffff' }}>
+        <h3 style={{ fontSize: '32px', fontWeight: '600', marginBottom: '40px', fontFamily: "'Montserrat', sans-serif", letterSpacing: '0.5px', color: '#000000' }}>
+          {leadershipTitle}
+        </h3>
 
         {/* Executive Team Members */}
-        <div className="team-profiles-grid">
-          {restTeam.map((member, idx) => (
-            <div key={idx} className="team-card">
-              <div className="team-image-wrapper">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '24px' }}>
+          {teamData.map((member, idx) => (
+            <div 
+              key={idx} 
+              style={{ display: 'flex', flexDirection: 'column', gap: '16px', cursor: 'pointer', transition: 'transform 0.2s' }}
+              onClick={() => setSelectedMember(member)}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+            >
+              <div style={{ borderRadius: '24px', overflow: 'hidden', height: '420px', backgroundColor: '#e2e8f0' }}>
                 <img
-                  src={member.imageUrl || (idx === 0
-                    ? "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&auto=format&fit=crop&q=60"
-                    : "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&auto=format&fit=crop&q=60")}
+                  src={getValidImageUrl(member, idx)}
                   alt={member.name}
-                  className="team-image"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               </div>
-              <div className="team-info">
-                <h4>{member.name}</h4>
-                <span className="team-role">{member.role}</span>
-                <p className="team-bio">{member.bio}</p>
-                <div className="team-edu">
-                  <strong>{lang === 'mn' ? 'Боловсрол:' : 'Education:'}</strong>
-                  <p>{member.edu}</p>
-                </div>
+              <div style={{ textAlign: 'left' }}>
+                <h4 style={{ fontSize: '20px', fontWeight: '700', fontFamily: "'Inter', sans-serif", margin: '0 0 6px 0', color: '#000000' }}>
+                  {member.name}
+                </h4>
+                <p style={{ fontSize: '14px', color: '#64748b', fontFamily: "'Inter', sans-serif", margin: 0, fontWeight: '400' }}>
+                  {member.role}
+                </p>
               </div>
             </div>
           ))}
         </div>
       </section>
-    </div>
-  );
-}
 
-function HistoryTimelineInteractive({ historyData }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const scrollRef = useRef(null);
-  const nodeRefs = useRef([]);
-  const [progressWidth, setProgressWidth] = useState(0);
-
-  // Drag to scroll state
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-
-  // Sync activeYear for rendering the content
-  const activeContent = historyData[activeIndex] || historyData[0];
-
-  // Infinite Marquee Auto-Scroll
-  useEffect(() => {
-    if (isDragging) return;
-
-    let animationId;
-    const container = scrollRef.current;
-
-    const scrollStep = () => {
-      if (container) {
-        container.scrollLeft += 0.8; // Smooth continuous flowing speed
-
-        // Loop seamlessly if we reach the end (assuming we duplicated the content)
-        if (container.scrollLeft >= container.scrollWidth / 2) {
-          container.scrollLeft = 0;
-        }
-      }
-      animationId = requestAnimationFrame(scrollStep);
-    };
-
-    animationId = requestAnimationFrame(scrollStep);
-    return () => cancelAnimationFrame(animationId);
-  }, [isDragging]);
-
-  // Continuously track which node is closest to the left side of the viewport to update activeIndex
-  useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    const handleScroll = () => {
-      const containerLeft = container.scrollLeft;
-
-      // Find the node whose offsetLeft is closest to containerLeft + (viewportWidth / 3)
-      let closestIndex = 0;
-      let minDistance = Infinity;
-      const targetPos = containerLeft + (container.clientWidth / 3);
-
-      nodeRefs.current.forEach((node, index) => {
-        if (!node) return;
-        // Since we duplicate the data, we only care about the original indices for activeIndex
-        const originalIndex = index % historyData.length;
-        const distance = Math.abs(node.offsetLeft - targetPos);
-
-        if (distance < minDistance) {
-          minDistance = distance;
-          closestIndex = originalIndex;
-        }
-      });
-
-      if (closestIndex !== activeIndex) {
-        setActiveIndex(closestIndex);
-      }
-    };
-
-    container.addEventListener('scroll', handleScroll, { passive: true });
-    return () => container.removeEventListener('scroll', handleScroll);
-  }, [activeIndex, historyData.length]);
-
-  // Update progress blue line
-  useEffect(() => {
-    // The line should stretch up to the current closest node
-    const activeNode = nodeRefs.current[activeIndex];
-    if (activeNode) {
-      setProgressWidth(activeNode.offsetLeft + (activeNode.offsetWidth / 2));
-    }
-  }, [activeIndex, historyData.length]);
-
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    setStartX(e.pageX - scrollRef.current.offsetLeft);
-    setScrollLeft(scrollRef.current.scrollLeft);
-  };
-
-  const handleMouseLeave = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  // Duplicate the history data to make it infinitely scrollable
-  const extendedHistory = [...historyData, ...historyData];
-
-  return (
-    <div className="horizontal-history-interactive">
-      {/* 1. Horizontal Years Navigation (Continuous Flow) */}
-      <div
-        className="horizontal-timeline-viewport"
-        ref={scrollRef}
-        onMouseDown={handleMouseDown}
-        onMouseLeave={handleMouseLeave}
-        onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseMove}
-      >
-        <div className="horizontal-timeline-nav">
-          <div className="horizontal-timeline-line"></div>
-          <div className="horizontal-timeline-progress-line" style={{ width: `${progressWidth}px` }}></div>
-          {extendedHistory.map((hist, index) => {
-            const originalIndex = index % historyData.length;
-            const isActive = originalIndex === activeIndex;
-            // A node is considered passed if its original index is <= activeIndex, OR if it's in the first loop and we're in the second loop
-            const isPassed = index <= (activeIndex + (index >= historyData.length ? historyData.length : 0));
-            const positionClass = index % 2 === 0 ? 'node-bottom' : 'node-top';
-
-            return (
-              <div
-                key={`${hist.id || hist.year}-${index}`}
-                ref={(el) => (nodeRefs.current[index] = el)}
-                className={`horizontal-timeline-node ${positionClass} ${isActive ? 'active' : ''} ${isPassed && !isActive ? 'passed' : ''}`}
-                onMouseEnter={() => !isDragging && setActiveIndex(originalIndex)}
-              >
-                <div className="horizontal-timeline-dot"></div>
-                <span className="horizontal-timeline-year-text">{hist.year}</span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* 2. Dynamic Content Area */}
-      <div className="horizontal-timeline-content-area">
-        {activeContent && (
+      {/* Team Member Modal */}
+      <AnimatePresence>
+        {selectedMember && (
           <motion.div
-            key={activeIndex} // Re-mounts and animates when activeIndex changes
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="pickpack-history-right-content"
-            style={{ width: '100%', maxWidth: '800px', margin: '0 auto' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              backdropFilter: 'blur(4px)',
+              zIndex: 9999,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '20px'
+            }}
+            onClick={() => setSelectedMember(null)}
           >
-            <div className="pickpack-history-cards-wrapper">
-              <div className="pickpack-history-event-card">
-                <img
-                  src={activeContent.imageUrl || "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800"}
-                  alt={activeContent.titleMn || activeContent.title}
-                  loading="lazy"
-                  className="pickpack-history-event-img"
-                  draggable={false}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                backgroundColor: '#ffffff',
+                borderRadius: '24px',
+                width: '100%',
+                maxWidth: '900px',
+                display: 'flex',
+                overflow: 'hidden',
+                position: 'relative',
+                color: '#000000',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.2)'
+              }}
+            >
+              <button
+                onClick={() => setSelectedMember(null)}
+                style={{
+                  position: 'absolute',
+                  top: '24px',
+                  right: '24px',
+                  background: 'rgba(0,0,0,0.05)',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#000000',
+                  cursor: 'pointer',
+                  zIndex: 10,
+                  transition: 'background 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.05)'}
+              >
+                <X size={20} />
+              </button>
+              
+              <div style={{ flex: '0 0 40%', minHeight: '500px', backgroundColor: '#e2e8f0' }}>
+                <img 
+                  src={getValidImageUrl(selectedMember, teamData.findIndex(m => m.name === selectedMember.name))} 
+                  alt={selectedMember.name} 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
-                <div className="pickpack-history-event-info">
-                  <h4 className="pickpack-history-event-title">{activeContent.titleMn || activeContent.title}</h4>
-                  <p className="pickpack-history-event-desc">{activeContent.descMn || activeContent.desc}</p>
+              </div>
+              <div style={{ flex: '1', padding: '48px', overflowY: 'auto', maxHeight: '600px', textAlign: 'left' }}>
+                <h3 style={{ fontSize: '28px', fontWeight: '700', marginBottom: '12px', fontFamily: "'Montserrat', sans-serif", color: '#000000' }}>
+                  {selectedMember.name}
+                </h3>
+                <p style={{ fontSize: '16px', color: '#64748b', marginBottom: '32px', fontFamily: "'Inter', sans-serif" }}>
+                  {selectedMember.role}
+                </p>
+                <div style={{ fontSize: '15px', lineHeight: '1.8', color: '#334155', fontFamily: "'Inter', sans-serif", whiteSpace: 'pre-line' }}>
+                  {selectedMember.bio && selectedMember.bio.length > 50 ? selectedMember.bio : "Тэрээр компанийн үйл ажиллагааны ерөнхий удирдлагыг хариуцан ажиллаж, стратегийн зорилтуудыг хэрэгжүүлэх, өдөр тутмын үйл ажиллагааг жигд удирдан зохион байгуулах чиглэлд олон жилийн туршлагатай. \n\nБайгууллагын дотоод процессыг сайжруулах, хүний нөөцийн чадавхыг бэхжүүлэх, салбартаа манлайлах урт хугацааны алсын харааг тодорхойлоход онцгой анхаарч ажилладаг. Түүний удирдлага дор баг хамт олон инноваци, технологийн шийдлүүдийг нэвтрүүлж, үйл ажиллагааны үр ашгийг тасралтгүй нэмэгдүүлсээр байна."}
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
+      </AnimatePresence>
+
       </div>
-    </div>
+    </>
   );
 }
+
+/*
+export const monpolymetMilestones = [
+  { year: "1992", title: "Company Founded", desc: "Monpolymet Group was established as a pioneering enterprise in the region.", imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" },
+  { year: "1995", title: "Gold Exploration", desc: "Began operations in gold exploration with cutting edge methods.", imageUrl: "https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80&w=2070&auto=format&fit=crop" },
+  { year: "2000", title: "Mining Expansion", desc: "Expanded mining operations significantly across multiple sites.", imageUrl: "https://images.unsplash.com/photo-1578241561880-0a1d5ce3cb10?q=80&w=2070&auto=format&fit=crop" },
+  { year: "2008", title: "Industrial Development", desc: "Launched major industrial development projects and vital infrastructure.", imageUrl: "https://images.unsplash.com/photo-1504917595217-d4ce5eb922fc?q=80&w=2082&auto=format&fit=crop" },
+  { year: "2015", title: "Sustainability Initiatives", desc: "Introduced advanced eco-friendly practices to preserve nature.", imageUrl: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?q=80&w=1974&auto=format&fit=crop" },
+  { year: "2020", title: "Digital Transformation", desc: "Adopted cutting-edge enterprise technologies and automated systems.", imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" },
+  { year: "2025", title: "Corporate Ecosystem", desc: "A fully integrated industrial ecosystem for a sustainable future.", imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" }
+];
+*/
+

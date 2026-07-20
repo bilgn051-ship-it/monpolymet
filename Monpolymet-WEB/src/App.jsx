@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { usePageRouting } from './hooks/usePageRouting';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
@@ -7,10 +7,11 @@ import AboutPage from './pages/about/AboutPage';
 import CompaniesPage from './pages/companies/CompaniesPage';
 import CsrPage from './pages/csr/CsrPage';
 import NewsPage from './pages/news/NewsPage';
+import NewsDetailPage from './pages/news/NewsDetailPage';
 import CareersPage from './pages/careers/CareersPage';
 import ContactPage from './pages/contact/ContactPage';
-import HsePage from './pages/hse/HsePage';
-import VirtualTourPage from './pages/tour/VirtualTourPage';
+
+
 import ProcurementPage from './pages/ProcurementPage';
 import { useLocalStorageState } from './hooks/useLocalStorageState';
 import { useDarkMode } from './hooks/useDarkMode';
@@ -24,7 +25,7 @@ function App() {
   const [lang, setLang] = useState('mn');
   // URL-backed page state: the visible page maps to the browser path, so deep
   // links (e.g. /about), refreshes and back/forward all work.
-  const [currentPage, setCurrentPage] = usePageRouting();
+  const [currentPage, setCurrentPage, pageParam] = usePageRouting();
 
   // Applies the persisted theme to the document (setter reserved for a toggle).
   useDarkMode();
@@ -40,33 +41,44 @@ function App() {
   const [procurementContent, setProcurementContent] = useState(null);
   const [submissions, setSubmissions] = useLocalStorageState('submissions', initialSubmissions);
 
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
   useEffect(() => {
     fetchNews()
       .then((data) => data.length && setNews(data))
-      .catch(() => {});
+      .catch(() => { });
     fetchJobs()
       .then((data) => setJobs(data))
-      .catch(() => {});
+      .catch(() => { });
     fetchSettings()
       .then((data) => setSettings(data))
-      .catch(() => {});
+      .catch(() => { });
     fetchPages()
       .then((data) => setPages(data))
-      .catch(() => {});
+      .catch(() => { });
     fetchProcurementContent()
       .then((data) => setProcurementContent(data))
-      .catch(() => {});
+      .catch(() => { });
     import('./api').then(({ fetchTimeline }) => {
       fetchTimeline()
         .then((data) => setTimeline(data))
-        .catch(() => {});
+        .catch(() => { });
     });
   }, []);
 
   useEffect(() => {
     const pageMeta = pages.find(p => p.key === currentPage);
     const siteTitle = lang === 'mn' ? 'Монполимет Групп' : 'Monpolymet Group';
-    if (pageMeta && pageMeta.seo) {
+    if (currentPage === 'post') {
+      const post = news.find(n => n.id.toString() === pageParam);
+      if (post) {
+        document.title = `${lang === 'mn' ? post.titleMn : post.titleEn} | ${siteTitle}`;
+      } else {
+        document.title = siteTitle;
+      }
+    } else if (pageMeta && pageMeta.seo) {
       const seoTitle = lang === 'mn' ? pageMeta.seo.titleMn : pageMeta.seo.titleEn;
       document.title = seoTitle ? `${seoTitle} | ${siteTitle}` : siteTitle;
       const metaDesc = document.querySelector('meta[name="description"]');
@@ -76,7 +88,7 @@ function App() {
     } else {
       document.title = siteTitle;
     }
-  }, [currentPage, pages, lang]);
+  }, [currentPage, pages, lang, pageParam, news]);
 
   const showHeader = useHideHeaderOnScroll();
 
@@ -86,7 +98,7 @@ function App() {
   // legacy in-site admin view still reflects it.
   const handleApply = (newSubmission) => {
     setSubmissions([newSubmission, ...submissions]);
-    submitApplication(newSubmission).catch(() => {});
+    submitApplication(newSubmission).catch(() => { });
   };
 
   const renderPage = () => {
@@ -94,23 +106,25 @@ function App() {
 
     switch (currentPage) {
       case 'home':
-        return <HomePage lang={lang} t={t} news={news} setCurrentPage={setCurrentPage} pageMetadata={pageMetadata} />;
+        return <HomePage lang={lang} t={t} news={news} setCurrentPage={setCurrentPage} timeline={timeline} pageMetadata={pageMetadata} />;
       case 'about':
-        return <AboutPage lang={lang} t={t} pageMetadata={pageMetadata} />;
+        return <AboutPage lang={lang} t={t} timeline={timeline} pageMetadata={pageMetadata} />;
       case 'companies':
         return <CompaniesPage lang={lang} t={t} pageMetadata={pageMetadata} />;
       case 'csr':
         return <CsrPage lang={lang} t={t} pageMetadata={pageMetadata} />;
       case 'news':
-        return <NewsPage lang={lang} t={t} news={news} pageMetadata={pageMetadata} />;
+        return <NewsPage news={news} lang={lang} t={t} pageMetadata={pageMetadata} setCurrentPage={setCurrentPage} />;
+      case 'post':
+        return <NewsDetailPage postId={pageParam} news={news} lang={lang} t={t} setCurrentPage={setCurrentPage} />;
       case 'careers':
         return <CareersPage lang={lang} t={t} jobs={jobs} onApply={handleApply} pageMetadata={pageMetadata} />;
       case 'contact':
         return <ContactPage lang={lang} t={t} settings={settings} pageMetadata={pageMetadata} />;
-      case 'hse':
-        return <HsePage lang={lang} t={t} pageMetadata={pageMetadata} />;
-      case 'tour':
-        return <VirtualTourPage lang={lang} t={t} pageMetadata={pageMetadata} />;
+      // case 'hse':
+      //   return <HsePage lang={lang} t={t} pageMetadata={pageMetadata} />;
+
+
       case 'procurement':
         return <ProcurementPage lang={lang} t={t} procurementContent={procurementContent} pageMetadata={pageMetadata} />;
       default:

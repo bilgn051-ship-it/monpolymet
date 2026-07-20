@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Hero from './sections/Hero';
 import HomeStatsGrid from './sections/HomeStatsGrid';
-import CEOGreeting from './sections/CEOGreeting';
+import CSRHighlight from './sections/CSRHighlight';
 import NewsPreview from './sections/NewsPreview';
 import { fetchHomeContent, fetchStatCards } from '../../api';
 
@@ -25,7 +25,7 @@ export default function HomePage({ lang, t, news, setCurrentPage }) {
     <div className="home-view animate-fade-in">
       <Hero lang={lang} setCurrentPage={setCurrentPage} />
       <HomeStatsGrid lang={lang} setCurrentPage={setCurrentPage} statCards={statCards} />
-      <CEOGreeting lang={lang} t={t} homeContent={homeContent} />
+      <CSRHighlight lang={lang} />
       <NewsPreview news={news} lang={lang} t={t} setCurrentPage={setCurrentPage} />
     </div>
   );

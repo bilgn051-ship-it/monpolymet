@@ -3,7 +3,7 @@ export const translations = {
     nav: {
       home: "Нүүр",
       about: "Бидний тухай",
-      companies: "Компаниуд",
+      companies: "Үйл ажиллагаа",
       csr: "Нийгмийн хариуцлага",
       hse: "Байгаль орчин & ХАБЭА",
       careers: "Ажлын байр",
@@ -63,9 +63,11 @@ export const translations = {
       ceoGreeting: "Удирдлагын мэндчилгээ",
       ceoGreetingText: "Эрхэм харилцагчид, хамтран ажиллагч түншүүд ээ, Монполимет Группийн вэбсайтаар зочилж буй танд энэ өдрийн мэнд хүргэе. Бид үүсгэн байгуулагдсан цагаасаа эхлэн эх орныхоо хөгжил дэвшилд бодит хувь нэмэр оруулахыг зорин ажиллаж ирсэн. Чанартай үйлдвэрлэл болон хариуцлагатай уул уурхайг хослуулан, ирээдүй хойчдоо ногоон байгалийг үлдээх нь бидний туйлын зорилго билээ.",
       team: [
-        { name: "Ц.Гарамжав", role: "Үүсгэн байгуулагч, ТУЗ-ийн Дарга", bio: "Монгол улсын уул уурхайн салбарын нэрт зүтгэлтэн, Эдийн засагч, Геологич инженер. Салбартаа 30 гаруй жил ажилласан туршлагатай.", edu: "МУИС - Геологийн анги, ШУТИС - Доктор." },
-        { name: "Н.Мөнхнасан", role: "Монполимет Группийн Ерөнхийлөгч", bio: "Санхүү, хөрөнгө оруулалтын чиглэлээр мэргэшсэн. Группийн стратегийн хөгжил, гадаад хамтын ажиллагааг удирддаг.", edu: "АНУ-ын Сан Францискогийн Их Сургууль - Санхүүгийн удирдлага." },
-        { name: "Б.Нандин-Эрдэнэ", role: "Үйл ажиллагаа эрхэлсэн захирал", bio: "Уул уурхай, үйлдвэрлэлийн төслийн удирдлагаар мэргэшсэн инженер.", edu: "ШУТИС - Уул уурхайн инженер." }
+        { name: "Ц.Гарамжав", role: "Үүсгэн байгуулагч, ТУЗ-ийн Дарга", bio: "Монгол улсын уул уурхайн салбарын нэрт зүтгэлтэн, Эдийн засагч, Геологич инженер. Салбартаа 30 гаруй жил ажилласан туршлагатай.", edu: "МУИС - Геологийн анги, ШУТИС - Доктор.", imageUrl: "/garamjav.png" },
+        { name: "Н.Мөнхнасан", role: "Монполимет Группийн Ерөнхийлөгч", bio: "Санхүү, хөрөнгө оруулалтын чиглэлээр мэргэшсэн. Группийн стратегийн хөгжил, гадаад хамтын ажиллагааг удирддаг.", edu: "АНУ-ын Сан Францискогийн Их Сургууль - Санхүүгийн удирдлага.", imageUrl: "/munkhnasan.png" },
+        { name: "Б.Нандин-Эрдэнэ", role: "Үйл ажиллагаа эрхэлсэн захирал", bio: "Уул уурхай, үйлдвэрлэлийн төслийн удирдлагаар мэргэшсэн инженер.", edu: "ШУТИС - Уул уурхайн инженер.", imageUrl: "/1.png" },
+        { name: "Б.Дэлгэр", role: "Гүйцэтгэх захирал", bio: "Тэрээр компанийн үйл ажиллагааны ерөнхий удирдлагыг хариуцан ажиллаж, стратегийн зорилтуудыг хэрэгжүүлэх, өдөр тутмын үйл ажиллагааг жигд удирдан зохион байгуулах чиглэлд олон жилийн туршлагатай.", edu: "", imageUrl: "/delger.png" },
+        { name: "Г.Төгөлдөр", role: "Санхүү эрхэлсэн захирал", bio: "Санхүүгийн удирдлага, төлөвлөлтийн өндөр туршлагатай. Компанийн төсөв болон хөрөнгө оруулалтын оновчтой хуваарилалтыг хангаж ажилладаг.", edu: "", imageUrl: "/2.png" }
       ]
     },
     companies: {
@@ -259,9 +261,11 @@ export const translations = {
       ceoGreeting: "Message from Leadership",
       ceoGreetingText: "Dear clients and partners, welcome to Monpolymet Group. Since our inception, we have aimed to make real contributions to our country's development. Combining high-quality production with responsible mining while preserving a green environment for future generations remains our ultimate goal.",
       team: [
-        { name: "Garamjav Ts.", role: "Founder, Chairwoman of the Board", bio: "Prominent figure in the Mongolian mining sector, economist, and geological engineer with over 30 years of experience.", edu: "National University of Mongolia (NUM) - Geology; MUST - Ph.D." },
-        { name: "Munkhnasan N.", role: "President of Monpolymet Group", bio: "Expert in finance and investments. Directs the group's strategic growth and international partnerships.", edu: "University of San Francisco, USA - Financial Management." },
-        { name: "Nandin-Erdene B.", role: "Chief Operating Officer", bio: "Engineer specializing in mining and industrial project management.", edu: "Mongolian University of Science and Technology (MUST) - Mining Engineer." }
+        { name: "Ts.Garamjav", role: "Founder, Chairman of the Board", bio: "A prominent figure in the Mongolian mining sector, economist, and geological engineer. Over 30 years of experience in the industry.", edu: "NUM - Geology, MUST - PhD.", imageUrl: "/garamjav.png" },
+        { name: "N.Munkhnasan", role: "President of Monpolymet Group", bio: "Specialized in finance and investments. Manages the group's strategic development and foreign relations.", edu: "University of San Francisco, USA - Financial Management.", imageUrl: "/munkhnasan.png" },
+        { name: "B.Nandin-Erdene", role: "Chief Operating Officer", bio: "An engineer specialized in mining and industrial project management.", edu: "MUST - Mining Engineer.", imageUrl: "/1.png" },
+        { name: "B.Delger", role: "Chief Executive Officer", bio: "He oversees general operations and manages the strategic implementation and day-to-day operations.", edu: "", imageUrl: "/delger.png" },
+        { name: "G.Tuguldur", role: "Chief Financial Officer", bio: "Highly experienced in financial management. Oversees budgets and investment allocations.", edu: "", imageUrl: "/2.png" }
       ]
     },
     companies: {

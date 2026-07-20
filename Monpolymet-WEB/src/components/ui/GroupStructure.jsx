@@ -35,19 +35,31 @@ export default function GroupStructure({ lang, t }) {
     ? [...sectors].sort((a, b) => a.order - b.order)
     : fallback;
 
-  const companies = source.map((s) => ({
-    title: lang === 'mn' ? s.titleMn : s.titleEn,
-    description: lang === 'mn' ? s.descMn : s.descEn,
-    projects: lang === 'mn' ? s.projectsMn : s.projectsEn,
-    websiteUrl: s.websiteUrl || 'https://monpolymet.mn/',
-    logoUrl: s.logoUrl || null,
-    icon: s.icon || 'Factory',
-    metrics: (s.metrics || []).map((m) => ({
-      value: lang === 'mn' ? (m.valMn || m.value) : (m.valEn || m.value),
-      label: lang === 'mn' ? m.labelMn : m.labelEn,
-    })),
-    highlights: (lang === 'mn' ? (s.highlightsMn || s.highlights) : (s.highlightsEn || s.highlights)) || [],
-  }));
+  const companies = source.map((s, idx) => {
+    let id = s.slug;
+    if (!id && s.titleEn) {
+      const lower = s.titleEn.toLowerCase();
+      if (lower.includes('monpolymet')) id = 'monpolymet';
+      else if (lower.includes('moncement')) id = 'moncement';
+      else if (lower.includes('nar-urt') || lower.includes('narurt')) id = 'narurt';
+      else if (lower.includes('ann')) id = 'ann';
+      else if (lower.includes('cater')) id = 'decater';
+    }
+    return {
+      id: id || `company-${idx}`,
+      title: lang === 'mn' ? s.titleMn : s.titleEn,
+      description: lang === 'mn' ? s.descMn : s.descEn,
+      projects: lang === 'mn' ? s.projectsMn : s.projectsEn,
+      websiteUrl: s.websiteUrl || 'https://monpolymet.mn/',
+      logoUrl: s.logoUrl || null,
+      icon: s.icon || 'Factory',
+      metrics: (s.metrics || []).map((m) => ({
+        value: lang === 'mn' ? (m.valMn || m.value) : (m.valEn || m.value),
+        label: lang === 'mn' ? m.labelMn : m.labelEn,
+      })),
+      highlights: (lang === 'mn' ? (s.highlightsMn || s.highlights) : (s.highlightsEn || s.highlights)) || [],
+    };
+  });
 
   const visitLabel = lang === 'mn' ? 'Охин компанийн вэбсайт руу шилжих' : 'Visit subsidiary website';
   const projectsLabel = lang === 'mn' ? 'Хэрэгжүүлсэн төслүүд:' : 'Projects:';
@@ -64,7 +76,7 @@ export default function GroupStructure({ lang, t }) {
         </div>
         <div className="org-children">
           {companies.map((company, idx) => (
-            <article key={idx} className="org-child-card" style={{ '--reveal-index': idx }}>
+            <article key={idx} id={company.id} className="org-child-card" style={{ '--reveal-index': idx }}>
               <div className="org-card-logo-head">
                 {company.logoUrl ? (
                   <img src={company.logoUrl} alt={company.title} className="org-card-logo" loading="lazy" />

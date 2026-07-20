@@ -46,6 +46,15 @@ export class NewsService {
     return { id };
   }
 
+  /** Atomically increment view count and return updated doc. */
+  async incrementViews(id: string) {
+    const doc = await this.model
+      .findByIdAndUpdate(id, { $inc: { views: 1 } }, { new: true })
+      .exec();
+    if (!doc) throw new NotFoundException('News article not found');
+    return doc;
+  }
+
   count() {
     return this.model.countDocuments().exec();
   }

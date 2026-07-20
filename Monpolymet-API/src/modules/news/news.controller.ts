@@ -35,6 +35,11 @@ export class NewsController {
     return this.news.update(id, dto);
   }
 
+  @Patch(':id/view')
+  incrementViews(@Param('id') id: string) {
+    return this.news.incrementViews(id);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.news.remove(id);

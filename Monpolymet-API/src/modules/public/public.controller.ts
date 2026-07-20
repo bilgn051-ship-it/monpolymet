@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Patch } from '@nestjs/common';
 import { Public } from '../../common/auth/public.decorator';
 import { NewsService } from '../news/news.service';
 import { JobsService } from '../careers/jobs.service';
@@ -6,7 +6,7 @@ import { TimelineService, CoreValuesService, TeamService, AboutContentService } 
 import { HeroSlidesService, StatCardsService, HomeContentService } from '../home/home.crud';
 import { SectorsService } from '../sectors/sectors.crud';
 import { CsrService } from '../csr/csr.crud';
-import { HseDocumentsService, HseContentService } from '../hse/hse.crud';
+
 import { TourService } from '../tour/tour.crud';
 import { FaqsService, CareersContentService } from '../careers/careers-content.crud';
 import { SettingsService } from '../settings/settings.crud';
@@ -30,15 +30,15 @@ export class PublicController {
     private readonly aboutContent: AboutContentService,
     private readonly sectors: SectorsService,
     private readonly csr: CsrService,
-    private readonly hseDocuments: HseDocumentsService,
-    private readonly hseContent: HseContentService,
+
+
     private readonly tour: TourService,
     private readonly faqs: FaqsService,
     private readonly careersContent: CareersContentService,
     private readonly settings: SettingsService,
     private readonly pages: PagesService,
     private readonly procurementContent: ProcurementContentService,
-  ) {}
+  ) { }
 
   @Public()
   @Get('news')
@@ -50,6 +50,12 @@ export class PublicController {
   @Get('news/:id')
   newsOne(@Param('id') id: string) {
     return this.news.findOne(id);
+  }
+
+  @Public()
+  @Patch('news/:id/view')
+  newsView(@Param('id') id: string) {
+    return this.news.incrementViews(id);
   }
 
   @Public()
@@ -116,17 +122,6 @@ export class PublicController {
     return csr.filter(c => c.isActive);
   }
 
-  @Public()
-  @Get('hse-documents')
-  hseDocumentsList() {
-    return this.hseDocuments.findAll();
-  }
-
-  @Public()
-  @Get('hse-content')
-  hseContentGet() {
-    return this.hseContent.get();
-  }
 
   @Public()
   @Get('tour')

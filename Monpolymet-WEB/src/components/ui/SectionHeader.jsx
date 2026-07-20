@@ -11,9 +11,10 @@ export default function SectionHeader({ tag, title, subtitle, pageMetadata, lang
 
   return (
     <>
-      {displayTag && <span className="section-tag">{displayTag}</span>}
       <h2>{displayTitle}</h2>
       {displaySubtitle && <p className="subtitle">{displaySubtitle}</p>}
     </>
   );
 }
+
+// Trigger HMR

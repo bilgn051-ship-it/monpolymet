@@ -10,8 +10,7 @@ const PATH_TO_PAGE = {
   '/news': 'news',
   '/careers': 'careers',
   '/contact': 'contact',
-  '/hse': 'hse',
-  '/tour': 'tour',
+  '/procurement': 'procurement',
   '/admin': 'admin',
 };
 
@@ -23,7 +22,18 @@ const PAGE_TO_PATH = Object.fromEntries(
 // falling back to home for anything unrecognized.
 function pageFromLocation() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  if (path.startsWith('/post/')) {
+    return 'post';
+  }
   return PATH_TO_PAGE[path] ?? 'home';
+}
+
+function paramFromLocation() {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  if (path.startsWith('/post/')) {
+    return path.split('/post/')[1];
+  }
+  return null;
 }
 
 /**
@@ -35,24 +45,35 @@ function pageFromLocation() {
  * - `navigate(id)` swaps the page and pushes the matching path so the URL
  *   always reflects what's on screen.
  *
- * Returns `[currentPage, navigate]`, a drop-in replacement for useState.
+ * Returns `[currentPage, navigate, pageParam]`.
  */
 export function usePageRouting() {
   const [currentPage, setCurrentPage] = useState(pageFromLocation);
+  const [pageParam, setPageParam] = useState(paramFromLocation);
 
   useEffect(() => {
-    const handlePopState = () => setCurrentPage(pageFromLocation());
+    const handlePopState = () => {
+      setCurrentPage(pageFromLocation());
+      setPageParam(paramFromLocation());
+    };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const navigate = useCallback((id) => {
+  const navigate = useCallback((id, param = null) => {
     setCurrentPage(id);
-    const path = PAGE_TO_PATH[id] ?? '/';
+    setPageParam(param);
+    
+    let path = PAGE_TO_PATH[id] ?? '/';
+    if (id === 'post' && param) {
+      path = `/post/${param}`;
+    }
+    
     if (path !== window.location.pathname) {
-      window.history.pushState({ page: id }, '', path);
+      window.history.pushState({ page: id, param }, '', path);
+      window.scrollTo(0, 0);
     }
   }, []);
 
-  return [currentPage, navigate];
+  return [currentPage, navigate, pageParam];
 }

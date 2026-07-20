@@ -5,7 +5,7 @@ import { AboutModule } from '../about/about.module';
 import { HomeModule } from '../home/home.module';
 import { SectorsModule } from '../sectors/sectors.module';
 import { CsrModule } from '../csr/csr.module';
-import { HseModule } from '../hse/hse.module';
+
 import { TourModule } from '../tour/tour.module';
 import { SettingsModule } from '../settings/settings.module';
 import { PagesModule } from '../pages/pages.module';
@@ -19,11 +19,11 @@ import { PublicController } from './public.controller';
     HomeModule,
     SectorsModule,
     CsrModule,
-    HseModule,
+
     TourModule,
     SettingsModule,
     PagesModule,
   ],
   controllers: [PublicController],
 })
-export class PublicModule {}
+export class PublicModule { }

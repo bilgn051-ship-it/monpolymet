@@ -11,12 +11,16 @@ export type PageDocument = HydratedDocument<Page>;
 export enum PageKey {
   HOME = 'home',
   ABOUT = 'about',
+  COMPANIES = 'companies',
   SECTORS = 'sectors',
   CSR = 'csr',
   HSE = 'hse',
+  NEWS = 'news',
   CAREERS = 'careers',
   TOUR = 'tour',
   MEDIA = 'media',
+  PROCUREMENT = 'procurement',
+  CONTACT = 'contact',
 }
 
 @Schema({ _id: false })

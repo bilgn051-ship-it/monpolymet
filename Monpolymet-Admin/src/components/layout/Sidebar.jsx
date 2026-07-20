@@ -57,19 +57,12 @@ const GROUPS = [
       { to: '/tour-scenes', label: t.nav.tourScenes, icon: Compass },
     ],
   },
-  {
-    label: t.nav.groupCareers,
-    items: [
-      { to: '/careers-content', label: t.nav.careersContent, icon: FileText },
-      { to: '/jobs', label: t.nav.jobs, icon: Briefcase },
-      { to: '/applications', label: t.nav.applications, icon: Inbox },
-      { to: '/faqs', label: t.nav.faqs, icon: HelpCircle },
-    ],
-  },
+
   {
     label: t.nav.groupSystem,
     items: [
       { to: '/pages', label: t.nav.pages, icon: FileText },
+      { to: '/careers-content', label: 'Ажлын байр баннер', icon: FileText },
       { to: '/navigation-settings', label: 'Цэсний тохиргоо', icon: ListOrdered },
       { to: '/settings', label: t.nav.settings, icon: Settings },
       { to: '/users', label: t.nav.users, icon: UserCog },

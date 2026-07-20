@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Quote } from 'lucide-react';
+// Removed unused Quote
 
 export default function CEOGreeting({ lang, homeContent }) {
   const containerRef = useRef(null);
@@ -40,40 +40,80 @@ export default function CEOGreeting({ lang, homeContent }) {
     ? (lang === 'mn' ? homeContent.ceoSection.roleMn : homeContent.ceoSection.roleEn)
     : (lang === 'mn' ? 'Үүсгэн байгуулагч, ТУЗ-ийн Дарга' : 'Founder, Chairwoman of the Board');
 
-  const imageUrl = homeContent?.ceoSection?.imageUrl || '/darga.png';
+  const imageUrl = '/darga.png';
 
   return (
-    <section className="ceo-greeting-section container-padding">
+    <section className="container-padding" style={{ paddingTop: '80px', paddingBottom: '80px', backgroundColor: '#ffffff' }}>
       <div
         ref={containerRef}
-        className={`ceo-greeting-container ${revealed ? 'is-revealed' : ''}`}
+        className={`ceo-greeting-wrapper ${revealed ? 'is-revealed' : ''}`}
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '24px',
+          backgroundColor: '#f6f4ed', // Beige background like the image
+          borderRadius: '32px',
+          padding: '24px',
+          width: '100%',
+          alignItems: 'stretch',
+          opacity: revealed ? 1 : 0,
+          transform: revealed ? 'translateY(0)' : 'translateY(24px)',
+          transition: 'opacity 0.8s ease, transform 0.8s ease'
+        }}
       >
-        {/* Left Side: CEO Portrait as a transparent cutout */}
-        <div className="ceo-image-side">
-          <div className="ceo-image-frame">
-            <img
-              src={imageUrl}
-              alt={name}
-              className="ceo-portrait-large"
-              loading="lazy"
-            />
-          </div>
+        {/* Left Side: CEO Image Card (Smaller/Narrower) */}
+        <div style={{ 
+          flex: '0.8', 
+          minWidth: '300px', 
+          borderRadius: '24px', 
+          overflow: 'hidden',
+          backgroundColor: '#e2e8f0' 
+        }}>
+          <img
+            src={imageUrl}
+            alt={name}
+            style={{ width: '100%', height: '100%', minHeight: '450px', objectFit: 'cover', display: 'block', filter: 'none' }}
+            loading="lazy"
+          />
         </div>
 
-        {/* Right Side: Big Message & Bio */}
-        <div className="ceo-text-side">
-          <h2 className="ceo-section-title">{sectionTitle}</h2>
-
-          <div className="ceo-quote-wrapper">
-            <Quote size={48} className="quote-icon-top" aria-hidden="true" />
-            <p className="ceo-quote-text">
-              “{quote}”
+        {/* Right Side: Text Card (Longer/Wider) */}
+        <div style={{ 
+          flex: '1.5', 
+          minWidth: '350px',
+          backgroundColor: '#ffffff', 
+          borderRadius: '24px', 
+          padding: '48px 56px', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          justifyContent: 'center' 
+        }}>
+          <h2 style={{ 
+            fontSize: '2.5rem', 
+            fontWeight: '700', 
+            color: '#0f172a', 
+            marginBottom: '24px', 
+            fontFamily: "'Montserrat', sans-serif",
+            letterSpacing: '-0.02em'
+          }}>
+            {sectionTitle}
+          </h2>
+          <p style={{ 
+            fontSize: '1.1rem', 
+            color: '#475569', 
+            lineHeight: 1.8, 
+            marginBottom: '40px',
+            fontFamily: "'Inter', sans-serif"
+          }}>
+            {quote}
+          </p>
+          <div style={{ marginTop: 'auto' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#0f172a', margin: '0 0 6px 0', fontFamily: "'Montserrat', sans-serif" }}>
+              {name}
+            </h3>
+            <p style={{ color: '#64748b', margin: 0, fontSize: '0.95rem', fontFamily: "'Inter', sans-serif" }}>
+              {role}
             </p>
-          </div>
-
-          <div className="ceo-signature-block">
-            <h3 className="ceo-signature-name">{name}</h3>
-            <p className="ceo-signature-role">{role}</p>
           </div>
         </div>
       </div>

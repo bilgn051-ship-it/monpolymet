@@ -5,12 +5,12 @@ import { t } from '../i18n';
 const PAGE_OPTIONS = [
   { value: 'home', label: 'Нүүр хуудас' },
   { value: 'about', label: 'Бидний тухай' },
-  { value: 'sectors', label: 'Салбар компаниуд' },
+  { value: 'companies', label: 'Компаниуд' },
   { value: 'csr', label: 'Нийгмийн хариуцлага' },
-  { value: 'hse', label: 'ХАБЭА' },
-  { value: 'careers', label: 'Ажлын байр' },
-  { value: 'tour', label: 'Виртуал аялал' },
-  { value: 'media', label: 'Мэдээ мэдээлэл' },
+  { value: 'news', label: 'Мэдээ мэдээлэл' },
+  { value: 'careers', label: 'Хүний нөөц' },
+  { value: 'procurement', label: 'Худалдан авалт' },
+  { value: 'contact', label: 'Холбоо барих' },
 ];
 const MEDIA_TYPES = [
   { value: 'image', label: 'Зураг' },
@@ -293,24 +293,6 @@ export const LIST_RESOURCES = {
     ],
   },
 
-  faqs: {
-    path: '/faqs',
-    title: t.nav.faqs,
-    subtitle: 'Ажлын байрны түгээмэл асуултууд',
-    addLabel: 'Асуулт нэмэх',
-    createLabel: 'Шинэ асуулт',
-    editLabel: 'Асуулт засах',
-    columns: [
-      { label: 'Асуулт', render: mn('question') },
-      { label: 'Дараалал', render: plain('order') },
-    ],
-    fields: [
-      { name: 'question', type: 'localized', label: 'Асуулт', required: true },
-      { name: 'answer', type: 'localizedArea', label: 'Хариулт', required: true },
-      { name: 'order', type: 'number', label: 'Дараалал' },
-    ],
-  },
-
   pages: {
     path: '/pages',
     title: t.nav.pages,
@@ -467,33 +449,15 @@ export const SINGLETON_RESOURCES = {
     ],
   },
 
+
   'careers-content': {
     path: '/careers-content',
-    title: t.nav.careersContent,
-    subtitle: 'Ажлын байр хуудасны бүтэцтэй агуулга',
+    title: 'Ажлын байр баннер',
+    subtitle: 'Ажлын байр хуудасны баннер тохиргоо',
     fields: [
-      {
-        name: 'whyUs',
-        type: 'group',
-        label: 'Яагаад бид гэж?',
-        fields: [
-          { name: 'title', type: 'localized', label: 'Гарчиг', required: true },
-          { name: 'text', type: 'localizedArea', label: 'Текст', required: true },
-          { name: 'imageUrl', type: 'url', label: 'Зураг (URL)', required: true, placeholder: 'https://...' },
-        ],
-      },
-      { name: 'stepsTitle', type: 'localized', label: 'Алхмуудын гарчиг', required: true },
-      {
-        name: 'steps',
-        type: 'objectList',
-        label: 'Ажилд авах алхмууд',
-        fields: [
-          { name: 'step', type: 'text', label: 'Дугаар', required: true, placeholder: '01' },
-          { name: 'title', type: 'localized', label: 'Гарчиг', required: true },
-          { name: 'description', type: 'localizedArea', label: 'Тайлбар', required: true },
-        ],
-      },
-      { name: 'faqTitle', type: 'localized', label: 'Асуулт хариултын гарчиг', required: true },
+      { name: 'bannerTitle', type: 'localized', label: 'Баннер гарчиг' },
+      { name: 'bannerButtonText', type: 'localized', label: 'Товчны текст' },
+      { name: 'bannerImage', type: 'url', label: 'Баннер зураг (URL)', placeholder: 'https://...' },
     ],
   },
 

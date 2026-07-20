@@ -1,0 +1,190 @@
+/* Procurement Pro Max Styles */
+.procurement-pro-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+    font-family: var(--sans);
+    color: var(--text-color);
+}
+
+/* Hero Section */
+.pro-hero {
+    text-align: center;
+    margin-bottom: 6rem;
+    position: relative;
+    padding: 4rem 0;
+}
+
+.pro-hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(6, 76, 173, 0.08) 0%, transparent 60%);
+    z-index: -1;
+    border-radius: 50%;
+}
+
+.pro-hero-title {
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #1e293b 0%, #064cad 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.pro-hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Bento Grid */
+.pro-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-bottom: 4rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 4rem;
+}
+
+@media (max-width: 1024px) {
+    .pro-bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .pro-bento-grid {
+        grid-template-columns: 1fr;
+        padding-top: 2rem;
+    }
+}
+
+/* Minimalist Cards */
+.pro-card {
+    background: transparent;
+    border: none;
+    padding: 0;
+    position: relative;
+    box-shadow: none;
+}
+
+.pro-card:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.pro-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    transition: none;
+}
+
+.pro-card:hover .pro-icon-box {
+    transform: none;
+    background: transparent;
+}
+
+.pro-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: inherit;
+    letter-spacing: -0.02em;
+}
+
+.pro-card-text {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+/* Intro Section */
+.pro-intro {
+    max-width: 800px;
+    margin: 0 auto 5rem;
+    text-align: center;
+}
+.pro-intro-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.03em;
+    color: var(--text-color);
+}
+.pro-intro-text {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+}
+
+/* Minimalist Wide Contact Card */
+.pro-card-wide {
+    grid-column: 1 / -1;
+    background: #0f172a;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5rem 6rem;
+    border-radius: 24px;
+    margin-top: 3rem;
+}
+
+@media (max-width: 768px) {
+    .pro-card-wide {
+        flex-direction: column;
+        text-align: left;
+        align-items: flex-start;
+        padding: 3rem 2rem;
+        gap: 2rem;
+    }
+}
+
+/* Contact Badges */
+.pro-contact-badges {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.pro-badge {
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    padding: 0;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1.25rem;
+    transition: opacity 0.3s ease;
+}
+
+.pro-badge:hover {
+    background: transparent;
+    transform: none;
+    opacity: 0.7;
+}

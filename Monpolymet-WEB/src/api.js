@@ -22,6 +22,7 @@ const mapNews = (d) => ({
   image: d.imageUrl,
   contentMn: d.content?.mn ?? '',
   contentEn: d.content?.en ?? '',
+  views: d.views ?? 0,
 });
 
 const mapJob = (d) => ({
@@ -41,6 +42,17 @@ const mapJob = (d) => ({
 export async function fetchNews() {
   const data = await getJson('/public/news');
   return data.map(mapNews);
+}
+
+export async function incrementNewsView(id) {
+  try {
+    const res = await fetch(`${BASE_URL}/public/news/${id}/view`, { method: 'PATCH' });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.views ?? 0;
+  } catch {
+    return null;
+  }
 }
 
 export async function fetchJobs() {
@@ -250,34 +262,6 @@ export async function fetchCsr() {
   return data.map(mapCsr);
 }
 
-const mapHseDocument = (d) => ({
-  id: d._id,
-  titleMn: d.title?.mn ?? '',
-  titleEn: d.title?.en ?? '',
-  fileUrl: d.fileUrl,
-  fileSize: d.fileSize,
-  fileType: d.fileType,
-  order: d.order ?? 0,
-});
-
-export async function fetchHseDocuments() {
-  const data = await getJson('/public/hse-documents');
-  return data.map(mapHseDocument);
-}
-
-const mapHseContent = (d) => ({
-  policiesTitleMn: d.policiesTitle?.mn ?? '',
-  policiesTitleEn: d.policiesTitle?.en ?? '',
-  policiesMn: (d.policies ?? []).map(p => p.mn ?? ''),
-  policiesEn: (d.policies ?? []).map(p => p.en ?? ''),
-  documentsTitleMn: d.documentsTitle?.mn ?? '',
-  documentsTitleEn: d.documentsTitle?.en ?? '',
-});
-
-export async function fetchHseContent() {
-  const data = await getJson('/public/hse-content');
-  return mapHseContent(data);
-}
 
 const mapTour = (d) => ({
   id: d._id,
@@ -308,24 +292,15 @@ export async function fetchFaqs() {
 }
 
 const mapCareersContent = (d) => ({
-  whyUs: {
-    titleMn: d.whyUs?.title?.mn ?? '',
-    titleEn: d.whyUs?.title?.en ?? '',
-    textMn: d.whyUs?.text?.mn ?? '',
-    textEn: d.whyUs?.text?.en ?? '',
-    imageUrl: d.whyUs?.imageUrl,
+  bannerTitle: {
+    mn: d.bannerTitle?.mn ?? '',
+    en: d.bannerTitle?.en ?? '',
   },
-  stepsTitleMn: d.stepsTitle?.mn ?? '',
-  stepsTitleEn: d.stepsTitle?.en ?? '',
-  steps: (d.steps ?? []).map(s => ({
-    step: s.step,
-    titleMn: s.title?.mn ?? '',
-    titleEn: s.title?.en ?? '',
-    descMn: s.description?.mn ?? '',
-    descEn: s.description?.en ?? '',
-  })),
-  faqTitleMn: d.faqTitle?.mn ?? '',
-  faqTitleEn: d.faqTitle?.en ?? '',
+  bannerButtonText: {
+    mn: d.bannerButtonText?.mn ?? '',
+    en: d.bannerButtonText?.en ?? '',
+  },
+  bannerImage: d.bannerImage ?? '',
 });
 
 export async function fetchCareersContent() {

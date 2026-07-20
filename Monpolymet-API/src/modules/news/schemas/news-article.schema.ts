@@ -32,6 +32,10 @@ export class NewsArticle {
   /** Drafts stay hidden from the public site until published. */
   @Prop({ default: true })
   isPublished!: boolean;
+
+  /** Real-time view count, incremented each time the article is opened. */
+  @Prop({ default: 0 })
+  views!: number;
 }
 
 export const NewsArticleSchema = SchemaFactory.createForClass(NewsArticle);

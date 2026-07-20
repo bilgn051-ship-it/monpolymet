@@ -55,17 +55,42 @@ export default function CsrPage({ lang, t, pageMetadata }) {
   const displayCsr = csrItems && csrItems.length > 0 ? csrItems : defaultCsr;
 
   return (
-    <div className="csr-page-container container-padding">
-      <SectionHeader tag={t.nav.csr} title={t.csr.title} subtitle={t.csr.subtitle} pageMetadata={pageMetadata} lang={lang} />
+    <>
+      {/* Full Bleed Hero Banner */}
+      <div className="full-bleed-banner" style={{
+        backgroundImage: `url('https://www.residencesegattini.it/clientfiles/page/20211021152000_sport-relax.jpg')`,
+        backgroundColor: '#0f172a'
+      }}>
+        <div className="full-bleed-banner-overlay"></div>
+        <div className="full-bleed-banner-container">
+          <div className="full-bleed-banner-content animate-slide-up">
+            <h1 className="hero-title">
+              {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.titleMn : pageMetadata.header.titleEn) : t.csr.title}
+            </h1>
+            <p className="hero-subtitle">
+              {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.subtitleMn : pageMetadata.header.subtitleEn) : t.csr.subtitle}
+            </p>
+          </div>
+        </div>
+      </div>
 
-      {/* Main CSR Grid */}
+      <div className="csr-page-container container-padding">
+        {/* Main CSR Grid */}
       <div className="csr-grid">
         {displayCsr.map((item, idx) => {
           const title = lang === 'mn' ? item.titleMn : item.titleEn;
           const desc = lang === 'mn' ? item.descMn : item.descEn;
+          const lowerTitle = (item.titleEn || item.titleMn || '').toLowerCase();
+          
+          let id = `csr-${idx}`;
+          if (lowerTitle.includes('fund') || lowerTitle.includes('сан')) id = 'fund';
+          else if (lowerTitle.includes('environment') || lowerTitle.includes('байгаль')) id = 'environment';
+          else if (lowerTitle.includes('report') || lowerTitle.includes('тайлан')) id = 'report';
+          else if (lowerTitle.includes('local') || lowerTitle.includes('орон нутаг')) id = 'local';
+          else if (lowerTitle.includes('visit') || lowerTitle.includes('зочлох')) id = 'visit';
 
           return (
-            <div key={idx} className={`csr-row ${idx % 2 === 0 ? '' : 'reverse'} animate-fade-in`}>
+            <div id={id} key={idx} className={`csr-row ${idx % 2 === 0 ? '' : 'reverse'} animate-fade-in`}>
               <div className="csr-content-card">
                 <div className="csr-card-header">
                   {getCsrIcon(item.icon)}
@@ -93,5 +118,7 @@ export default function CsrPage({ lang, t, pageMetadata }) {
         })}
       </div>
     </div>
+    </>
   );
 }
+
