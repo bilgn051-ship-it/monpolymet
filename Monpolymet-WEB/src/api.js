@@ -4,7 +4,8 @@
  * the flat `*Mn` / `*En` shape the existing components already consume, so
  * the UI works whether data comes from the API or the bundled fallback.
  */
-const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:4000/api';
+const defaultHost = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+const BASE_URL = import.meta.env.VITE_API_URL ?? `http://${defaultHost}:4000/api`;
 
 export async function getJson(path) {
   const res = await fetch(`${BASE_URL}${path}`);

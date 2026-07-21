@@ -2,7 +2,8 @@
  * Minimal fetch wrapper for the Monpolymet API (NestJS).
  * Base URL comes from .env → VITE_API_URL.
  */
-const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:4000/api';
+const defaultHost = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+const BASE_URL = import.meta.env.VITE_API_URL ?? `http://${defaultHost}:4000/api`;
 
 async function handleResponse(res, path) {
   if (!res.ok) {
