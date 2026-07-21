@@ -37,46 +37,46 @@ export default function AdminLayout() {
 
   return (
     <AppShell
-      header={{ height: 64 }}
-      navbar={{ width: 260, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      header={{ height: 68 }}
+      navbar={{ width: 270, breakpoint: 'sm', collapsed: { mobile: !opened } }}
       padding="xl"
       bg="#f8fafc"
     >
-      <AppShell.Header style={{ borderBottom: 'none', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)' }}>
-        <Group h="100%" px="md" justify="space-between" wrap="nowrap">
-          <Group gap="sm" wrap="nowrap">
+      <AppShell.Header style={{ borderBottom: '1px solid #e2e8f0', backgroundColor: '#ffffff', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.02)' }}>
+        <Group h="100%" px="lg" justify="space-between" wrap="nowrap">
+          <Group gap="md" wrap="nowrap">
             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-            <ThemeIcon size={36} radius="md" variant="filled" color="brand">
-              <Text fw={800} size="lg">
+            <ThemeIcon size={40} radius="xl" variant="gradient" gradient={{ from: 'blue', to: 'indigo', angle: 45 }}>
+              <Text fw={800} size="lg" color="white">
                 M
               </Text>
             </ThemeIcon>
             <div>
-              <Text fw={700} lh={1.15}>
+              <Text fw={700} fz={16} lh={1.2} style={{ fontFamily: "'Montserrat', sans-serif" }}>
                 {t.appName}
               </Text>
               <Text size="xs" c="dimmed" visibleFrom="xs">
-                {t.appSubtitle}
+                Удирдлагын хяналтын панель
               </Text>
             </div>
           </Group>
 
-          <Menu width={220} position="bottom-end" withArrow shadow="md">
+          <Menu width={220} position="bottom-end" withArrow shadow="lg">
             <Menu.Target>
-              <UnstyledButton>
+              <UnstyledButton style={{ padding: '6px 12px', borderRadius: '12px', backgroundColor: '#f1f5f9', transition: 'background 0.2s' }}>
                 <Group gap="xs" wrap="nowrap">
-                  <Avatar color="brand" radius="xl" size={36}>
+                  <Avatar color="blue" radius="xl" size={32}>
                     {initials(user?.name)}
                   </Avatar>
                   <div style={{ lineHeight: 1.15 }}>
-                    <Text size="sm" fw={600} visibleFrom="xs">
+                    <Text size="xs" fw={700} visibleFrom="xs">
                       {user?.name}
                     </Text>
-                    <Text size="xs" c="dimmed" visibleFrom="xs">
+                    <Text size="10px" c="dimmed" visibleFrom="xs">
                       {roleLabel(user?.role)}
                     </Text>
                   </div>
-                  <ChevronDown size={16} />
+                  <ChevronDown size={14} color="#64748b" />
                 </Group>
               </UnstyledButton>
             </Menu.Target>
@@ -94,11 +94,11 @@ export default function AdminLayout() {
         </Group>
       </AppShell.Header>
 
-      <AppShell.Navbar p="md" style={{ borderRight: '1px solid #e2e8f0', backgroundColor: '#ffffff' }}>
+      <AppShell.Navbar p="xs" style={{ borderRight: '1px solid #e2e8f0', backgroundColor: '#ffffff' }}>
         <Sidebar onNavigate={close} />
       </AppShell.Navbar>
 
-      <AppShell.Main>
+      <AppShell.Main style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
         <Outlet />
       </AppShell.Main>
     </AppShell>

@@ -9,6 +9,10 @@ import ApplicationsPage from './pages/careers/ApplicationsPage';
 import ResourcePage from './components/resource/ResourcePage';
 import SingletonPage from './components/resource/SingletonPage';
 import NavigationPage from './pages/settings/NavigationPage';
+import HomeBuilder from './pages/builder/HomeBuilder';
+import AboutBuilder from './pages/builder/AboutBuilder';
+import CompaniesBuilder from './pages/builder/CompaniesBuilder';
+import CsrBuilder from './pages/builder/CsrBuilder';
 import { LIST_RESOURCES, SINGLETON_RESOURCES } from './pages/resources';
 
 export default function App() {
@@ -19,6 +23,12 @@ export default function App() {
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<AdminLayout />}>
           <Route index element={<DashboardPage />} />
+
+          {/* Live Page Builders */}
+          <Route path="home-builder" element={<HomeBuilder />} />
+          <Route path="about-builder" element={<AboutBuilder />} />
+          <Route path="companies-builder" element={<CompaniesBuilder />} />
+          <Route path="csr-builder" element={<CsrBuilder />} />
 
           {/* Hand-built vertical-slice CRUD screens */}
           <Route path="news" element={<NewsPage />} />

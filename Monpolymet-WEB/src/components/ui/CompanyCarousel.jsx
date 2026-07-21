@@ -197,8 +197,33 @@ export default function CompanyCarousel({ lang }) {
       ref={containerRef}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={() => setIsTrapped(true)}
+      className="company-carousel-container"
       style={{ position: 'relative', width: '100%', height: '560px', display: 'flex', alignItems: 'center', justifyContent: 'center', perspective: '1600px', overflow: 'hidden', padding: '0' }}
     >
+      <style>{`
+        @media (max-width: 768px) {
+          .company-carousel-container {
+            height: 700px !important;
+          }
+          .company-carousel-card {
+            flex-direction: column !important;
+            height: 660px !important;
+            max-width: 92vw !important;
+            overflow-y: auto !important;
+          }
+          .company-carousel-left {
+            flex: 0 0 auto !important;
+            padding: 20px !important;
+          }
+          .company-carousel-left h1 {
+            font-size: 20px !important;
+            margin-bottom: 16px !important;
+          }
+          .company-carousel-right {
+            padding: 0 20px 20px 20px !important;
+          }
+        }
+      `}</style>
 
       {companies.map((company, index) => {
         const offset = getOffset(index);
@@ -251,6 +276,7 @@ export default function CompanyCarousel({ lang }) {
         return (
           <motion.div
             key={company.id}
+            className="company-carousel-card"
             onClick={() => handleCardClick(index)}
             initial={false}
             animate={{

@@ -27,44 +27,35 @@ import { t } from '../../i18n';
 const GROUPS = [
   {
     label: null,
-    items: [{ to: '/', label: t.nav.dashboard, icon: LayoutDashboard }],
+    items: [{ to: '/', label: 'Дашборд хяналт', icon: LayoutDashboard }],
   },
   {
-    label: t.nav.groupHome,
+    label: 'Вэбсайт Builder & Хуудсууд',
     items: [
-      { to: '/hero-slides', label: t.nav.heroSlides, icon: Image },
-      { to: '/stat-cards', label: t.nav.statCards, icon: Grid3x3 },
-      { to: '/ceo-section', label: t.nav.ceoSection, icon: Quote },
+      { to: '/home-builder', label: 'Нүүр хуудас Builder', icon: Compass },
+      { to: '/about-builder', label: 'Бидний тухай Builder', icon: Landmark },
+      { to: '/companies-builder', label: 'Компаниуд Builder', icon: Building2 },
+      { to: '/csr-builder', label: 'CSR & Тогтвортой хөгжил', icon: Trees },
     ],
   },
   {
-    label: t.nav.groupAbout,
+    label: 'Мэдээ ба Хэвлэл',
     items: [
-      { to: '/about-content', label: t.nav.aboutContent, icon: Landmark },
-      { to: '/core-values', label: t.nav.coreValues, icon: ListOrdered },
-      { to: '/timeline', label: t.nav.timeline, icon: History },
-      { to: '/team', label: t.nav.team, icon: Users },
+      { to: '/news', label: 'Мэдээ нийтлэх', icon: Newspaper },
     ],
   },
   {
-    label: t.nav.groupContent,
+    label: 'Хүний нөөц & Ажлын байр',
     items: [
-      { to: '/news', label: t.nav.news, icon: Newspaper },
-      { to: '/sectors', label: t.nav.sectors, icon: Building2 },
-      { to: '/csr-initiatives', label: t.nav.csr, icon: Trees },
-      { to: '/csr-stats', label: t.nav.csrStats, icon: ListOrdered },
-      { to: '/csr-highlight', label: t.nav.csrHighlight, icon: Image },
+      { to: '/jobs', label: 'Ажлын байр зарлах', icon: Briefcase },
+      { to: '/applications', label: 'Ажилд орох хүсэлтүүд', icon: Inbox },
     ],
   },
-
   {
-    label: t.nav.groupSystem,
+    label: 'Систем & Тохиргоо',
     items: [
-      { to: '/pages', label: t.nav.pages, icon: FileText },
-      { to: '/careers-content', label: 'Ажлын байр баннер', icon: FileText },
       { to: '/navigation-settings', label: 'Цэсний тохиргоо', icon: ListOrdered },
-      { to: '/settings', label: t.nav.settings, icon: Settings },
-      { to: '/users', label: t.nav.users, icon: UserCog },
+      { to: '/users', label: 'Хэрэглэгчдийн эрх', icon: UserCog },
     ],
   },
 ];
@@ -74,44 +65,61 @@ export default function Sidebar({ onNavigate }) {
 
   return (
     <ScrollArea type="scroll" style={{ height: '100%' }}>
-      {GROUPS.map((group, index) => (
-        <Box key={group.label ?? index} mb={4}>
-          {group.label && (
-            <Text
-              size="10px"
-              tt="uppercase"
-              fw={700}
-              c="dimmed"
-              px="sm"
-              pt="xs"
-              pb={2}
-              style={{ letterSpacing: '0.05em' }}
-            >
-              {group.label}
-            </Text>
-          )}
-          {group.items.map((item) => {
-            const Icon = item.icon;
-            return (
-              <NavLink
-                key={item.to}
-                component={RouterNavLink}
-                to={item.to}
-                label={item.label}
-                leftSection={<Icon size={16} strokeWidth={1.8} />}
-                active={pathname === item.to}
-                onClick={onNavigate}
-                variant="filled"
-                styles={{
-                  label: { fontSize: '12.5px', fontWeight: 500 }
-                }}
-                style={{ borderRadius: 6 }}
-                mb={1}
-              />
-            );
-          })}
-        </Box>
-      ))}
+      <Box p="xs">
+        {GROUPS.map((group, index) => (
+          <Box key={group.label ?? index} mb="lg">
+            {group.label && (
+              <Text
+                size="11px"
+                tt="uppercase"
+                fw={700}
+                c="#94a3b8"
+                px="sm"
+                pt="xs"
+                pb={6}
+                style={{ letterSpacing: '0.08em' }}
+              >
+                {group.label}
+              </Text>
+            )}
+            {group.items.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.to;
+              return (
+                <NavLink
+                  key={item.to}
+                  component={RouterNavLink}
+                  to={item.to}
+                  label={item.label}
+                  leftSection={
+                    <Icon
+                      size={18}
+                      strokeWidth={isActive ? 2.2 : 1.8}
+                      color={isActive ? '#3b82f6' : '#64748b'}
+                    />
+                  }
+                  active={isActive}
+                  onClick={onNavigate}
+                  styles={{
+                    root: {
+                      borderRadius: 10,
+                      backgroundColor: isActive ? '#eff6ff' : 'transparent',
+                      color: isActive ? '#1d4ed8' : '#334155',
+                      fontWeight: isActive ? 600 : 500,
+                      transition: 'all 0.2s ease',
+                      '&:hover': {
+                        backgroundColor: isActive ? '#eff6ff' : '#f1f5f9',
+                      },
+                    },
+                    label: { fontSize: '13px', lineHeight: 1.4 },
+                  }}
+                  mb={4}
+                />
+              );
+            })}
+          </Box>
+        ))}
+      </Box>
     </ScrollArea>
   );
 }
