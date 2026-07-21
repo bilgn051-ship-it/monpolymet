@@ -52,9 +52,8 @@ const GROUPS = [
       { to: '/news', label: t.nav.news, icon: Newspaper },
       { to: '/sectors', label: t.nav.sectors, icon: Building2 },
       { to: '/csr-initiatives', label: t.nav.csr, icon: Trees },
-      { to: '/hse-content', label: t.nav.hseContent, icon: ShieldAlert },
-      { to: '/hse-documents', label: t.nav.hseDocuments, icon: FileDown },
-      { to: '/tour-scenes', label: t.nav.tourScenes, icon: Compass },
+      { to: '/csr-stats', label: t.nav.csrStats, icon: ListOrdered },
+      { to: '/csr-highlight', label: t.nav.csrHighlight, icon: Image },
     ],
   },
 

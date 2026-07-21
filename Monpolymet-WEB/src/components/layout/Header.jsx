@@ -41,10 +41,10 @@ export default function Header({
 
   const subMenus = {
     'about': [
-      { id: 'founder', label: lang === 'mn' ? 'Үүсгэн байгуулагчийн мэндчилгээ / Философи' : "Founder's Greeting / Philosophy", hash: '#founder' },
-      { id: 'vision', label: lang === 'mn' ? 'Группийн танилцуулга / Алсын хараа' : 'Group Intro / Vision', hash: '#vision' },
-      { id: 'values', label: lang === 'mn' ? 'Үнэт зүйл, зарчим' : 'Values & Principles', hash: '#values' },
-      { id: 'leadership', label: lang === 'mn' ? 'Удирдлагууд' : 'Leadership', hash: '#leadership' }
+      { id: 'intro', label: lang === 'mn' ? 'Группийн танилцуулга' : 'Group Introduction', hash: '#vision' },
+      { id: 'values', label: lang === 'mn' ? 'Алсын хараа, үнэт зүйлс, зарчим' : 'Vision, Values & Principles', hash: '#values' },
+      { id: 'history', label: lang === 'mn' ? 'Түүхэн замнал' : 'Historical Journey', hash: '#history' },
+      { id: 'leadership', label: lang === 'mn' ? 'Удирдлагын баг' : 'Leadership', hash: '#leadership' }
     ],
     'companies': [
       { id: 'monpolymet', label: lang === 'mn' ? 'Монполимет ХХК' : 'Monpolymet LLC', hash: '#monpolymet' },
@@ -60,8 +60,7 @@ export default function Header({
       { id: 'visit', label: lang === 'mn' ? 'Тосон үйлдвэрт зочлох 360' : 'Visit Toson Factory 360', hash: '#visit' }
     ],
     'news': [
-      { id: 'news-list', label: lang === 'mn' ? 'Мэдээ' : 'News', hash: '#news-list' },
-      { id: 'awards', label: lang === 'mn' ? 'Шагналууд' : 'Awards', hash: '#awards' }
+      { id: 'news-list', label: lang === 'mn' ? 'Мэдээ' : 'News', hash: '#news-list' }
     ],
     'careers': [
       { id: 'policy', label: lang === 'mn' ? 'Хүний нөөцийн бодлого' : 'HR Policy', hash: '#hr-policy' },

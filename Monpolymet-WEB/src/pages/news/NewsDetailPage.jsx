@@ -49,7 +49,7 @@ export default function NewsDetailPage({ postId, news, lang, setCurrentPage }) {
 
   return (
     <div className="animate-fade-in" style={{ backgroundColor: '#ffffff', minHeight: '100vh', fontFamily: 'Montserrat, sans-serif', paddingTop: '90px' }}>
-      <div style={{ maxWidth: '800px', margin: '0', padding: '20px 20px 80px 3%' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 20px 80px 20px' }}>
 
         {/* Breadcrumb / Category */}
         <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
@@ -95,20 +95,20 @@ export default function NewsDetailPage({ postId, news, lang, setCurrentPage }) {
 
 
 
-        {/* Article body — image first, then paragraphs */}
-        <div style={{ color: '#60697B', fontSize: '16px', fontFamily: 'Montserrat, sans-serif', lineHeight: 1.8 }}>
+        {/* Article body — image left, text right */}
+        <div style={{ color: '#60697B', fontSize: '16px', fontFamily: 'Montserrat, sans-serif', lineHeight: 1.8, display: 'flex', flexWrap: 'wrap', gap: '40px', alignItems: 'flex-start' }}>
 
           {/* Primary image inside article */}
           {imageUrl && (
-            <div style={{ marginBottom: '40px' }}>
+            <div style={{ flex: '1 1 400px', minWidth: '0' }}>
               <img
                 src={imageUrl}
                 alt={title}
                 onError={(e) => { e.target.style.display = 'none'; }}
                 style={{
                   width: '100%',
-                  maxHeight: '450px',
-                  borderRadius: '6px',
+                  height: 'auto',
+                  borderRadius: '12px',
                   display: 'block',
                   objectFit: 'cover',
                   boxShadow: '0 10px 30px rgba(0,0,0,0.05)'
@@ -118,15 +118,15 @@ export default function NewsDetailPage({ postId, news, lang, setCurrentPage }) {
           )}
 
           {/* Text content */}
-          <div style={{ maxWidth: '720px', margin: '0 auto' }}>
+          <div style={{ flex: '1 1 400px', minWidth: '0', display: 'flex', flexDirection: 'column' }}>
             {paragraphs.map((para, idx) => (
-              <p key={idx} style={{ marginBottom: '1.8em', marginTop: 0, color: '#334155', fontSize: '17px', fontFamily: 'Montserrat, sans-serif', lineHeight: 1.9, textAlign: 'justify' }}>
+              <p key={idx} style={{ marginBottom: '1.5em', marginTop: 0, color: '#334155', fontSize: '16px', fontFamily: 'Montserrat, sans-serif', lineHeight: 1.9, textAlign: 'justify' }}>
                 {para}
               </p>
             ))}
 
             {paragraphs.length === 0 && (
-              <p style={{ color: '#94a3b8', textAlign: 'center' }}>
+              <p style={{ color: '#94a3b8', textAlign: 'left' }}>
                 {lang === 'mn' ? 'Агуулга байхгүй байна.' : 'No content available.'}
               </p>
             )}
@@ -145,7 +145,7 @@ export default function NewsDetailPage({ postId, news, lang, setCurrentPage }) {
             target="_blank" rel="noopener noreferrer"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '8px 16px', background: '#f1f5f9', color: '#475569', borderRadius: '8px', fontSize: '13px', fontWeight: '600', textDecoration: 'none', fontFamily: 'Montserrat, sans-serif', transition: 'all 0.2s' }}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> Facebook
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg> Facebook
           </a>
 
           {/* Twitter/X */}
@@ -164,7 +164,7 @@ export default function NewsDetailPage({ postId, news, lang, setCurrentPage }) {
             target="_blank" rel="noopener noreferrer"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '8px 16px', background: '#f1f5f9', color: '#475569', borderRadius: '8px', fontSize: '13px', fontWeight: '600', textDecoration: 'none', fontFamily: 'Montserrat, sans-serif', transition: 'all 0.2s' }}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> Linkedin
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg> Linkedin
           </a>
 
           {/* Copy */}

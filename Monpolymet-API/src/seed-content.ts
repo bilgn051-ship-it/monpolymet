@@ -182,7 +182,7 @@ const PAGES = [
   { key: 'careers', navLabel: ls('Хүний нөөц', 'Careers'), header: { tag: ls('Хүний нөөц', 'Careers'), title: ls('Хүний нөөц', 'Careers'), subtitle: ls('Монполимет групп', 'Monpolymet Group') }, isActive: true },
   { key: 'home', navLabel: ls('Нүүр хуудас', 'Home'), header: { tag: ls('Нүүр', 'Home'), title: ls('Нүүр хуудас', 'Home'), subtitle: ls('Монполимет групп', 'Monpolymet Group') }, isActive: true },
   { key: 'companies', navLabel: ls('Компаниуд', 'Companies'), header: { tag: ls('Компаниуд', 'Companies'), title: ls('Компаниуд', 'Companies'), subtitle: ls('Охин компаниуд', 'Subsidiaries') }, isActive: true },
-  { key: 'csr', navLabel: ls('Нийгмийн хариуцлага', 'CSR'), header: { tag: ls('Нийгмийн хариуцлага', 'CSR'), title: ls('Нийгмийн хариуцлага', 'Corporate Social Responsibility'), subtitle: ls('Монполимет групп', 'Monpolymet Group') }, isActive: true },
+  { key: 'csr', navLabel: ls('Тогтвортой хөгжил', 'CSR'), header: { tag: ls('Тогтвортой хөгжил', 'CSR'), title: ls('Тогтвортой хөгжил', 'Corporate Social Responsibility'), subtitle: ls('Монполимет групп', 'Monpolymet Group') }, isActive: true },
   { key: 'news', navLabel: ls('Мэдээ мэдээлэл', 'News'), header: { tag: ls('Мэдээ', 'News'), title: ls('Мэдээ мэдээлэл', 'News & Updates'), subtitle: ls('Цаг үеийн мэдээ', 'Latest Updates') }, isActive: true },
   { key: 'procurement', navLabel: ls('Худалдан авалт', 'Procurement'), header: { tag: ls('Худалдан авалт', 'Procurement'), title: ls('Худалдан авалт', 'Procurement'), subtitle: ls('Тендер', 'Tender') }, isActive: true },
 ];

@@ -6,10 +6,11 @@
  */
 const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:4000/api';
 
-async function getJson(path) {
+export async function getJson(path) {
   const res = await fetch(`${BASE_URL}${path}`);
   if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-  return res.json();
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
 }
 
 const mapNews = (d) => ({
@@ -116,6 +117,43 @@ const mapStatCard = (d) => ({
 export async function fetchStatCards() {
   const data = await getJson('/public/stat-cards');
   return data.map(mapStatCard);
+}
+
+const mapCsrStat = (d) => ({
+  id: d._id,
+  value: d.value,
+  prefix: d.prefix ?? '',
+  suffix: d.suffix ?? '',
+  titleMn: d.title?.mn ?? '',
+  titleEn: d.title?.en ?? '',
+  subMn: d.sub?.mn ?? '',
+  subEn: d.sub?.en ?? '',
+  order: d.order ?? 0,
+});
+
+export async function fetchCsrStats() {
+  const data = await getJson('/public/csr-stats');
+  return data.map(mapCsrStat);
+}
+
+const mapCsrHighlight = (d) => ({
+  titleMn: d.title?.mn ?? '',
+  titleEn: d.title?.en ?? '',
+  subtitleMn: d.subtitle?.mn ?? '',
+  subtitleEn: d.subtitle?.en ?? '',
+  imageUrl: d.imageUrl,
+  buttonTextMn: d.buttonText?.mn ?? '',
+  buttonTextEn: d.buttonText?.en ?? '',
+  bullets: (d.bullets ?? []).map(b => ({
+    icon: b.icon,
+    textMn: b.text?.mn ?? '',
+    textEn: b.text?.en ?? '',
+  })),
+});
+
+export async function fetchCsrHighlight() {
+  const data = await getJson('/public/csr-highlight');
+  return data ? mapCsrHighlight(data) : null;
 }
 
 const mapHomeContent = (d) => ({

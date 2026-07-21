@@ -293,6 +293,29 @@ export const LIST_RESOURCES = {
     ],
   },
 
+  'csr-stats': {
+    path: '/csr-stats',
+    title: 'Тогтвортой хөгжлийн тоон үзүүлэлт',
+    subtitle: 'Нүүр хуудасны тогтвортой хөгжлийн тоон үзүүлэлтүүд',
+    addLabel: 'Үзүүлэлт нэмэх',
+    createLabel: 'Шинэ үзүүлэлт',
+    editLabel: 'Үзүүлэлт засах',
+    columns: [
+      { label: 'Утга', render: plain('value') },
+      { label: 'Гарчиг', render: mn('title') },
+      { label: t.common.status, render: activeBadge },
+    ],
+    fields: [
+      { name: 'value', type: 'number', label: 'Тоон утга', required: true },
+      { name: 'prefix', type: 'text', label: 'Угтвар (жишээ: +)' },
+      { name: 'suffix', type: 'text', label: 'Дагавар (жишээ: га, %)' },
+      { name: 'title', type: 'localized', label: 'Гарчиг', required: true },
+      { name: 'sub', type: 'localized', label: 'Дэд гарчиг', required: true },
+      { name: 'order', type: 'number', label: 'Дараалал' },
+      { name: 'isActive', type: 'switch', label: 'Идэвхтэй', default: true },
+    ],
+  },
+
   pages: {
     path: '/pages',
     title: t.nav.pages,
@@ -362,6 +385,27 @@ export const LIST_RESOURCES = {
 
 /* ── SINGLETON pages ────────────────────────────────────────────── */
 export const SINGLETON_RESOURCES = {
+  'csr-highlight': {
+    path: '/csr-highlight',
+    title: 'Онцлох нөхөн сэргээлт',
+    subtitle: 'Нүүр хуудасны тогтвортой хөгжлийн онцлох хэсэг',
+    fields: [
+      { name: 'title', type: 'localized', label: 'Гарчиг', required: true },
+      { name: 'subtitle', type: 'localizedArea', label: 'Дэд гарчиг', required: true },
+      { name: 'imageUrl', type: 'url', label: 'Арын зураг (URL)', required: true },
+      {
+        name: 'bullets',
+        type: 'objectList',
+        label: 'Үзүүлэлтүүд',
+        fields: [
+          { name: 'icon', type: 'text', label: 'Icon (lucide нэр)', placeholder: 'Trees, Check...' },
+          { name: 'text', type: 'localized', label: 'Текст', required: true },
+        ],
+      },
+      { name: 'buttonText', type: 'localized', label: 'Товчны нэр' },
+    ],
+  },
+
   'ceo-section': {
     path: '/home-content',
     title: t.nav.ceoSection,

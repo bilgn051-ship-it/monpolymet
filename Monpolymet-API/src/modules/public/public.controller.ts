@@ -5,7 +5,7 @@ import { JobsService } from '../careers/jobs.service';
 import { TimelineService, CoreValuesService, TeamService, AboutContentService } from '../about/about.crud';
 import { HeroSlidesService, StatCardsService, HomeContentService } from '../home/home.crud';
 import { SectorsService } from '../sectors/sectors.crud';
-import { CsrService } from '../csr/csr.crud';
+import { CsrService, CsrStatsService, CsrHighlightService } from '../csr/csr.crud';
 
 import { TourService } from '../tour/tour.crud';
 import { FaqsService, CareersContentService } from '../careers/careers-content.crud';
@@ -30,8 +30,8 @@ export class PublicController {
     private readonly aboutContent: AboutContentService,
     private readonly sectors: SectorsService,
     private readonly csr: CsrService,
-
-
+    private readonly csrStats: CsrStatsService,
+    private readonly csrHighlight: CsrHighlightService,
     private readonly tour: TourService,
     private readonly faqs: FaqsService,
     private readonly careersContent: CareersContentService,
@@ -122,7 +122,18 @@ export class PublicController {
     return csr.filter(c => c.isActive);
   }
 
+  @Public()
+  @Get('csr-stats')
+  async csrStatsList() {
+    const stats = await this.csrStats.findAll();
+    return stats.filter(s => s.isActive);
+  }
 
+  @Public()
+  @Get('csr-highlight')
+  csrHighlightGet() {
+    return this.csrHighlight.get();
+  }
   @Public()
   @Get('tour')
   async tourList() {

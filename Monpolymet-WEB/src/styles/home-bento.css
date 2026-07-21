@@ -72,7 +72,7 @@
 }
 
 .bento-card-blue {
-  background-color: #217cc2;
+  background: linear-gradient(135deg, #010B40 -10%, #001CE8 45%, #1a4fff 100%);
   color: white;
   height: 400px;
   padding: 0;
@@ -147,8 +147,8 @@
 }
 
 .bento-card-lime {
-  background-color: #d9f99d;
-  color: #0f172a;
+  background-color: #4c9a44 !important;
+  color: #ffffff !important;
   flex: 1;
 }
 
@@ -184,3 +184,6 @@
     grid-template-columns: 1fr;
   }
 }
+
+.bento-card.is-animating { transition: none !important; }
+

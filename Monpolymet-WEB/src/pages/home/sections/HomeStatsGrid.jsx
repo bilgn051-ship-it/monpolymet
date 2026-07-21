@@ -55,7 +55,7 @@ export default function HomeStatsGrid({ lang = 'mn' }) {
   }, []);
 
   return (
-    <section className="home-stats-grid-section container-padding" style={{ fontFamily: "'Inter', sans-serif", paddingTop: '24px', borderBottom: 'none' }}>
+    <section className="home-stats-grid-section container-padding" style={{ fontFamily: "'Inter', sans-serif", paddingTop: '24px', paddingBottom: '30px', borderBottom: 'none' }}>
       <div className="marquee-container">
         <div className="marquee-content">
           <span>Жишиг нөхөн сэргээгч үндэсний компани - Бат бэх хөгжлийн суурийг хамтдаа бүтээцгээе</span>
@@ -78,9 +78,13 @@ export default function HomeStatsGrid({ lang = 'mn' }) {
         </div>
       </div>
 
-      <div style={{ textAlign: 'left', margin: '60px 0 30px 0' }}>
-        <h2 className="no-underline" style={{ fontSize: '32px', fontWeight: '600', color: '#000000', letterSpacing: '-0.02em', fontFamily: "'Montserrat', sans-serif" }}>
-          {lang === 'mn' ? 'Бидний бүтээсэн үнэ цэн' : 'The Value We Created'}
+      <div style={{ textAlign: 'center', margin: '76px 0 100px 0' }}>
+        <h2 className="no-underline" style={{ fontSize: '50px', lineHeight: '1.1', fontWeight: '600', color: '#000000', letterSpacing: '-0.02em', fontFamily: "'Montserrat', sans-serif" }}>
+          {lang === 'mn' ? (
+            <>Үндэсний үйлдвэрлэл <br /> Монголын бахархал</>
+          ) : (
+            <>National Production <br /> Pride of Mongolia</>
+          )}
         </h2>
       </div>
 

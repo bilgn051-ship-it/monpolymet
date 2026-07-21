@@ -53,7 +53,7 @@ const NEWS_SEED = [
       mn: 'Орон нутгийн сургуулийн лабораторийг тохижуулж хүлээлгэн өглөө',
       en: 'Refurbished school laboratory handed over to local community',
     },
-    category: { mn: 'Нийгмийн хариуцлага', en: 'CSR' },
+    category: { mn: 'Тогтвортой хөгжил', en: 'CSR' },
     content: {
       mn: 'Монполимет Группийн нийгмийн хариуцлагын хүрээнд орон нутгийн хөгжлийг дэмжих зорилгоор Тосон уурхайн ойролцоох сургуулийн хими, физикийн лабораторийг иж бүрэн тоног төхөөрөмжөөр тохижуулж хүлээлгэн өглөө.',
       en: 'As part of Monpolymet Group’s corporate social responsibility, we fully equipped and handed over a chemistry and physics laboratory to the school near the Toson mine site to support local development.',
@@ -113,7 +113,7 @@ const NEWS_SEED = [
       mn: 'Орон нутгийн иргэдийг ажлын байраар дэмжих хөтөлбөр хэрэгжиж байна',
       en: 'Local citizen employment support program is in progress',
     },
-    category: { mn: 'Нийгмийн хариуцлага', en: 'CSR' },
+    category: { mn: 'Тогтвортой хөгжил', en: 'CSR' },
     content: {
       mn: 'Үйл ажиллагаа явуулж буй сум орон нутгийн иргэдийн амьжиргааг дэмжих, ажлын байраар хангах зорилтот хөтөлбөрийн дагуу орон нутгаас 40 гаруй ажилтныг сургаж, тогтвортой ажлын байранд нэгтгэлээ.',
       en: 'Under the target program to support the livelihood and employment of citizens in local communities, over 40 local workers were trained and provided with stable employment.',

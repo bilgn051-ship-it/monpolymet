@@ -4,6 +4,49 @@ import { User, X } from 'lucide-react';
 import { useInView } from '../../hooks/useInView';
 import { fetchTimeline, fetchAboutContent, fetchCoreValues, fetchTeam } from '../../api';
 import CEOGreeting from '../home/sections/CEOGreeting';
+import HistoryTimeline from '../../components/ui/HistoryTimeline';
+
+function InteractiveTitle({ text, className, style }) {
+  const [hoveredIdx, setHoveredIdx] = useState(null);
+
+  return (
+    <h2
+      className={className}
+      style={{ ...style, display: 'inline-block', position: 'relative' }}
+      onMouseLeave={() => setHoveredIdx(null)}
+    >
+      {text.split('').map((char, idx) => {
+        let color = style.color || '#000000';
+        
+        if (hoveredIdx !== null) {
+          const dist = Math.abs(hoveredIdx - idx);
+          if (dist === 0) {
+            color = '#2563eb';
+          } else if (dist === 1) {
+            color = '#3b82f6';
+          } else if (dist === 2) {
+            color = '#93c5fd';
+          }
+        }
+
+        return (
+          <span
+            key={idx}
+            onMouseEnter={() => setHoveredIdx(idx)}
+            style={{
+              display: 'inline-block',
+              transition: 'color 0.15s ease-out',
+              color: color,
+              cursor: 'default',
+            }}
+          >
+            {char === ' ' ? '\u00A0' : char}
+          </span>
+        );
+      })}
+    </h2>
+  );
+}
 
 export default function AboutPage({ lang, t, pageMetadata }) {
   const timelineRef = useRef(null);
@@ -27,19 +70,27 @@ export default function AboutPage({ lang, t, pageMetadata }) {
   const fallbackByNames = {
     "Ц.Гарамжав": "/garamjav.png",
     "Ts.Garamjav": "/garamjav.png",
-    "Н.Мөнхнасан": "/munkhnasan.png",
-    "N.Munkhnasan": "/munkhnasan.png",
+    "Н.Мөнхнасан": "/monhnasan.png",
+    "N.Munkhnasan": "/monhnasan.png",
     "Б.Дэлгэр": "/delger.png",
     "B.Delger": "/delger.png",
-    "Ц.Халиун": "/1.png",
-    "Ts.Haliun": "/1.png",
-    "Б.Гандөш": "/2.png",
-    "B.Gandush": "/2.png"
+    "Ц.Халиун": "/haliun.png",
+    "Ts.Haliun": "/haliun.png",
+    "Б.Гандөш": "/dosh.png",
+    "B.Gandush": "/dosh.png"
   };
 
   const getValidImageUrl = (member, idx) => {
-    // FORCE local images regardless of what is in the database!
-    return fallbackByNames[member.name] || fallbackImages[idx % 5];
+    if (!member || !member.name) return fallbackImages[idx % 5];
+    const name = member.name.toLowerCase();
+
+    if (name.includes('мөнхнасан') || name.includes('munkhnasan')) return '/monhnasan.png';
+    if (name.includes('халиун') || name.includes('haliun')) return '/haliun.png';
+    if (name.includes('гандөш') || name.includes('gandush')) return '/dosh.png';
+    if (name.includes('дэлгэр') || name.includes('delger')) return '/delger.png';
+    if (name.includes('гарамжав') || name.includes('garamjav')) return '/garamjav.png';
+
+    return member.imageUrl || fallbackImages[idx % 5];
   };
 
   useEffect(() => {
@@ -199,343 +250,322 @@ export default function AboutPage({ lang, t, pageMetadata }) {
       <div className="about-page-container">
         {/* Two-row photo collage hero: edge-to-edge images scrolling right → left */}
         <div className="about-hero-collage">
-        {/* Overlay and Title */}
-        <div className="full-bleed-banner-overlay" style={{ zIndex: 1 }}></div>
-        <div className="full-bleed-banner-container" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 2, margin: 'auto' }}>
-          <div className="full-bleed-banner-content animate-slide-up">
-            <h1 className="hero-title">
-              {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.titleMn : pageMetadata.header.titleEn) : (lang === 'mn' ? 'Бидний тухай' : 'About Us')}
-            </h1>
-            <p className="hero-subtitle">
-              {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.subtitleMn : pageMetadata.header.subtitleEn) : ''}
-            </p>
-          </div>
-        </div>
-
-        <div className="collage-row" aria-hidden="true" style={{ position: 'relative', zIndex: 0 }}>
-          <div className="collage-track collage-track-a">
-            {[0, 1, 2, 3].flatMap((rep) =>
-              marqueeTop.map((src, i) => (
-                <div className="collage-cell" key={`t-${rep}-${i}`}>
-                  <img src={src} alt="" loading="lazy" />
-                </div>
-              )),
-            )}
-          </div>
-        </div>
-        <div className="collage-row" aria-hidden="true" style={{ position: 'relative', zIndex: 0 }}>
-          <div className="collage-track collage-track-b">
-            {[0, 1, 2, 3].flatMap((rep) =>
-              marqueeBottom.map((src, i) => (
-                <div className="collage-cell" key={`b-${rep}-${i}`}>
-                  <img src={src} alt="" loading="lazy" />
-                </div>
-              )),
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Pickpack-style Exact Layout */}
-      <section id="values" className="pickpack-exact-section" ref={valuesRef}>
-        <div className="pickpack-exact-container">
-
-          {/* Section Badge */}
-          <motion.div
-            className="pickpack-badge-wrapper"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="pickpack-badge">
-              <span className="pickpack-badge-star">✦</span>
-              <span className="pickpack-badge-text">{valuesTitle}</span>
-            </div>
-          </motion.div>
-
-          {/* Values Grid */}
-          <motion.div
-            className="pickpack-values-layout"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="pickpack-values-card-white pickpack-top-left-card">
-              <div className="pickpack-values-network-graphic" style={{ minHeight: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <svg viewBox="0 0 600 350" width="100%" height="100%" className="network-svg">
-                  <defs>
-                    <linearGradient id="pillGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#3B82F6" />
-                      <stop offset="100%" stopColor="#1E3A8A" />
-                    </linearGradient>
-                    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-                      <feDropShadow dx="0" dy="8" stdDeviation="12" floodColor="#1E3A8A" floodOpacity="0.25" />
-                    </filter>
-                    <filter id="dotGlow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feGaussianBlur stdDeviation="3" result="blur" />
-                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                    </filter>
-                  </defs>
-
-                  {/* Network Lines */}
-                  <path d="M 140 40 L 140 280" fill="none" stroke="#E0E7FF" strokeWidth="2" />
-                  <path d="M 40 180 L 320 180" fill="none" stroke="#E0E7FF" strokeWidth="2" />
-                  <path d="M 320 60 L 320 280" fill="none" stroke="#E0E7FF" strokeWidth="2" />
-                  <path d="M 320 100 L 520 100" fill="none" stroke="#E0E7FF" strokeWidth="2" />
-                  <path d="M 520 40 L 520 280 L 560 280 L 600 200" fill="none" stroke="#E0E7FF" strokeWidth="2" strokeLinejoin="round" />
-
-                  {/* Nodes */}
-                  {/* Top Left */}
-                  <g transform="translate(140, 80)">
-                    <circle cx="0" cy="0" r="10" fill="#EEF2FF" />
-                    <circle cx="0" cy="0" r="5" fill="#93C5FD" />
-                  </g>
-                  {/* Middle Intersection */}
-                  <g transform="translate(320, 180)">
-                    <circle cx="0" cy="0" r="10" fill="#EEF2FF" />
-                    <circle cx="0" cy="0" r="5" fill="#93C5FD" />
-                  </g>
-                  {/* Top Right Solid */}
-                  <g transform="translate(320, 100)">
-                    <circle cx="0" cy="0" r="12" fill="#DBEAFE" />
-                    <circle cx="0" cy="0" r="7" fill="#2563EB" />
-                  </g>
-                  {/* Bottom Right */}
-                  <g transform="translate(520, 280)">
-                    <circle cx="0" cy="0" r="10" fill="#EEF2FF" />
-                    <circle cx="0" cy="0" r="5" fill="#93C5FD" />
-                  </g>
-
-                  {/* Pills */}
-                  {/* Инновац */}
-                  <g transform="translate(110, 155)">
-                    <rect x="0" y="0" width="140" height="46" rx="23" fill="url(#pillGrad)" filter="url(#shadow)" stroke="#EEF2FF" strokeWidth="3" />
-                    <text x="30" y="28" fill="white" fontSize="16" fontFamily="sans-serif" fontWeight="500">Инновац</text>
-                    <circle cx="112" cy="23" r="13" fill="white" />
-                    <path d="M 112 13 Q 112 23 122 23 Q 112 23 112 33 Q 112 23 102 23 Q 112 23 112 13 Z" fill="#1E3A8A" />
-                  </g>
-
-                  {/* Хэрэглэгч */}
-                  <g transform="translate(380, 75)">
-                    <rect x="0" y="0" width="150" height="46" rx="23" fill="url(#pillGrad)" filter="url(#shadow)" stroke="#EEF2FF" strokeWidth="3" />
-                    <text x="25" y="28" fill="white" fontSize="16" fontFamily="sans-serif" fontWeight="500">Хэрэглэгч</text>
-                    <circle cx="122" cy="23" r="13" fill="white" />
-                    <path d="M 122 13 Q 122 23 132 23 Q 122 23 122 33 Q 122 23 112 23 Q 122 23 122 13 Z" fill="#1E3A8A" />
-                  </g>
-
-                  {/* Технологи */}
-                  <g transform="translate(290, 240)">
-                    <rect x="0" y="0" width="150" height="46" rx="23" fill="url(#pillGrad)" filter="url(#shadow)" stroke="#EEF2FF" strokeWidth="3" />
-                    <text x="25" y="28" fill="white" fontSize="16" fontFamily="sans-serif" fontWeight="500">Технологи</text>
-                    <circle cx="122" cy="23" r="13" fill="white" />
-                    <path d="M 122 13 Q 122 23 132 23 Q 122 23 122 33 Q 122 23 112 23 Q 122 23 122 13 Z" fill="#1E3A8A" />
-                  </g>
-
-                  {/* Mouse Cursor Arrow pointing to Инновац */}
-                  <g transform="translate(195, 200) rotate(-15)">
-                    <path d="M0,0 L0,32 L8,24 L16,40 L22,37 L14,21 L24,21 Z" fill="#1E3A8A" stroke="white" strokeWidth="2" filter="url(#shadow)" />
-                  </g>
-                </svg>
-              </div>
-              <h3 className="pickpack-card-title">{valuesTitle}</h3>
-              <p className="pickpack-card-text">
-                {lang === 'mn' 
-                  ? "Инновац, технологи, хэрэглэгч төвтэй хандлагад тулгуурлан, дэлхий даяар саадгүй, найдвартай үйлчилгээг санал болгодог онцгой логистикийн шийдлүүдийг хүргэх." 
-                  : "Delivering exceptional logistics solutions worldwide, driven by innovation, technology, and a customer-centric approach."}
+          {/* Overlay and Title */}
+          <div className="full-bleed-banner-overlay" style={{ zIndex: 1 }}></div>
+          <div className="full-bleed-banner-container" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 2, margin: 'auto' }}>
+            <div className="full-bleed-banner-content animate-slide-up">
+              <h1 className="hero-title">
+                {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.titleMn : pageMetadata.header.titleEn) : (lang === 'mn' ? 'Бидний тухай' : 'About Us')}
+              </h1>
+              <p className="hero-subtitle">
+                {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.subtitleMn : pageMetadata.header.subtitleEn) : ''}
               </p>
             </div>
-            
-            <div className="pickpack-values-card-blue pickpack-top-right-card">
-              <div className="isometric-graphic">
-                <svg viewBox="0 0 200 200" width="100%" height="100%" style={{ opacity: 0.9 }}>
-                  <g transform="translate(100, 50)">
-                    {/* Top Face */}
-                    <path d="M 0 0 L 60 30 L 0 60 L -60 30 Z" fill="#3b82f6" opacity="0.5"/>
-                    {/* Left Face */}
-                    <path d="M -60 30 L 0 60 L 0 130 L -60 100 Z" fill="#1d4ed8" opacity="0.8"/>
-                    {/* Right Face */}
-                    <path d="M 0 60 L 60 30 L 60 100 L 0 130 Z" fill="#1e40af" opacity="0.95"/>
-                    
-                    {/* Cutout/Inner shape trick */}
-                    <path d="M 0 60 L 40 40 L 40 80 L 0 100 Z" fill="#172554" opacity="0.3"/>
-
-                    {/* Small box bottom right */}
-                    <g transform="translate(75, 75)">
-                      <path d="M 0 0 L 25 12.5 L 0 25 L -25 12.5 Z" fill="#3b82f6" opacity="0.6"/>
-                      <path d="M -25 12.5 L 0 25 L 0 55 L -25 42.5 Z" fill="#1d4ed8" opacity="0.8"/>
-                      <path d="M 0 25 L 25 12.5 L 25 42.5 L 0 55 Z" fill="#1e40af" opacity="1"/>
-                    </g>
-                  </g>
-                </svg>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Mission & Vision Grid */}
-          <div id="vision" className="pickpack-mv-layout">
-            <motion.div
-              className="pickpack-mission-card pickpack-bottom-left-card"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <div className="pickpack-card-text-content">
-                <h3 className="pickpack-card-title">{missionTitle}</h3>
-                <p className="pickpack-card-text">{missionText}</p>
-              </div>
-              <div className="pickpack-mission-bg-circles">
-                <div className="circle-3"></div>
-                <div className="circle-2"></div>
-                <div className="circle-1"></div>
-                <div className="mission-bg-icon"><User size={24} /></div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="pickpack-vision-card pickpack-bottom-right-card"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="pickpack-vision-bg-dots"></div>
-              <div className="pickpack-card-text-content">
-                <h3 className="pickpack-card-title">{visionTitle}</h3>
-                <p className="pickpack-card-text">{visionText}</p>
-              </div>
-            </motion.div>
           </div>
 
+          <div className="collage-row" aria-hidden="true" style={{ position: 'relative', zIndex: 0 }}>
+            <div className="collage-track collage-track-a">
+              {[0, 1, 2, 3].flatMap((rep) =>
+                marqueeTop.map((src, i) => (
+                  <div className="collage-cell" key={`t-${rep}-${i}`}>
+                    <img src={src} alt="" loading="lazy" />
+                  </div>
+                )),
+              )}
+            </div>
+          </div>
+          <div className="collage-row" aria-hidden="true" style={{ position: 'relative', zIndex: 0 }}>
+            <div className="collage-track collage-track-b">
+              {[0, 1, 2, 3].flatMap((rep) =>
+                marqueeBottom.map((src, i) => (
+                  <div className="collage-cell" key={`b-${rep}-${i}`}>
+                    <img src={src} alt="" loading="lazy" />
+                  </div>
+                )),
+              )}
+            </div>
+          </div>
         </div>
-      </section>
 
-      {/* CEO Greeting Section moved outside of leadership padded section */}
-      <CEOGreeting lang={lang} t={t} />
 
-      <section id="leadership" style={{ padding: '80px 5%', backgroundColor: '#ffffff' }}>
-        <h3 style={{ fontSize: '32px', fontWeight: '600', marginBottom: '40px', fontFamily: "'Montserrat', sans-serif", letterSpacing: '0.5px', color: '#000000' }}>
-          {leadershipTitle}
-        </h3>
+        {/* CEO Greeting Section moved here */}
+        <CEOGreeting lang={lang} t={t} />
 
-        {/* Executive Team Members */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '24px' }}>
-          {teamData.map((member, idx) => (
-            <div 
-              key={idx} 
-              style={{ display: 'flex', flexDirection: 'column', gap: '16px', cursor: 'pointer', transition: 'transform 0.2s' }}
-              onClick={() => setSelectedMember(member)}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-            >
-              <div style={{ borderRadius: '24px', overflow: 'hidden', height: '420px', backgroundColor: '#e2e8f0' }}>
-                <img
-                  src={getValidImageUrl(member, idx)}
-                  alt={member.name}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
+        {/* Group Intro & 3 Cards Section */}
+        <section className="pickpack-exact-section" ref={valuesRef}>
+          <div className="pickpack-exact-container">
+
+            {/* Group Intro Heading */}
+            <div id="vision" style={{ textAlign: 'center', maxWidth: '1200px', margin: '0 auto' }}>
+              <InteractiveTitle 
+                className="no-underline" 
+                style={{ fontSize: '50px', fontWeight: '600', letterSpacing: '-0.02em', fontFamily: "'Montserrat', sans-serif", color: '#000000', margin: '0' }}
+                text={lang === 'mn' ? 'Группийн танилцуулга' : 'Group Introduction'}
+              />
+              <div style={{
+                fontSize: '16px',
+                lineHeight: '1.5',
+                color: '#475569',
+                fontFamily: "'Inter', sans-serif",
+                textAlign: 'center',
+                margin: '50px auto'
+              }}>
+                {lang === 'mn' ? (
+                  <>
+                    <p style={{ marginBottom: '12px' }}>Монполимет Групп нь 1992 онд байгуулагдсан. Уул уурхай, байгаль орчны нөхөн сэргээлт, барилгын материал үйлдвэрлэл, барилга байгууламж, гадаад худалдааны чиглэлээр үйл ажиллагаа явуулж буй үндэсний үйлдвэрлэгч – хөрөнгө оруулагч компани юм.</p>
+                    <p>Манай компани үйл ажиллагаа явуулж буй салбар бүртээ байгальд ээлтэй эко шийдэл бүхий шинэ нөү-хау, инноваци, дэвшилтэт технологийг нэвтрүүлэх, ногоон хөгжлийг дэмжихийг эрхэм зорилгоо болгон ажиллаж байна.</p>
+                  </>
+                ) : (
+                  <p>Monpolymet Group was established in 1992. It is a national producer-investor company operating in the fields of mining, environmental rehabilitation, building materials production, construction, and foreign trade. Our company's main goal is to introduce new know-how, innovation, and advanced technology with eco-friendly solutions in every sector we operate in, supporting green development.</p>
+                )}
               </div>
-              <div style={{ textAlign: 'left' }}>
-                <h4 style={{ fontSize: '20px', fontWeight: '700', fontFamily: "'Inter', sans-serif", margin: '0 0 6px 0', color: '#000000' }}>
-                  {member.name}
-                </h4>
-                <p style={{ fontSize: '14px', color: '#64748b', fontFamily: "'Inter', sans-serif", margin: 0, fontWeight: '400' }}>
-                  {member.role}
+            </div>
+
+            {/* Horizontal 3 Cards (Vision, Values, Principles) */}
+            <div id="values" style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gap: '32px',
+              maxWidth: '1200px',
+              margin: '0 auto',
+              paddingBottom: '40px'
+            }}>
+              {/* Card 1: Алсын хараа */}
+              <div style={{
+                backgroundColor: '#ffffff',
+                borderRadius: '24px',
+                padding: '40px 32px',
+                boxShadow: '0 10px 30px -10px rgba(0,0,0,0.08)',
+                border: '1px solid #cbd5e1', /* Default gray/blackish border */
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                transition: 'all 0.3s ease'
+              }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-10px)';
+                  e.currentTarget.style.borderColor = '#2563eb';
+                  const title = e.currentTarget.querySelector('h3');
+                  if (title) title.style.color = '#2563eb';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.borderColor = '#cbd5e1';
+                  const title = e.currentTarget.querySelector('h3');
+                  if (title) title.style.color = '#0f172a';
+                }}>
+                <h3 style={{ fontSize: '24px', fontWeight: '700', fontFamily: "'Montserrat', sans-serif", color: '#0f172a', margin: '0 0 16px 0', transition: 'color 0.3s ease' }}>
+                  {lang === 'mn' ? 'Алсын хараа' : 'Vision'}
+                </h3>
+                <p style={{ fontSize: '1rem', lineHeight: '1.4', color: '#475569', fontFamily: "'Inter', sans-serif", margin: 0 }}>
+                  {visionText || (lang === 'mn' ? 'Эх орныхоо баялгийг байгаль орчинд ээлтэй, дэвшилтэт технологиор боловсруулан, үндэсний бүтээн байгуулалт, тогтвортой хөгжлийн түүчээ байна.' : 'Leading national development and sustainable growth through eco-friendly advanced technology.')}
+                </p>
+              </div>
+
+              {/* Card 2: Үнэт зүйлс */}
+              <div style={{
+                backgroundColor: '#ffffff',
+                borderRadius: '24px',
+                padding: '40px 32px',
+                boxShadow: '0 10px 30px -10px rgba(0,0,0,0.08)',
+                border: '1px solid #cbd5e1', /* Default gray/blackish border */
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                transition: 'all 0.3s ease'
+              }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-10px)';
+                  e.currentTarget.style.borderColor = '#2563eb';
+                  const title = e.currentTarget.querySelector('h3');
+                  if (title) title.style.color = '#2563eb';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.borderColor = '#cbd5e1';
+                  const title = e.currentTarget.querySelector('h3');
+                  if (title) title.style.color = '#0f172a';
+                }}>
+                <h3 style={{ fontSize: '24px', fontWeight: '700', fontFamily: "'Montserrat', sans-serif", color: '#0f172a', margin: '0 0 16px 0', transition: 'color 0.3s ease' }}>
+                  {lang === 'mn' ? 'Үнэт зүйлс' : 'Values'}
+                </h3>
+                <p style={{ fontSize: '1rem', lineHeight: '1.4', color: '#475569', fontFamily: "'Inter', sans-serif", margin: 0 }}>
+                  {lang === 'mn' ? 'Хариуцлага, Инноваци, Нөхөн сэргээлт, Хамтын ажиллагааг эрхэмлэн, харилцан итгэлцэл дээр тулгуурлан хамтдаа хөгжинө.' : 'Responsibility, Innovation, Restoration, and Cooperation based on mutual trust and growth.'}
+                </p>
+              </div>
+
+              {/* Card 3: Зарчим */}
+              <div style={{
+                backgroundColor: '#ffffff',
+                borderRadius: '24px',
+                padding: '40px 32px',
+                boxShadow: '0 10px 30px -10px rgba(0,0,0,0.08)',
+                border: '1px solid #cbd5e1', /* Default gray/blackish border */
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                transition: 'all 0.3s ease'
+              }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-10px)';
+                  e.currentTarget.style.borderColor = '#2563eb';
+                  const title = e.currentTarget.querySelector('h3');
+                  if (title) title.style.color = '#2563eb';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.borderColor = '#cbd5e1';
+                  const title = e.currentTarget.querySelector('h3');
+                  if (title) title.style.color = '#0f172a';
+                }}>
+                <h3 style={{ fontSize: '24px', fontWeight: '700', fontFamily: "'Montserrat', sans-serif", color: '#0f172a', margin: '0 0 16px 0', transition: 'color 0.3s ease' }}>
+                  {lang === 'mn' ? 'Зарчим' : 'Principles'}
+                </h3>
+                <p style={{ fontSize: '1rem', lineHeight: '1.4', color: '#475569', fontFamily: "'Inter', sans-serif", margin: 0 }}>
+                  {missionText || (lang === 'mn' ? 'Олон улсын стандартад нийцсэн чанартай бүтээгдэхүүн, үйлчилгээгээр хэрэглэгчдээ хангаж, нийгэм болон байгаль орчны өмнө хүлээсэн хариуцлагаа дээдлэн ажиллана.' : 'Providing quality products and services meeting international standards, highly respecting social and environmental responsibilities.')}
                 </p>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* Team Member Modal */}
-      <AnimatePresence>
-        {selectedMember && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              backdropFilter: 'blur(4px)',
-              zIndex: 9999,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '20px'
-            }}
-            onClick={() => setSelectedMember(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '24px',
-                width: '100%',
-                maxWidth: '900px',
-                display: 'flex',
-                overflow: 'hidden',
-                position: 'relative',
-                color: '#000000',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.2)'
-              }}
-            >
-              <button
-                onClick={() => setSelectedMember(null)}
-                style={{
-                  position: 'absolute',
-                  top: '24px',
-                  right: '24px',
-                  background: 'rgba(0,0,0,0.05)',
-                  border: '1px solid rgba(0,0,0,0.1)',
-                  borderRadius: '50%',
-                  width: '40px',
-                  height: '40px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#000000',
-                  cursor: 'pointer',
-                  zIndex: 10,
-                  transition: 'background 0.2s'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.05)'}
+        {/* History Timeline Section */}
+        <section id="history" style={{ backgroundColor: '#ffffff', padding: '60px 5% 40px 5%' }}>
+          <div style={{ textAlign: 'center', maxWidth: '1200px', margin: '0 auto' }}>
+            <InteractiveTitle 
+              className="no-underline" 
+              style={{ fontSize: '50px', fontWeight: '600', letterSpacing: '-0.02em', fontFamily: "'Montserrat', sans-serif", color: '#000000', margin: '0' }}
+              text={lang === 'mn' ? 'Түүхэн замнал' : 'Historical Journey'}
+            />
+          </div>
+          <HistoryTimeline timeline={timeline} lang={lang} />
+        </section>
+
+        <section id="leadership" style={{ padding: '80px 5%', backgroundColor: '#ffffff' }}>
+          <h3 style={{ fontSize: '32px', fontWeight: '600', marginBottom: '40px', fontFamily: "'Montserrat', sans-serif", letterSpacing: '0.5px', color: '#000000', textAlign: 'center' }}>
+            {leadershipTitle}
+          </h3>
+
+          {/* Executive Team Members */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '40px' }}>
+            {teamData.map((member, idx) => (
+              <div
+                key={idx}
+                style={{ display: 'flex', flexDirection: 'column', gap: '16px', cursor: 'pointer', transition: 'transform 0.2s' }}
+                onClick={() => setSelectedMember(member)}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
               >
-                <X size={20} />
-              </button>
-              
-              <div style={{ flex: '0 0 40%', minHeight: '500px', backgroundColor: '#e2e8f0' }}>
-                <img 
-                  src={getValidImageUrl(selectedMember, teamData.findIndex(m => m.name === selectedMember.name))} 
-                  alt={selectedMember.name} 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              </div>
-              <div style={{ flex: '1', padding: '48px', overflowY: 'auto', maxHeight: '600px', textAlign: 'left' }}>
-                <h3 style={{ fontSize: '28px', fontWeight: '700', marginBottom: '12px', fontFamily: "'Montserrat', sans-serif", color: '#000000' }}>
-                  {selectedMember.name}
-                </h3>
-                <p style={{ fontSize: '16px', color: '#64748b', marginBottom: '32px', fontFamily: "'Inter', sans-serif" }}>
-                  {selectedMember.role}
-                </p>
-                <div style={{ fontSize: '15px', lineHeight: '1.8', color: '#334155', fontFamily: "'Inter', sans-serif", whiteSpace: 'pre-line' }}>
-                  {selectedMember.bio && selectedMember.bio.length > 50 ? selectedMember.bio : "Тэрээр компанийн үйл ажиллагааны ерөнхий удирдлагыг хариуцан ажиллаж, стратегийн зорилтуудыг хэрэгжүүлэх, өдөр тутмын үйл ажиллагааг жигд удирдан зохион байгуулах чиглэлд олон жилийн туршлагатай. \n\nБайгууллагын дотоод процессыг сайжруулах, хүний нөөцийн чадавхыг бэхжүүлэх, салбартаа манлайлах урт хугацааны алсын харааг тодорхойлоход онцгой анхаарч ажилладаг. Түүний удирдлага дор баг хамт олон инноваци, технологийн шийдлүүдийг нэвтрүүлж, үйл ажиллагааны үр ашгийг тасралтгүй нэмэгдүүлсээр байна."}
+                <div style={{ borderRadius: '12px', overflow: 'hidden', height: '320px', backgroundColor: '#e2e8f0' }}>
+                  <img
+                    src={getValidImageUrl(member, idx)}
+                    alt={member.name}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                </div>
+                <div style={{ textAlign: 'left' }}>
+                  <h4 style={{ fontSize: '20px', fontWeight: '700', fontFamily: "'Inter', sans-serif", margin: '0 0 6px 0', color: '#000000' }}>
+                    {member.name}
+                  </h4>
+                  <p style={{ fontSize: '14px', color: '#64748b', fontFamily: "'Inter', sans-serif", margin: 0, fontWeight: '400' }}>
+                    {member.role}
+                  </p>
                 </div>
               </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Team Member Modal */}
+        <AnimatePresence>
+          {selectedMember && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                backdropFilter: 'blur(4px)',
+                zIndex: 9999,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '20px'
+              }}
+              onClick={() => setSelectedMember(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '12px',
+                  width: '100%',
+                  maxWidth: '900px',
+                  display: 'flex',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  color: '#000000',
+                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.2)'
+                }}
+              >
+                <button
+                  onClick={() => setSelectedMember(null)}
+                  style={{
+                    position: 'absolute',
+                    top: '24px',
+                    right: '24px',
+                    background: 'rgba(0,0,0,0.05)',
+                    border: '1px solid rgba(0,0,0,0.1)',
+                    borderRadius: '50%',
+                    width: '40px',
+                    height: '40px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#000000',
+                    cursor: 'pointer',
+                    zIndex: 10,
+                    transition: 'background 0.2s'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.05)'}
+                >
+                  <X size={20} />
+                </button>
+
+                <div style={{ flex: '0 0 40%', minHeight: '500px', backgroundColor: '#e2e8f0' }}>
+                  <img
+                    src={getValidImageUrl(selectedMember, teamData.findIndex(m => m.name === selectedMember.name))}
+                    alt={selectedMember.name}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                </div>
+                <div style={{ flex: '1', padding: '48px', overflowY: 'auto', maxHeight: '600px', textAlign: 'left' }}>
+                  <h3 style={{ fontSize: '28px', fontWeight: '700', marginBottom: '12px', fontFamily: "'Montserrat', sans-serif", color: '#000000' }}>
+                    {selectedMember.name}
+                  </h3>
+                  <p style={{ fontSize: '16px', color: '#64748b', marginBottom: '32px', fontFamily: "'Inter', sans-serif" }}>
+                    {selectedMember.role}
+                  </p>
+                  <div style={{ fontSize: '15px', lineHeight: '1.8', color: '#334155', fontFamily: "'Inter', sans-serif", whiteSpace: 'pre-line' }}>
+                    {selectedMember.bio && selectedMember.bio.length > 50 ? selectedMember.bio : "Тэрээр компанийн үйл ажиллагааны ерөнхий удирдлагыг хариуцан ажиллаж, стратегийн зорилтуудыг хэрэгжүүлэх, өдөр тутмын үйл ажиллагааг жигд удирдан зохион байгуулах чиглэлд олон жилийн туршлагатай. \n\nБайгууллагын дотоод процессыг сайжруулах, хүний нөөцийн чадавхыг бэхжүүлэх, салбартаа манлайлах урт хугацааны алсын харааг тодорхойлоход онцгой анхаарч ажилладаг. Түүний удирдлага дор баг хамт олон инноваци, технологийн шийдлүүдийг нэвтрүүлж, үйл ажиллагааны үр ашгийг тасралтгүй нэмэгдүүлсээр байна."}
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
 
       </div>
     </>

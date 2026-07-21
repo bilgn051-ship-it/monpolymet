@@ -22,11 +22,11 @@ export const theme = createTheme({
     ],
   },
   fontFamily:
-    '"Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif',
+    '"Montserrat", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif',
   headings: {
     fontFamily:
-      '"Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif',
+      '"Montserrat", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif',
     fontWeight: '700',
   },
-  defaultRadius: 'md',
+  defaultRadius: 'xl',
 });

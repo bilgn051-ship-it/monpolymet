@@ -5168,8 +5168,8 @@ h2.no-underline::after {
 
 .news-preview-footer {
   display: flex;
-  justify-content: center;
-  margin-top: 40px;
+  justify-content: flex-end;
+  margin-top: 16px;
 }
 
 .read-all-btn {
@@ -5177,37 +5177,53 @@ h2.no-underline::after {
   align-items: center;
   gap: 8px;
   background-color: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--primary-color);
+  border-radius: 24px;
   color: #0f172a;
   font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 12px 24px;
-  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .read-all-btn:hover {
   background-color: #f8fafc;
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  border-color: #93c5fd;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .pill-badge-heading {
   background-color: #ffffff;
-  color: #040C29;
-  padding: 8px 24px;
-  border-radius: 30px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  display: inline-block;
+  color: #0f172a;
+  padding: 12px 32px;
+  border-radius: 24px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   margin: 0;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--primary-color);
 }
 
 .pill-badge-heading::after {
   display: none !important;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-slow {
+  animation: spin-slow 8s linear infinite;
 }
 
 /* --- Subtle Marquee --- */

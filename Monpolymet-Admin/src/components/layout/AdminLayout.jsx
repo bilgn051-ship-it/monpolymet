@@ -37,11 +37,12 @@ export default function AdminLayout() {
 
   return (
     <AppShell
-      header={{ height: 62 }}
-      navbar={{ width: 230, breakpoint: 'sm', collapsed: { mobile: !opened } }}
-      padding="lg"
+      header={{ height: 64 }}
+      navbar={{ width: 260, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      padding="xl"
+      bg="#f8fafc"
     >
-      <AppShell.Header>
+      <AppShell.Header style={{ borderBottom: 'none', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)' }}>
         <Group h="100%" px="md" justify="space-between" wrap="nowrap">
           <Group gap="sm" wrap="nowrap">
             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
@@ -93,7 +94,7 @@ export default function AdminLayout() {
         </Group>
       </AppShell.Header>
 
-      <AppShell.Navbar p="sm">
+      <AppShell.Navbar p="md" style={{ borderRight: '1px solid #e2e8f0', backgroundColor: '#ffffff' }}>
         <Sidebar onNavigate={close} />
       </AppShell.Navbar>
 

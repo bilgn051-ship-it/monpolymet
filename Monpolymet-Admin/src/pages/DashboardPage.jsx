@@ -35,22 +35,44 @@ function StatCard({ icon: Icon, label, value, color, to }) {
     <Paper
       component={Link}
       to={to}
-      withBorder
-      radius="md"
-      p="lg"
-      style={{ textDecoration: 'none', color: 'inherit' }}
+      radius="xl"
+      p="xl"
+      style={{ 
+        textDecoration: 'none', 
+        color: 'inherit',
+        backgroundColor: '#ffffff',
+        border: '1px dashed #bfdbfe',
+        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = 'translateY(-4px)';
+        e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = 'none';
+      }}
     >
       <Group justify="space-between" align="flex-start" wrap="nowrap">
         <div>
-          <Text size="xs" tt="uppercase" c="dimmed" fw={700}>
+          <Text size="sm" tt="uppercase" c="#64748b" fw={600} mb={8}>
             {label}
           </Text>
-          <Text fw={800} fz={30} lh={1.1} mt={4}>
+          <Text 
+            fw={800} 
+            fz={38} 
+            lh={1.1}
+            style={{
+              background: 'linear-gradient(90deg, #10b981, #0ea5e9)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
             {value}
           </Text>
         </div>
-        <ThemeIcon size={44} radius="md" variant="light" color={color}>
-          <Icon size={22} />
+        <ThemeIcon size={48} radius="xl" variant="light" color={color}>
+          <Icon size={24} />
         </ThemeIcon>
       </Group>
     </Paper>

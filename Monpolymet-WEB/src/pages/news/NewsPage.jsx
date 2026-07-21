@@ -8,7 +8,7 @@ export default function NewsPage({ news = [], lang, t, pageMetadata, setCurrentP
     { id: 'all', labelMn: 'Бүх мэдээ', labelEn: 'All News' },
     { id: 'press', labelMn: 'Хэвлэлийн мэдээ', labelEn: 'Press Release' },
     { id: 'mining', labelMn: 'Уул уурхай', labelEn: 'Mining' },
-    { id: 'csr', labelMn: 'Нийгмийн хариуцлага', labelEn: 'CSR' }
+    { id: 'csr', labelMn: 'Тогтвортой хөгжил', labelEn: 'Sustainable Development' }
   ];
 
   const activeCatObj = categories.find(c => c.id === activeCategory);

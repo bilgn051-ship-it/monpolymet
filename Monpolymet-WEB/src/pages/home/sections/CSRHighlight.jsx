@@ -1,9 +1,14 @@
+import * as LucideIcons from 'lucide-react';
 import { ArrowUpRight } from 'lucide-react';
 import { useRef, useState, useEffect } from 'react';
+import webVideo from '../../../assets/WEB.mp4';
 
-export default function CSRHighlight({ lang }) {
+export default function CSRHighlight({ lang, data }) {
   const containerRef = useRef(null);
   const [revealed, setRevealed] = useState(false);
+
+  const bgUrl = data?.imageUrl || webVideo;
+  const isVideo = bgUrl.match(/\.(mp4|webm|ogg)(\?.*)?$/i) || bgUrl === webVideo;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -22,7 +27,7 @@ export default function CSRHighlight({ lang }) {
   }, []);
 
   return (
-    <section className="container-padding" style={{ paddingBottom: '80px', backgroundColor: '#ffffff' }}>
+    <section className="container-padding" style={{ paddingTop: '30px', paddingBottom: '40px', backgroundColor: '#ffffff' }}>
       <div
         ref={containerRef}
         className="csr-highlight-card"
@@ -35,7 +40,7 @@ export default function CSRHighlight({ lang }) {
           flexDirection: 'column',
           alignItems: 'flex-start',
           padding: '60px',
-          backgroundImage: 'url("https://images.unsplash.com/photo-1542224566-6e85f2e6772f?auto=format&fit=crop&q=80&w=2000")',
+          backgroundImage: !isVideo ? `url("${bgUrl}")` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           boxShadow: '0 24px 50px rgba(0,0,0,0.1)',
@@ -44,6 +49,26 @@ export default function CSRHighlight({ lang }) {
           transition: 'opacity 0.8s ease, transform 0.8s ease'
         }}
       >
+        {/* Video Background */}
+        {isVideo && (
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            src={bgUrl}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              zIndex: 0
+            }}
+          />
+        )}
+
         {/* Gradient Overlay */}
         <div style={{
           position: 'absolute',
@@ -65,7 +90,7 @@ export default function CSRHighlight({ lang }) {
             marginBottom: '24px'
           }}>
             <span style={{ fontSize: '32px', fontWeight: '600', fontFamily: "'Montserrat', sans-serif", letterSpacing: '0.5px' }}>
-              Жишиг нөхөн сэргээгч
+              {lang === 'mn' ? (data?.titleMn || 'Тогтвортой хөгжил') : (data?.titleEn || 'Sustainable Development')}
             </span>
           </div>
 
@@ -79,30 +104,47 @@ export default function CSRHighlight({ lang }) {
 
           {/* Paragraph */}
           <p style={{
-            fontSize: '18px',
+            fontSize: '16px',
             lineHeight: 1.6,
             color: 'rgba(255,255,255,0.9)',
-            fontFamily: "'Inter', sans-serif",
+            fontFamily: "'Montserrat', sans-serif",
             maxWidth: '850px',
             marginBottom: '32px'
           }}>
-            Тосонгийн ордод 931,67 га талбайд ашиглалт явуулсанаас техникийн нөхөн сэргээлтийг 743 га талбайд, биологийн нөхөн сэргээлтийг 514 га талбайд хийсэн. 100 000 гаруй мод тариалж 5,5 км урт 7 хэсэг ойн төглүүд ургуулсан бөгөөд 16 га талбайтай Тосон нуурыг бий болгоод байна.
+            {lang === 'mn' 
+              ? (data?.subtitleMn || 'Тосонгийн ордод 931,67 га талбайд ашиглалт явуулсанаас техникийн нөхөн сэргээлтийг 743 га талбайд, биологийн нөхөн сэргээлтийг 514 га талбайд хийсэн. 100 000 гаруй мод тариалж 5,5 км урт 7 хэсэг ойн төглүүд ургуулсан бөгөөд 16 га талбайтай Тосон нуурыг бий болгоод байна.') 
+              : (data?.subtitleEn || 'Reclamation works at Toson mine.')}
           </p>
 
           {/* Stats */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-             <div style={{ fontSize: '18px', fontWeight: '400', lineHeight: 1.5, fontFamily: "'Inter', sans-serif", color: '#ffffff', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-               <span>•</span>
-               <span>Техникийн нөхөн сэргээлт 870.3 га талбайд 85.2%</span>
-             </div>
-             <div style={{ fontSize: '18px', fontWeight: '400', lineHeight: 1.5, fontFamily: "'Inter', sans-serif", color: '#ffffff', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-               <span>•</span>
-               <span>Биологийн нөхөн сэргээлт, ургамалжуулалт 561 га талбайд 69%</span>
-             </div>
-             <div style={{ fontSize: '18px', fontWeight: '400', lineHeight: 1.5, fontFamily: "'Inter', sans-serif", color: '#ffffff', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-               <span>•</span>
-               <span>300,000+ мод тариалсан 100%</span>
-             </div>
+            {data?.bullets?.map((b, i) => {
+              const Icon = b.icon && LucideIcons[b.icon] ? LucideIcons[b.icon] : null;
+              return (
+                <div key={i} style={{ fontSize: '16px', fontWeight: '400', lineHeight: 1.5, fontFamily: "'Montserrat', sans-serif", color: '#ffffff', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px' }}>
+                    {Icon ? <Icon size={20} color="#ffffff" /> : '•'}
+                  </span>
+                  <span>{lang === 'mn' ? b.textMn : b.textEn}</span>
+                </div>
+              );
+            })}
+            {!data?.bullets?.length && (
+              <>
+                 <div style={{ fontSize: '16px', fontWeight: '400', lineHeight: 1.5, fontFamily: "'Montserrat', sans-serif", color: '#ffffff', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px' }}><LucideIcons.Leaf size={20} color="#ffffff" /></span>
+                   <span>Техникийн нөхөн сэргээлт 870.3 га талбайд 85.2%</span>
+                 </div>
+                 <div style={{ fontSize: '16px', fontWeight: '400', lineHeight: 1.5, fontFamily: "'Montserrat', sans-serif", color: '#ffffff', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px' }}><LucideIcons.Leaf size={20} color="#ffffff" /></span>
+                   <span>Биологийн нөхөн сэргээлт, ургамалжуулалт 561 га талбайд 69%</span>
+                 </div>
+                 <div style={{ fontSize: '16px', fontWeight: '400', lineHeight: 1.5, fontFamily: "'Montserrat', sans-serif", color: '#ffffff', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px' }}><LucideIcons.Leaf size={20} color="#ffffff" /></span>
+                   <span>300,000+ мод тариалсан 100%</span>
+                 </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -126,13 +168,13 @@ export default function CSRHighlight({ lang }) {
             fontWeight: '600',
             cursor: 'pointer',
             transition: 'transform 0.2s ease',
-            fontFamily: "'Inter', sans-serif",
+            fontFamily: "'Montserrat', sans-serif",
             boxShadow: '0 10px 25px rgba(0,0,0,0.2)'
           }}
             onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
             onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
           >
-            {lang === 'mn' ? 'Дэлгэрэнгүй' : 'More details'}
+            {lang === 'mn' ? (data?.buttonTextMn || 'Дэлгэрэнгүй') : (data?.buttonTextEn || 'More details')}
             <div style={{
               width: '32px',
               height: '32px',
@@ -143,7 +185,7 @@ export default function CSRHighlight({ lang }) {
               justifyContent: 'center',
               color: '#ffffff'
             }}>
-              <ArrowUpRight size={20} />
+              <LucideIcons.Leaf size={20} />
             </div>
           </button>
         </div>
