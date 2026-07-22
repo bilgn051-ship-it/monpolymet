@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import mandalaImg from '../../assets/mandala.jpg';
+import oneImg from '../../assets/1.jpg';
+import twoImg from '../../assets/2.jpg';
+import threeImg from '../../assets/3.png';
+import fourImg from '../../assets/4.png';
 
 const FALLBACK_IMAGES = [
-  'https://images.unsplash.com/photo-1592985684742-9e14fc18606c?w=800&auto=format&fit=crop&q=60', // Tractor/Agriculture
-  'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=800&auto=format&fit=crop&q=60', // Mining/Industry
-  'https://images.unsplash.com/photo-1541888087405-eb81f57ce32b?w=800&auto=format&fit=crop&q=60', // Construction
-  'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&auto=format&fit=crop&q=60', // Industrial
-  'https://images.unsplash.com/photo-1587293852726-69435b7194cc?w=800&auto=format&fit=crop&q=60', // Heavy machinery
+  oneImg,
+  twoImg,
+  threeImg,
+  mandalaImg,
+  fourImg,
 ];
 
 export default function HistoryTimeline({ timeline, lang }) {
@@ -26,8 +29,9 @@ export default function HistoryTimeline({ timeline, lang }) {
 
   // Helper to get image based on index
   const getImageUrl = (index) => {
-    const img = sortedTimeline[index]?.imageUrl;
-    if (img && img !== 'null' && img !== 'undefined' && img.trim() !== '') {
+    const item = sortedTimeline[index];
+    const img = item?.imageUrl || item?.image || item?.photo || item?.coverImage;
+    if (img && img !== 'null' && img !== 'undefined' && typeof img === 'string' && img.trim() !== '') {
       return img;
     }
     return FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
