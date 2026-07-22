@@ -34,7 +34,6 @@ export default function Header({
     { id: 'companies', label: t.nav.companies, target: 'companies' },
     { id: 'csr', label: t.nav.csr, target: 'csr' },
     { id: 'news', label: t.nav.news, target: 'news' },
-    { id: 'tour', label: t.nav.tour, target: 'tour' },
     { id: 'careers', label: t.nav.careers, target: 'careers' },
     { id: 'contact', label: t.nav.contact, target: 'contact' }
   ];
