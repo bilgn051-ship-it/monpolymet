@@ -5,11 +5,9 @@ export const translations = {
       about: "Бидний тухай",
       companies: "Үйл ажиллагаа",
       csr: "Тогтвортой хөгжил",
-      hse: "Байгаль орчин & ХАБЭА",
-      careers: "Ажлын байр",
-      tour: "360",
-      news: "Мэдээлэл",
-      contact: "Холбоо барих",
+      procurement: "Худалдан авалт",
+      news: "Мэдээ мэдээлэл",
+      careers: "Хүний нөөц",
       admin: "Админ"
     },
     common: {
@@ -60,14 +58,14 @@ export const translations = {
         { year: "Өнөөдөр", title: "Тогтвортой Хөгжил", desc: "Олон улсын стандартыг хангасан ногоон үйлдвэрлэл, тогтвортой хөгжлийн бодлогыг амжилттай үргэлжлүүлж байна." }
       ],
       leadershipTitle: "Мэндчилгээ & Удирдлагын баг",
-      ceoGreeting: "Үүсгэн байгуулагчын мэндчилгээ",
+      ceoGreeting: "Үүсгэн байгуулагчийн мэндчилгээ",
       ceoGreetingText: "Эрхэм харилцагчид, хамтран ажиллагч түншүүд ээ, Монполимет Группийн вэбсайтаар зочилж буй танд энэ өдрийн мэнд хүргэе. Бид үүсгэн байгуулагдсан цагаасаа эхлэн эх орныхоо хөгжил дэвшилд бодит хувь нэмэр оруулахыг зорин ажиллаж ирсэн. Чанартай үйлдвэрлэл болон хариуцлагатай уул уурхайг хослуулан, ирээдүй хойчдоо ногоон байгалийг үлдээх нь бидний туйлын зорилго билээ.",
       team: [
         { name: "Ц.Гарамжав", role: "Үүсгэн байгуулагч, ТУЗ-ийн Дарга", bio: "Монгол улсын уул уурхайн салбарын нэрт зүтгэлтэн, Эдийн засагч, Геологич инженер. Салбартаа 30 гаруй жил ажилласан туршлагатай.", edu: "МУИС - Геологийн анги, ШУТИС - Доктор.", imageUrl: "/garamjav.png" },
-        { name: "Н.Мөнхнасан", role: "Монполимет Группийн Ерөнхийлөгч", bio: "Санхүү, хөрөнгө оруулалтын чиглэлээр мэргэшсэн. Группийн стратегийн хөгжил, гадаад хамтын ажиллагааг удирддаг.", edu: "АНУ-ын Сан Францискогийн Их Сургууль - Санхүүгийн удирдлага.", imageUrl: "/munkhnasan.png" },
-        { name: "Б.Нандин-Эрдэнэ", role: "Үйл ажиллагаа эрхэлсэн захирал", bio: "Уул уурхай, үйлдвэрлэлийн төслийн удирдлагаар мэргэшсэн инженер.", edu: "ШУТИС - Уул уурхайн инженер.", imageUrl: "/1.png" },
+        { name: "Н.Мөнхнасан", role: "Монполимет Группийн Ерөнхийлөгч", bio: "Санхүү, хөрөнгө оруулалтын чиглэлээр мэргэшсэн. Группийн стратегийн хөгжил, гадаад хамтын ажиллагааг удирддаг.", edu: "АНУ-ын Сан Францискогийн Их Сургууль - Санхүүгийн удирдлага.", imageUrl: "/monhnasan.png" },
         { name: "Б.Дэлгэр", role: "Гүйцэтгэх захирал", bio: "Тэрээр компанийн үйл ажиллагааны ерөнхий удирдлагыг хариуцан ажиллаж, стратегийн зорилтуудыг хэрэгжүүлэх, өдөр тутмын үйл ажиллагааг жигд удирдан зохион байгуулах чиглэлд олон жилийн туршлагатай.", edu: "", imageUrl: "/delger.png" },
-        { name: "Г.Төгөлдөр", role: "Санхүү эрхэлсэн захирал", bio: "Санхүүгийн удирдлага, төлөвлөлтийн өндөр туршлагатай. Компанийн төсөв болон хөрөнгө оруулалтын оновчтой хуваарилалтыг хангаж ажилладаг.", edu: "", imageUrl: "/2.png" }
+        { name: "Ц.Халиун", role: "Тэргүүн дэд захирал", bio: "Группийн стратегийн төслүүд болон гадаад хамтын ажиллагааг хариуцан ажилладаг.", edu: "", imageUrl: "/haliun.png" },
+        { name: "Б.Гандөш", role: "Үйл ажиллагаа эрхэлсэн захирал", bio: "Уул уурхай, үйлдвэрлэлийн төслийн удирдлага болон өдөр тутмын үйл ажиллагааг хариуцдаг.", edu: "ШУТИС - Инженер.", imageUrl: "/dosh.png" }
       ]
     },
     companies: {
@@ -89,12 +87,24 @@ export const translations = {
       }
     },
     csr: {
-      title: "Тогтвортой хөгжил",
-      subtitle: "Бид байгаль эх болон нийгмийн сайн сайхны төлөө хариуцлагатай ажилладаг.",
-      restorationTitle: "Биологийн болон Техникийн нөхөн сэргээлт",
-      restorationDesc: "Монполимет Групп нь олборлолт явуулсан талбай бүртээ 100% биологийн нөхөн сэргээлт хийдэг. Одоогоор 1000 гаруй га талбайг ойжуулж, нуур цөөрөм байгуулан, байгалийн анхны төрхийг сэргээгээд байна.",
-      communityTitle: "Орон нутгийн дэмжлэг",
-      communityDesc: "Үйл ажиллагаа явуулж буй сум, орон нутгийн сургууль, цэцэрлэг, эмнэлгийн тохижилт, ажилчдын сургалт, тэтгэлэгт хөтөлбөрүүдийг тасралтгүй санхүүжүүлдэг."
+      title: "Тогтвортой хөгжил & Нийгмийн хариуцлага",
+      subtitle: "Жишиг нөхөн сэргээгч – Эх байгаль ба нийгмийн сайн сайхны төлөө хариуцлагатай үйлдвэрлэл",
+      tosonTitle: "Тосонгийн орд – Жишиг нөхөн сэргээлт",
+      tosonDesc: "Тосонгийн ордод 931.67 га талбайд ашиглалт явуулснаас техникийн болон биологийн нөхөн сэргээлтийг өндөр түвшинд гүйцэтгэн, 300,000+ мод тариалж, 16 га талбай бүхий Цэнгэг уст Тосон нуурыг шинээр бий болгосон.",
+      technicalStat: "Техникийн нөхөн сэргээлт 870.3 га талбайд",
+      biologicalStat: "Биологийн нөхөн сэргээлт, ургамалжуулалт 561 га талбайд",
+      treesStat: "300,000+ мод тариалж, 5.5 км ойн төгөл ургуулсан",
+      pillarsTitle: "Нийгмийн хариуцлагын үндсэн чиглэлүүд",
+      billionTreesTitle: "1 Сая Модоор Дэмжинэ",
+      billionTreesDesc: "Үндэсний 'Нэг тэрбум мод' хөдөлгөөнд Монполимет Групп 1 сая модоор идэвхтэй оролцож, ойн төглүүд болон нөхөн сэргээлтийн бүсүүддээ тасралтгүй тариалж байна.",
+      foundationTitle: "Мөнх Тогтвортой Хөгжил Сан",
+      foundationDesc: "Байгаль орчны нөхөн сэргээлт, орон нутгийн сургууль, цэцэрлэг, эмнэлгийн тохижилт, ажилтнууд болон оюутнуудын тэтгэлэгт хөтөлбөрүүдийг тасралтгүй санхүүжүүлдэг.",
+      greenTechTitle: "Ногоон Үйлдвэрлэл & Эко Технологи",
+      greenTechDesc: "Европын стандартын Монцемент хуурай аргын үйлдвэр болон бусад нэгжүүд дээр усыг 100% дахин ашиглах, хүлэмжийн хийг бууруулах дэвшилтэт шүүлтүүрийн системийг нэвтрүүлсэн.",
+      reportTitle: "Тогтвортой хөгжлийн тайлан & 360 Аялал",
+      reportDesc: "Тосон үйлдвэрийн нөхөн сэргээлтийн талбайд виртуал 360° аялал хийх эсвэл ESG & Тогтвортой хөгжлийн тайланг татаж авна уу.",
+      view360Btn: "Тосон үйлдвэрт зочлох 360° Аялал",
+      downloadReportBtn: "ESG & Тогтвортой хөгжлийн тайлан (PDF)"
     },
     hse: {
       title: "Байгаль орчин & ХАБЭА",
@@ -201,13 +211,11 @@ export const translations = {
     nav: {
       home: "Home",
       about: "About Us",
-      companies: "Companies",
+      companies: "Operations",
       csr: "CSR",
-      hse: "HSE & Environment",
+      procurement: "Procurement",
+      news: "News & Media",
       careers: "Careers",
-      tour: "360",
-      news: "News",
-      contact: "Contact",
       admin: "Admin"
     },
     common: {
@@ -262,10 +270,10 @@ export const translations = {
       ceoGreetingText: "Dear clients and partners, welcome to Monpolymet Group. Since our inception, we have aimed to make real contributions to our country's development. Combining high-quality production with responsible mining while preserving a green environment for future generations remains our ultimate goal.",
       team: [
         { name: "Ts.Garamjav", role: "Founder, Chairman of the Board", bio: "A prominent figure in the Mongolian mining sector, economist, and geological engineer. Over 30 years of experience in the industry.", edu: "NUM - Geology, MUST - PhD.", imageUrl: "/garamjav.png" },
-        { name: "N.Munkhnasan", role: "President of Monpolymet Group", bio: "Specialized in finance and investments. Manages the group's strategic development and foreign relations.", edu: "University of San Francisco, USA - Financial Management.", imageUrl: "/munkhnasan.png" },
-        { name: "B.Nandin-Erdene", role: "Chief Operating Officer", bio: "An engineer specialized in mining and industrial project management.", edu: "MUST - Mining Engineer.", imageUrl: "/1.png" },
+        { name: "N.Munkhnasan", role: "President of Monpolymet Group", bio: "Specialized in finance and investments. Manages the group's strategic development and foreign relations.", edu: "University of San Francisco, USA - Financial Management.", imageUrl: "/monhnasan.png" },
         { name: "B.Delger", role: "Chief Executive Officer", bio: "He oversees general operations and manages the strategic implementation and day-to-day operations.", edu: "", imageUrl: "/delger.png" },
-        { name: "G.Tuguldur", role: "Chief Financial Officer", bio: "Highly experienced in financial management. Oversees budgets and investment allocations.", edu: "", imageUrl: "/2.png" }
+        { name: "Ts.Haliun", role: "First Deputy Director", bio: "Oversees group strategic projects and international partnerships.", edu: "", imageUrl: "/haliun.png" },
+        { name: "B.Gandush", role: "Chief Operating Officer", bio: "Responsible for mining and industrial project management and operations.", edu: "MUST - Engineer.", imageUrl: "/dosh.png" }
       ]
     },
     companies: {
@@ -287,12 +295,24 @@ export const translations = {
       }
     },
     csr: {
-      title: "Corporate Social Responsibility",
-      subtitle: "We act responsibly for the well-being of mother nature and our society.",
-      restorationTitle: "Biological & Technical Reclamation",
-      restorationDesc: "Monpolymet Group performs 100% biological reclamation on every mined site. We have reforested over 1,000 hectares, created artificial lakes, and successfully restored natural biodiversity.",
-      communityTitle: "Local Development Support",
-      communityDesc: "We continuously fund the refurbishment of local schools, kindergartens, and hospitals, and support community scholarships and employee development programs."
+      title: "Sustainability & CSR",
+      subtitle: "Model Eco-Restoration Leader – Responsible Production for Nature and Society",
+      tosonTitle: "Toson Deposit – Model Reclamation",
+      tosonDesc: "Out of 931.67 ha exploited at the Toson placer deposit, technical & biological reclamation has been conducted at benchmark standards, planting over 300,000 trees and creating the 16-hectare freshwater Toson Lake ecosystem.",
+      technicalStat: "Technical Reclamation (870.3 ha total)",
+      biologicalStat: "Biological Reclamation & Revegetation (561 ha total)",
+      treesStat: "300,000+ Trees Planted across 5.5 km forest belts",
+      pillarsTitle: "Key Sustainability Pillars",
+      billionTreesTitle: "1 Million Trees Pledge",
+      billionTreesDesc: "Supporting the national 'One Billion Trees' movement by actively planting 1 million trees across our forestry and restoration zones.",
+      foundationTitle: "Eternal Sustainability Foundation",
+      foundationDesc: "Continuously funding environmental restoration, local education, community healthcare upgrades, employee training, and student scholarships.",
+      greenTechTitle: "Green Production & Eco-Tech",
+      greenTechDesc: "Implementing European standard dry-process cement technology at Moncement, utilizing 100% water recycling and advanced dust filtering systems.",
+      reportTitle: "Sustainability Report & 360° Virtual Tour",
+      reportDesc: "Experience a 360° virtual tour of Toson Factory's reclaimed eco-park or download our official ESG & Sustainability Report.",
+      view360Btn: "Experience 360° Virtual Tour",
+      downloadReportBtn: "Download ESG & Sustainability Report (PDF)"
     },
     hse: {
       title: "Environment & HSE",

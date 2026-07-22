@@ -21,12 +21,16 @@ export default function HistoryTimeline({ timeline, lang }) {
     return null;
   }
 
-  // Sort timeline by year descending
+  // Safe sort timeline by year descending (handling non-numeric years like 'Өнөөдөр' or 'Today')
   const sortedTimeline = [...timeline].sort((a, b) => {
-    return parseInt(b.year) - parseInt(a.year);
+    const valA = parseInt(a.year);
+    const valB = parseInt(b.year);
+    const numA = isNaN(valA) ? 9999 : valA;
+    const numB = isNaN(valB) ? 9999 : valB;
+    return numB - numA;
   });
 
-  const currentActiveIndex = activeIndex === -1 ? sortedTimeline.length - 1 : activeIndex;
+  const currentActiveIndex = activeIndex >= sortedTimeline.length ? 0 : (activeIndex < 0 ? 0 : activeIndex);
   const activeEvent = sortedTimeline[currentActiveIndex] || sortedTimeline[0];
 
   // Helper to get image based on index
@@ -39,72 +43,228 @@ export default function HistoryTimeline({ timeline, lang }) {
     return FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
   };
 
-  const activeTitle = lang === 'mn' ? activeEvent.titleMn : activeEvent.titleEn;
-  const activeDesc = lang === 'mn' ? activeEvent.descMn : activeEvent.descEn;
+  const activeTitle = (lang === 'mn' ? activeEvent.titleMn : activeEvent.titleEn) || activeEvent.title || activeEvent.titleMn;
+  const activeDesc = (lang === 'mn' ? activeEvent.descMn : activeEvent.descEn) || activeEvent.desc || activeEvent.description || activeEvent.descMn;
+
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev > 0 ? prev - 1 : sortedTimeline.length - 1));
+  };
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev < sortedTimeline.length - 1 ? prev + 1 : 0));
+  };
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '60px 0 80px 0', fontFamily: "'Montserrat', sans-serif" }}>
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 0 60px 0', fontFamily: "'Montserrat', sans-serif" }}>
+      <style>
+        {`
+          .history-timeline-flex {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+          }
+          .timeline-years-scroll {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            flex: 0 0 130px;
+            border-right: 2px solid #f1f5f9;
+            padding-right: 20px;
+            height: 420px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            gap: 16px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
+            scroll-behavior: smooth;
+          }
+          .timeline-years-scroll::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+          }
+          .timeline-years-scroll::-webkit-scrollbar-track {
+            background: transparent;
+          }
+          .timeline-years-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+          }
+          .year-btn {
+            background: transparent;
+            border: none;
+            text-align: right;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 500;
+            color: #64748b;
+            transition: all 0.2s ease;
+            font-family: 'Montserrat', sans-serif;
+            flex-shrink: 0;
+            width: 100%;
+          }
+          .year-btn:hover {
+            color: #2563eb;
+            background-color: #f8fafc;
+          }
+          .year-btn.active {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2563eb;
+            background-color: #eff6ff;
+          }
+          .timeline-card-wrapper {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+          }
+          .timeline-motion-div {
+            position: relative;
+            width: 100%;
+            height: 420px;
+          }
+          .timeline-card-inner {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            background-color: #ffffff;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+          }
+          .timeline-card-img-wrap {
+            flex: 0 0 45%;
+            position: relative;
+            background-color: #f8fafc;
+            min-height: 200px;
+          }
+          .timeline-card-text-wrap {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: #ffffff;
+          }
 
-      <div style={{ display: 'flex', gap: '60px', alignItems: 'center', flexWrap: 'wrap' }}>
+          .mobile-nav-buttons {
+            display: none;
+          }
 
-        {/* Left Side: Years List (Scrollable) */}
-        <div
-          className="timeline-years-scroll"
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-end',
-            flex: '0 0 120px',
-            borderRight: '2px solid #f1f5f9',
-            paddingRight: '16px',
-            height: '420px', // Matches the card height
-            overflowY: 'auto',
-            overflowX: 'hidden',
-            gap: '28px', // Adjusted so exactly 8 items fit in 420px
-            paddingTop: '10px',
-            paddingBottom: '10px'
-          }}>
-          <style>
-            {`
-              .timeline-years-scroll::-webkit-scrollbar {
-                width: 4px;
-              }
-              .timeline-years-scroll::-webkit-scrollbar-track {
-                background: transparent;
-              }
-              .timeline-years-scroll::-webkit-scrollbar-thumb {
-                background: #cbd5e1;
-                border-radius: 4px;
-              }
-              .timeline-years-scroll {
-                scrollbar-width: thin;
-                scrollbar-color: #cbd5e1 transparent;
-                scroll-behavior: smooth;
-              }
-            `}
-          </style>
+          @media (max-width: 768px) {
+            .history-timeline-flex {
+              flex-direction: column;
+              gap: 16px;
+              align-items: stretch;
+            }
+            .timeline-years-scroll {
+              flex-direction: row;
+              flex: none;
+              width: 100%;
+              height: auto;
+              border-right: none;
+              border-bottom: 1px solid #e2e8f0;
+              padding: 4px 10px 12px 10px;
+              overflow-x: auto;
+              overflow-y: hidden;
+              justify-content: flex-start;
+              gap: 8px;
+              -webkit-overflow-scrolling: touch;
+              touch-action: pan-x;
+              scrollbar-width: none;
+            }
+            .timeline-years-scroll::-webkit-scrollbar {
+              display: none;
+            }
+            .year-btn {
+              width: auto !important;
+              text-align: center !important;
+              white-space: nowrap;
+              padding: 8px 16px !important;
+              font-size: 14px !important;
+              border-radius: 20px !important;
+              background-color: #f1f5f9;
+              color: #475569;
+            }
+            .year-btn.active {
+              background-color: #2563eb !important;
+              color: #ffffff !important;
+              font-size: 14px !important;
+              font-weight: 700 !important;
+              box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+            }
+            .mobile-nav-buttons {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 0 4px;
+              margin-bottom: 8px;
+            }
+            .nav-arrow-btn {
+              background: #f1f5f9;
+              border: 1px solid #cbd5e1;
+              border-radius: 50%;
+              width: 36px;
+              height: 36px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 16px;
+              font-weight: bold;
+              color: #0f172a;
+              cursor: pointer;
+            }
+            .timeline-motion-div {
+              height: auto !important;
+            }
+            .timeline-card-inner {
+              flex-direction: column;
+              height: auto !important;
+            }
+            .timeline-card-img-wrap {
+              flex: none;
+              width: 100%;
+              height: 200px;
+            }
+            .timeline-card-text-wrap {
+              padding: 20px 16px;
+            }
+          }
+        `}
+      </style>
+
+      {/* Mobile arrows indicator */}
+      <div className="mobile-nav-buttons">
+        <button onClick={handlePrev} className="nav-arrow-btn" aria-label="Previous year">
+          ‹
+        </button>
+        <span style={{ fontSize: '14px', fontWeight: '600', color: '#2563eb' }}>
+          {activeEvent.year} ({currentActiveIndex + 1}/{sortedTimeline.length})
+        </span>
+        <button onClick={handleNext} className="nav-arrow-btn" aria-label="Next year">
+          ›
+        </button>
+      </div>
+
+      <div className="history-timeline-flex">
+        {/* Left/Top Side: Years List (Scrollable) */}
+        <div className="timeline-years-scroll">
           {sortedTimeline.map((item, idx) => {
-            const isActive = idx === activeIndex;
+            const isActive = idx === currentActiveIndex;
             return (
               <button
                 key={item.id || idx}
                 onClick={() => setActiveIndex(idx)}
                 onMouseEnter={() => setActiveIndex(idx)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  textAlign: 'right',
-                  padding: 0,
-                  cursor: 'pointer',
-                  fontSize: isActive ? '26px' : '20px',
-                  fontWeight: isActive ? '700' : '500',
-                  color: isActive ? '#2563eb' : '#cbd5e1', // Matches the bright blue of the cards
-                  transition: 'all 0.15s ease',
-                  fontFamily: "'Montserrat', sans-serif",
-                  transform: 'scale(1)', // Removed scale since font-size already handles enlargement
-                  transformOrigin: 'right center',
-                  flexShrink: 0
-                }}
+                className={`year-btn ${isActive ? 'active' : ''}`}
               >
                 {item.year}
               </button>
@@ -112,44 +272,21 @@ export default function HistoryTimeline({ timeline, lang }) {
           })}
         </div>
 
-        {/* Right Side: Content Card */}
-        <div style={{ flex: '1', position: 'relative', display: 'flex', alignItems: 'center' }}>
-
+        {/* Right/Bottom Side: Content Card */}
+        <div className="timeline-card-wrapper">
           <AnimatePresence mode="wait">
             <motion.div
-              key={activeIndex}
-              initial={{ opacity: 0, x: 10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -10 }}
-              transition={{ duration: 0.15 }}
-              style={{
-                position: 'relative',
-                width: '100%',
-                height: '420px', // Increased height since it will be wider
-              }}
+              key={currentActiveIndex}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="timeline-motion-div"
             >
-
-
-
               {/* Main Card */}
-              <div style={{
-                position: 'relative',
-                zIndex: 1,
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                borderRadius: '16px',
-                border: '1px solid #2563eb',
-                backgroundColor: '#ffffff',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
-                overflow: 'hidden'
-              }}>
+              <div className="timeline-card-inner">
                 {/* Image Column */}
-                <div style={{
-                  flex: '0 0 45%', // 45% width for image
-                  position: 'relative',
-                  backgroundColor: '#f8fafc'
-                }}>
+                <div className="timeline-card-img-wrap">
                   <img
                     src={getImageUrl(currentActiveIndex)}
                     alt={activeTitle || 'Timeline Image'}
@@ -157,51 +294,37 @@ export default function HistoryTimeline({ timeline, lang }) {
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
-                      position: 'absolute',
-                      top: 0,
-                      left: 0
+                      display: 'block'
                     }}
                   />
                 </div>
 
                 {/* Text Column */}
-                <div style={{
-                  flex: '1',
-                  padding: '40px 60px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  backgroundColor: '#ffffff'
-                }}>
+                <div className="timeline-card-text-wrap">
                   <h3 style={{
-                    fontSize: '28px',
+                    fontSize: '22px',
                     fontWeight: '700',
                     color: '#0f172a',
-                    marginBottom: '20px',
+                    marginBottom: '14px',
                     fontFamily: "'Montserrat', sans-serif"
                   }}>
                     {activeTitle || 'Гарчиг'}
                   </h3>
                   <div style={{
-                    fontSize: '16px',
+                    fontSize: '15px',
                     lineHeight: '1.7',
                     color: '#475569',
                     fontFamily: "'Inter', sans-serif",
                     margin: 0,
                     whiteSpace: 'pre-line',
-                    overflowY: 'auto',
-                    paddingRight: '10px'
                   }}>
                     {activeDesc || 'Мэдээлэл байхгүй байна.'}
                   </div>
                 </div>
               </div>
-
             </motion.div>
           </AnimatePresence>
-
         </div>
-
       </div>
     </div>
   );

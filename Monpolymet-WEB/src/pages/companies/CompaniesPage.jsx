@@ -23,7 +23,7 @@ export default function CompaniesPage({ lang, t, pageMetadata }) {
 
       <div style={{ backgroundColor: '#ffffff', padding: '60px 20px', textAlign: 'center' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <p style={{ fontSize: '20px', lineHeight: '1.8', color: '#334155', fontWeight: '500', fontFamily: "'Inter', sans-serif", margin: 0 }}>
+          <p style={{ fontSize: '20px', lineHeight: '1.5', color: '#334155', fontWeight: '500', fontFamily: "'Inter', sans-serif", margin: 0 }}>
             {lang === 'mn' ? 'Монполимет Групп нь 1992 онд байгуулагдсан. Уул уурхай, байгаль орчны нөхөн сэргээлт, барилгын материал үйлдвэрлэл, барилга байгууламж, гадаад худалдааны чиглэлээр үйл ажиллагаа явуулж буй үндэсний үйлдвэрлэгч – хөрөнгө оруулагч компани юм.' : 'Monpolymet Group was founded in 1992. It is a national manufacturer-investor company operating in mining, environmental rehabilitation, building materials production, construction, and foreign trade.'}
           </p>
         </div>

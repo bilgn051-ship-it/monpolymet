@@ -453,3 +453,24 @@ export async function fetchProcurementContent() {
     return null;
   }
 }
+
+export async function submitSupplierRegistration(formData, attachedFile) {
+  const payload = new FormData();
+  payload.append('companyName', formData.companyName);
+  payload.append('regNumber', formData.regNumber);
+  payload.append('category', formData.category);
+  payload.append('email', formData.email);
+  payload.append('phone', formData.phone);
+  payload.append('description', formData.description || '');
+  if (attachedFile) {
+    payload.append('file', attachedFile);
+  }
+
+  const res = await fetch(`${BASE_URL}/public/supplier-register`, {
+    method: 'POST',
+    body: payload,
+  });
+
+  if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
+  return res.json();
+}

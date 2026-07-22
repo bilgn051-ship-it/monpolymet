@@ -35,7 +35,7 @@ export default function Header({
     { id: 'csr', label: t.nav.csr, target: 'csr' },
     { id: 'news', label: t.nav.news, target: 'news' },
     { id: 'careers', label: t.nav.careers, target: 'careers' },
-    { id: 'contact', label: t.nav.contact, target: 'contact' }
+    { id: 'procurement', label: lang === 'mn' ? 'Худалдан авалт' : 'Procurement', target: 'procurement' }
   ];
 
   const subMenus = {
@@ -72,16 +72,7 @@ export default function Header({
     ]
   };
 
-  const navItems = settings?.navigation?.length > 0
-    ? [...settings.navigation]
-        .filter(n => n.isActive !== false)
-        .sort((a, b) => a.order - b.order)
-        .map(item => ({
-          id: item.id,
-          label: lang === 'mn' ? item.label?.mn : item.label?.en,
-          target: item.target
-        }))
-    : defaultNavItems;
+  const navItems = defaultNavItems;
 
   const handleNavClick = (target) => {
     setMenuOpen(false);
@@ -165,6 +156,7 @@ export default function Header({
             })}
           </nav>
 
+          {/* Action Buttons */}
           {/* Action Buttons */}
           <div className="header-actions">
             <button

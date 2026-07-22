@@ -78,12 +78,12 @@ export default function HomeStatsGrid({ lang = 'mn' }) {
         </div>
       </div>
 
-      <div style={{ textAlign: 'center', margin: '76px 0 100px 0' }}>
-        <h2 className="no-underline" style={{ fontSize: '50px', lineHeight: '1.1', fontWeight: '600', color: '#000000', letterSpacing: '-0.02em', fontFamily: "'Montserrat', sans-serif" }}>
+      <div style={{ textAlign: 'center', margin: '76px 0 100px 0', padding: '0 20px' }}>
+        <h2 className="no-underline" style={{ fontSize: '36px', lineHeight: '1.35', fontWeight: '700', color: '#000000', letterSpacing: '-0.01em', fontFamily: "'Montserrat', sans-serif", maxWidth: '1000px', margin: '0 auto' }}>
           {lang === 'mn' ? (
-            <>Үндэсний үйлдвэрлэл <br /> Монголын бахархал</>
+            <>Шинэ технологи, шилдэг санаа, ногоон хөгжилд суурилсан үйлдвэрлэл, бүтээн байгуулалтыг Монголдоо бүтээцгээе</>
           ) : (
-            <>National Production <br /> Pride of Mongolia</>
+            <>Creating industrial development & national production based on new technology and green development in Mongolia</>
           )}
         </h2>
       </div>

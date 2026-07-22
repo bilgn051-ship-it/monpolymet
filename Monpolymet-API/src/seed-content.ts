@@ -184,7 +184,7 @@ const PAGES = [
   { key: 'companies', navLabel: ls('Компаниуд', 'Companies'), header: { tag: ls('Компаниуд', 'Companies'), title: ls('Компаниуд', 'Companies'), subtitle: ls('Охин компаниуд', 'Subsidiaries') }, isActive: true },
   { key: 'csr', navLabel: ls('Тогтвортой хөгжил', 'CSR'), header: { tag: ls('Тогтвортой хөгжил', 'CSR'), title: ls('Тогтвортой хөгжил', 'Corporate Social Responsibility'), subtitle: ls('Монполимет групп', 'Monpolymet Group') }, isActive: true },
   { key: 'news', navLabel: ls('Мэдээ мэдээлэл', 'News'), header: { tag: ls('Мэдээ', 'News'), title: ls('Мэдээ мэдээлэл', 'News & Updates'), subtitle: ls('Цаг үеийн мэдээ', 'Latest Updates') }, isActive: true },
-  { key: 'procurement', navLabel: ls('Худалдан авалт', 'Procurement'), header: { tag: ls('Худалдан авалт', 'Procurement'), title: ls('Худалдан авалт', 'Procurement'), subtitle: ls('Тендер', 'Tender') }, isActive: true },
+  { key: 'procurement', navLabel: ls('Худалдан авалт', 'Procurement'), header: { tag: ls('Худалдан авалт', 'Procurement'), title: ls('Худалдан Авалтын Портал', 'Global Procurement Portal'), subtitle: ls('Дэлхийн стандарт, ногоон хөгжилд суурилсан тогтвортой нийлүүлэгчдийн сүлжээ', 'Sustainable procurement network based on global standards and green technology.') }, isActive: true },
 ];
 
 const HOME_CONTENT = {

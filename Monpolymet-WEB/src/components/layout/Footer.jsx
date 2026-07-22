@@ -47,7 +47,7 @@ export default function Footer({ lang, t, setCurrentPage, settings }) {
   };
 
   return (
-    <div className="footer-wrapper" style={{ backgroundColor: '#ffffff', padding: '40px 5% 0 5%' }}>
+    <div className="footer-wrapper" style={{ backgroundColor: '#ffffff', padding: '0 5% 0 5%' }}>
       <footer className="site-footer" style={{ width: '100%', margin: '0 auto', borderRadius: '24px' }}>
         <div className="footer-top">
           <div className="footer-brand-col">

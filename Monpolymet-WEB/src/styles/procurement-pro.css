@@ -123,6 +123,7 @@
     margin: 0 auto 5rem;
     text-align: center;
 }
+
 .pro-intro-title {
     font-size: 2.5rem;
     font-weight: 800;
@@ -130,6 +131,7 @@
     letter-spacing: -0.03em;
     color: var(--text-color);
 }
+
 .pro-intro-text {
     font-size: 1.25rem;
     color: var(--text-muted);
@@ -163,8 +165,50 @@
 /* Contact Badges */
 .pro-contact-badges {
     display: flex;
-    gap: 3rem;
+    gap: 1rem;
     flex-wrap: wrap;
+}
+
+.proc-step-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.proc-step-card .proc-step-icon-wrap svg {
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
+}
+
+.proc-step-card:hover .proc-step-icon-wrap svg {
+    transform: scale(1.25) translateY(-3px);
+    color: #2563eb;
+}
+
+.proc-step-card:hover {
+    border-color: #2563eb !important;
+    box-shadow: none !important;
+}
+
+.stat-pill-item {
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.stat-pill-item .stat-num {
+    color: #0f172a;
+    transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.stat-pill-item:hover .stat-num {
+    color: #0260b4;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .hero-pill-stats {
+        border-radius: 24px !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        padding: 20px !important;
+    }
 }
 
 .pro-badge {

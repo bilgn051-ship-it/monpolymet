@@ -27,8 +27,8 @@ function App() {
   // links (e.g. /about), refreshes and back/forward all work.
   const [currentPage, setCurrentPage, pageParam] = usePageRouting();
 
-  // Applies the persisted theme to the document (setter reserved for a toggle).
-  useDarkMode();
+  // Applies the persisted theme to the document and provides theme state.
+  const [darkMode, setDarkMode] = useDarkMode();
 
   // News and open vacancies come live from the API (managed in the admin
   // dashboard). The bundled mock data is the initial value and the fallback

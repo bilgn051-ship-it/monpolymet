@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Quote } from 'lucide-react';
+import garamjavSignature from '../../../assets/garamjav-signature.png';
 
 export default function CEOGreeting({ lang, homeContent }) {
   const containerRef = useRef(null);
@@ -24,7 +25,7 @@ export default function CEOGreeting({ lang, homeContent }) {
 
   const sectionTitle = homeContent?.ceoSection
     ? (lang === 'mn' ? homeContent.ceoSection.sectionTitleMn : homeContent.ceoSection.sectionTitleEn)
-    : (lang === 'mn' ? 'Үүсгэн байгуулагчын мэндчилгээ' : 'Message from Founder');
+    : (lang === 'mn' ? 'Үүсгэн байгуулагчийн мэндчилгээ' : 'Message from Founder');
 
   const quote = homeContent?.ceoSection
     ? (lang === 'mn' ? homeContent.ceoSection.quoteMn : homeContent.ceoSection.quoteEn)
@@ -94,36 +95,28 @@ export default function CEOGreeting({ lang, homeContent }) {
           flexDirection: 'column',
           justifyContent: 'flex-start'
         }}>
-          <h2 className="no-underline" style={{ 
-            fontSize: '32px', 
-            fontWeight: '600', 
-            color: '#000000', 
-            marginBottom: '24px', 
+          <h2 className="no-underline" style={{
+            fontSize: '32px',
+            fontWeight: '600',
+            color: '#000000',
+            marginBottom: '24px',
             fontFamily: "'Montserrat', sans-serif",
             letterSpacing: '0.5px',
-            textAlign: 'center'
+            textAlign: 'left'
           }}>
             {sectionTitle}
           </h2>
-          <div style={{ position: 'relative' }}>
-            <div style={{ position: 'absolute', left: '-36px', top: '-6px' }}>
-              <Quote size={32} color="#94a3b8" strokeWidth={1.5} style={{ transform: 'rotateY(180deg)' }} />
-            </div>
-          <p style={{ 
-            fontSize: '0.95rem', 
-            color: '#475569', 
-            lineHeight: 1.6, 
+          <p style={{
+            fontSize: '0.95rem',
+            color: '#475569',
+            lineHeight: 1.5,
             marginBottom: '24px',
             fontFamily: "'Inter', sans-serif",
             whiteSpace: 'pre-line',
             textAlign: 'justify'
           }}>
             {quote}
-            <span style={{ display: 'inline-block', marginLeft: '6px', verticalAlign: 'bottom', marginBottom: '-8px' }}>
-              <Quote size={32} color="#94a3b8" strokeWidth={1.5} />
-            </span>
           </p>
-          </div>
           <div style={{ marginTop: 'auto', position: 'relative' }}>
             <style>
               {`@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');`}
@@ -134,10 +127,18 @@ export default function CEOGreeting({ lang, homeContent }) {
             <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem', fontFamily: "'Inter', sans-serif", lineHeight: '1.4' }}>
               {role}
             </p>
-            <div style={{ marginTop: '4px', marginLeft: '16px' }}>
-              <span style={{ fontFamily: "'Great Vibes', cursive", fontSize: '36px', color: '#94a3b8', fontWeight: '400', transform: 'rotate(-5deg)', display: 'inline-block', lineHeight: '0.8' }}>
-                Garamjav.Ts
-              </span>
+            <div style={{ marginTop: '4px', marginLeft: '-12px' }}>
+              <img
+                src={garamjavSignature}
+                alt="Ц.Гарамжав Гарын үсэг"
+                style={{
+                  height: '75px',
+                  width: 'auto',
+                  mixBlendMode: 'multiply',
+                  objectFit: 'contain',
+                  display: 'block'
+                }}
+              />
             </div>
           </div>
         </div>

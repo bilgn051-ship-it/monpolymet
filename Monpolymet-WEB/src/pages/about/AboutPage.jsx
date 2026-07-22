@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, X } from 'lucide-react';
+import { User, X, Compass, Award, ShieldCheck } from 'lucide-react';
 import { useInView } from '../../hooks/useInView';
 import { fetchTimeline, fetchAboutContent, fetchCoreValues, fetchTeam } from '../../api';
 import CEOGreeting from '../home/sections/CEOGreeting';
@@ -60,10 +60,10 @@ export default function AboutPage({ lang, t, pageMetadata }) {
   const [selectedMember, setSelectedMember] = useState(null);
 
   const fallbackImages = [
-    "/Ц.Гарамжав.jpg",
-    "/Н.Мөнхнасан.jpg",
-    "/Б.Дэлгэр.jpg",
-    "/Ц.Халиун.jpg",
+    "/garamjav.png",
+    "/monhnasan.png",
+    "/delger.png",
+    "/haliun.png",
     "/2.jpg"
   ];
 
@@ -81,16 +81,17 @@ export default function AboutPage({ lang, t, pageMetadata }) {
   };
 
   const getValidImageUrl = (member, idx) => {
-    if (!member || !member.name) return fallbackImages[idx % 5];
+    if (!member || !member.name) return fallbackImages[idx % fallbackImages.length];
     const name = member.name.toLowerCase();
 
+    if (name.includes('гарамжав') || name.includes('garamjav')) return '/garamjav.png';
     if (name.includes('мөнхнасан') || name.includes('munkhnasan')) return '/monhnasan.png';
+    if (name.includes('дэлгэр') || name.includes('delger')) return '/delger.png';
     if (name.includes('халиун') || name.includes('haliun')) return '/haliun.png';
     if (name.includes('гандөш') || name.includes('gandush')) return '/dosh.png';
-    if (name.includes('дэлгэр') || name.includes('delger')) return '/delger.png';
-    if (name.includes('гарамжав') || name.includes('garamjav')) return '/garamjav.png';
 
-    return member.imageUrl || fallbackImages[idx % 5];
+    if (member.imageUrl && member.imageUrl.startsWith('/') && !member.imageUrl.includes('1.png')) return member.imageUrl;
+    return fallbackImages[idx % fallbackImages.length];
   };
 
   useEffect(() => {
@@ -189,16 +190,23 @@ export default function AboutPage({ lang, t, pageMetadata }) {
     ? (lang === 'mn' ? aboutContent.leadershipGreeting.textMn : aboutContent.leadershipGreeting.textEn)
     : t.about.ceoGreetingText;
 
-  /* let historyData = timeline && timeline.length > 0
+  const historyData = timeline && timeline.length > 0
     ? timeline.map(h => ({
-      year: h.year,
-      title: lang === 'mn' ? h.titleMn : h.titleEn,
-      desc: lang === 'mn' ? h.descMn : h.descEn,
-      imageUrl: h.imageUrl
-    }))
-    : []; */
-
-  // Dummy data removed. Just use the actual historyData.
+        id: h._id || h.id,
+        year: h.year,
+        titleMn: (typeof h.title === 'object' ? h.title?.mn : h.titleMn) || h.title,
+        titleEn: (typeof h.title === 'object' ? h.title?.en : h.titleEn) || h.title,
+        descMn: (typeof h.desc === 'object' ? h.desc?.mn : h.descMn) || h.description || h.desc,
+        descEn: (typeof h.desc === 'object' ? h.desc?.en : h.descEn) || h.description || h.desc,
+        imageUrl: h.imageUrl
+      }))
+    : (t.about.history || []).map(h => ({
+        year: h.year,
+        titleMn: h.title,
+        titleEn: h.title,
+        descMn: h.desc,
+        descEn: h.desc,
+      }));
 
   /* const valuesData = coreValues && coreValues.length > 0
     ? coreValues.sort((a, b) => a.order - b.order).map(v => ({
@@ -208,15 +216,17 @@ export default function AboutPage({ lang, t, pageMetadata }) {
     }))
     : t.about.values; */
 
-  const teamData = team && team.length > 0
-    ? team.sort((a, b) => a.order - b.order).map(m => ({
-      name: lang === 'mn' ? m.nameMn : m.nameEn,
-      role: lang === 'mn' ? m.roleMn : m.roleEn,
-      bio: lang === 'mn' ? m.bioMn : m.bioEn,
-      edu: lang === 'mn' ? m.eduMn : m.eduEn,
-      imageUrl: m.imageUrl,
-    }))
-    : t.about.team;
+  const parsedTeam = team && team.length > 0
+    ? team.map(m => {
+        const name = (typeof m.name === 'object' ? (lang === 'mn' ? m.name?.mn : m.name?.en) : (lang === 'mn' ? m.nameMn : m.nameEn)) || (typeof m.name === 'string' ? m.name : '');
+        const role = (typeof m.role === 'object' ? (lang === 'mn' ? m.role?.mn : m.role?.en) : (lang === 'mn' ? m.roleMn : m.roleEn)) || (typeof m.role === 'string' ? m.role : '');
+        const bio = (typeof m.bio === 'object' ? (lang === 'mn' ? m.bio?.mn : m.bio?.en) : (lang === 'mn' ? m.bioMn : m.bioEn)) || (typeof m.bio === 'string' ? m.bio : '');
+        const edu = (typeof m.edu === 'object' ? (lang === 'mn' ? m.edu?.mn : m.edu?.en) : (lang === 'mn' ? m.eduMn : m.eduEn)) || m.education || (typeof m.edu === 'string' ? m.edu : '');
+        return { name, role, bio, edu, imageUrl: m.imageUrl };
+      }).filter(m => m.name && !m.name.includes('?'))
+    : [];
+
+  const teamData = (parsedTeam && parsedTeam.length > 0) ? parsedTeam : t.about.team;
 
   const founder = teamData[0] || {};
   const restTeam = teamData.slice(1);
@@ -292,7 +302,7 @@ export default function AboutPage({ lang, t, pageMetadata }) {
         <CEOGreeting lang={lang} t={t} />
 
         {/* Group Intro & 3 Cards Section */}
-        <section className="pickpack-exact-section" ref={valuesRef}>
+        <section className="pickpack-exact-section" style={{ paddingTop: '24px', marginTop: '-30px' }} ref={valuesRef}>
           <div className="pickpack-exact-container">
 
             {/* Group Intro Heading */}
@@ -308,7 +318,7 @@ export default function AboutPage({ lang, t, pageMetadata }) {
                 color: '#475569',
                 fontFamily: "'Inter', sans-serif",
                 textAlign: 'center',
-                margin: '50px auto'
+                margin: '24px auto 40px auto'
               }}>
                 {lang === 'mn' ? (
                   <>
@@ -328,15 +338,15 @@ export default function AboutPage({ lang, t, pageMetadata }) {
               gap: '32px',
               maxWidth: '1200px',
               margin: '0 auto',
-              paddingBottom: '40px'
+              paddingBottom: '10px'
             }}>
               {/* Card 1: Алсын хараа */}
               <div style={{
                 backgroundColor: '#ffffff',
                 borderRadius: '24px',
-                padding: '40px 32px',
+                padding: '36px 28px',
                 boxShadow: '0 10px 30px -10px rgba(0,0,0,0.08)',
-                border: '1px solid #cbd5e1', /* Default gray/blackish border */
+                border: '1px solid #cbd5e1',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -355,10 +365,18 @@ export default function AboutPage({ lang, t, pageMetadata }) {
                   const title = e.currentTarget.querySelector('h3');
                   if (title) title.style.color = '#0f172a';
                 }}>
-                <h3 style={{ fontSize: '24px', fontWeight: '700', fontFamily: "'Montserrat', sans-serif", color: '#0f172a', margin: '0 0 16px 0', transition: 'color 0.3s ease' }}>
+                <div style={{
+                  marginBottom: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <Compass size={46} color="#2563eb" strokeWidth={1.6} />
+                </div>
+                <h3 style={{ fontSize: '22px', fontWeight: '700', fontFamily: "'Montserrat', sans-serif", color: '#0f172a', margin: '0 0 14px 0', transition: 'color 0.3s ease' }}>
                   {lang === 'mn' ? 'Алсын хараа' : 'Vision'}
                 </h3>
-                <p style={{ fontSize: '1rem', lineHeight: '1.4', color: '#475569', fontFamily: "'Inter', sans-serif", margin: 0 }}>
+                <p style={{ fontSize: '0.95rem', lineHeight: '1.5', color: '#475569', fontFamily: "'Inter', sans-serif", margin: 0 }}>
                   {visionText || (lang === 'mn' ? 'Эх орныхоо баялгийг байгаль орчинд ээлтэй, дэвшилтэт технологиор боловсруулан, үндэсний бүтээн байгуулалт, тогтвортой хөгжлийн түүчээ байна.' : 'Leading national development and sustainable growth through eco-friendly advanced technology.')}
                 </p>
               </div>
@@ -367,9 +385,9 @@ export default function AboutPage({ lang, t, pageMetadata }) {
               <div style={{
                 backgroundColor: '#ffffff',
                 borderRadius: '24px',
-                padding: '40px 32px',
+                padding: '36px 28px',
                 boxShadow: '0 10px 30px -10px rgba(0,0,0,0.08)',
-                border: '1px solid #cbd5e1', /* Default gray/blackish border */
+                border: '1px solid #cbd5e1',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -388,10 +406,18 @@ export default function AboutPage({ lang, t, pageMetadata }) {
                   const title = e.currentTarget.querySelector('h3');
                   if (title) title.style.color = '#0f172a';
                 }}>
-                <h3 style={{ fontSize: '24px', fontWeight: '700', fontFamily: "'Montserrat', sans-serif", color: '#0f172a', margin: '0 0 16px 0', transition: 'color 0.3s ease' }}>
+                <div style={{
+                  marginBottom: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <Award size={46} color="#2563eb" strokeWidth={1.6} />
+                </div>
+                <h3 style={{ fontSize: '22px', fontWeight: '700', fontFamily: "'Montserrat', sans-serif", color: '#0f172a', margin: '0 0 14px 0', transition: 'color 0.3s ease' }}>
                   {lang === 'mn' ? 'Үнэт зүйлс' : 'Values'}
                 </h3>
-                <p style={{ fontSize: '1rem', lineHeight: '1.4', color: '#475569', fontFamily: "'Inter', sans-serif", margin: 0 }}>
+                <p style={{ fontSize: '0.95rem', lineHeight: '1.5', color: '#475569', fontFamily: "'Inter', sans-serif", margin: 0 }}>
                   {lang === 'mn' ? 'Хариуцлага, Инноваци, Нөхөн сэргээлт, Хамтын ажиллагааг эрхэмлэн, харилцан итгэлцэл дээр тулгуурлан хамтдаа хөгжинө.' : 'Responsibility, Innovation, Restoration, and Cooperation based on mutual trust and growth.'}
                 </p>
               </div>
@@ -400,9 +426,9 @@ export default function AboutPage({ lang, t, pageMetadata }) {
               <div style={{
                 backgroundColor: '#ffffff',
                 borderRadius: '24px',
-                padding: '40px 32px',
+                padding: '36px 28px',
                 boxShadow: '0 10px 30px -10px rgba(0,0,0,0.08)',
-                border: '1px solid #cbd5e1', /* Default gray/blackish border */
+                border: '1px solid #cbd5e1',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -421,10 +447,18 @@ export default function AboutPage({ lang, t, pageMetadata }) {
                   const title = e.currentTarget.querySelector('h3');
                   if (title) title.style.color = '#0f172a';
                 }}>
-                <h3 style={{ fontSize: '24px', fontWeight: '700', fontFamily: "'Montserrat', sans-serif", color: '#0f172a', margin: '0 0 16px 0', transition: 'color 0.3s ease' }}>
+                <div style={{
+                  marginBottom: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <ShieldCheck size={46} color="#2563eb" strokeWidth={1.6} />
+                </div>
+                <h3 style={{ fontSize: '22px', fontWeight: '700', fontFamily: "'Montserrat', sans-serif", color: '#0f172a', margin: '0 0 14px 0', transition: 'color 0.3s ease' }}>
                   {lang === 'mn' ? 'Зарчим' : 'Principles'}
                 </h3>
-                <p style={{ fontSize: '1rem', lineHeight: '1.4', color: '#475569', fontFamily: "'Inter', sans-serif", margin: 0 }}>
+                <p style={{ fontSize: '0.95rem', lineHeight: '1.5', color: '#475569', fontFamily: "'Inter', sans-serif", margin: 0 }}>
                   {missionText || (lang === 'mn' ? 'Олон улсын стандартад нийцсэн чанартай бүтээгдэхүүн, үйлчилгээгээр хэрэглэгчдээ хангаж, нийгэм болон байгаль орчны өмнө хүлээсэн хариуцлагаа дээдлэн ажиллана.' : 'Providing quality products and services meeting international standards, highly respecting social and environmental responsibilities.')}
                 </p>
               </div>
@@ -433,7 +467,7 @@ export default function AboutPage({ lang, t, pageMetadata }) {
         </section>
 
         {/* History Timeline Section */}
-        <section id="history" style={{ backgroundColor: '#ffffff', padding: '60px 5% 40px 5%' }}>
+        <section id="history" style={{ backgroundColor: '#ffffff', padding: '24px 5% 40px 5%', marginTop: '-30px' }}>
           <div style={{ textAlign: 'center', maxWidth: '1200px', margin: '0 auto' }}>
             <InteractiveTitle 
               className="no-underline" 
@@ -441,10 +475,10 @@ export default function AboutPage({ lang, t, pageMetadata }) {
               text={lang === 'mn' ? 'Түүхэн замнал' : 'Historical Journey'}
             />
           </div>
-          <HistoryTimeline timeline={timeline} lang={lang} />
+          <HistoryTimeline timeline={historyData} lang={lang} />
         </section>
 
-        <section id="leadership" style={{ padding: '80px 5%', backgroundColor: '#ffffff' }}>
+        <section id="leadership" style={{ padding: '30px 5% 80px 5%', marginTop: '-20px', backgroundColor: '#ffffff' }}>
           <h3 style={{ fontSize: '32px', fontWeight: '600', marginBottom: '40px', fontFamily: "'Montserrat', sans-serif", letterSpacing: '0.5px', color: '#000000', textAlign: 'center' }}>
             {leadershipTitle}
           </h3>

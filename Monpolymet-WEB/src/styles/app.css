@@ -49,8 +49,12 @@ body {
   font-weight: 500;
   background-color: var(--bg-color);
   color: var(--text-color);
-  line-height: 1.6;
+  line-height: 1.5;
   overflow-x: hidden;
+}
+
+body, p, span, div, h1, h2, h3, h4, h5, h6, li, a {
+  line-height: 1.5;
 }
 
 #root {
@@ -162,12 +166,12 @@ body {
 .full-bleed-banner-content h1,
 .full-bleed-banner-content h2 {
   font-size: 48px;
-  font-weight: 700;
+  font-weight: 500;
   margin: 0;
   color: #ffffff;
   text-align: center;
   font-family: 'Montserrat', sans-serif;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .full-bleed-banner-content p {
@@ -644,7 +648,7 @@ h2.no-underline::after {
   color: #ffffff !important;
   margin-bottom: 12px;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  font-weight: 800;
+  font-weight: 500;
   text-align: left;
 }
 

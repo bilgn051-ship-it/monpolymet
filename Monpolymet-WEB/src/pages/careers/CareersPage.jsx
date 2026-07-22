@@ -524,7 +524,7 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
     { icon: Users, titleMn: 'Анкетийн сонгон шалгаруулалт', titleEn: 'Application Screening' },
     { icon: MessageCircle, titleMn: 'Ажлын анхан шатны ярилцлага', titleEn: 'Initial Job Interview' },
     { icon: UserCog, titleMn: 'Ур чадварын шалгалт авах', titleEn: 'Skill Assessment Test' },
-    { icon: MessageCircle, titleMn: 'Хоёр дугаар түвшний ярилцлага', titleEn: 'Second Level Interview' }
+    { icon: MessageCircle, titleMn: 'Сүүлийн шатны ярилцлага', titleEn: 'Final Stage Interview' }
   ];
 
   const guarantees = [
