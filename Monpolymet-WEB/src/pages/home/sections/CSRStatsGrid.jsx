@@ -41,8 +41,8 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
         }
         .csr-stat-number {
           font-size: 42px;
-          font-weight: 600;
-          font-family: 'Inter', sans-serif;
+          font-weight: 700;
+          font-family: 'Montserrat', sans-serif;
           background: linear-gradient(90deg, #10b981, #2563eb);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -83,7 +83,8 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
             borderRadius: '24px',
             padding: '12px 32px',
             fontSize: '18px',
-            fontWeight: '500',
+            fontWeight: '600',
+            fontFamily: "'Montserrat', sans-serif",
             color: '#0f172a',
             backgroundColor: '#ffffff',
             display: 'flex',
@@ -127,7 +128,7 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
                 fontSize: '18px',
                 fontWeight: '700',
                 color: '#0f172a',
-                fontFamily: "'Inter', sans-serif",
+                fontFamily: "'Montserrat', sans-serif",
                 marginBottom: '8px',
                 lineHeight: '1.3'
               }}>
@@ -135,9 +136,9 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
               </div>
               <div style={{
                 fontSize: '14px',
-                fontWeight: '400',
+                fontWeight: '500',
                 color: '#64748b',
-                fontFamily: "'Inter', sans-serif",
+                fontFamily: "'Montserrat', sans-serif",
                 lineHeight: '1.5'
               }}>
                 {lang === 'mn' ? stat.subMn : stat.subEn}
