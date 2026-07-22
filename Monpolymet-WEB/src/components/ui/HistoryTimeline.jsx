@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import mandalaImg from '../../assets/mandala.jpg';
 import oneImg from '../../assets/1.jpg';
 import twoImg from '../../assets/2.jpg';
