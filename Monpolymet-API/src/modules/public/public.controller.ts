@@ -14,6 +14,8 @@ import { FaqsService, CareersContentService } from '../careers/careers-content.c
 import { SettingsService } from '../settings/settings.crud';
 import { PagesService, ProcurementContentService } from '../pages/pages.crud';
 
+import { TendersService } from '../tenders/tenders.service';
+
 /**
  * Unauthenticated read API consumed by the public website. Only returns
  * visitor-safe content.
@@ -23,6 +25,7 @@ export class PublicController {
   constructor(
     private readonly news: NewsService,
     private readonly jobs: JobsService,
+    private readonly tendersService: TendersService,
     private readonly timeline: TimelineService,
     private readonly heroSlides: HeroSlidesService,
     private readonly statCards: StatCardsService,
@@ -41,6 +44,12 @@ export class PublicController {
     private readonly pages: PagesService,
     private readonly procurementContent: ProcurementContentService,
   ) { }
+
+  @Public()
+  @Get('tenders')
+  tendersList() {
+    return this.tendersService.findPublished();
+  }
 
   @Public()
   @Get('news')

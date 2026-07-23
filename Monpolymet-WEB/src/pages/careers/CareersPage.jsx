@@ -50,14 +50,13 @@ const styles = `
 }
 .hr-policy-left {
   flex: 1.2;
-  min-width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 .hr-policy-left h2 {
-  font-size: 40px;
-  font-weight: 800;
+  font-size: clamp(26px, 3.5vw, 36px);
+  font-weight: 700;
   margin-bottom: 24px;
   background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
   -webkit-background-clip: text;
@@ -67,30 +66,11 @@ const styles = `
 .hr-policy-left p {
   color: #475569;
   line-height: 1.8;
-  margin-bottom: 40px;
-  font-size: 16px;
-}
-.btn-outline {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 28px;
-  border: 1px solid #cbd5e1;
-  border-radius: 12px;
-  color: #0f172a;
-  font-weight: 700;
-  font-size: 14px;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  align-self: flex-start;
-}
-.btn-outline:hover {
-  border-color: #2563eb;
-  color: #2563eb;
-  background: #eff6ff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(37,99,235,0.1);
+  margin-bottom: 30px;
+  font-size: 15px;
+  font-weight: 400;
+  text-align: justify;
+  text-justify: inter-word;
 }
 .hr-policy-right {
   flex: 1.8;
@@ -112,7 +92,7 @@ const styles = `
 }
 .policy-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(37, 99, 235, 0.08);
+  box-shadow: none;
   border-color: #cbd5e1;
 }
 .policy-icon-wrapper {
@@ -123,19 +103,16 @@ const styles = `
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #eff6ff;
+  color: #2563eb;
 }
-.policy-card:nth-child(1) .policy-icon-wrapper { background: #eff6ff; color: #2563eb; }
-.policy-card:nth-child(2) .policy-icon-wrapper { background: #f0fdf4; color: #16a34a; }
-.policy-card:nth-child(3) .policy-icon-wrapper { background: #fef2f2; color: #dc2626; }
-.policy-card:nth-child(4) .policy-icon-wrapper { background: #fefce8; color: #ca8a04; }
-.policy-card:nth-child(5) .policy-icon-wrapper { background: #f5f3ff; color: #7c3aed; }
-.policy-card:nth-child(6) .policy-icon-wrapper { background: #fdf4ff; color: #c026d3; }
 
 .policy-text-content h4 {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 800;
-  margin: 0 0 8px 0;
+  margin: 0 0 6px 0;
   color: #0f172a;
+  line-height: 1.5;
 }
 .policy-text-content p {
   font-size: 13px;
@@ -155,61 +132,50 @@ const styles = `
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 .stages-title {
-  font-size: 28px;
+  font-size: clamp(22px, 3vw, 28px);
   font-weight: 800;
-  color: #64748b;
-  text-transform: uppercase;
-  margin: 0 0 16px 0;
-  letter-spacing: 0.5px;
-}
-.stages-title span {
-  color: #0284c7;
-}
-.stages-divider {
-  width: 100%;
-  min-width: 400px;
-  height: 3px;
-  background: linear-gradient(90deg, #0284c7 0%, #84cc16 100%);
-  border-radius: 2px;
+  font-family: 'Montserrat', sans-serif;
+  color: #0f172a;
+  text-transform: none;
+  margin: 0;
 }
 .stages-grid {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
   width: 100%;
   max-width: 1200px;
-  flex-wrap: wrap;
 }
 .stage-card {
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 40px 20px;
-  flex: 1;
-  min-width: 180px;
-  max-width: 220px;
+  background: transparent;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 32px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  transition: transform 0.3s;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none;
+  width: 100%;
 }
 .stage-card:hover {
   transform: translateY(-5px);
-  background: #f1f5f9;
+  background: transparent;
+  border-color: #0284c7;
+  box-shadow: none;
 }
 .stage-icon-box {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   color: #0284c7;
 }
 .stage-card h4 {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
   color: #0f172a;
-  text-transform: uppercase;
   line-height: 1.5;
   margin: 0;
 }
@@ -274,7 +240,7 @@ const styles = `
 .guarantees-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 20px;
 }
 .guarantee-card {
   background: #f8fafc;
@@ -304,54 +270,46 @@ const styles = `
   line-height: 1.4;
 }
 
-/* STATS BANNER */
+/* STATS BANNER / JOIN BANNER */
 .stats-banner {
   display: flex;
-  background: #25418b;
-  border-radius: 16px;
+  background: linear-gradient(90deg, #010B40 0%, #001CE8 100%);
+  border-radius: 24px;
   margin: 0 5% 40px;
   color: white;
   overflow: hidden;
   position: relative;
-  min-height: 180px;
+  min-height: 240px;
+  box-shadow: 0 12px 35px rgba(1, 11, 64, 0.2);
 }
 .stats-left {
-  flex: 6;
-  padding: 40px;
+  flex: 1.4;
+  padding: 44px 48px;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   position: relative;
   z-index: 2;
 }
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.stat-icon { color: white; opacity: 1; }
-.stat-info { display: flex; flex-direction: column; }
-.stat-value { font-size: 26px; font-weight: 800; margin-bottom: 4px; line-height: 1; }
-.stat-label { font-size: 13px; opacity: 0.7; font-weight: 500; }
 
 .stats-right {
-  flex: 4;
+  flex: 1;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 40px;
   z-index: 2;
+  min-height: 200px;
 }
 .stats-right-bg {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background-size: cover;
   background-position: right center;
-  z-index: -1;
-  opacity: 0.6;
-  -webkit-mask-image: linear-gradient(to right, transparent, black 35%);
-  mask-image: linear-gradient(to right, transparent, black 35%);
+  z-index: 1;
+  opacity: 0.75;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 40%);
+  mask-image: linear-gradient(to right, transparent 0%, black 40%);
 }
 
 /* QUOTE BOX */
@@ -430,27 +388,42 @@ const styles = `
   margin-bottom: 24px;
 }
 
-/* RESPONSIVE */
-@media (max-width: 1200px) {
-  .hr-policy-right { grid-template-columns: repeat(2, 1fr); }
-  .stages-grid { gap: 12px; }
-  .stage-card { min-width: 140px; padding: 24px 16px; }
-  .guarantees-grid { grid-template-columns: repeat(3, 1fr); }
+/* RESPONSIVE FOR TABLET (10.9-inch ~1024px/834px) AND MOBILE PHONES */
+@media (max-width: 1100px) {
+  .stages-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .guarantees-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
 }
-@media (max-width: 900px) {
-  .hr-policy-container { flex-direction: column; padding: 32px; }
-  .join-guarantees-container { flex-direction: column; }
-  .stats-banner { flex-direction: column; }
-  .quote-box { flex-direction: column; }
-  .quote-image { min-height: 250px; }
-  .guarantees-grid { grid-template-columns: repeat(2, 1fr); }
-  .stats-left { flex-direction: column; align-items: flex-start; gap: 24px; }
+
+@media (max-width: 1024px) {
+  .hr-policy-container {
+    flex-direction: column;
+    padding: 40px 32px;
+    margin: 0 4% 40px;
+    gap: 36px;
+  }
+  .hr-policy-left { flex: none; width: 100%; }
+  .hr-policy-right { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .join-guarantees-container { flex-direction: column; margin: 0 4% 40px; }
+  .guarantees-box { padding: 36px 28px; }
+  .stats-banner { flex-direction: column; margin: 0 4% 40px; }
+  .quote-box { flex-direction: column; margin: 0 4%; }
 }
-@media (max-width: 600px) {
+
+@media (max-width: 768px) {
+  .stages-container { padding: 40px 4%; }
+  .stages-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .stage-card { padding: 24px 14px; }
+  .guarantees-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .hr-policy-container { padding: 28px 20px; border-radius: 24px; }
+  .policy-card { padding: 20px 16px; gap: 14px; border-radius: 16px; }
+  .quote-left { padding: 28px 20px; }
+  .stats-left { padding: 28px 24px; }
+}
+
+@media (max-width: 480px) {
+  .stages-grid { grid-template-columns: repeat(1, 1fr); }
   .hr-policy-right { grid-template-columns: 1fr; }
-  .stage-card { min-width: 100%; }
-  .guarantees-grid { grid-template-columns: 1fr; }
-  .stages-divider { min-width: 200px; }
+  .guarantees-grid { grid-template-columns: repeat(1, 1fr); }
 }
 `;
 
@@ -569,12 +542,9 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
             <h2>{lang === 'mn' ? 'Хүний нөөцийн бодлого' : 'HR Policy'}</h2>
             <p>
               {lang === 'mn'
-                ? 'Бид хүний нөөцийг байгууллагын хамгийн үнэ цэнтэй капитал гэж үздэг. Тиймээс ажилтнуудынхаа чадвар, хөгжлийг дэмжиж, аюулгүй ажлын орчинд ажиллах нөхцөлийг ханган ажилладаг.'
-                : 'We consider human resources to be the most valuable capital of our organization. Therefore, we support our employees\' skills and development, and ensure a safe working environment.'}
+                ? 'Бид хүний нөөцийн бодлогын хүрээнд дотоод ажилчдаа бүхийл салбартаа хөрвөн ажиллах боломжийг бүрдүүлэн гадаад дотоодын сургалт хөгжлөөр хангаж урамшуулан, тогтвортой хариуцлагатай, үлгэр жишээ ажиллах хүчнийг бэлтгэн эх орны бүтээн байгуулалтад үнэтэй хувь нэмэр оруулах найдвартай тогтвортой ажлын байрыг бий болгох зорилготойгоор салбар бүртээ шаргуу ажиллаж байна. Уул уурхай, үйлдвэрлэл, нөхөн сэргээлт, байгаль орчин, барилга, худалдаа үйлчилгээ, хоол үйлдвэрлэлийн салбаруудад тогтвортой ажиллах мэргэжлийн, мэргэшсэн, үлгэр жишээ ажилтнууд бол манай байгууллагын бахархал юм.'
+                : 'Within the scope of our HR policy, we work diligently in every sector to create opportunities for internal employees to work across all sectors, provide them with foreign and domestic training and development, encourage them, prepare a stable, responsible, and exemplary workforce, and create reliable and stable jobs that make a valuable contribution to national development. Professional, specialized, and exemplary employees who work sustainably in the mining, manufacturing, land rehabilitation, environmental, construction, trade, services, and catering sectors are the pride of our organization.'}
             </p>
-            <button className="btn-outline">
-              {lang === 'mn' ? 'Дэлгэрэнгүй' : 'Read More'} <ArrowRight size={16} />
-            </button>
           </div>
           <div className="hr-policy-right">
             {hrPolicies.map((policy, idx) => {
@@ -596,15 +566,10 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
 
         {/* STAGES SECTION */}
         <section id="selection" className="stages-container">
-          <div className="stages-title-box">
+          <div className="stages-title-box" style={{ marginBottom: '40px' }}>
             <h2 className="stages-title">
-              {lang === 'mn' ? (
-                <>СОНГОН <span>ШАЛГАРУУЛАЛТ</span></>
-              ) : (
-                <>SELECTION <span>PROCESS</span></>
-              )}
+              {lang === 'mn' ? 'Сонгон шалгаруулалт' : 'Selection Process'}
             </h2>
-            <div className="stages-divider"></div>
           </div>
           <div className="stages-grid">
             {hrStages.map((stage, idx) => {
@@ -621,41 +586,9 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
           </div>
         </section>
 
-        {/* JOIN & GUARANTEES */}
-        <section id="join-us" className="join-guarantees-container">
-          <div className="join-box">
-            <div className="join-illustration"></div>
-            <div className="join-content">
-              <h2 style={{ fontSize: '24px', fontWeight: '800', marginBottom: '16px' }}>
-                {lang === 'mn' ? 'Бидэнтэй нэгдэх' : 'Join Us'}
-              </h2>
-              <p style={{ fontSize: '14px', color: '#94a3b8', marginBottom: '32px', maxWidth: '80%', lineHeight: '1.6' }}>
-                {lang === 'mn'
-                  ? 'Өөрийн мэдээллээ илгээж, манай ирээдүйн хамт олны нэг болоорой.'
-                  : 'Submit your information and become part of our future team.'}
-              </p>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '40px' }}>
-                {[
-                  lang === 'mn' ? 'Анкет илгээх' : 'Submit Application',
-                  lang === 'mn' ? 'CV файл хавсаргах' : 'Attach CV File',
-                  lang === 'mn' ? 'Мэдээллээ илгээх' : 'Send Information',
-                  lang === 'mn' ? 'HR багтай холбогдоно' : 'Connect with HR Team'
-                ].map((item, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '14px', fontWeight: '500' }}>
-                    <Check size={18} color="#10b981" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              <button className="btn-solid" onClick={() => openApplyModal()}>
-                {lang === 'mn' ? 'Анкет илгээх' : 'Apply Now'} <ArrowRight size={16} />
-              </button>
-            </div>
-          </div>
-
-          <div className="guarantees-box">
+        {/* GUARANTEES SECTION */}
+        <section id="join-us" className="join-guarantees-container" style={{ margin: '0 5% 40px' }}>
+          <div className="guarantees-box" style={{ flex: 1, width: '100%' }}>
             <h2 style={{ fontSize: '24px', fontWeight: '800', color: '#0f172a', marginBottom: '32px' }}>
               {lang === 'mn' ? 'Нийгмийн баталгаа' : 'Social Guarantees'}
             </h2>
@@ -675,78 +608,71 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
           </div>
         </section>
 
-        {/* STATS BANNER */}
-        <section className="stats-banner">
-          <div className="stats-left">
-            {displayCards.length > 0 ? (
-              displayCards.map((card, idx) => (
-                <div key={idx} className="stat-item">
-                  <DynamicIcon name={card.icon || 'Star'} size={32} strokeWidth={1.5} className="stat-icon" />
-                  <div className="stat-info">
-                    <span className="stat-value">{card.statValue}</span>
-                    <span className="stat-label">{lang === 'mn' ? card.titleMn : card.titleEn}</span>
-                  </div>
+        {/* JOIN US SLIM HORIZONTAL BANNER CARD */}
+        <section className="stats-banner" style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          background: 'linear-gradient(90deg, #010B40 0%, #001CE8 100%)',
+          borderRadius: '20px',
+          margin: '0 5% 40px',
+          padding: '28px 44px',
+          color: '#ffffff',
+          boxShadow: '0 10px 30px rgba(1, 11, 64, 0.18)',
+          gap: '32px',
+          minHeight: 'auto'
+        }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <h2 style={{ fontSize: '22px', fontWeight: '800', marginBottom: '6px', color: '#ffffff', fontFamily: "'Montserrat', sans-serif" }}>
+              {lang === 'mn' ? 'Бидэнтэй нэгдэх' : 'Join Us'}
+            </h2>
+            <p style={{ fontSize: '13.5px', color: '#e2e8f0', marginBottom: '16px', maxWidth: '650px', lineHeight: '1.5' }}>
+              {lang === 'mn'
+                ? 'Өөрийн мэдээллээ илгээж, манай ирээдүйн хамт олны нэг болоорой.'
+                : 'Submit your information and become part of our future team.'}
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 24px' }}>
+              {[
+                lang === 'mn' ? 'Анкет илгээх' : 'Submit Application',
+                lang === 'mn' ? 'CV файл хавсаргах' : 'Attach CV File',
+                lang === 'mn' ? 'Мэдээллээ илгээх' : 'Send Information',
+                lang === 'mn' ? 'HR багтай холбогдоно' : 'Connect with HR Team'
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', fontWeight: '500', color: '#ffffff' }}>
+                  <Check size={16} color="#10b981" />
+                  <span>{item}</span>
                 </div>
-              ))
-            ) : (
-              <>
-                <div className="stat-item">
-                  <Users size={32} strokeWidth={1.5} className="stat-icon" />
-                  <div className="stat-info">
-                    <span className="stat-value">3500+</span>
-                    <span className="stat-label">{lang === 'mn' ? 'Ажилтны тоо' : 'Employees'}</span>
-                  </div>
-                </div>
-                <div className="stat-item">
-                  <Building2 size={32} strokeWidth={1.5} className="stat-icon" />
-                  <div className="stat-info">
-                    <span className="stat-value">16</span>
-                    <span className="stat-label">{lang === 'mn' ? 'Охин компани' : 'Subsidiaries'}</span>
-                  </div>
-                </div>
-                <div className="stat-item">
-                  <MapPin size={32} strokeWidth={1.5} className="stat-icon" />
-                  <div className="stat-info">
-                    <span className="stat-value">4+</span>
-                    <span className="stat-label">{lang === 'mn' ? 'Газарзүйн байршил' : 'Locations'}</span>
-                  </div>
-                </div>
-                <div className="stat-item">
-                  <Calendar size={32} strokeWidth={1.5} className="stat-icon" />
-                  <div className="stat-info">
-                    <span className="stat-value">25+</span>
-                    <span className="stat-label">{lang === 'mn' ? 'Жилийн туршлагатай' : 'Years of Exp'}</span>
-                  </div>
-                </div>
-              </>
-            )}
+              ))}
+            </div>
           </div>
-          <div className="stats-right">
-            <div
-              className="stats-right-bg"
-              style={{ backgroundImage: `url(${bannerContent?.bannerImage || 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800'})` }}
-            />
-            <h3 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '20px', lineHeight: '1.4', color: '#0ea5e9' }}>
-              {bannerContent ? (lang === 'mn' ? bannerContent.bannerTitle?.mn : bannerContent.bannerTitle?.en) : (lang === 'mn' ? 'Ирээдүйг бүтээх аялалд хамтдаа нэгдэцгээе.' : 'Let us build the future together.')}
-            </h3>
-            <button className="btn-solid" style={{ alignSelf: 'flex-start', background: 'white', color: '#0f172a' }} onClick={() => openApplyModal()}>
-              {bannerContent ? (lang === 'mn' ? bannerContent.bannerButtonText?.mn : bannerContent.bannerButtonText?.en) : (lang === 'mn' ? 'Анкет илгээх' : 'Apply Now')}
+
+          <div style={{ flexShrink: 0 }}>
+            <button
+              className="btn-solid"
+              style={{
+                background: '#ffffff',
+                color: '#010B40',
+                fontWeight: '700',
+                padding: '13px 28px',
+                borderRadius: '12px',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: '14px',
+                boxShadow: '0 4px 15px rgba(0,0,0,0.15)',
+                transition: 'all 0.3s ease',
+                whiteSpace: 'nowrap'
+              }}
+              onClick={() => openApplyModal()}
+            >
+              {lang === 'mn' ? 'Анкет илгээх' : 'Apply Now'} <ArrowRight size={16} />
             </button>
           </div>
         </section>
 
-        {/* QUOTE BOX */}
-        <section className="quote-box">
-          <div className="quote-left">
-            <span style={{ fontSize: '100px', color: '#2563eb', lineHeight: '0.6', fontFamily: 'serif', marginTop: '10px' }}>❝</span>
-            <p className="quote-text">
-              {lang === 'mn'
-                ? 'Монполимет Групп нь ажилтнуудынхаа хөгжлийг дэмжиж, аюулгүй, урам зоригтой, үнэ цэнтэй ажлын орчинг бүрдүүлэхэд үргэлж анхаардаг.'
-                : 'Monpolymet Group always focuses on supporting employee development and creating a safe, inspiring, and valuable work environment.'}
-            </p>
-          </div>
-          <div className="quote-image"></div>
-        </section>
+
       </div>
 
       {/* MODAL FOR APPLICATION */}

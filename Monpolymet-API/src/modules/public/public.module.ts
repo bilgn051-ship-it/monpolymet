@@ -11,6 +11,8 @@ import { SettingsModule } from '../settings/settings.module';
 import { PagesModule } from '../pages/pages.module';
 import { PublicController } from './public.controller';
 
+import { TendersModule } from '../tenders/tenders.module';
+
 @Module({
   imports: [
     NewsModule,
@@ -19,6 +21,7 @@ import { PublicController } from './public.controller';
     HomeModule,
     SectorsModule,
     CsrModule,
+    TendersModule,
 
     TourModule,
     SettingsModule,

@@ -189,12 +189,12 @@ async function seed() {
     const jobs = app.get(JobsService);
     const applications = app.get(ApplicationsService);
 
-    const email = config.get<string>('SEED_ADMIN_EMAIL', 'admin@monpolymet.mn');
+    const email = config.get<string>('SEED_ADMIN_EMAIL', 'E.Bilguun@monpolymet.mn');
     if (!(await users.findByEmail(email))) {
       await users.create({
         email,
-        password: config.get<string>('SEED_ADMIN_PASSWORD', 'Admin@12345'),
-        name: config.get<string>('SEED_ADMIN_NAME', 'Системийн админ'),
+        password: config.get<string>('SEED_ADMIN_PASSWORD', 'Enhee0412@'),
+        name: config.get<string>('SEED_ADMIN_NAME', 'Билгүүн (Админ)'),
         role: UserRole.ADMIN,
       });
       logger.log(`Created admin user: ${email}`);

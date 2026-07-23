@@ -3,38 +3,44 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // Security HTTP Headers via Helmet
+  app.use(
+    helmet({
+      crossOriginResourcePolicy: { policy: 'cross-origin' },
+      contentSecurityPolicy: false, // Allows static asset previews while protecting headers
+    }),
+  );
+
   app.setGlobalPrefix('api');
 
-  // Serve uploaded images (e.g. the CEO portrait) at /uploads/<file>.
+  // Serve uploaded assets at /uploads/<file>
   app.useStaticAssets(join(process.cwd(), 'uploads'), { prefix: '/uploads/' });
 
   const config = app.get(ConfigService);
 
-  const corsOrigins = config.get<string>('CORS_ORIGINS', 'http://localhost:5173,http://localhost:5174')
+  const allowedOrigins = config
+    .get<string>(
+      'CORS_ORIGINS',
+      'http://localhost:5173,http://localhost:5174,https://monpolymet.mn,https://admin.monpolymet.mn',
+    )
     .split(',')
-    .map(origin => origin.trim());
-  
-  try {
-    const fs = require('fs');
-    const path = require('path');
-    fs.writeFileSync(
-      path.join(process.cwd(), 'cors-debug.txt'),
-      JSON.stringify({
-        corsOrigins,
-        processEnv: process.env.CORS_ORIGINS,
-        cwd: process.cwd()
-      }, null, 2)
-    );
-  } catch (e) {
-    console.error('Failed to write CORS debug file:', e);
-  }
+    .map((origin) => origin.trim());
 
   app.enableCors({
-    origin: true,
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, postman) or matching listed origins
+      if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
+        callback(null, true);
+      } else {
+        callback(new Error('CORS access blocked by security policy'));
+      }
+    },
     credentials: true,
   });
 
@@ -46,6 +52,7 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(config.get<number>('PORT', 4000));
+  const port = config.get<number>('PORT', 4000);
+  await app.listen(port);
 }
 void bootstrap();

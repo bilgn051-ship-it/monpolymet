@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import NewsPage from './pages/news/NewsPage';
 import JobsPage from './pages/careers/JobsPage';
+import TendersPage from './pages/tenders/TendersPage';
 import ApplicationsPage from './pages/careers/ApplicationsPage';
 import ResourcePage from './components/resource/ResourcePage';
 import SingletonPage from './components/resource/SingletonPage';
@@ -33,6 +34,7 @@ export default function App() {
           {/* Hand-built vertical-slice CRUD screens */}
           <Route path="news" element={<NewsPage />} />
           <Route path="jobs" element={<JobsPage />} />
+          <Route path="tenders" element={<TendersPage />} />
           <Route path="applications" element={<ApplicationsPage />} />
           <Route path="navigation-settings" element={<NavigationPage />} />
 

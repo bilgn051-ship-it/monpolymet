@@ -52,6 +52,12 @@ const GROUPS = [
     ],
   },
   {
+    label: 'Худалдан авалт & Тендер',
+    items: [
+      { to: '/tenders', label: 'Тендер зарлах', icon: FileText },
+    ],
+  },
+  {
     label: 'Систем & Тохиргоо',
     items: [
       { to: '/navigation-settings', label: 'Цэсний тохиргоо', icon: ListOrdered },

@@ -3,9 +3,9 @@ import {
   Building2, ShieldCheck, Cpu, Truck, FileText, Download, CheckCircle2,
   ArrowUpRight, PackageCheck, Zap, Factory, Award, UserCheck, X, Send,
   Search, Mail, FileCheck, Paperclip, Trash2, AlertCircle, ChevronLeft, ChevronRight,
-  ClipboardList, SearchCheck, Handshake, ShoppingCart, BadgeCheck
+  ClipboardList, SearchCheck, Handshake, ShoppingCart, BadgeCheck, Upload
 } from 'lucide-react';
-import { submitSupplierRegistration } from '../api';
+import { submitSupplierRegistration, fetchTenders } from '../api';
 import '../styles/procurement-pro.css';
 
 import partner1 from '../assets/partners/partner-1.jpg';
@@ -31,18 +31,67 @@ import tenderhubBg from '../assets/tenderhub-bg.png';
 const row1Logos = [partner1, partner10, partner3, partner12, partner5, partner14, partner7, partner16, partner9];
 const row2Logos = [partner2, partner11, partner4, partner13, partner6, partner15, partner8, partner17];
 
-export default function ProcurementPage({ lang, t, procurementContent, pageMetadata }) {
-  const header = procurementContent?.header;
-  const intro = procurementContent?.intro;
+export default function ProcurementPage({ lang = 'mn', t, procurementContent, pageMetadata }) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-  const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [tenderIndex, setTenderIndex] = useState(0);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [liveTenders, setLiveTenders] = useState([]);
   const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    fetchTenders()
+      .then((data) => setLiveTenders(data || []))
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Tender Participation Modal State
+  const [applyModalOpen, setApplyModalOpen] = useState(false);
+  const [selectedTenderForApply, setSelectedTenderForApply] = useState(null);
+  const [applyFormSubmitted, setApplyFormSubmitted] = useState(false);
+  const [applyFile, setApplyFile] = useState(null);
+  const [applyFileError, setApplyFileError] = useState('');
+  const [applyFormData, setApplyFormData] = useState({
+    priceOffer: '',
+    contactName: '',
+    contactPhone: '',
+    contactEmail: ''
+  });
+
+  const handleApplyFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // 50MB limit per user directive
+    const maxSizeBytes = 50 * 1024 * 1024;
+    if (file.size > maxSizeBytes) {
+      setApplyFileError(lang === 'mn'
+        ? 'Файлын хэмжээ хэтэрсэн байна (Хамгийн ихдээ 50MB).'
+        : 'File size exceeds limit (Max 50MB).');
+      return;
+    }
+
+    setApplyFileError('');
+    setApplyFile(file);
+  };
+
+  const handleApplySubmit = (e) => {
+    e.preventDefault();
+    if (!applyFile) {
+      setApplyFileError(lang === 'mn'
+        ? 'Шаардлагатай хавсралт файлаа сонгоно уу.'
+        : 'Please attach the required document file.');
+      return;
+    }
+    setApplyFormSubmitted(true);
+  };
 
   const [scrollPos, setScrollPos] = useState(0);
 
@@ -175,7 +224,7 @@ export default function ProcurementPage({ lang, t, procurementContent, pageMetad
           <div style={{ marginBottom: '30px' }}>
             <div style={{ textAlign: 'center', marginBottom: '50px' }}>
               <h2 className="no-underline" style={{
-                fontSize: '48px',
+                fontSize: 'clamp(24px, 4vw, 48px)',
                 fontWeight: '600',
                 color: scrollPos > 120 ? '#0f172a' : '#e2e8f0',
                 letterSpacing: '-0.5px',
@@ -185,22 +234,16 @@ export default function ProcurementPage({ lang, t, procurementContent, pageMetad
               </h2>
             </div>
 
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-              gap: '20px',
-              maxWidth: '1200px',
-              margin: '0 auto'
-            }}>
+            <div className="proc-steps-grid">
               {[
-                { step: '01', icon: <ClipboardList size={28} color="#001CE8" />, title: 'Хүсэлт Илгээх (PR)', desc: 'Нийлүүлэгчдэд үнийн саналаа ирүүлэх хүсэлт илгээх (PR)' },
+                { step: '01', icon: <ClipboardList size={28} color="#001CE8" />, title: '1-р шатны санал', desc: '2026.07.27 - 13:00 хүртэл үнийн санал хүлээн авна' },
                 { step: '02', icon: <SearchCheck size={28} color="#001CE8" />, title: 'Шалган баталгаажуулах', desc: 'Ирүүлсэн үнийн саналыг шалган баталгаажуулах, асууж тодруулах' },
                 { step: '03', icon: <ShoppingCart size={28} color="#001CE8" />, title: 'Худалдан авах хүсэлт', desc: 'Үнийн саналд хариу илгээх худалдан авах хүсэлтээ мэйлээр илгээнэ' },
                 { step: '04', icon: <Handshake size={28} color="#001CE8" />, title: 'Гэрээ байгуулах', desc: 'Сонгогдсон нийлүүлэгчтэй гэрээ байгуулах' },
                 { step: '05', icon: <Truck size={28} color="#001CE8" />, title: 'Гүйцэтгэл хангах', desc: 'Гэрээний гүйцэтгэлийг хангах' }
               ].map((proc, idx) => (
                 <div key={idx} className="proc-step-card" style={{
-                  backgroundColor: '#ffffff',
+                  backgroundColor: 'transparent',
                   borderRadius: '24px',
                   padding: '36px 24px',
                   border: '1px solid #cbd5e1',
@@ -208,20 +251,20 @@ export default function ProcurementPage({ lang, t, procurementContent, pageMetad
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.06)',
+                  boxShadow: 'none',
                   transition: 'all 0.3s ease'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-6px)';
                   e.currentTarget.style.borderColor = '#001CE8';
-                  e.currentTarget.style.boxShadow = '0 15px 30px -8px rgba(0, 28, 232, 0.15)';
+                  e.currentTarget.style.boxShadow = 'none';
                   const title = e.currentTarget.querySelector('h4');
                   if (title) title.style.color = '#001CE8';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.borderColor = '#cbd5e1';
-                  e.currentTarget.style.boxShadow = '0 10px 30px -10px rgba(0, 0, 0, 0.06)';
+                  e.currentTarget.style.boxShadow = 'none';
                   const title = e.currentTarget.querySelector('h4');
                   if (title) title.style.color = '#0f172a';
                 }}
@@ -395,152 +438,146 @@ export default function ProcurementPage({ lang, t, procurementContent, pageMetad
             </div>
 
             {/* Open Tenders Slider Container */}
-            <div style={{ position: 'relative', maxWidth: '1200px', margin: '0 auto' }}>
-              
-              {/* Left Arrow Button */}
-              <button
-                onClick={() => setTenderIndex((prev) => Math.max(0, prev - 1))}
-                disabled={tenderIndex === 0}
-                aria-label="Previous Tenders"
-                style={{
-                  position: 'absolute',
-                  left: '-24px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  zIndex: 25,
-                  width: '48px',
-                  height: '48px',
-                  borderRadius: '50%',
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #cbd5e1',
-                  boxShadow: '0 10px 25px rgba(0, 0, 0, 0.12)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: tenderIndex === 0 ? 'not-allowed' : 'pointer',
-                  opacity: tenderIndex === 0 ? 0.3 : 1,
-                  transition: 'all 0.25s ease'
-                }}
-              >
-                <ChevronLeft size={24} color="#0f172a" />
-              </button>
+            {(() => {
+              const fallbackTenders = [
+                {
+                  code: 'ТШ-2026/08',
+                  categoryMn: 'Уул Уурхай & Сэлбэг',
+                  categoryEn: 'Mining & Spare Parts',
+                  titleMn: 'Тосон уурхайн хүнд машины шүүр, тос тосолгооны материал нийлүүлэх',
+                  titleEn: 'Supply of heavy machinery filters & lubricants for Toson Mine',
+                  startTime: '2026.07.01 09:00',
+                  startDate: '2026-07-01T09:00:00',
+                  deadline: '2026.08.25 18:00',
+                  deadlineDate: '2026-08-25T18:00:00',
+                  locationMn: 'Төв аймаг, Заамар сум',
+                  locationEn: 'Zaamar sum, Tuv province',
+                  descMn: '2026-2027 оны олборлолтын улирлын хэрэгцээнд зориулсан CAT, Komatsu тоног төхөөрөмжийн шүүр, гидравлик тосны нийлүүлэгчийг сонгон шалгаруулна.',
+                  descEn: 'Selecting suppliers for CAT & Komatsu machinery filters and hydraulic fluids for 2026-2027 mining season.'
+                },
+                {
+                  code: 'ТШ-2026/09',
+                  categoryMn: 'Үйлдвэрлэлийн Түүхий Эд',
+                  categoryEn: 'Factory Raw Materials',
+                  titleMn: 'Монцемент үйлдвэрийн 2026 оны гипсэн чулуу (гөлтгөнө) нийлүүлэлт',
+                  titleEn: 'Supply of gypsum raw materials for Moncement factory 2026',
+                  startTime: '2026.07.15 09:00',
+                  startDate: '2026-07-15T09:00:00',
+                  deadline: '2026.08.30 18:00',
+                  deadlineDate: '2026-08-30T18:00:00',
+                  locationMn: 'Дорноговь аймаг, Өргөн сум',
+                  locationEn: 'Urgun sum, Dornogovi province',
+                  descMn: 'Жилд 100,000 тонн өндөр чанарын гөлтгөнө (CaSO4·2H2O > 85%) нийлүүлэх туршлагатай байгууллагуудыг сонгон шалгаруулалтад урьж байна.',
+                  descEn: 'Inviting experienced suppliers for annual supply of 100,000 tons high-grade gypsum for cement production.'
+                },
+                {
+                  code: 'ТШ-2026/10',
+                  categoryMn: 'Тээвэр & Логистик',
+                  categoryEn: 'Transport & Logistics',
+                  titleMn: 'Вагон болон авто замын тээврийн бөөний логистикийн үйлчилгээ',
+                  titleEn: 'Railway cargo & heavy auto transport logistics service',
+                  startTime: '2026.07.20 09:00',
+                  startDate: '2026-07-20T09:00:00',
+                  deadline: '2026.09.15 18:00',
+                  deadlineDate: '2026-09-15T18:00:00',
+                  locationMn: 'Улаанбаатар - Дорноговь',
+                  locationEn: 'Ulaanbaatar - Dornogovi',
+                  descMn: 'Бүтээгдэхүүн ба түүхий эдийн төмөр замын болон авто замын тээвэрлэлтийг гүйцэтгэх найдвартай логистикийн түнш сонгон шалгаруулна.',
+                  descEn: 'Selecting reliable logistics partners for bulk cargo transport via railway and heavy truck fleet.'
+                }
+              ];
 
-              {/* Right Arrow Button */}
-              <button
-                onClick={() => setTenderIndex((prev) => Math.min(1, prev + 1))}
-                disabled={tenderIndex >= 1}
-                aria-label="Next Tenders"
-                style={{
-                  position: 'absolute',
-                  right: '-24px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  zIndex: 25,
-                  width: '48px',
-                  height: '48px',
-                  borderRadius: '50%',
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #cbd5e1',
-                  boxShadow: '0 10px 25px rgba(0, 0, 0, 0.12)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: tenderIndex >= 1 ? 'not-allowed' : 'pointer',
-                  opacity: tenderIndex >= 1 ? 0.3 : 1,
-                  transition: 'all 0.25s ease'
-                }}
-              >
-                <ChevronRight size={24} color="#0f172a" />
-              </button>
+              const displayTenders = (liveTenders && liveTenders.length > 0) ? liveTenders : fallbackTenders;
+              const maxTenderIndex = Math.max(0, displayTenders.length - 1);
 
-              {/* Slider Viewport */}
-              <div style={{ overflow: 'hidden', padding: '12px 4px' }}>
-                <div style={{
-                  display: 'flex',
-                  gap: '24px',
-                  transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                  transform: `translateX(calc(-${tenderIndex} * (100% + 24px)))`
-                }}>
-                  {[
-                    {
-                      code: 'ТШ-2026/08',
-                      categoryMn: 'Уул Уурхай & Сэлбэг',
-                      categoryEn: 'Mining & Spare Parts',
-                      titleMn: 'Тосон уурхайн хүнд машины шүүр, тос тосолгооны материал нийлүүлэх',
-                      titleEn: 'Supply of heavy machinery filters & lubricants for Toson Mine',
-                      deadline: '2026.07.22 21:10',
-                      deadlineTime: '2026-07-22T21:10:00',
-                      locationMn: 'Төв аймаг, Заамар сум',
-                      locationEn: 'Zaamar sum, Tuv province',
-                      descMn: '2026-2027 оны олборлолтын улирлын хэрэгцээнд зориулсан CAT, Komatsu тоног төхөөрөмжийн шүүр, гидравлик тосны нийлүүлэгчийг сонгон шалгаруулна.',
-                      descEn: 'Selecting suppliers for CAT & Komatsu machinery filters and hydraulic fluids for 2026-2027 mining season.'
-                    },
-                    {
-                      code: 'ТШ-2026/09',
-                      categoryMn: 'Үйлдвэрлэлийн Түүхий Эд',
-                      categoryEn: 'Factory Raw Materials',
-                      titleMn: 'Монцемент үйлдвэрийн 2026 оны гипсэн чулуу (гөлтгөнө) нийлүүлэлт',
-                      titleEn: 'Supply of gypsum raw materials for Moncement factory 2026',
-                      deadline: '2026.08.20',
-                      locationMn: 'Дорноговь аймаг, Өргөн сум',
-                      locationEn: 'Urgun sum, Dornogovi province',
-                      descMn: 'Жилд 100,000 тонн өндөр чанарын гөлтгөнө (CaSO4·2H2O > 85%) нийлүүлэх туршлагатай байгууллагуудыг сонгон шалгаруулалтад урьж байна.',
-                      descEn: 'Inviting experienced suppliers for annual supply of 100,000 tons high-grade gypsum for cement production.'
-                    },
-                    {
-                      code: 'ТШ-2026/10',
-                      categoryMn: 'Тээвэр & Логистик',
-                      categoryEn: 'Transport & Logistics',
-                      titleMn: 'Вагон болон авто замын тээврийн бөөний логистикийн үйлчилгээ',
-                      titleEn: 'Railway cargo & heavy auto transport logistics service',
-                      deadline: '2026.08.30',
-                      locationMn: 'Улаанбаатар - Дорноговь',
-                      locationEn: 'Ulaanbaatar - Dornogovi',
-                      descMn: 'Бүтээгдэхүүн ба түүхий эдийн төмөр замын болон авто замын тээвэрлэлтийг гүйцэтгэх найдвартай логистикийн түнш сонгон шалгаруулна.',
-                      descEn: 'Selecting reliable logistics partners for bulk cargo transport via railway and heavy truck fleet.'
-                    },
-                    {
-                      code: 'ТШ-2026/11',
-                      categoryMn: 'Барилга & Дэд Бүтэц',
-                      categoryEn: 'Construction & Infrastructure',
-                      titleMn: 'Монцемент үйлдвэрийн авто савлагаа, лабораторийн тоног төхөөрөмж нийлүүлэлт',
-                      titleEn: 'Supply of automated packaging and laboratory test equipment for Moncement Plant',
-                      deadline: '2026.09.10',
-                      locationMn: 'Дорноговь аймаг, Өргөн сум',
-                      locationEn: 'Urgun sum, Dornogovi province',
-                      descMn: 'Цементийн үйлдвэрийн лабораторийн чанарын хяналтын анализатор болон автомат савлагааны төхөөрөмжийн нийлүүлэгчийг сонгон шалгаруулна.',
-                      descEn: 'Selecting suppliers for cement quality control laboratory analyzers and automatic packing machinery.'
-                    },
-                    {
-                      code: 'ТШ-2026/12',
-                      categoryMn: 'Эрчим хүч & Автоматик',
-                      categoryEn: 'Energy & Automation',
-                      titleMn: 'Үйлдвэр ба уурхайн бүсийн 110/35кВ дэд станцын тоног төхөөрөмж ба дизель станц',
-                      titleEn: 'Supply of 110/35kV substation equipment and backup diesel generators',
-                      deadline: '2026.09.25',
-                      locationMn: 'Төв аймаг & Дорноговь',
-                      locationEn: 'Tuv & Dornogovi provinces',
-                      descMn: 'Уурхай ба үйлдвэрийн тасралтгүй ажиллагааг хангах 110/35кВ дэд станцын сэлбэг, бэлтгэл дизель станцын нийлүүлэгч сонгон шалгаруулна.',
-                      descEn: 'Procuring 110/35kV substation spare parts and backup diesel generator sets.'
-                    },
-                    {
-                      code: 'ТШ-2026/13',
-                      categoryMn: 'Мэдээллийн Технологи & Сүлжээ',
-                      categoryEn: 'IT & Automation',
-                      titleMn: 'Уурхай, үйлдвэрийн SCADA систем ба ухаалаг хяналтын CCTV сүлжээ',
-                      titleEn: 'Integrated SCADA industrial control & smart CCTV surveillance network',
-                      deadline: '2026.10.05',
-                      locationMn: 'Улаанбаатар - Заамар - Өргөн',
-                      locationEn: 'Ulaanbaatar - Zaamar - Urgun',
-                      descMn: 'Үйлдвэрлэл, олборлолтын процессын автоматжуулалтын SCADA систем ба үйлдвэрийн бүсийн IP CCTV сүлжээний гүйцэтгэгчийг сонгон шалгаруулна.',
-                      descEn: 'Selecting contractor for updating SCADA process control automation and site-wide IP CCTV surveillance network.'
+              return (
+                <div style={{ position: 'relative', maxWidth: '1200px', margin: '0 auto' }}>
+                  {/* Left Arrow Button */}
+                  <button
+                    onClick={() => setTenderIndex((prev) => Math.max(0, prev - 1))}
+                    disabled={tenderIndex === 0}
+                    aria-label="Previous Tenders"
+                    style={{
+                      position: 'absolute',
+                      left: '-24px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      zIndex: 25,
+                      width: '48px',
+                      height: '48px',
+                      borderRadius: '50%',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #cbd5e1',
+                      boxShadow: '0 10px 25px rgba(0, 0, 0, 0.12)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: tenderIndex === 0 ? 'not-allowed' : 'pointer',
+                      opacity: tenderIndex === 0 ? 0.3 : 1,
+                      transition: 'all 0.25s ease'
+                    }}
+                  >
+                    <ChevronLeft size={24} color="#0f172a" />
+                  </button>
+
+                  {/* Right Arrow Button */}
+                  <button
+                    onClick={() => setTenderIndex((prev) => Math.min(maxTenderIndex, prev + 1))}
+                    disabled={tenderIndex >= maxTenderIndex}
+                    aria-label="Next Tenders"
+                    style={{
+                      position: 'absolute',
+                      right: '-24px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      zIndex: 25,
+                      width: '48px',
+                      height: '48px',
+                      borderRadius: '50%',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #cbd5e1',
+                      boxShadow: '0 10px 25px rgba(0, 0, 0, 0.12)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: tenderIndex >= maxTenderIndex ? 'not-allowed' : 'pointer',
+                      opacity: tenderIndex >= maxTenderIndex ? 0.3 : 1,
+                      transition: 'all 0.25s ease'
+                    }}
+                  >
+                    <ChevronRight size={24} color="#0f172a" />
+                  </button>
+
+                  {/* Slider Viewport */}
+                  <div style={{ overflow: 'hidden', padding: '12px 4px' }}>
+                    <div style={{
+                      display: 'flex',
+                      gap: '24px',
+                      transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+                      transform: `translateX(calc(-${tenderIndex} * 350px))`
+                    }}>
+                      {displayTenders.map((tender, idx) => {
+                    const start = tender.startDate ? new Date(tender.startDate) : null;
+                    const end = tender.deadlineDate ? new Date(tender.deadlineDate) : (tender.deadlineTime ? new Date(tender.deadlineTime) : null);
+                    const isClosed = end ? now > end : false;
+
+                    const formattedStart = start ? `${start.getFullYear()}.${String(start.getMonth() + 1).padStart(2, '0')}.${String(start.getDate()).padStart(2, '0')} - ${String(start.getHours()).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}` : tender.startTime;
+                    const formattedEnd = end ? `${end.getFullYear()}.${String(end.getMonth() + 1).padStart(2, '0')}.${String(end.getDate()).padStart(2, '0')} - ${String(end.getHours()).padStart(2, '0')}:${String(end.getMinutes()).padStart(2, '0')}` : tender.deadline;
+
+                    let statusText = lang === 'mn' ? 'Нээлттэй' : 'Open';
+                    let statusBg = '#dcfce7';
+                    let statusColor = '#15803d';
+                    let dotColor = '#16a34a';
+
+                    if (isClosed) {
+                      statusText = lang === 'mn' ? 'Хаагдсан' : 'Closed';
+                      statusBg = '#fee2e2';
+                      statusColor = '#dc2626';
+                      dotColor = '#ef4444';
                     }
-                  ].map((tender, idx) => {
-                    const tenderDeadlineDate = tender.deadlineTime ? new Date(tender.deadlineTime) : null;
-                    const isClosed = tenderDeadlineDate ? now >= tenderDeadlineDate : false;
 
                     return (
-                      <div key={idx} style={{
+                      <div key={tender.id || idx} style={{
                         flex: '0 0 calc((100% - 48px) / 3)',
                         minWidth: '300px',
                         boxSizing: 'border-box',
@@ -575,17 +612,15 @@ export default function ProcurementPage({ lang, t, procurementContent, pageMetad
                               display: 'inline-flex',
                               alignItems: 'center',
                               gap: '6px',
-                              backgroundColor: isClosed ? '#fee2e2' : '#dcfce7',
-                              color: isClosed ? '#dc2626' : '#15803d',
+                              backgroundColor: statusBg,
+                              color: statusColor,
                               padding: '4px 12px',
                               borderRadius: '20px',
                               fontSize: '12px',
                               fontWeight: '700'
                             }}>
-                              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: isClosed ? '#ef4444' : '#16a34a' }}></span>
-                              {isClosed
-                                ? (lang === 'mn' ? 'Хаагдсан' : 'Closed')
-                                : (lang === 'mn' ? 'Нээлттэй' : 'Active Open')}
+                              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: dotColor }}></span>
+                              {statusText}
                             </span>
                             <span style={{ fontSize: '13px', fontWeight: '700', color: isClosed ? '#dc2626' : '#2563eb', backgroundColor: isClosed ? '#fef2f2' : '#eff6ff', padding: '4px 10px', borderRadius: '6px' }}>
                               {tender.code}
@@ -602,9 +637,15 @@ export default function ProcurementPage({ lang, t, procurementContent, pageMetad
 
                           {/* Meta details */}
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '14px 16px', backgroundColor: isClosed ? '#fff5f5' : '#f8fafc', borderRadius: '12px', marginBottom: '24px' }}>
+                            {formattedStart && (
+                              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
+                                <span style={{ color: '#64748b', fontWeight: '500' }}>{lang === 'mn' ? 'Эхлэх хугацаа:' : 'Start Time:'}</span>
+                                <span style={{ color: '#2563eb', fontWeight: '700' }}>{formattedStart}</span>
+                              </div>
+                            )}
                             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
                               <span style={{ color: '#64748b', fontWeight: '500' }}>{lang === 'mn' ? 'Дуусах огноо:' : 'Deadline:'}</span>
-                              <span style={{ color: isClosed ? '#dc2626' : '#0f172a', fontWeight: '700' }}>{tender.deadline}</span>
+                              <span style={{ color: isClosed ? '#dc2626' : '#0f172a', fontWeight: '700' }}>{formattedEnd}</span>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
                               <span style={{ color: '#64748b', fontWeight: '500' }}>{lang === 'mn' ? 'Байршил:' : 'Location:'}</span>
@@ -617,7 +658,14 @@ export default function ProcurementPage({ lang, t, procurementContent, pageMetad
                         <div style={{ display: 'flex', gap: '10px' }}>
                           <button
                             onClick={() => {
-                              if (!isClosed) setShowRegisterModal(true);
+                              if (!isClosed) {
+                                setSelectedTenderForApply(tender);
+                                setApplyFile(null);
+                                setApplyFileError('');
+                                setApplyFormData({ priceOffer: '', contactName: '', contactPhone: '', contactEmail: '' });
+                                setApplyFormSubmitted(false);
+                                setApplyModalOpen(true);
+                              }
                             }}
                             disabled={isClosed}
                             style={{
@@ -644,25 +692,38 @@ export default function ProcurementPage({ lang, t, procurementContent, pageMetad
                           </button>
                           <button
                             onClick={() => {
-                              if (!isClosed) setShowRegisterModal(true);
+                              const targetUrl = tender.pdfUrl || '/toson_tender_doc.png';
+                              const link = document.createElement('a');
+                              link.href = targetUrl;
+                              link.setAttribute('download', targetUrl.split('/').pop() || 'Tender_Document.png');
+                              link.setAttribute('target', '_blank');
+                              document.body.appendChild(link);
+                              link.click();
+                              document.body.removeChild(link);
                             }}
-                            disabled={isClosed}
-                            title={lang === 'mn' ? 'Баримт бичиг татах' : 'Download Document'}
+                            title={lang === 'mn' ? 'Тендерийн баримт бичиг татах' : 'Download Tender Document'}
                             style={{
                               backgroundColor: '#f1f5f9',
-                              color: isClosed ? '#94a3b8' : '#0f172a',
+                              color: '#001CE8',
                               border: '1px solid #cbd5e1',
                               borderRadius: '12px',
-                              padding: '12px',
+                              padding: '12px 14px',
                               display: 'flex',
                               alignItems: 'center',
                               justifyContent: 'center',
-                              cursor: isClosed ? 'not-allowed' : 'pointer',
-                              transition: 'all 0.2s',
-                              opacity: isClosed ? 0.6 : 1
+                              cursor: 'pointer',
+                              transition: 'all 0.2s'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = '#dbeafe';
+                              e.currentTarget.style.borderColor = '#001CE8';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = '#f1f5f9';
+                              e.currentTarget.style.borderColor = '#cbd5e1';
                             }}
                           >
-                            <Download size={16} />
+                            <FileText size={18} color="#001CE8" />
                           </button>
                         </div>
                       </div>
@@ -671,6 +732,8 @@ export default function ProcurementPage({ lang, t, procurementContent, pageMetad
                 </div>
               </div>
             </div>
+            );
+          })()}
 
             {/* TenderHub External Portal Link Banner */}
             <div style={{ textAlign: 'center', marginTop: '45px' }}>
@@ -857,8 +920,8 @@ export default function ProcurementPage({ lang, t, procurementContent, pageMetad
                         required
                         type="tel"
                         value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="+976 9911..."
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '') })}
+                        placeholder="9911..."
                         style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', fontFamily: "'Montserrat', sans-serif" }}
                       />
                     </div>
@@ -982,6 +1045,337 @@ export default function ProcurementPage({ lang, t, procurementContent, pageMetad
                     }}
                   >
                     {lang === 'mn' ? 'Бүртгэл илгээх' : 'Submit Application'}
+                  </button>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Tender Participation Modal */}
+      {applyModalOpen && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(15, 23, 42, 0.75)',
+          backdropFilter: 'blur(8px)',
+          zIndex: 1000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px'
+        }}>
+          <div style={{
+            backgroundColor: '#ffffff',
+            borderRadius: '20px',
+            maxWidth: applyFormSubmitted ? '450px' : '680px',
+            width: '100%',
+            padding: applyFormSubmitted ? '28px 24px' : '36px',
+            boxShadow: '0 25px 50px rgba(0,0,0,0.25)',
+            position: 'relative',
+            fontFamily: "'Montserrat', sans-serif",
+            transition: 'all 0.3s ease'
+          }}>
+            <button
+              onClick={() => setApplyModalOpen(false)}
+              style={{ position: 'absolute', right: '16px', top: '16px', border: 'none', background: 'none', cursor: 'pointer', color: '#64748b' }}
+            >
+              <X size={20} />
+            </button>
+
+            {applyFormSubmitted ? (
+              <div style={{ textAlign: 'center', padding: '10px 8px' }}>
+                <CheckCircle2 size={46} color="#16a34a" style={{ margin: '0 auto 12px auto' }} />
+                <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '8px', fontFamily: "'Montserrat', sans-serif" }}>
+                  {lang === 'mn' ? 'Тендерт оролцох хүсэлт хүлээн авагдлаа' : 'Application Received'}
+                </h3>
+                <p style={{ color: '#475569', fontSize: '13px', lineHeight: '1.5', margin: '0 0 16px 0' }}>
+                  {lang === 'mn'
+                    ? 'Таны ирүүлсэн үнийн санал болон хавсралт баримт бичгийг манай худалдан авалтын баг хүлээн авлаа. Бүрэн шалгаад тун удахгүй холбогдох болно.'
+                    : 'Your quotation and documents have been received by our procurement team. We will evaluate and contact you shortly.'}
+                </p>
+                <button
+                  onClick={() => setApplyModalOpen(false)}
+                  style={{
+                    backgroundColor: '#001CE8',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: '10px',
+                    padding: '10px 24px',
+                    fontSize: '13px',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                    fontFamily: "'Montserrat', sans-serif"
+                  }}
+                >
+                  Хаах
+                </button>
+              </div>
+            ) : (
+              <>
+                <div style={{ marginBottom: '20px' }}>
+                  <h3 style={{ fontSize: '22px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>
+                    Үндсэн мэдээлэл
+                  </h3>
+                  <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 12px 0' }}>
+                    Үнийн санал, холбоо барих мэдээлэл болон шаардлагатай файл оруулна уу.
+                  </p>
+
+                  {/* Stage & Deadline Notice Box inside Form */}
+                  <div style={{
+                    padding: '12px 16px',
+                    backgroundColor: '#f8fafc',
+                    border: '1px solid #e2e8f0',
+                    borderRadius: '12px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '12px',
+                    marginBottom: '16px'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ fontSize: '13px', fontWeight: '700', color: '#000000' }}>
+                        1-р шатны санал:
+                      </span>
+                      {selectedTenderForApply && (
+                        <span style={{ fontSize: '13px', fontWeight: '700', color: '#000000' }}>
+                          {selectedTenderForApply.code}
+                        </span>
+                      )}
+                    </div>
+                    <span style={{ fontSize: '12px', fontWeight: '700', color: '#000000' }}>
+                      2026.07.27 - 13:00 хүртэл үнийн санал хүлээн авна
+                    </span>
+                  </div>
+                </div>
+
+                <form onSubmit={handleApplySubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px', fontFamily: "'Montserrat', sans-serif" }}>
+                  {/* Price Proposal Input */}
+                  <div>
+                    <label style={{ fontSize: '13px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '8px' }}>
+                      Үнийн санал <span style={{ color: '#ef4444' }}>*</span>
+                    </label>
+                    <input
+                      required
+                      type="text"
+                      value={applyFormData.priceOffer}
+                      onChange={(e) => setApplyFormData({ ...applyFormData, priceOffer: e.target.value })}
+                      placeholder="Үнийн саналаа оруулна уу..."
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        borderRadius: '10px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '14px',
+                        outline: 'none',
+                        boxSizing: 'border-box',
+                        fontFamily: "'Montserrat', sans-serif"
+                      }}
+                    />
+                  </div>
+
+                  {/* NOTE: Түншлэлийн байгууллага сонгох HAS BEEN EXCLUDED AS REQUESTED */}
+
+                  {/* 3-Column Contact Fields Grid */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '14px' }}>
+                    <div>
+                      <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>
+                        Холбоо барих хүний нэр <span style={{ color: '#ef4444' }}>*</span>
+                      </label>
+                      <input
+                        required
+                        type="text"
+                        value={applyFormData.contactName}
+                        onChange={(e) => setApplyFormData({ ...applyFormData, contactName: e.target.value })}
+                        placeholder="Нэр оруулдах"
+                        style={{
+                          width: '100%',
+                          padding: '12px 14px',
+                          borderRadius: '10px',
+                          border: '1px solid #cbd5e1',
+                          fontSize: '13px',
+                          outline: 'none',
+                          boxSizing: 'border-box',
+                          fontFamily: "'Montserrat', sans-serif"
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>
+                        Холбоо барих утас <span style={{ color: '#ef4444' }}>*</span>
+                      </label>
+                      <input
+                        required
+                        type="tel"
+                        value={applyFormData.contactPhone}
+                        onChange={(e) => setApplyFormData({ ...applyFormData, contactPhone: e.target.value.replace(/\D/g, '') })}
+                        placeholder="Утасны дугаар"
+                        style={{
+                          width: '100%',
+                          padding: '12px 14px',
+                          borderRadius: '10px',
+                          border: '1px solid #cbd5e1',
+                          fontSize: '13px',
+                          outline: 'none',
+                          boxSizing: 'border-box',
+                          fontFamily: "'Montserrat', sans-serif"
+                        }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>
+                        Холбоо барих и-мэйл <span style={{ color: '#ef4444' }}>*</span>
+                      </label>
+                      <input
+                        required
+                        type="email"
+                        value={applyFormData.contactEmail}
+                        onChange={(e) => setApplyFormData({ ...applyFormData, contactEmail: e.target.value })}
+                        placeholder="И-мэйл хаяг"
+                        style={{
+                          width: '100%',
+                          padding: '12px 14px',
+                          borderRadius: '10px',
+                          border: '1px solid #cbd5e1',
+                          fontSize: '13px',
+                          outline: 'none',
+                          boxSizing: 'border-box',
+                          fontFamily: "'Montserrat', sans-serif"
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Required File Section */}
+                  <div>
+                    <label style={{ fontSize: '13px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '8px' }}>
+                      Шаардлагатай файл <span style={{ color: '#ef4444' }}>*</span>
+                    </label>
+                    <div style={{
+                      border: '1px solid #cbd5e1',
+                      borderRadius: '12px',
+                      padding: '18px',
+                      backgroundColor: '#ffffff',
+                      boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.02)'
+                    }}>
+                      <input
+                        type="file"
+                        id="apply-file-attach"
+                        accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg"
+                        onChange={handleApplyFileChange}
+                        style={{ display: 'none' }}
+                      />
+
+                      {!applyFile ? (
+                        <div style={{ textAlign: 'left' }}>
+                          <label
+                            htmlFor="apply-file-attach"
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '8px',
+                              padding: '10px 20px',
+                              borderRadius: '10px',
+                              border: '1px solid #cbd5e1',
+                              backgroundColor: '#f8fafc',
+                              color: '#334155',
+                              fontSize: '13px',
+                              fontWeight: '600',
+                              cursor: 'pointer',
+                              transition: 'all 0.2s ease',
+                              fontFamily: "'Montserrat', sans-serif"
+                            }}
+                          >
+                            <Upload size={16} color="#475569" />
+                            <span>Файл сонгох</span>
+                          </label>
+                          <div style={{ marginTop: '14px', paddingTop: '12px', borderTop: '1px dashed #cbd5e1' }}>
+                            <p style={{ fontSize: '12px', fontWeight: '700', color: '#000000', margin: '0 0 6px 0' }}>
+                              Хавсаргах шаардлагатай бичиг баримтууд:
+                            </p>
+                            <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '12px', fontWeight: '600', color: '#000000', lineHeight: '1.8' }}>
+                              <li>Танилцуулга</li>
+                              <li>Хийж гүйцэтгэсэн ажлууд</li>
+                              <li>Бараа бүтээгдэхүүний мэдээлэл</li>
+                              <li>Улсын бүртгэлийн гэрчилгээ</li>
+                            </ul>
+                            <p style={{ fontSize: '11px', color: '#475569', margin: '10px 0 0 0', fontWeight: '500' }}>
+                              PDF, Word, Excel, зураг файл (50MB хүртэл)
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '10px 14px',
+                          borderRadius: '10px',
+                          border: '1px solid #cbd5e1',
+                          backgroundColor: '#f1f5f9',
+                          fontSize: '13px',
+                          fontFamily: "'Montserrat', sans-serif"
+                        }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
+                            <Paperclip size={16} color="#0f172a" style={{ flexShrink: 0 }} />
+                            <span style={{ fontWeight: '600', color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '380px' }}>
+                              {applyFile.name}
+                            </span>
+                            <span style={{ fontSize: '11px', color: '#64748b', flexShrink: 0 }}>
+                              ({(applyFile.size / (1024 * 1024)).toFixed(2)} MB)
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => { setApplyFile(null); setApplyFileError(''); }}
+                            style={{ border: 'none', background: 'none', cursor: 'pointer', color: '#ef4444', padding: '4px' }}
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      )}
+
+                      {applyFileError && (
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          padding: '10px 14px',
+                          borderRadius: '10px',
+                          backgroundColor: '#fef2f2',
+                          border: '1px solid #fecaca',
+                          color: '#dc2626',
+                          fontSize: '12px',
+                          fontWeight: '600',
+                          marginTop: '10px',
+                          fontFamily: "'Montserrat', sans-serif"
+                        }}>
+                          <AlertCircle size={16} style={{ flexShrink: 0 }} />
+                          <span>{applyFileError}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    style={{
+                      background: 'linear-gradient(90deg, #010B40 0%, #001CE8 100%)',
+                      color: '#ffffff',
+                      border: 'none',
+                      borderRadius: '12px',
+                      padding: '14px',
+                      fontSize: '15px',
+                      fontWeight: '700',
+                      cursor: 'pointer',
+                      marginTop: '8px',
+                      fontFamily: "'Montserrat', sans-serif"
+                    }}
+                  >
+                    Тендерт оролцох хүсэлт илгээх
                   </button>
                 </form>
               </>

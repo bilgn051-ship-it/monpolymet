@@ -62,6 +62,34 @@ export async function fetchJobs() {
   return data.map(mapJob);
 }
 
+const mapTender = (d) => ({
+  id: d._id,
+  code: d.code ?? '',
+  titleMn: d.title?.mn ?? '',
+  titleEn: d.title?.en ?? '',
+  categoryMn: d.category?.mn ?? '',
+  categoryEn: d.category?.en ?? '',
+  locationMn: d.location?.mn ?? '',
+  locationEn: d.location?.en ?? '',
+  descMn: d.description?.mn ?? '',
+  descEn: d.description?.en ?? '',
+  startDate: d.startDate ?? null,
+  deadlineDate: d.deadlineDate ?? null,
+  deadline: d.deadlineDate ? new Date(d.deadlineDate).toLocaleString('mn-MN', { dateStyle: 'short', timeStyle: 'short' }) : '',
+  startTime: d.startDate ? new Date(d.startDate).toLocaleString('mn-MN', { dateStyle: 'short', timeStyle: 'short' }) : '',
+  isPublished: d.isPublished ?? true,
+});
+
+export async function fetchTenders() {
+  try {
+    const data = await getJson('/public/tenders');
+    if (!Array.isArray(data)) return null;
+    return data.map(mapTender);
+  } catch {
+    return null;
+  }
+}
+
 const mapTimeline = (d) => ({
   id: d._id,
   year: d.year,

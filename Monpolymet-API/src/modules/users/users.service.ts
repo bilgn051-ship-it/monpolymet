@@ -20,7 +20,16 @@ export class UsersService {
 
   /** Includes passwordHash — used only by AuthService for password checks. */
   findByEmail(email: string) {
-    return this.userModel.findOne({ email: email.toLowerCase() }).exec();
+    const cleanEmail = email ? email.trim() : '';
+    return this.userModel
+      .findOne({
+        $or: [
+          { email: cleanEmail },
+          { email: cleanEmail.toLowerCase() },
+          { email: new RegExp(`^${cleanEmail.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')}$`, 'i') },
+        ],
+      })
+      .exec();
   }
 
   findAll() {

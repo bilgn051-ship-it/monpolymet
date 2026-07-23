@@ -122,7 +122,7 @@ export default function Header({
 
           {/* Desktop Navigation Menu */}
           <nav className="desktop-nav">
-            {navItems.map((item, index) => {
+            {navItems.map((item) => {
               const subs = subMenus[item.target];
 
               return (
@@ -157,7 +157,6 @@ export default function Header({
           </nav>
 
           {/* Action Buttons */}
-          {/* Action Buttons */}
           <div className="header-actions">
             <button
               className="action-btn lang-btn"
@@ -189,26 +188,40 @@ export default function Header({
           <nav className="mobile-nav">
             {navItems.map((item) => {
               const subs = subMenus[item.target];
+              const isExpanded = activeDropdown === item.id;
               return (
                 <div key={item.id} className="mobile-nav-group">
                   <div className="mobile-nav-header">
                     <button
                       className={`mobile-nav-link ${currentPage === item.target ? 'active' : ''}`}
-                      onClick={() => handleNavClick(item.target)}
+                      onClick={() => {
+                        if (subs) {
+                          setActiveDropdown(isExpanded ? null : item.id);
+                        } else {
+                          handleNavClick(item.target);
+                        }
+                      }}
                     >
                       {item.label}
                     </button>
                     {subs && (
                       <button 
                         className="mobile-toggle-btn"
-                        onClick={() => setActiveDropdown(activeDropdown === item.id ? null : item.id)}
+                        onClick={() => setActiveDropdown(isExpanded ? null : item.id)}
                       >
-                        <ChevronDown size={20} className={activeDropdown === item.id ? 'rotated' : ''} />
+                        <ChevronDown size={20} className={isExpanded ? 'rotated' : ''} />
                       </button>
                     )}
                   </div>
-                  {subs && activeDropdown === item.id && (
+                  {subs && isExpanded && (
                     <div className="mobile-submenu animate-slide-down">
+                      <button 
+                        className="mobile-sub-link overview-link"
+                        onClick={() => handleNavClick(item.target)}
+                        style={{ fontWeight: '700', color: '#2563eb' }}
+                      >
+                        {item.label}
+                      </button>
                       {subs.map(sub => (
                         <button 
                           key={sub.id}

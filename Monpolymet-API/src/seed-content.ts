@@ -27,6 +27,7 @@ import {
 } from './modules/careers/careers-content.crud';
 import { PagesService } from './modules/pages/pages.crud';
 import { SettingsService } from './modules/settings/settings.crud';
+import { TendersService } from './modules/tenders/tenders.service';
 
 const ls = (mn: string, en: string) => ({ mn, en });
 
@@ -283,6 +284,69 @@ async function seedSingleton<S extends { get(): Promise<unknown>; update(dto: an
   logger.log(`Seeded ${label}`);
 }
 
+const TENDERS = [
+  {
+    code: 'ТШ-2026/08',
+    category: ls('Уул Уурхай & Сэлбэг', 'Mining & Spare Parts'),
+    title: ls('Тосон уурхайн хүнд машины шүүр, тос тосолгооны материал нийлүүлэх', 'Supply of heavy machinery filters & lubricants for Toson Mine'),
+    location: ls('Төв аймаг, Заамар сум', 'Zaamar sum, Tuv province'),
+    description: ls('2026-2027 оны олборлолтын улирлын хэрэгцээнд зориулсан CAT, Komatsu тоног төхөөрөмжийн шүүр, гидравлик тосны нийлүүлэгчийг сонгон шалгаруулна.', 'Selecting suppliers for CAT & Komatsu machinery filters and hydraulic fluids for 2026-2027 mining season.'),
+    startDate: new Date('2026-07-01T09:00:00.000Z'),
+    deadlineDate: new Date('2026-08-25T18:00:00.000Z'),
+    isPublished: true,
+  },
+  {
+    code: 'ТШ-2026/09',
+    category: ls('Үйлдвэрлэлийн Түүхий Эд', 'Factory Raw Materials'),
+    title: ls('Монцемент үйлдвэрийн 2026 оны гипсэн чулуу (гөлтгөнө) нийлүүлэлт', 'Supply of gypsum raw materials for Moncement factory 2026'),
+    location: ls('Дорноговь аймаг, Өргөн сум', 'Urgun sum, Dornogovi province'),
+    description: ls('Жилд 100,000 тонн өндөр чанарын гөлтгөнө (CaSO4·2H2O > 85%) нийлүүлэх туршлагатай байгууллагуудыг сонгон шалгаруулалтад урьж байна.', 'Inviting experienced suppliers for annual supply of 100,000 tons high-grade gypsum for cement production.'),
+    startDate: new Date('2026-07-15T09:00:00.000Z'),
+    deadlineDate: new Date('2026-08-30T18:00:00.000Z'),
+    isPublished: true,
+  },
+  {
+    code: 'ТШ-2026/10',
+    category: ls('Тээвэр & Логистик', 'Transport & Logistics'),
+    title: ls('Вагон болон авто замын тээврийн бөөний логистикийн үйлчилгээ', 'Railway cargo & heavy auto transport logistics service'),
+    location: ls('Улаанбаатар - Дорноговь', 'Ulaanbaatar - Dornogovi'),
+    description: ls('Бүтээгдэхүүн ба түүхий эдийн төмөр замын болон авто замын тээвэрлэлтийг гүйцэтгэх найдвартай логистикийн түнш сонгон шалгаруулна.', 'Selecting reliable logistics partners for bulk cargo transport via railway and heavy truck fleet.'),
+    startDate: new Date('2026-07-20T09:00:00.000Z'),
+    deadlineDate: new Date('2026-09-15T18:00:00.000Z'),
+    isPublished: true,
+  },
+  {
+    code: 'ТШ-2026/11',
+    category: ls('Барилга & Дэд Бүтэц', 'Construction & Infrastructure'),
+    title: ls('Монцемент үйлдвэрийн авто савлагаа, лабораторийн тоног төхөөрөмж нийлүүлэлт', 'Supply of automated packaging and laboratory test equipment for Moncement Plant'),
+    location: ls('Дорноговь аймаг, Өргөн сум', 'Urgun sum, Dornogovi province'),
+    description: ls('Цементийн үйлдвэрийн лабораторийн чанарын хяналтын анализатор болон автомат савлагааны төхөөрөмжийн нийлүүлэгчийг сонгон шалгаруулна.', 'Selecting suppliers for cement quality control laboratory analyzers and automatic packing machinery.'),
+    startDate: new Date('2026-08-01T09:00:00.000Z'),
+    deadlineDate: new Date('2026-09-30T18:00:00.000Z'),
+    isPublished: true,
+  },
+  {
+    code: 'ТШ-2026/12',
+    category: ls('Эрчим хүч & Автоматик', 'Energy & Automation'),
+    title: ls('Үйлдвэр ба уурхайн бүсийн 110/35кВ дэд станцын тоног төхөөрөмж ба дизель станц', 'Supply of 110/35kV substation equipment and backup diesel generators'),
+    location: ls('Төв аймаг & Дорноговь', 'Tuv & Dornogovi provinces'),
+    description: ls('Уурхай ба үйлдвэрийн тасралтгүй ажиллагааг хангах 110/35кВ дэд станцын сэлбэг, бэлтгэл дизель станцын нийлүүлэгч сонгон шалгаруулна.', 'Procuring 110/35kV substation spare parts and backup diesel generator sets.'),
+    startDate: new Date('2026-08-10T09:00:00.000Z'),
+    deadlineDate: new Date('2026-10-15T18:00:00.000Z'),
+    isPublished: true,
+  },
+  {
+    code: 'ТШ-2026/13',
+    category: ls('Мэдээллийн Технологи & Сүлжээ', 'IT & Automation'),
+    title: ls('Уурхай, үйлдвэрийн SCADA систем ба ухаалаг хяналтын CCTV сүлжээ', 'Integrated SCADA industrial control & smart CCTV surveillance network'),
+    location: ls('Улаанбаатар - Заамар - Өргөн', 'Ulaanbaatar - Zaamar - Urgun'),
+    description: ls('Үйлдвэрлэл, олборлолтын процессын автоматжуулалтын SCADA систем ба үйлдвэрийн бүсийн IP CCTV сүлжээний гүйцэтгэгчийг сонгон шалгаруулна.', 'Selecting contractor for updating SCADA process control automation and site-wide IP CCTV surveillance network.'),
+    startDate: new Date('2026-08-15T09:00:00.000Z'),
+    deadlineDate: new Date('2026-10-30T18:00:00.000Z'),
+    isPublished: true,
+  }
+];
+
 export async function seedContent(app: INestApplicationContext, logger: Logger) {
   const opts = { strict: false };
   await seedList(app.get(HeroSlidesService, opts), HERO_SLIDES, 'hero slides', logger);
@@ -292,6 +356,7 @@ export async function seedContent(app: INestApplicationContext, logger: Logger) 
   await seedList(app.get(TeamService, opts), TEAM, 'team members', logger);
   await seedList(app.get(SectorsService, opts), SECTORS, 'sectors', logger);
   await seedList(app.get(CsrService, opts), CSR, 'CSR initiatives', logger);
+  await seedList(app.get(TendersService, opts), TENDERS, 'tenders', logger);
 
   await seedList(app.get(TourService, opts), TOUR, 'tour scenes', logger);
   await seedList(app.get(FaqsService, opts), FAQS, 'FAQs', logger);

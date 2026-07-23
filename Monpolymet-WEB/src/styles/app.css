@@ -3627,7 +3627,7 @@ h2.no-underline::after {
   border-color: #ffffff;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .site-header {
     height: 70px;
   }
@@ -3686,6 +3686,50 @@ h2.no-underline::after {
 
   .mobile-nav-link.active {
     color: var(--primary-color);
+  }
+
+  /* TOUCH SWIPE CARDS FOR TABLET & MOBILE */
+  .stages-grid,
+  .proc-steps-grid,
+  .guarantees-grid,
+  .touch-scroll-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 16px !important;
+    padding-top: 8px !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+    gap: 16px !important;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+  }
+
+  .stages-grid::-webkit-scrollbar,
+  .proc-steps-grid::-webkit-scrollbar,
+  .guarantees-grid::-webkit-scrollbar,
+  .touch-scroll-grid::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .stages-grid::-webkit-scrollbar-thumb,
+  .proc-steps-grid::-webkit-scrollbar-thumb,
+  .guarantees-grid::-webkit-scrollbar-thumb,
+  .touch-scroll-grid::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 4px;
+  }
+
+  .stage-card,
+  .proc-step-card,
+  .guarantee-card {
+    flex: 0 0 260px !important;
+    min-width: 240px !important;
+    max-width: 280px !important;
+    scroll-snap-align: start !important;
   }
 
   .form-grid {
