@@ -537,30 +537,43 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
         <div style={{ height: '40px' }}></div>
 
         {/* HR POLICY SECTION */}
-        <section id="hr-policy" className="hr-policy-container">
-          <div className="hr-policy-left">
-            <h2>{lang === 'mn' ? 'Хүний нөөцийн бодлого' : 'HR Policy'}</h2>
-            <p>
-              {lang === 'mn'
-                ? 'Бид хүний нөөцийн бодлогын хүрээнд дотоод ажилчдаа бүхийл салбартаа хөрвөн ажиллах боломжийг бүрдүүлэн гадаад дотоодын сургалт хөгжлөөр хангаж урамшуулан, тогтвортой хариуцлагатай, үлгэр жишээ ажиллах хүчнийг бэлтгэн эх орны бүтээн байгуулалтад үнэтэй хувь нэмэр оруулах найдвартай тогтвортой ажлын байрыг бий болгох зорилготойгоор салбар бүртээ шаргуу ажиллаж байна. Уул уурхай, үйлдвэрлэл, нөхөн сэргээлт, байгаль орчин, барилга, худалдаа үйлчилгээ, хоол үйлдвэрлэлийн салбаруудад тогтвортой ажиллах мэргэжлийн, мэргэшсэн, үлгэр жишээ ажилтнууд бол манай байгууллагын бахархал юм.'
-                : 'Within the scope of our HR policy, we work diligently in every sector to create opportunities for internal employees to work across all sectors, provide them with foreign and domestic training and development, encourage them, prepare a stable, responsible, and exemplary workforce, and create reliable and stable jobs that make a valuable contribution to national development. Professional, specialized, and exemplary employees who work sustainably in the mining, manufacturing, land rehabilitation, environmental, construction, trade, services, and catering sectors are the pride of our organization.'}
-            </p>
+        <section id="hr-policy" style={{ margin: '0 5% 60px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <h2 style={{
+              fontSize: '36px',
+              fontWeight: '800',
+              color: '#0f172a',
+              marginBottom: '12px',
+              letterSpacing: '-0.5px',
+              fontFamily: "'Montserrat', sans-serif"
+            }}>
+              {lang === 'mn' ? 'Хүний нөөцийн бодлого' : 'HR Policy'}
+            </h2>
           </div>
-          <div className="hr-policy-right">
-            {hrPolicies.map((policy, idx) => {
-              const PIcon = policy.icon;
-              return (
-                <div key={idx} className="policy-card">
-                  <div className="policy-icon-wrapper">
-                    <PIcon size={24} strokeWidth={2} />
+          <div className="hr-policy-container" style={{ margin: 0 }}>
+            <div className="hr-policy-left">
+              <p>
+                {lang === 'mn'
+                  ? 'Бид хүний нөөцийн бодлогын хүрээнд дотоод ажилчдаа бүхийл салбартаа хөрвөн ажиллах боломжийг бүрдүүлэн гадаад дотоодын сургалт хөгжлөөр хангаж урамшуулан, тогтвортой хариуцлагатай, үлгэр жишээ ажиллах хүчнийг бэлтгэн эх орны бүтээн байгуулалтад үнэтэй хувь нэмэр оруулах найдвартай тогтвортой ажлын байрыг бий болгох зорилготойгоор салбар бүртээ шаргуу ажиллаж байна. Уул уурхай, үйлдвэрлэл, нөхөн сэргээлт, байгаль орчин, барилга, худалдаа үйлчилгээ, хоол үйлдвэрлэлийн салбаруудад тогтвортой ажиллах мэргэжлийн, мэргэшсэн, үлгэр жишээ ажилтнууд бол манай байгууллагын бахархал юм.'
+                  : 'Within the scope of our HR policy, we work diligently in every sector to create opportunities for internal employees to work across all sectors, provide them with foreign and domestic training and development, encourage them, prepare a stable, responsible, and exemplary workforce, and create reliable and stable jobs that make a valuable contribution to national development. Professional, specialized, and exemplary employees who work sustainably in the mining, manufacturing, land rehabilitation, environmental, construction, trade, services, and catering sectors are the pride of our organization.'}
+              </p>
+            </div>
+            <div className="hr-policy-right">
+              {hrPolicies.map((policy, idx) => {
+                const PIcon = policy.icon;
+                return (
+                  <div key={idx} className="policy-card">
+                    <div className="policy-icon-wrapper">
+                      <PIcon size={24} strokeWidth={2} />
+                    </div>
+                    <div className="policy-text-content">
+                      <h4>{lang === 'mn' ? policy.titleMn : policy.titleEn}</h4>
+                      <p>{lang === 'mn' ? policy.descMn : policy.descEn}</p>
+                    </div>
                   </div>
-                  <div className="policy-text-content">
-                    <h4>{lang === 'mn' ? policy.titleMn : policy.titleEn}</h4>
-                    <p>{lang === 'mn' ? policy.descMn : policy.descEn}</p>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </section>
 
