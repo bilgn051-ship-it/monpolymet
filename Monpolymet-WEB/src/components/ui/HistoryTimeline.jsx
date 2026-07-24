@@ -135,9 +135,9 @@ export default function HistoryTimeline({ timeline, lang }) {
             height: 100%;
             display: flex;
             border-radius: 16px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #3b82f6;
             background-color: #ffffff;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.08);
             overflow: hidden;
           }
           .timeline-card-img-wrap {

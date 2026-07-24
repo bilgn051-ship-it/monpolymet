@@ -77,6 +77,9 @@ const mapTender = (d) => ({
   deadlineDate: d.deadlineDate ?? null,
   deadline: d.deadlineDate ? new Date(d.deadlineDate).toLocaleString('mn-MN', { dateStyle: 'short', timeStyle: 'short' }) : '',
   startTime: d.startDate ? new Date(d.startDate).toLocaleString('mn-MN', { dateStyle: 'short', timeStyle: 'short' }) : '',
+  pdfUrl: d.pdfUrl ?? d.fileUrl ?? '',
+  fileUrl: d.fileUrl ?? d.pdfUrl ?? '',
+  attachmentUrl: d.attachmentUrl ?? d.fileUrl ?? d.pdfUrl ?? '',
   isPublished: d.isPublished ?? true,
 });
 
@@ -501,4 +504,40 @@ export async function submitSupplierRegistration(formData, attachedFile) {
 
   if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
   return res.json();
+}
+
+export async function submitCandidateApplication(formData, attachedFile) {
+  const jsonBody = {
+    name: formData.name || '',
+    phone: formData.phone || '',
+    email: formData.email || '',
+    position: formData.position || '',
+    previousCompany: formData.previousCompany || '',
+    profession: formData.profession || '',
+    expectedSalary: formData.expectedSalary || '',
+    availableDate: formData.availableDate || '',
+    introMessage: formData.introMessage || '',
+    message: formData.introMessage || '',
+  };
+
+  if (attachedFile) {
+    const payload = new FormData();
+    Object.keys(jsonBody).forEach(key => payload.append(key, jsonBody[key]));
+    payload.append('file', attachedFile);
+
+    const res = await fetch(`${BASE_URL}/public/candidate-apply`, {
+      method: 'POST',
+      body: payload,
+    });
+    if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
+    return res.json();
+  } else {
+    const res = await fetch(`${BASE_URL}/public/candidate-apply`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(jsonBody),
+    });
+    if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
+    return res.json();
+  }
 }

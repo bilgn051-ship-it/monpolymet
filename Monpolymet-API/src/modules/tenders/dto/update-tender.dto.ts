@@ -42,6 +42,14 @@ export class UpdateTenderDto {
   deadlineDate?: string;
 
   @IsOptional()
+  @IsString()
+  pdfUrl?: string;
+
+  @IsOptional()
+  @IsString()
+  fileUrl?: string;
+
+  @IsOptional()
   @IsBoolean()
   isPublished?: boolean;
 }

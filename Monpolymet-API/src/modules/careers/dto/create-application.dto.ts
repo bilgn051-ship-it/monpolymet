@@ -32,6 +32,26 @@ export class CreateApplicationDto {
   message?: string;
 
   @IsOptional()
+  @IsString()
+  previousCompany?: string;
+
+  @IsOptional()
+  @IsString()
+  profession?: string;
+
+  @IsOptional()
+  @IsString()
+  expectedSalary?: string;
+
+  @IsOptional()
+  @IsString()
+  availableDate?: string;
+
+  @IsOptional()
+  @IsString()
+  fileUrl?: string;
+
+  @IsOptional()
   @IsMongoId()
   job?: string;
 }

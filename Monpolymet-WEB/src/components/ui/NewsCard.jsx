@@ -25,7 +25,7 @@ export default function NewsCard({
   return (
     <div className="news-separated-card" onClick={onReadMore}>
       <div className="news-card-image">
-        <img src={imageUrl} alt={title} onError={(e) => { e.target.onerror = null; e.target.src = 'https://monpolymet.mn/wp-content/uploads/2022/05/img-slider-02-2.jpg'; }} />
+        <img src={imageUrl} alt={title} loading="lazy" decoding="async" onError={(e) => { e.target.onerror = null; e.target.src = 'https://monpolymet.mn/wp-content/uploads/2022/05/img-slider-02-2.jpg'; }} />
       </div>
       <div className="news-card-text-box">
         <div className="news-card-date">{formattedDate}</div>

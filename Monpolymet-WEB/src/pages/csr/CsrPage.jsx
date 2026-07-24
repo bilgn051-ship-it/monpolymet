@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Trees, HeartHandshake, Leaf, Droplets, Building2, Cpu, ArrowUpRight, Sparkles } from 'lucide-react';
+import { Trees, HeartHandshake, Leaf, Droplets, Building2, Cpu, ArrowUpRight, Sparkles, Globe, ShieldCheck, Sun, Sprout, Award, CheckCircle2 } from 'lucide-react';
 import { fetchCsr } from '../../api';
 
 export default function CsrPage({ lang, t, pageMetadata }) {
@@ -56,9 +56,50 @@ export default function CsrPage({ lang, t, pageMetadata }) {
 
   const displayCsr = csrItems && csrItems.length > 0 ? csrItems : defaultCsr;
 
+
+
+  const sdgGoals = [
+    {
+      goalNumber: 'SDG 6',
+      titleMn: 'Цэвэр Ус Болон Ариун Шугам',
+      titleEn: 'Clean Water & Sanitation',
+      descMn: 'Монцемент үйлдвэрт 100% хаалттай дахин ашиглах технологи нэвтрүүлж, усны хаягдлыг тэглэсэн.',
+      descEn: 'Zero-water-waste closed loop recycling technologies deployed in green production.',
+      icon: <Droplets size={28} />,
+      bgGradient: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
+    },
+    {
+      goalNumber: 'SDG 12',
+      titleMn: 'Хариуцлагатай Хэрэглээ Ба Үйлдвэрлэл',
+      titleEn: 'Responsible Consumption & Production',
+      descMn: 'Европын хуурай аргын цементийн үйлдвэрлэлээр эрчим хүч, усны хэрэглээг 50% бууруулсан.',
+      descEn: 'Eco-friendly dry process reducing water and energy consumption by 50%.',
+      icon: <Leaf size={28} />,
+      bgGradient: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+    },
+    {
+      goalNumber: 'SDG 13',
+      titleMn: 'Уур Амьсгалын Өөрчлөлтийн Үйл Хэрэг',
+      titleEn: 'Climate Action',
+      descMn: '5.5 км ойн төгөл болон 1 сая мод тарих хөтөлбөрөөр хүлэмжийн хийг шингээж байна.',
+      descEn: 'Absorbing carbon emissions through 5.5 km forest belts & 1 million trees pledge.',
+      icon: <Sun size={28} />,
+      bgGradient: 'linear-gradient(135deg, #d97706 0%, #b45309 100%)',
+    },
+    {
+      goalNumber: 'SDG 15',
+      titleMn: 'Хуурай Газрын Амьдрал & Нөхөн Сэргээлт',
+      titleEn: 'Life on Land & Ecosystem Reclamation',
+      descMn: 'Уул уурхайн салбарт 100% биологийн нөхөн сэргээлт хийж жишиг стандарт тогтоосон.',
+      descEn: '100% biological ecosystem restoration setting industry benchmark standards.',
+      icon: <Sprout size={28} />,
+      bgGradient: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)',
+    },
+  ];
+
   return (
     <>
-      {/* 1. Exact Standard Full Bleed Hero Banner (Untouched) */}
+      {/* 1. Full Bleed Hero Banner */}
       <div className="full-bleed-banner" style={{
         backgroundImage: `url('https://www.residencesegattini.it/clientfiles/page/20211021152000_sport-relax.jpg')`,
         backgroundColor: '#0f172a'
@@ -67,216 +108,113 @@ export default function CsrPage({ lang, t, pageMetadata }) {
         <div className="full-bleed-banner-container">
           <div className="full-bleed-banner-content animate-slide-up">
             <h1 className="hero-title">
-              {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.titleMn : pageMetadata.header.titleEn) : t.csr.title}
+              {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.titleMn : pageMetadata.header.titleEn) : (lang === 'mn' ? 'Тогтвортой Хөгжил & Эко Бодлого' : 'Sustainable Development & CSR')}
             </h1>
             <p className="hero-subtitle">
-              {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.subtitleMn : pageMetadata.header.subtitleEn) : t.csr.subtitle}
+              {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.subtitleMn : pageMetadata.header.subtitleEn) : (lang === 'mn' ? 'Ирээдүй үедээ ногоон байгаль, хариуцлагатай үйлдвэрлэлийг өвлүүлэн үлдээх нь бидний эрхэм зорилго юм.' : 'Preserving green environment and responsible production for future generations.')}
             </p>
           </div>
         </div>
       </div>
 
-      {/* 2. 3D Isometric Smart City & Eco-Park Dashboard Concept (Inspired by Pinterest 3D UI) */}
-      <div style={{ backgroundColor: '#0b1329', color: '#ffffff', padding: '80px 20px 100px 20px', fontFamily: "'Montserrat', sans-serif", position: 'relative', overflow: 'hidden' }}>
-        
-        {/* Background Ambient Glow FX */}
-        <div style={{
-          position: 'absolute',
-          top: '-10%',
-          left: '20%',
-          width: '500px',
-          height: '500px',
-          background: 'radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(37, 99, 235, 0.08) 50%, rgba(0,0,0,0) 80%)',
-          pointerEvents: 'none',
-          borderRadius: '50%'
-        }} />
 
-        <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
+
+
+
+      {/* 4. UN Sustainable Development Goals (SDGs) Bento Grid */}
+      <section style={{ backgroundColor: '#f8fafc', padding: '80px 20px', fontFamily: "'Montserrat', sans-serif", borderTop: '1px solid #e2e8f0' }}>
+        <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
           
-          {/* Header Tag */}
-          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <div style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-              backgroundColor: 'rgba(16, 185, 129, 0.15)',
-              border: '1px solid rgba(16, 185, 129, 0.3)',
+              backgroundColor: '#eff6ff',
+              border: '1px solid #bfdbfe',
               borderRadius: '24px',
               padding: '6px 20px',
               fontSize: '13px',
               fontWeight: '600',
-              color: '#34d399',
+              color: '#2563eb',
               marginBottom: '16px'
             }}>
-              <Cpu size={16} />
-              3D ECO-PARK CONCEPT & SMART DASHBOARD
+              <Globe size={16} />
+              UN SUSTAINABLE DEVELOPMENT GOALS
             </div>
-            <h2 style={{ fontSize: '36px', fontWeight: '800', color: '#ffffff', marginBottom: '12px', letterSpacing: '-0.5px' }}>
-              {lang === 'mn' ? 'Нөхөн Сэргээлтийн 3D Дижитал Модель' : 'Eco-Restoration 3D Digital Twin'}
+            <h2 className="no-underline" style={{ fontSize: '32px', fontWeight: '800', color: '#0f172a', marginBottom: '12px', letterSpacing: '-0.5px' }}>
+              {lang === 'mn' ? 'НҮБ-ын Тогтвортой Хөгжлийн Зорилтууд' : 'UN Sustainable Development Goals'}
             </h2>
-            <p style={{ fontSize: '16px', color: '#94a3b8', maxWidth: '640px', margin: '0 auto' }}>
-              {lang === 'mn' ? 'Тосонгийн орд болон эко үйлдвэрүүдийн нөхөн сэргээлтийн үзүүлэлтүүд ба интерактив 3D бүтэц' : 'Interactive 3D visualization and real-time environmental reclamation indicators'}
+            <p style={{ fontSize: '16px', color: '#64748b', maxWidth: '640px', margin: '0 auto' }}>
+              {lang === 'mn' ? 'Бид дэлхийн тогтвортой хөгжлийн зорилтуудад бодитой хувь нэмэр оруулж байна' : 'Aligning our green operations with global UN sustainable development goals'}
             </p>
           </div>
 
-          {/* Main 3D Card Stage */}
-          <div style={{
-            backgroundColor: 'rgba(15, 23, 42, 0.75)',
-            backdropFilter: 'blur(20px)',
-            borderRadius: '28px',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
-            boxShadow: '0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.1)',
-            padding: '40px',
-            display: 'grid',
-            gridTemplateColumns: '1.1fr 0.9fr',
-            gap: '40px',
-            alignItems: 'center'
-          }} className="smart-3d-stage">
-            <style>{`
-              @media (max-width: 992px) {
-                .smart-3d-stage {
-                  grid-template-columns: 1fr !important;
-                }
-              }
-            `}</style>
-
-            {/* Left 3D Visual Box with Floating Cards */}
-            <div style={{ position: 'relative', width: '100%', height: '420px', borderRadius: '20px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
-              <img
-                src={displayCsr[activeTab]?.imageUrl || defaultCsr[0].imageUrl}
-                alt="3D Eco Visual"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'linear-gradient(180deg, rgba(11, 19, 41, 0.2) 0%, rgba(11, 19, 41, 0.85) 100%)'
-              }} />
-
-              {/* Floating 3D Badge 1 (Top Right) */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', gap: '24px' }}>
+            {sdgGoals.map((sdg, index) => (
               <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                key={index}
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.2 }}
                 style={{
-                  position: 'absolute',
-                  top: '20px',
-                  right: '20px',
-                  backgroundColor: 'rgba(15, 23, 42, 0.85)',
-                  backdropFilter: 'blur(12px)',
-                  border: '1px solid rgba(52, 211, 153, 0.4)',
-                  borderRadius: '16px',
-                  padding: '12px 20px',
-                  boxShadow: '0 10px 25px rgba(0,0,0,0.3)',
+                  backgroundColor: '#ffffff',
+                  borderRadius: '24px',
+                  padding: '32px 28px',
+                  border: '1px solid #e2e8f0',
+                  boxShadow: '0 10px 30px rgba(15, 23, 42, 0.04)',
                   display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px'
-                }}
-              >
-                <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#34d399', boxShadow: '0 0 10px #34d399' }} />
-                <div>
-                  <div style={{ fontSize: '11px', color: '#94a3b8', fontWeight: '600' }}>Эко Стандарт</div>
-                  <div style={{ fontSize: '14px', fontWeight: '700', color: '#ffffff' }}>100% Биологийн Нөхөн Сэргээлт</div>
-                </div>
-              </motion.div>
-
-              {/* Floating 3D Badge 2 (Bottom Left) */}
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                style={{
-                  position: 'absolute',
-                  bottom: '20px',
-                  left: '20px',
-                  backgroundColor: 'rgba(15, 23, 42, 0.85)',
-                  backdropFilter: 'blur(12px)',
-                  border: '1px solid rgba(59, 130, 246, 0.4)',
-                  borderRadius: '16px',
-                  padding: '14px 20px',
-                  boxShadow: '0 10px 25px rgba(0,0,0,0.3)',
-                  display: 'flex',
-                  gap: '16px'
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
                 }}
               >
                 <div>
-                  <div style={{ fontSize: '18px', fontWeight: '800', color: '#60a5fa' }}>743 га</div>
-                  <div style={{ fontSize: '11px', color: '#94a3b8' }}>Техникийн нөхөн сэргээлт</div>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '24px'
+                  }}>
+                    <span style={{
+                      fontSize: '12px',
+                      fontWeight: '800',
+                      letterSpacing: '1px',
+                      color: '#ffffff',
+                      background: sdg.bgGradient,
+                      padding: '6px 14px',
+                      borderRadius: '20px'
+                    }}>
+                      {sdg.goalNumber}
+                    </span>
+                    <div style={{ color: '#0284c7' }}>
+                      {sdg.icon}
+                    </div>
+                  </div>
+
+                  <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', marginBottom: '12px', lineHeight: '1.35' }}>
+                    {lang === 'mn' ? sdg.titleMn : sdg.titleEn}
+                  </h3>
+
+                  <p style={{ fontSize: '14px', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
+                    {lang === 'mn' ? sdg.descMn : sdg.descEn}
+                  </p>
                 </div>
-                <div style={{ borderLeft: '1px solid rgba(255,255,255,0.15)', paddingLeft: '16px' }}>
-                  <div style={{ fontSize: '18px', fontWeight: '800', color: '#34d399' }}>514 га</div>
-                  <div style={{ fontSize: '11px', color: '#94a3b8' }}>Биологийн нөхөн сэргээлт</div>
+
+                <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#16a34a', fontWeight: '600' }}>
+                  <CheckCircle2 size={16} />
+                  <span>{lang === 'mn' ? 'Бодит үр дүн хэрэгжсэн' : 'Active Impact Verified'}</span>
                 </div>
               </motion.div>
-            </div>
-
-            {/* Right Controls & Tab Selector */}
-            <div>
-              <div style={{ fontSize: '13px', color: '#38bdf8', fontWeight: '700', letterSpacing: '1px', marginBottom: '10px' }}>
-                ИНТЕРАКТИВ ТОХИРУУЛГА
-              </div>
-              <h3 style={{ fontSize: '26px', fontWeight: '800', color: '#ffffff', marginBottom: '24px', lineHeight: '1.3' }}>
-                {lang === 'mn' ? displayCsr[activeTab]?.titleMn : displayCsr[activeTab]?.titleEn}
-              </h3>
-
-              <p style={{ fontSize: '15px', color: '#cbd5e1', lineHeight: '1.7', marginBottom: '30px' }}>
-                {lang === 'mn' ? displayCsr[activeTab]?.descMn : displayCsr[activeTab]?.descEn}
-              </p>
-
-              {/* Tab Selector Buttons */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {displayCsr.map((item, idx) => {
-                  const isActive = idx === activeTab;
-                  return (
-                    <button
-                      key={idx}
-                      onClick={() => setActiveTab(idx)}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        backgroundColor: isActive ? 'rgba(37, 99, 235, 0.25)' : 'rgba(255, 255, 255, 0.04)',
-                        border: isActive ? '1px solid #3b82f6' : '1px solid rgba(255, 255, 255, 0.08)',
-                        borderRadius: '14px',
-                        padding: '14px 20px',
-                        color: '#ffffff',
-                        cursor: 'pointer',
-                        textAlign: 'left',
-                        transition: 'all 0.2s ease',
-                        fontFamily: "'Montserrat', sans-serif"
-                      }}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <div style={{
-                          width: '32px',
-                          height: '32px',
-                          borderRadius: '8px',
-                          backgroundColor: isActive ? '#2563eb' : 'rgba(255,255,255,0.1)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          fontSize: '13px',
-                          fontWeight: '700'
-                        }}>
-                          0{idx + 1}
-                        </div>
-                        <span style={{ fontSize: '15px', fontWeight: isActive ? '700' : '500' }}>
-                          {lang === 'mn' ? item.titleMn : item.titleEn}
-                        </span>
-                      </div>
-                      <ArrowUpRight size={18} style={{ opacity: isActive ? 1 : 0.4 }} />
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+            ))}
           </div>
-        </div>
-      </div>
 
-      {/* 3. Environmental Commitments Grid */}
-      <section style={{ backgroundColor: '#ffffff', borderTop: '1px solid #e2e8f0', padding: '80px 20px' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+        </div>
+      </section>
+
+      {/* 5. Environmental Commitments Grid */}
+      <section style={{ backgroundColor: '#ffffff', borderTop: '1px solid #e2e8f0', padding: '80px 20px', fontFamily: "'Montserrat', sans-serif" }}>
+        <div style={{ maxWidth: '1140px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-            <h2 style={{ fontSize: '32px', fontWeight: '800', marginBottom: '12px' }}>
+            <h2 className="no-underline" style={{ fontSize: '32px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
               {lang === 'mn' ? 'Байгаль Орчин & Ногоон Бодлого' : 'Environmental Policy & Commitments'}
             </h2>
             <p style={{ fontSize: '16px', color: '#64748b', maxWidth: '600px', margin: '0 auto' }}>
@@ -287,14 +225,14 @@ export default function CsrPage({ lang, t, pageMetadata }) {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
             <div style={{
               backgroundColor: '#f8fafc',
-              borderRadius: '20px',
-              padding: '32px 24px',
+              borderRadius: '24px',
+              padding: '36px 28px',
               border: '1px solid #e2e8f0'
             }}>
               <div style={{
-                width: '50px',
-                height: '50px',
-                borderRadius: '14px',
+                width: '54px',
+                height: '54px',
+                borderRadius: '16px',
                 backgroundColor: '#dbeafe',
                 color: '#2563eb',
                 display: 'flex',
@@ -302,26 +240,26 @@ export default function CsrPage({ lang, t, pageMetadata }) {
                 justifyContent: 'center',
                 marginBottom: '20px'
               }}>
-                <Droplets size={26} />
+                <Droplets size={28} />
               </div>
-              <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>
+              <h3 style={{ fontSize: '19px', fontWeight: '700', color: '#0f172a', marginBottom: '12px' }}>
                 {lang === 'mn' ? 'Усны 100% Дахин Ашиглалт' : '100% Water Recycling'}
               </h3>
-              <p style={{ fontSize: '14px', color: '#64748b', lineHeight: '1.6' }}>
+              <p style={{ fontSize: '14px', color: '#64748b', lineHeight: '1.65', margin: 0 }}>
                 {lang === 'mn' ? 'Монцемент үйлдвэр нь хаалттай усан хангамжийн системээр үйлдвэрлэлийн усыг 100% дахин ашигладаг.' : 'Utilizing zero-water-waste closed loop recycling technologies.'}
               </p>
             </div>
 
             <div style={{
               backgroundColor: '#f8fafc',
-              borderRadius: '20px',
-              padding: '32px 24px',
+              borderRadius: '24px',
+              padding: '36px 28px',
               border: '1px solid #e2e8f0'
             }}>
               <div style={{
-                width: '50px',
-                height: '50px',
-                borderRadius: '14px',
+                width: '54px',
+                height: '54px',
+                borderRadius: '16px',
                 backgroundColor: '#dcfce7',
                 color: '#16a34a',
                 display: 'flex',
@@ -329,26 +267,26 @@ export default function CsrPage({ lang, t, pageMetadata }) {
                 justifyContent: 'center',
                 marginBottom: '20px'
               }}>
-                <Trees size={26} />
+                <Trees size={28} />
               </div>
-              <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>
+              <h3 style={{ fontSize: '19px', fontWeight: '700', color: '#0f172a', marginBottom: '12px' }}>
                 {lang === 'mn' ? '7 Хэсэг Ойн Төгөл' : '7 Forest Belts'}
               </h3>
-              <p style={{ fontSize: '14px', color: '#64748b', lineHeight: '1.6' }}>
+              <p style={{ fontSize: '14px', color: '#64748b', lineHeight: '1.65', margin: 0 }}>
                 {lang === 'mn' ? 'Тосонгийн орд газарт 5.5 км урт ойн төглийг ургуулж, хөрсний ургамалжилтыг сэргээсэн.' : 'Created 5.5 km forest belts to restore natural biodiversity.'}
               </p>
             </div>
 
             <div style={{
               backgroundColor: '#f8fafc',
-              borderRadius: '20px',
-              padding: '32px 24px',
+              borderRadius: '24px',
+              padding: '36px 28px',
               border: '1px solid #e2e8f0'
             }}>
               <div style={{
-                width: '50px',
-                height: '50px',
-                borderRadius: '14px',
+                width: '54px',
+                height: '54px',
+                borderRadius: '16px',
                 backgroundColor: '#fef3c7',
                 color: '#d97706',
                 display: 'flex',
@@ -356,12 +294,12 @@ export default function CsrPage({ lang, t, pageMetadata }) {
                 justifyContent: 'center',
                 marginBottom: '20px'
               }}>
-                <Building2 size={26} />
+                <Building2 size={28} />
               </div>
-              <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '10px' }}>
+              <h3 style={{ fontSize: '19px', fontWeight: '700', color: '#0f172a', marginBottom: '12px' }}>
                 {lang === 'mn' ? 'Орон Нутгийн Хөгжил' : 'Local Community Upgrades'}
               </h3>
-              <p style={{ fontSize: '14px', color: '#64748b', lineHeight: '1.6' }}>
+              <p style={{ fontSize: '14px', color: '#64748b', lineHeight: '1.65', margin: 0 }}>
                 {lang === 'mn' ? 'Сургууль, цэцэрлэг, эмнэлгийн тохижилтыг тасралтгүй санхүүжүүлдэг.' : 'Funding community schools, healthcare upgrades, and local infrastructure.'}
               </p>
             </div>

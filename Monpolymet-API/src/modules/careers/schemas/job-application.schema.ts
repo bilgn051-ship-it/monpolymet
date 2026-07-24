@@ -34,6 +34,21 @@ export class JobApplication {
   @Prop()
   message?: string;
 
+  @Prop()
+  previousCompany?: string;
+
+  @Prop()
+  profession?: string;
+
+  @Prop()
+  expectedSalary?: string;
+
+  @Prop()
+  availableDate?: string;
+
+  @Prop()
+  fileUrl?: string;
+
   /** Set when the applicant applied via a listed vacancy. */
   @Prop({ type: Types.ObjectId, ref: Job.name })
   job?: Types.ObjectId;

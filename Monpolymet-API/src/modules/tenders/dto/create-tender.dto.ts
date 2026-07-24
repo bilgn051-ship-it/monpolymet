@@ -40,6 +40,10 @@ export class CreateTenderDto {
   @IsOptional()
   pdfUrl?: string;
 
+  @IsString()
+  @IsOptional()
+  fileUrl?: string;
+
   @IsBoolean()
   @IsOptional()
   isPublished?: boolean;

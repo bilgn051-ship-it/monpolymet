@@ -16,6 +16,9 @@ import { PagesService, ProcurementContentService } from '../pages/pages.crud';
 
 import { TendersService } from '../tenders/tenders.service';
 
+import { ApplicationsService } from '../careers/applications.service';
+import { ApplicationStatus } from '../careers/schemas/job-application.schema';
+
 /**
  * Unauthenticated read API consumed by the public website. Only returns
  * visitor-safe content.
@@ -25,6 +28,7 @@ export class PublicController {
   constructor(
     private readonly news: NewsService,
     private readonly jobs: JobsService,
+    private readonly applicationsService: ApplicationsService,
     private readonly tendersService: TendersService,
     private readonly timeline: TimelineService,
     private readonly heroSlides: HeroSlidesService,
@@ -294,5 +298,137 @@ export class PublicController {
       const sent = await dispatchMail();
       return { success: true, sentEmail: sent };
     }
+  }
+
+  @Public()
+  @Post('candidate-apply')
+  @UseInterceptors(FileInterceptor('file'))
+  async candidateApply(
+    @Body() body: {
+      name: string;
+      phone: string;
+      email?: string;
+      position: string;
+      previousCompany?: string;
+      profession?: string;
+      expectedSalary?: string;
+      availableDate?: string;
+      introMessage?: string;
+    },
+    @UploadedFile() file?: any
+  ) {
+    const name = body?.name || 'Ажил горилогч';
+    const phone = body?.phone || '-';
+    const email = body?.email || '';
+    const position = body?.position || 'Ерөнхий анкет';
+    const previousCompany = body?.previousCompany || '';
+    const profession = body?.profession || '';
+    const expectedSalary = body?.expectedSalary || '';
+    const availableDate = body?.availableDate || '';
+    const message = body?.introMessage || (body as any)?.message || '';
+
+    // 1. Save candidate application to MongoDB database so it appears in Admin Dashboard
+    try {
+      await this.applicationsService.create({
+        name,
+        phone,
+        email,
+        position,
+        previousCompany,
+        profession,
+        expectedSalary,
+        availableDate,
+        message,
+        status: ApplicationStatus.NEW
+      } as any);
+    } catch (dbErr) {
+      console.warn('MongoDB save candidate application failed:', dbErr);
+    }
+
+    const transporterOptions = [
+      // 1. Office365 / Microsoft Exchange
+      { host: 'smtp.office365.com', port: 587, secure: false },
+      // 2. Direct cPanel / Webmail SMTP
+      { host: 'mail.monpolymet.mn', port: 465, secure: true },
+      // 3. Fallback Webmail SMTP 587
+      { host: 'mail.monpolymet.mn', port: 587, secure: false }
+    ];
+
+    const htmlContent = `<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f8fafc;">
+  <div style="max-width: 650px; margin: 20px auto; padding: 28px; border: 1px solid #cbd5e1; border-radius: 16px; background-color: #ffffff;">
+    <h2 style="color: #0f172a; border-bottom: 3px solid #001CE8; padding-bottom: 12px; margin-top: 0;">👤 [Ажил горилогчийн товч анкет] ${body.name || 'Шинэ анкет'}</h2>
+    <div style="background-color: #eff6ff; border: 1px solid #bfdbfe; padding: 12px 16px; border-radius: 8px; font-size: 13px; color: #1e40af; margin-bottom: 18px;">
+      💼 <strong>Монполимет Группийн веб сайтаас шууд ирсэн ажил горилогчийн анкетын мэдээлэл.</strong>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px;">
+      <tr><td style="padding: 10px 0; font-weight: bold; color: #475569; width: 220px;">Овог, нэр:</td><td style="padding: 10px 0; color: #0f172a; font-weight: bold;">${body.name || '-'}</td></tr>
+      <tr><td style="padding: 10px 0; font-weight: bold; color: #475569;">Холбоо барих утас:</td><td style="padding: 10px 0; color: #0f172a; font-weight: bold;">${body.phone || '-'}</td></tr>
+      <tr><td style="padding: 10px 0; font-weight: bold; color: #475569;">Имэйл хаяг:</td><td style="padding: 10px 0; color: #2563eb;">${body.email || '-'}</td></tr>
+      <tr><td style="padding: 10px 0; font-weight: bold; color: #475569;">Сонирхож буй албан тушаал:</td><td style="padding: 10px 0; color: #001CE8; font-weight: bold;">${body.position || '-'}</td></tr>
+      <tr><td style="padding: 10px 0; font-weight: bold; color: #475569;">Өмнө нь ажиллаж байсан байгууллага:</td><td style="padding: 10px 0; color: #0f172a;">${body.previousCompany || '-'}</td></tr>
+      <tr><td style="padding: 10px 0; font-weight: bold; color: #475569;">Мэргэжил:</td><td style="padding: 10px 0; color: #0f172a;">${body.profession || '-'}</td></tr>
+      <tr><td style="padding: 10px 0; font-weight: bold; color: #475569;">Цалингийн хүлээлт:</td><td style="padding: 10px 0; color: #0f172a;">${body.expectedSalary || '-'}</td></tr>
+      <tr><td style="padding: 10px 0; font-weight: bold; color: #475569;">Ажилд орох боломжтой хугацаа:</td><td style="padding: 10px 0; color: #0f172a;">${body.availableDate || '-'}</td></tr>
+      <tr><td style="padding: 10px 0; font-weight: bold; color: #475569; vertical-align: top;">Өөрийн товч танилцуулга:</td><td style="padding: 10px 0; color: #0f172a; line-height: 1.6;">${body.introMessage || 'Байхгүй'}</td></tr>
+    </table>
+    ${file ? `<div style="margin-top: 20px; padding: 14px; background-color: #f1f5f9; border-radius: 8px; font-size: 13px; color: #334155;">📎 <strong>Хавсаргасан CV / Анкет файл:</strong> ${file.originalname} (${(file.size / (1024 * 1024)).toFixed(2)} MB)</div>` : ''}
+    <hr style="margin-top: 24px; border: none; border-top: 1px solid #e2e8f0;" />
+    <p style="font-size: 11px; color: #94a3b8; margin: 8px 0 0 0;">Энэхүү и-мэйл нь Монполимет Группийн карьер цонхноос mpm-hr@monpolymet.mn хаяг руу автоматаар илгээгдсэн болно.</p>
+  </div>
+</body>
+</html>`;
+
+    let sent = false;
+    let lastError: any = null;
+
+    for (const opt of transporterOptions) {
+      try {
+        const transporter = nodemailer.createTransport({
+          host: opt.host,
+          port: opt.port,
+          secure: opt.secure,
+          auth: {
+            user: 'procurement@monpolymet.mn',
+            pass: 'Lalar05$',
+          },
+          tls: {
+            rejectUnauthorized: false
+          }
+        });
+
+        const mailOptions: any = {
+          from: `"Монполимет Ажил Горилогчийн Портал" <procurement@monpolymet.mn>`,
+          to: 'mpm-hr@monpolymet.mn',
+          replyTo: body.email || 'mpm-hr@monpolymet.mn',
+          subject: `[Ажил горилогчийн товч анкет] ${body.name} - ${body.position}`,
+          html: htmlContent,
+          textEncoding: 'base64',
+          encoding: 'utf-8',
+          attachments: file ? [{
+            filename: file.originalname,
+            content: file.buffer,
+            contentType: file.mimetype || 'application/octet-stream'
+          }] : []
+        };
+
+        await transporter.sendMail(mailOptions);
+        sent = true;
+        break;
+      } catch (err) {
+        lastError = err;
+      }
+    }
+
+    if (!sent) {
+      console.error('Candidate email dispatch error:', lastError?.message || lastError);
+    }
+
+    return { success: true, sentEmail: sent };
   }
 }

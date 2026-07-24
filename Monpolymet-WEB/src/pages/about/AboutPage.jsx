@@ -9,38 +9,47 @@ import HistoryTimeline from '../../components/ui/HistoryTimeline';
 function InteractiveTitle({ text, className, style }) {
   const [hoveredIdx, setHoveredIdx] = useState(null);
 
+  const words = (text || '').split(' ');
+  let globalCharCount = 0;
+
   return (
     <h2
       className={className}
-      style={{ ...style, display: 'inline-block', position: 'relative' }}
+      style={{ ...style, position: 'relative', wordBreak: 'keep-all' }}
       onMouseLeave={() => setHoveredIdx(null)}
     >
-      {text.split('').map((char, idx) => {
-        let color = style.color || '#000000';
-        
-        if (hoveredIdx !== null) {
-          const dist = Math.abs(hoveredIdx - idx);
-          if (dist === 0) {
-            color = '#2563eb';
-          } else if (dist === 1) {
-            color = '#3b82f6';
-          } else if (dist === 2) {
-            color = '#93c5fd';
-          }
-        }
+      {words.map((word, wordIdx) => {
+        const wordCharStartIndex = globalCharCount;
+        globalCharCount += word.length + 1;
 
         return (
-          <span
-            key={idx}
-            onMouseEnter={() => setHoveredIdx(idx)}
-            style={{
-              display: 'inline-block',
-              transition: 'color 0.15s ease-out',
-              color: color,
-              cursor: 'default',
-            }}
-          >
-            {char === ' ' ? '\u00A0' : char}
+          <span key={wordIdx} style={{ display: 'inline-flex', flexWrap: 'nowrap', whiteSpace: 'nowrap', marginRight: '0.3em' }}>
+            {word.split('').map((char, charIdx) => {
+              const overallIdx = wordCharStartIndex + charIdx;
+              let color = (style && style.color) || '#000000';
+
+              if (hoveredIdx !== null) {
+                const dist = Math.abs(hoveredIdx - overallIdx);
+                if (dist === 0) color = '#2563eb';
+                else if (dist === 1) color = '#3b82f6';
+                else if (dist === 2) color = '#93c5fd';
+              }
+
+              return (
+                <span
+                  key={charIdx}
+                  onMouseEnter={() => setHoveredIdx(overallIdx)}
+                  style={{
+                    display: 'inline-block',
+                    transition: 'color 0.15s ease-out',
+                    color: color,
+                    cursor: 'default',
+                  }}
+                >
+                  {char}
+                </span>
+              );
+            })}
           </span>
         );
       })}

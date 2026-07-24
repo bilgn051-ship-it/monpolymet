@@ -3,6 +3,7 @@ import {
   ActionIcon,
   Anchor,
   Badge,
+  Button,
   Card,
   Divider,
   Drawer,
@@ -17,12 +18,13 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { modals } from '@mantine/modals';
-import { Eye, Trash2, Filter, Search, RotateCcw } from 'lucide-react';
+import { Eye, Trash2, Filter, Search, RotateCcw, FileText } from 'lucide-react';
 import { api } from '../../api/client';
 import { useCollection } from '../../lib/useCollection';
 import { formatDate } from '../../lib/format';
 import PageHeader from '../../components/PageHeader';
 import DataState from '../../components/DataState';
+import { generateApplicationPdf } from '../../lib/applicationPdfGenerator';
 import { STATUS_COLORS, STATUS_OPTIONS } from './applicationStatus';
 import { t } from '../../i18n';
 
@@ -220,6 +222,14 @@ export default function ApplicationsPage() {
                       <Group gap={4} justify="flex-end" wrap="nowrap">
                         <ActionIcon
                           variant="subtle"
+                          color="blue"
+                          onClick={() => generateApplicationPdf(item)}
+                          title="Ажилд орох анкет PDF татах"
+                        >
+                          <FileText size={16} />
+                        </ActionIcon>
+                        <ActionIcon
+                          variant="subtle"
                           onClick={() => openDetail(item)}
                           aria-label={t.applications.viewTitle}
                         >
@@ -270,6 +280,10 @@ export default function ApplicationsPage() {
             </Group>
             <Divider />
             <DetailRow label={t.applications.position}>{selected.position}</DetailRow>
+            <DetailRow label="Өмнөх байгууллага">{selected.previousCompany || '-'}</DetailRow>
+            <DetailRow label="Мэргэжил">{selected.profession || '-'}</DetailRow>
+            <DetailRow label="Цалингийн хүлээлт">{selected.expectedSalary || '-'}</DetailRow>
+            <DetailRow label="Орох хугацаа">{selected.availableDate || '-'}</DetailRow>
             <DetailRow label={t.applications.phone}>
               <Anchor href={`tel:${selected.phone}`}>{selected.phone}</Anchor>
             </DetailRow>
@@ -281,12 +295,23 @@ export default function ApplicationsPage() {
             <DetailRow label={t.applications.colDate}>
               {formatDate(selected.createdAt)}
             </DetailRow>
-            {selected.message && (
+            {(selected.message || selected.introMessage) && (
               <>
                 <Divider label={t.applications.message} labelPosition="left" />
-                <Text size="sm">{selected.message}</Text>
+                <Text size="sm">{selected.message || selected.introMessage}</Text>
               </>
             )}
+            <Divider />
+            <Button
+              variant="light"
+              color="blue"
+              fullWidth
+              leftSection={<FileText size={16} />}
+              onClick={() => generateApplicationPdf(selected)}
+              style={{ fontWeight: 700 }}
+            >
+              📄 Ажилд орох анкетыг PDF болгон татах
+            </Button>
             <Divider />
             <Select
               label={t.applications.changeStatus}

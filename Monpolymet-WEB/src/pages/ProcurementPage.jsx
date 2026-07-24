@@ -31,6 +31,249 @@ import tenderhubBg from '../assets/tenderhub-bg.png';
 const row1Logos = [partner1, partner10, partner3, partner12, partner5, partner14, partner7, partner16, partner9];
 const row2Logos = [partner2, partner11, partner4, partner13, partner6, partner15, partner8, partner17];
 
+function generateTenderPdf(tender) {
+  if (!tender) return;
+  const printWindow = window.open('', '_blank', 'width=1050,height=1050');
+  if (!printWindow) {
+    alert('Попап блоклогдсон байна. Браузерын цонх нээх зөвшөөрөл өгнө үү.');
+    return;
+  }
+  const titleMn = typeof tender.title === 'object' ? tender.title?.mn : tender.title;
+  const deadlineDateObj = tender.deadlineDate ? new Date(tender.deadlineDate) : new Date();
+  const yearStr = deadlineDateObj.getFullYear();
+  const monthStr = deadlineDateObj.getMonth() + 1;
+  const dayStr = deadlineDateObj.getDate();
+  const hoursStr = String(deadlineDateObj.getHours()).padStart(2, '0');
+  const minutesStr = String(deadlineDateObj.getMinutes()).padStart(2, '0');
+
+  const html = `
+    <!DOCTYPE html>
+    <html lang="mn">
+    <head>
+      <meta charset="UTF-8">
+      <title>Тендерийн Зар Постер - ${tender.code || 'MONPOLYMET'}</title>
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+          font-family: 'Montserrat', sans-serif;
+          background: #e2e8f0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          padding: 30px;
+        }
+        .poster-card {
+          width: 1000px;
+          height: 1000px;
+          position: relative;
+          background-color: #ffffff;
+          background-image: 
+            linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(248, 250, 252, 0.90) 100%),
+            url('https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?q=80&w=1200&auto=format&fit=crop');
+          background-size: cover;
+          background-position: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 60px;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+          overflow: hidden;
+        }
+        .poster-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          position: relative;
+          padding-bottom: 24px;
+        }
+        .poster-header-line {
+          position: absolute;
+          bottom: 0;
+          left: 170px;
+          right: 240px;
+          height: 1px;
+          background: #cbd5e1;
+        }
+        .brand-left { font-size: 26px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px; }
+        .brand-right { display: flex; align-items: center; gap: 10px; }
+        .brand-star { color: #001CE8; font-size: 28px; line-height: 1; }
+        .brand-logo-text { font-size: 18px; font-weight: 900; color: #010B40; line-height: 1.1; letter-spacing: -0.2px; }
+        .brand-logo-sub { font-size: 10px; font-weight: 800; color: #001CE8; letter-spacing: 1.5px; }
+        .poster-body {
+          margin-top: 20px;
+          margin-bottom: auto;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 40px 0;
+        }
+        .code-badge {
+          display: inline-flex;
+          align-items: center;
+          background: rgba(255, 255, 255, 0.95);
+          border: 1.5px solid #00c49f;
+          border-left: 5px solid #00c49f;
+          padding: 12px 28px;
+          border-radius: 8px;
+          font-size: 24px;
+          font-weight: 800;
+          color: #0f172a;
+          letter-spacing: 0.5px;
+          margin-bottom: 36px;
+          backdrop-filter: blur(8px);
+          box-shadow: 0 4px 14px rgba(0, 196, 159, 0.15);
+          width: fit-content;
+        }
+        .tender-title {
+          font-size: 54px;
+          font-weight: 900;
+          color: #000000;
+          line-height: 1.15;
+          letter-spacing: -1px;
+          margin-bottom: 70px;
+          max-width: 880px;
+        }
+        .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+        .detail-item { position: relative; }
+        .detail-item.with-accent { padding-left: 18px; }
+        .detail-item.with-accent::before {
+          content: ''; position: absolute; left: 0; top: 6px; bottom: 6px; width: 4px; background: #00c49f; border-radius: 2px;
+        }
+        .detail-label { font-size: 17px; font-weight: 700; color: #475569; margin-bottom: 8px; }
+        .detail-value { font-size: 30px; font-weight: 900; color: #000000; line-height: 1.25; }
+        .poster-footer {
+          background: #ffffff;
+          border-radius: 16px;
+          padding: 24px 44px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+          border: 1px solid #e2e8f0;
+        }
+        .footer-col { display: flex; flexDirection: column; }
+        .footer-label { font-size: 14px; font-weight: 700; color: #64748b; margin-bottom: 4px; }
+        .footer-val-link { font-size: 22px; font-weight: 800; color: #00c49f; text-decoration: none; }
+        .footer-val-text { font-size: 22px; font-weight: 800; color: #0f172a; }
+        @media print {
+          body { background: none; padding: 0; }
+          .poster-card { box-shadow: none; width: 1000px; height: 1000px; page-break-after: always; }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="poster-card">
+        <div class="poster-header">
+          <div class="brand-left">TenderHub</div>
+          <div class="poster-header-line"></div>
+          <div class="brand-right">
+            <div class="brand-star">✦</div>
+            <div>
+              <div class="brand-logo-text">МОНПОЛИМЕТ</div>
+              <div class="brand-logo-sub">ГРУПП</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="poster-body">
+          <div class="code-badge">
+            ${tender.code || 'THR26-2029278-000058'}
+          </div>
+          <h1 class="tender-title">
+            ${titleMn || 'Шонгийн мод нийлүүлэх'}
+          </h1>
+          <div class="details-grid">
+            <div class="detail-item">
+              <div class="detail-label">Захиалагчийн нэр</div>
+              <div class="detail-value">Монполимет ХХК</div>
+            </div>
+            <div class="detail-item with-accent">
+              <div class="detail-label">Материал хүлээн авах хугацаа</div>
+              <div class="detail-value">
+                ${yearStr} оны ${monthStr} сарын ${dayStr}<br/>
+                ${hoursStr} цаг ${minutesStr} минут
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="poster-footer">
+          <div class="footer-col">
+            <div class="footer-label">Вэбсайт</div>
+            <div class="footer-val-link">www.TenderHub.mn</div>
+          </div>
+          <div class="footer-col">
+            <div class="footer-label">И-мэйл</div>
+            <div class="footer-val-text">procurement@monpolymet.mn</div>
+          </div>
+          <div class="footer-col">
+            <div class="footer-label">Утас</div>
+            <div class="footer-val-text">7000-9999 / 7585-5858</div>
+          </div>
+        </div>
+      </div>
+      <script>window.onload = function() { window.print(); };</script>
+    </body>
+    </html>
+  `;
+  printWindow.document.open();
+  printWindow.document.write(html);
+  printWindow.document.close();
+}
+
+function InteractiveTitle({ text, className, style }) {
+  const [hoveredIdx, setHoveredIdx] = useState(null);
+
+  const words = (text || '').split(' ');
+  let globalCharCount = 0;
+
+  return (
+    <h2
+      className={className}
+      style={{ ...style, position: 'relative', wordBreak: 'keep-all' }}
+      onMouseLeave={() => setHoveredIdx(null)}
+    >
+      {words.map((word, wordIdx) => {
+        const wordCharStartIndex = globalCharCount;
+        globalCharCount += word.length + 1;
+
+        return (
+          <span key={wordIdx} style={{ display: 'inline-flex', flexWrap: 'nowrap', whiteSpace: 'nowrap', marginRight: '0.3em' }}>
+            {word.split('').map((char, charIdx) => {
+              const overallIdx = wordCharStartIndex + charIdx;
+              let color = (style && style.color) || '#0f172a';
+
+              if (hoveredIdx !== null) {
+                const dist = Math.abs(hoveredIdx - overallIdx);
+                if (dist === 0) color = '#001CE8';
+                else if (dist === 1) color = '#2563eb';
+                else if (dist === 2) color = '#60a5fa';
+              }
+
+              return (
+                <span
+                  key={charIdx}
+                  onMouseEnter={() => setHoveredIdx(overallIdx)}
+                  style={{
+                    display: 'inline-block',
+                    transition: 'color 0.15s ease-out',
+                    color: color,
+                    cursor: 'default',
+                  }}
+                >
+                  {char}
+                </span>
+              );
+            })}
+          </span>
+        );
+      })}
+    </h2>
+  );
+}
+
 export default function ProcurementPage({ lang = 'mn', t, procurementContent, pageMetadata }) {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -223,24 +466,26 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
           {/* 1. Худалдан авалтын үе шат (Procurement Process) */}
           <div style={{ marginBottom: '30px' }}>
             <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-              <h2 className="no-underline" style={{
-                fontSize: 'clamp(24px, 4vw, 48px)',
-                fontWeight: '600',
-                color: scrollPos > 120 ? '#0f172a' : '#e2e8f0',
-                letterSpacing: '-0.5px',
-                transition: 'color 0.4s ease'
-              }}>
-                {lang === 'mn' ? 'Худалдан авалтын үе шат' : 'Procurement Stages'}
-              </h2>
+              <InteractiveTitle
+                text={lang === 'mn' ? 'Худалдан авалтын үе шат' : 'Procurement Stages'}
+                className="no-underline"
+                style={{
+                  fontSize: 'clamp(24px, 4vw, 48px)',
+                  fontWeight: '600',
+                  color: '#0f172a',
+                  letterSpacing: '-0.5px',
+                  fontFamily: "'Montserrat', sans-serif"
+                }}
+              />
             </div>
 
             <div className="proc-steps-grid">
               {[
-                { step: '01', icon: <ClipboardList size={28} color="#001CE8" />, title: '1-р шатны санал', desc: '2026.07.27 - 13:00 хүртэл үнийн санал хүлээн авна' },
-                { step: '02', icon: <SearchCheck size={28} color="#001CE8" />, title: 'Шалган баталгаажуулах', desc: 'Ирүүлсэн үнийн саналыг шалган баталгаажуулах, асууж тодруулах' },
-                { step: '03', icon: <ShoppingCart size={28} color="#001CE8" />, title: 'Худалдан авах хүсэлт', desc: 'Үнийн саналд хариу илгээх худалдан авах хүсэлтээ мэйлээр илгээнэ' },
-                { step: '04', icon: <Handshake size={28} color="#001CE8" />, title: 'Гэрээ байгуулах', desc: 'Сонгогдсон нийлүүлэгчтэй гэрээ байгуулах' },
-                { step: '05', icon: <Truck size={28} color="#001CE8" />, title: 'Гүйцэтгэл хангах', desc: 'Гэрээний гүйцэтгэлийг хангах' }
+                { step: '01', icon: <ClipboardList size={28} color="#2563eb" />, title: lang === 'mn' ? 'Үнийн санал ирүүлэх' : 'Submit Quotation', desc: lang === 'mn' ? 'Байгууллагын үнийн санал болон холбогдох баримт бичгийг хүлээн авах' : 'Receiving price quotations and company proposals' },
+                { step: '02', icon: <SearchCheck size={28} color="#2563eb" />, title: lang === 'mn' ? 'Шалган баталгаажуулах' : 'Verification', desc: lang === 'mn' ? 'Ирүүлсэн үнийн саналыг шалган баталгаажуулах, асууж тодруулах' : 'Reviewing submitted quotations and technical specifications' },
+                { step: '03', icon: <ShoppingCart size={28} color="#2563eb" />, title: lang === 'mn' ? 'Худалдан авах хүсэлт' : 'Purchase Request', desc: lang === 'mn' ? 'Үнийн саналд хариу илгээх худалдан авах хүсэлтээ мэйлээр илгээнэ' : 'Sending purchase request notifications to selected suppliers' },
+                { step: '04', icon: <Handshake size={28} color="#2563eb" />, title: lang === 'mn' ? 'Гэрээ байгуулах' : 'Contract Award', desc: lang === 'mn' ? 'Сонгогдсон нийлүүлэгчтэй хамтран ажиллах гэрээ байгуулах' : 'Signing partnership contract with chosen supplier' },
+                { step: '05', icon: <Truck size={28} color="#2563eb" />, title: lang === 'mn' ? 'Гүйцэтгэл хангах' : 'Fulfillment', desc: lang === 'mn' ? 'Гэрээний гүйцэтгэл болон тээвэрлэлт, нийлүүлэлтийг хангах' : 'Ensuring delivery and contract performance' }
               ].map((proc, idx) => (
                 <div key={idx} className="proc-step-card" style={{
                   backgroundColor: 'transparent',
@@ -256,10 +501,10 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-6px)';
-                  e.currentTarget.style.borderColor = '#001CE8';
+                  e.currentTarget.style.borderColor = '#2563eb';
                   e.currentTarget.style.boxShadow = 'none';
                   const title = e.currentTarget.querySelector('h4');
-                  if (title) title.style.color = '#001CE8';
+                  if (title) title.style.color = '#2563eb';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
@@ -421,15 +666,18 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
           {/* 3. Нээлттэй тендер (Open Tenders Section) */}
           <div style={{ marginTop: '40px', marginBottom: '40px' }}>
             <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-              <h2 className="no-underline" style={{
-                fontSize: '48px',
-                fontWeight: '600',
-                color: '#0f172a',
-                letterSpacing: '-0.5px',
-                marginBottom: '12px'
-              }}>
-                {lang === 'mn' ? 'Нээлттэй тендер' : 'Open Tenders'}
-              </h2>
+              <InteractiveTitle
+                text={lang === 'mn' ? 'Нээлттэй тендер' : 'Open Tenders'}
+                className="no-underline"
+                style={{
+                  fontSize: '48px',
+                  fontWeight: '600',
+                  color: '#0f172a',
+                  letterSpacing: '-0.5px',
+                  marginBottom: '12px',
+                  fontFamily: "'Montserrat', sans-serif"
+                }}
+              />
               <p style={{ fontSize: '16px', color: '#64748b', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>
                 {lang === 'mn'
                   ? 'Монполимет Группийн хэрэгжүүлж буй сонгон шалгаруулалт, үнийн санал авах идэвхтэй урилгууд'
@@ -557,9 +805,10 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                       transform: `translateX(calc(-${tenderIndex} * 350px))`
                     }}>
                       {displayTenders.map((tender, idx) => {
-                    const start = tender.startDate ? new Date(tender.startDate) : null;
-                    const end = tender.deadlineDate ? new Date(tender.deadlineDate) : (tender.deadlineTime ? new Date(tender.deadlineTime) : null);
-                    const isClosed = end ? now > end : false;
+                        const now = new Date();
+                        const start = tender.startDate ? new Date(tender.startDate) : null;
+                        const end = tender.deadlineDate ? new Date(tender.deadlineDate) : (tender.deadlineTime ? new Date(tender.deadlineTime) : null);
+                        const isClosed = end ? now > end : false;
 
                     const formattedStart = start ? `${start.getFullYear()}.${String(start.getMonth() + 1).padStart(2, '0')}.${String(start.getDate()).padStart(2, '0')} - ${String(start.getHours()).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}` : tender.startTime;
                     const formattedEnd = end ? `${end.getFullYear()}.${String(end.getMonth() + 1).padStart(2, '0')}.${String(end.getDate()).padStart(2, '0')} - ${String(end.getHours()).padStart(2, '0')}:${String(end.getMinutes()).padStart(2, '0')}` : tender.deadline;
@@ -651,6 +900,31 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                               <span style={{ color: '#64748b', fontWeight: '500' }}>{lang === 'mn' ? 'Байршил:' : 'Location:'}</span>
                               <span style={{ color: '#0f172a', fontWeight: '600' }}>{lang === 'mn' ? tender.locationMn : tender.locationEn}</span>
                             </div>
+
+                            {!isClosed && end && (end.getTime() > Date.now()) && (
+                              <div style={{
+                                marginTop: '6px',
+                                paddingTop: '8px',
+                                borderTop: '1px dashed #cbd5e1',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                fontSize: '12px',
+                                color: '#1d4ed8',
+                                fontWeight: '600'
+                              }}>
+                                <span>{lang === 'mn' ? 'Хугацаа дуусахад:' : 'Time Remaining:'}</span>
+                                <span style={{ background: '#dbeafe', padding: '2px 8px', borderRadius: '4px', color: '#1e40af', fontWeight: '700' }}>
+                                  {(() => {
+                                    const diffMs = end.getTime() - Date.now();
+                                    const d = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                                    const h = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                    const m = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                                    return d > 0 ? `${d}ө ${h}ц` : `${h}ц ${m}м`;
+                                  })()}
+                                </span>
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -692,14 +966,12 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                           </button>
                           <button
                             onClick={() => {
-                              const targetUrl = tender.pdfUrl || '/toson_tender_doc.png';
-                              const link = document.createElement('a');
-                              link.href = targetUrl;
-                              link.setAttribute('download', targetUrl.split('/').pop() || 'Tender_Document.png');
-                              link.setAttribute('target', '_blank');
-                              document.body.appendChild(link);
-                              link.click();
-                              document.body.removeChild(link);
+                              const docUrl = tender.fileUrl || tender.pdfUrl || tender.attachmentUrl;
+                              if (docUrl) {
+                                window.open(docUrl, '_blank');
+                              } else {
+                                alert(lang === 'mn' ? 'Энэ тендерийн хавсралт баримт бичиг одоогоор файлгүй байна.' : 'Tender attachment document is not attached.');
+                              }
                             }}
                             title={lang === 'mn' ? 'Тендерийн баримт бичиг татах' : 'Download Tender Document'}
                             style={{
@@ -1109,17 +1381,19 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                     fontFamily: "'Montserrat', sans-serif"
                   }}
                 >
-                  Хаах
+                  {lang === 'mn' ? 'Хаах' : 'Close'}
                 </button>
               </div>
             ) : (
               <>
                 <div style={{ marginBottom: '20px' }}>
                   <h3 style={{ fontSize: '22px', fontWeight: '800', color: '#0f172a', marginBottom: '6px' }}>
-                    Үндсэн мэдээлэл
+                    {lang === 'mn' ? 'Үндсэн мэдээлэл' : 'General Information'}
                   </h3>
                   <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 12px 0' }}>
-                    Үнийн санал, холбоо барих мэдээлэл болон шаардлагатай файл оруулна уу.
+                    {lang === 'mn'
+                      ? 'Үнийн санал, холбоо барих мэдээлэл болон шаардлагатай файл оруулна уу.'
+                      : 'Please enter your price proposal, contact details, and required documents.'}
                   </p>
 
                   {/* Stage & Deadline Notice Box inside Form */}
@@ -1136,7 +1410,7 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span style={{ fontSize: '13px', fontWeight: '700', color: '#000000' }}>
-                        1-р шатны санал:
+                        {lang === 'mn' ? '1-р шатны санал:' : 'Stage 1 Proposal:'}
                       </span>
                       {selectedTenderForApply && (
                         <span style={{ fontSize: '13px', fontWeight: '700', color: '#000000' }}>
@@ -1145,7 +1419,7 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                       )}
                     </div>
                     <span style={{ fontSize: '12px', fontWeight: '700', color: '#000000' }}>
-                      2026.07.27 - 13:00 хүртэл үнийн санал хүлээн авна
+                      {lang === 'mn' ? '2026.07.27 - 13:00 хүртэл үнийн санал хүлээн авна' : 'Proposals accepted until 2026.07.27 - 13:00'}
                     </span>
                   </div>
                 </div>
@@ -1154,14 +1428,14 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                   {/* Price Proposal Input */}
                   <div>
                     <label style={{ fontSize: '13px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '8px' }}>
-                      Үнийн санал <span style={{ color: '#ef4444' }}>*</span>
+                      {lang === 'mn' ? 'Үнийн санал' : 'Price Offer / Proposal'} <span style={{ color: '#ef4444' }}>*</span>
                     </label>
                     <input
                       required
                       type="text"
                       value={applyFormData.priceOffer}
                       onChange={(e) => setApplyFormData({ ...applyFormData, priceOffer: e.target.value })}
-                      placeholder="Үнийн саналаа оруулна уу..."
+                      placeholder={lang === 'mn' ? 'Үнийн саналаа оруулна уу...' : 'Enter your price offer...'}
                       style={{
                         width: '100%',
                         padding: '12px 16px',
@@ -1175,20 +1449,18 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                     />
                   </div>
 
-                  {/* NOTE: Түншлэлийн байгууллага сонгох HAS BEEN EXCLUDED AS REQUESTED */}
-
                   {/* 3-Column Contact Fields Grid */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '14px' }}>
                     <div>
                       <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>
-                        Холбоо барих хүний нэр <span style={{ color: '#ef4444' }}>*</span>
+                        {lang === 'mn' ? 'Холбоо барих хүний нэр' : 'Contact Person Name'} <span style={{ color: '#ef4444' }}>*</span>
                       </label>
                       <input
                         required
                         type="text"
                         value={applyFormData.contactName}
                         onChange={(e) => setApplyFormData({ ...applyFormData, contactName: e.target.value })}
-                        placeholder="Нэр оруулдах"
+                        placeholder={lang === 'mn' ? 'Нэр оруулдах' : 'Enter full name'}
                         style={{
                           width: '100%',
                           padding: '12px 14px',
@@ -1204,14 +1476,14 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
 
                     <div>
                       <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>
-                        Холбоо барих утас <span style={{ color: '#ef4444' }}>*</span>
+                        {lang === 'mn' ? 'Холбоо барих утас' : 'Contact Phone'} <span style={{ color: '#ef4444' }}>*</span>
                       </label>
                       <input
                         required
                         type="tel"
                         value={applyFormData.contactPhone}
                         onChange={(e) => setApplyFormData({ ...applyFormData, contactPhone: e.target.value.replace(/\D/g, '') })}
-                        placeholder="Утасны дугаар"
+                        placeholder={lang === 'mn' ? 'Утасны дугаар' : 'Phone number'}
                         style={{
                           width: '100%',
                           padding: '12px 14px',
@@ -1227,14 +1499,14 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
 
                     <div>
                       <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>
-                        Холбоо барих и-мэйл <span style={{ color: '#ef4444' }}>*</span>
+                        {lang === 'mn' ? 'Холбоо барих и-мэйл' : 'Contact Email'} <span style={{ color: '#ef4444' }}>*</span>
                       </label>
                       <input
                         required
                         type="email"
                         value={applyFormData.contactEmail}
                         onChange={(e) => setApplyFormData({ ...applyFormData, contactEmail: e.target.value })}
-                        placeholder="И-мэйл хаяг"
+                        placeholder={lang === 'mn' ? 'И-мэйл хаяг' : 'Email address'}
                         style={{
                           width: '100%',
                           padding: '12px 14px',
@@ -1252,7 +1524,7 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                   {/* Required File Section */}
                   <div>
                     <label style={{ fontSize: '13px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '8px' }}>
-                      Шаардлагатай файл <span style={{ color: '#ef4444' }}>*</span>
+                      {lang === 'mn' ? 'Шаардлагатай файл' : 'Required Documents'} <span style={{ color: '#ef4444' }}>*</span>
                     </label>
                     <div style={{
                       border: '1px solid #cbd5e1',
@@ -1290,20 +1562,20 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                             }}
                           >
                             <Upload size={16} color="#475569" />
-                            <span>Файл сонгох</span>
+                            <span>{lang === 'mn' ? 'Файл сонгох' : 'Select File'}</span>
                           </label>
                           <div style={{ marginTop: '14px', paddingTop: '12px', borderTop: '1px dashed #cbd5e1' }}>
                             <p style={{ fontSize: '12px', fontWeight: '700', color: '#000000', margin: '0 0 6px 0' }}>
-                              Хавсаргах шаардлагатай бичиг баримтууд:
+                              {lang === 'mn' ? 'Хавсаргах шаардлагатай бичиг баримтууд:' : 'Required attachments:'}
                             </p>
                             <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '12px', fontWeight: '600', color: '#000000', lineHeight: '1.8' }}>
-                              <li>Танилцуулга</li>
-                              <li>Хийж гүйцэтгэсэн ажлууд</li>
-                              <li>Бараа бүтээгдэхүүний мэдээлэл</li>
-                              <li>Улсын бүртгэлийн гэрчилгээ</li>
+                              <li>{lang === 'mn' ? 'Танилцуулга' : 'Company profile / Presentation'}</li>
+                              <li>{lang === 'mn' ? 'Хийж гүйцэтгэсэн ажлууд' : 'Completed projects / Work experience'}</li>
+                              <li>{lang === 'mn' ? 'Бараа бүтээгдэхүүний мэдээлэл' : 'Product / Goods specifications'}</li>
+                              <li>{lang === 'mn' ? 'Улсын бүртгэлийн гэрчилгээ' : 'State registration certificate'}</li>
                             </ul>
                             <p style={{ fontSize: '11px', color: '#475569', margin: '10px 0 0 0', fontWeight: '500' }}>
-                              PDF, Word, Excel, зураг файл (50MB хүртэл)
+                              {lang === 'mn' ? 'PDF, Word, Excel, зураг файл (50MB хүртэл)' : 'PDF, Word, Excel, Image files (Up to 50MB)'}
                             </p>
                           </div>
                         </div>

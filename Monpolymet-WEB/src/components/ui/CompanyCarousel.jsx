@@ -9,11 +9,17 @@ import monpolymetLogo from '../../assets/logo.png';
 import annLogo from '../../assets/ann.png';
 import narLogo from '../../assets/nar.png';
 
-export default function CompanyCarousel({ lang }) {
+export default function CompanyCarousel({ lang, onActiveChange }) {
   const [activeIndex, setActiveIndex] = useState(0); // Start at index 0 (Monpolymet)
   const [isTrapped, setIsTrapped] = useState(true);
   const containerRef = useRef(null);
   const lastScrollTime = useRef(0);
+
+  useEffect(() => {
+    if (onActiveChange) {
+      onActiveChange(activeIndex);
+    }
+  }, [activeIndex, onActiveChange]);
 
   // Data for the 5 companies with detailed fields
   const companies = [
@@ -312,7 +318,7 @@ export default function CompanyCarousel({ lang }) {
             <div style={{ flex: '0 0 45%', padding: '40px', display: 'flex', flexDirection: 'column', backgroundColor: 'transparent' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
                 {company.logoImg ? (
-                  <img src={company.logoImg} alt={company.titleMn} style={{ height: '50px', objectFit: 'contain' }} />
+                  <img src={company.logoImg} alt={company.titleMn} loading="lazy" decoding="async" style={{ height: '50px', objectFit: 'contain' }} />
                 ) : (
                   <>
                     <div style={{ color: company.color }}>{company.icon}</div>
@@ -326,7 +332,7 @@ export default function CompanyCarousel({ lang }) {
                 {lang === 'mn' ? 'Таны бизнесийн өсөлтийн хурдасгуур' : 'Your Business Growth Accelerator'}
               </h1>
               <div style={{ flex: 1, borderRadius: '16px', overflow: 'hidden', minHeight: '200px' }}>
-                <img src={company.bgImg} alt="Cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={company.bgImg} alt="Cover" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
             </div>
 

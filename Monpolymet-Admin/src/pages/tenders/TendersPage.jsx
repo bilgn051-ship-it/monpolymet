@@ -29,6 +29,7 @@ import { useCollection } from '../../lib/useCollection';
 import PageHeader from '../../components/PageHeader';
 import DataState from '../../components/DataState';
 import LocalizedInput from '../../components/LocalizedInput';
+import { generateTenderPdf } from '../../lib/tenderPdfGenerator';
 import { t } from '../../i18n';
 
 const EMPTY = {
@@ -84,10 +85,9 @@ export default function TendersPage() {
 
     try {
       setUploadingPdf(true);
-      const res = await api.post('/uploads', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      form.setFieldValue('pdfUrl', res.data.url);
+      const res = await api.upload('/uploads', formData);
+      const uploadedUrl = res?.url || res?.data?.url || '';
+      form.setFieldValue('pdfUrl', uploadedUrl);
       notifications.show({ color: 'green', message: 'Тендерийн PDF файл амжилттай хуулагдлаа' });
     } catch (err) {
       notifications.show({ color: 'red', message: err.message || 'Файл хуулахад алдаа гарлаа' });
@@ -103,7 +103,7 @@ export default function TendersPage() {
       code: `ТШ-2026/${String((items?.length || 0) + 8).padStart(2, '0')}`,
       startDate: formatDateForInput(new Date()),
       deadlineDate: formatDateForInput(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)),
-      pdfUrl: '/toson_tender_doc.png',
+      pdfUrl: '',
     });
     open();
   };
@@ -127,17 +127,27 @@ export default function TendersPage() {
   const submit = async (values) => {
     setSaving(true);
     try {
+      const parsedStart = values.startDate ? new Date(values.startDate) : new Date();
+      const parsedDeadline = values.deadlineDate ? new Date(values.deadlineDate) : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+
       const payload = {
-        ...values,
+        code: values.code || `ТШ-2026/${Date.now().toString().slice(-4)}`,
         title: { mn: values.title?.mn || '', en: values.title?.en || values.title?.mn || '' },
         category: { mn: values.category?.mn || '', en: values.category?.en || values.category?.mn || '' },
         location: { mn: values.location?.mn || '', en: values.location?.en || values.location?.mn || '' },
         description: { mn: values.description?.mn || '', en: values.description?.en || values.description?.mn || '' },
-        startDate: new Date(values.startDate).toISOString(),
-        deadlineDate: new Date(values.deadlineDate).toISOString(),
+        startDate: isNaN(parsedStart.getTime()) ? new Date().toISOString() : parsedStart.toISOString(),
+        deadlineDate: isNaN(parsedDeadline.getTime()) ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() : parsedDeadline.toISOString(),
+        pdfUrl: values.pdfUrl || '',
+        isPublished: values.isPublished !== false,
       };
-      if (editing) await api.patch(`/tenders/${editing._id}`, payload);
-      else await api.post('/tenders', payload);
+
+      if (editing && editing._id) {
+        await api.patch(`/tenders/${editing._id}`, payload);
+      } else {
+        await api.post('/tenders', payload);
+      }
+
       notifications.show({
         color: 'green',
         message: editing ? t.toast.updated : t.toast.created,
@@ -145,10 +155,11 @@ export default function TendersPage() {
       close();
       reload();
     } catch (err) {
+      console.error('Tender save failed:', err);
       notifications.show({
         color: 'red',
-        title: t.toast.saveError,
-        message: err.message,
+        title: 'Хадгалахад алдаа гарлаа',
+        message: Array.isArray(err.message) ? err.message.join(', ') : (err.message || 'Сүлжээний алдаа'),
       });
     } finally {
       setSaving(false);
@@ -449,6 +460,23 @@ export default function TendersPage() {
                   {item.location?.mn || '-'}
                 </Text>
               </Group>
+
+              {!isClosed && end && (end.getTime() > Date.now()) && (
+                <Group justify="space-between" mt={4} pt={4} style={{ borderTop: '1px dashed #cbd5e1' }}>
+                  <Text size="11px" c="blue.7" fw={600}>
+                    Дуусахад үлдсэн хугацаа:
+                  </Text>
+                  <Badge size="xs" color="blue" variant="light" radius="xs">
+                    {(() => {
+                      const diffMs = end.getTime() - Date.now();
+                      const d = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                      const h = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                      const m = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                      return d > 0 ? `${d}ө ${h}ц` : `${h}ц ${m}м`;
+                    })()}
+                  </Badge>
+                </Group>
+              )}
             </Stack>
           </Box>
         </div>
@@ -464,6 +492,15 @@ export default function TendersPage() {
             />
 
             <Group gap={6}>
+              <Button
+                size="xs"
+                variant="light"
+                color="teal"
+                leftSection={<FileText size={14} />}
+                onClick={() => generateTenderPdf(item)}
+              >
+                PDF Бэлдэх
+              </Button>
               <Button
                 size="xs"
                 variant="light"
@@ -664,12 +701,15 @@ export default function TendersPage() {
               required
             />
 
-            <Box style={{ backgroundColor: '#eff6ff', padding: 14, borderRadius: 12, border: '1px solid #bfdbfe' }}>
-              <Text size="xs" fw={700} c="blue.8" mb={6}>
-                Тендерийн хавсралт баримт бичиг (PDF / Файл)
-              </Text>
+            <Box style={{ backgroundColor: '#f8fafc', padding: 14, borderRadius: 12, border: '1px solid #e2e8f0' }}>
+              <Group justify="space-between" mb={6}>
+                <Text size="xs" fw={700} c="slate.7">
+                  Тендерийн хавсралт баримт бичиг (Заавал биш / Сонголттой)
+                </Text>
+                <Badge size="xs" color="gray" variant="light">Оруулахгүй байж болно</Badge>
+              </Group>
               <FileInput
-                placeholder="PDF эсвэл Баримт бичгийн файл сонгож хуулах"
+                placeholder="Файл хуулах бол сонгоно уу (Хоосон үлдээж болно)"
                 accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg"
                 leftSection={<Upload size={16} />}
                 onChange={handlePdfUpload}
@@ -677,16 +717,21 @@ export default function TendersPage() {
                 mb={8}
               />
               <TextInput
-                label="Файлын шууд URL хаяг"
-                placeholder="/toson_tender_doc.png эсвэл http://..."
+                label="Файлын URL хаяг"
+                placeholder="Хоосон эсвэл http://..."
                 {...form.getInputProps('pdfUrl')}
               />
               {form.values.pdfUrl && (
-                <Group gap={6} mt={6}>
-                  <FileText size={14} color="#16a34a" />
-                  <Text size="xs" c="green.7" fw={600}>
-                    Хавсаргасан файл: {form.values.pdfUrl}
-                  </Text>
+                <Group justify="space-between" mt={6}>
+                  <Group gap={6}>
+                    <FileText size={14} color="#16a34a" />
+                    <Text size="xs" c="green.7" fw={600}>
+                      Хавсаргасан файл: {form.values.pdfUrl}
+                    </Text>
+                  </Group>
+                  <Button size="xs" variant="subtle" color="red" onClick={() => form.setFieldValue('pdfUrl', '')}>
+                    Файлыг хасах
+                  </Button>
                 </Group>
               )}
             </Box>

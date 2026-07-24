@@ -62,8 +62,8 @@ export default function Header({
       { id: 'news-list', label: lang === 'mn' ? 'Мэдээ' : 'News', hash: '#news-list' }
     ],
     'careers': [
-      { id: 'policy', label: lang === 'mn' ? 'Хүний нөөцийн бодлого' : 'HR Policy', hash: '#hr-policy' },
       { id: 'process', label: lang === 'mn' ? 'Сонгон шалгаруулалтын үе шат' : 'Selection Process', hash: '#selection' },
+      { id: 'policy', label: lang === 'mn' ? 'Хүний нөөцийн бодлого' : 'HR Policy', hash: '#hr-policy' },
       { id: 'join', label: lang === 'mn' ? 'Бидэнтэй нэгдэх' : 'Join Us', hash: '#join-us' }
     ],
     'procurement': [
