@@ -69,6 +69,16 @@ function App() {
   }, []);
 
   useEffect(() => {
+    // Dynamic Favicon Enforcement
+    let link = document.querySelector("link[rel*='icon']");
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'shortcut icon';
+      document.getElementsByTagName('head')[0].appendChild(link);
+    }
+    link.type = 'image/png';
+    link.href = '/favicon.png?v=3';
+
     const pageMeta = pages.find(p => p.key === currentPage);
     const siteTitle = lang === 'mn' ? 'Монполимет Групп' : 'Monpolymet Group';
     if (currentPage === 'post') {
