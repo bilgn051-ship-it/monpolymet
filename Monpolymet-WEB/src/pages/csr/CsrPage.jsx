@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Trees, HeartHandshake, Leaf, Droplets, Building2, Cpu, ArrowUpRight, Sparkles, Globe, ShieldCheck, Sun, Sprout, Award, CheckCircle2 } from 'lucide-react';
+import { Trees, HeartHandshake, Leaf, Droplets, Building2, Cpu, ArrowUpRight, Sparkles, Globe, ShieldCheck, Sun, Sprout, Award, CheckCircle2, RotateCw, Maximize2, Minimize2, ZoomIn, ZoomOut, X } from 'lucide-react';
 import { fetchCsr } from '../../api';
 
 export default function CsrPage({ lang, t, pageMetadata }) {
@@ -306,6 +306,456 @@ export default function CsrPage({ lang, t, pageMetadata }) {
           </div>
         </div>
       </section>
+
+      {/* 5. 360° Virtual Tour & 3D Interactive Showcase (Right above Footer) */}
+      <CsrVirtualTour lang={lang} />
     </>
+  );
+}
+
+function CsrVirtualTour({ lang }) {
+  const [activeSceneIdx, setActiveSceneIdx] = useState(0);
+  const [panX, setPanX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [autoRotate, setAutoRotate] = useState(true);
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [selectedHotspot, setSelectedHotspot] = useState(null);
+
+  const scenes = [
+    {
+      id: 'lake',
+      titleMn: 'Тосон Нуур (16 га тунгалаг нуур)',
+      titleEn: 'Toson Lake (16 ha Freshwater)',
+      descMn: 'Алтан цагаан сувд мэт 16 га талбай бүхий тунгалаг нуур ба усны шувуудын цугларах бүс.',
+      descEn: 'A pristine 16-hectare freshwater lake supporting local ecosystem biodiversity.',
+      panoUrl: 'https://en.monpolymet.mn/wp-content/uploads/2021/12/img-slider-01-2.jpg',
+      hotspots: [
+        {
+          id: 1,
+          left: '30%',
+          top: '45%',
+          titleMn: '16 га Тосон Нуур',
+          titleEn: '16 ha Toson Lake',
+          infoMn: '100% хиймэл аргаар байгуулсан цэнгэг уст нуур бөгөөд усны шувууд болон загас үржих таатай орчин бүрдсэн.',
+          infoEn: 'Man-made freshwater lake supporting migrating waterfowl and fish biodiversity.',
+          stat: '16 га'
+        },
+        {
+          id: 2,
+          left: '68%',
+          top: '55%',
+          titleMn: 'Усны хаалттай дахин ашиглалт',
+          titleEn: 'Zero Water Waste Recycling',
+          infoMn: 'Эко үйлдвэрлэл болон уул уурхайн хэрэгцээнд усыг 100% дахин ашиглаж, байгалийн нөөцийг хэмнэдэг.',
+          infoEn: 'Closed-loop water recycling ensuring zero industrial wastewater release.',
+          stat: '100%'
+        }
+      ]
+    },
+    {
+      id: 'forest',
+      titleMn: 'Ойн Төгөл ба Ногоон Бүс (5.5 км)',
+      titleEn: '5.5 km Forest Belts',
+      descMn: '100,000 гаруй мод тариалж, хөрсний ургамалжлыг 100% сэргээсэн жишиг ойн төгөл.',
+      descEn: 'Over 100,000 trees planted creating 5.5 km protective green forestry belts.',
+      panoUrl: 'https://en.monpolymet.mn/wp-content/uploads/2021/12/news_20211113-1.jpg',
+      hotspots: [
+        {
+          id: 3,
+          left: '42%',
+          top: '40%',
+          titleMn: '100,000+ Тариалсан Мод',
+          titleEn: '100,000+ Trees Planted',
+          infoMn: 'Шинэс, нарс, харгана, чацаргана зэрэг 10 гаруй төрлийн мод сөөг тариалж хамгаалалтын бүс байгуулсан.',
+          infoEn: 'Diverse tree species planted forming permanent windbreak forest belts.',
+          stat: '100,000+'
+        },
+        {
+          id: 4,
+          left: '75%',
+          top: '60%',
+          titleMn: '1 сая мод амлалт',
+          titleEn: '1 Million Trees Pledge',
+          infoMn: 'Үндэсний "Нэг тэрбум мод" хөдөлгөөнд Монполимет Групп 1 сая модоор идэвхтэй оролцож байна.',
+          infoEn: 'Monpolymet Group pledged 1 million trees for the national afforestation initiative.',
+          stat: '1,000,000'
+        }
+      ]
+    },
+    {
+      id: 'reclamation',
+      titleMn: 'Биологийн Нөхөн Сэргээлтийн Бүс',
+      titleEn: 'Biological Reclamation Area',
+      descMn: 'Техникийн 743 га, биологийн 514 га талбайд 100% амжилттай хийсэн сэргээлтийн талбай.',
+      descEn: 'Model 743 ha technical and 514 ha biological restoration zones.',
+      panoUrl: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1920&auto=format&fit=crop',
+      hotspots: [
+        {
+          id: 5,
+          left: '35%',
+          top: '50%',
+          titleMn: '743 га Техникийн Сэргээлт',
+          titleEn: '743 ha Technical Reclamation',
+          infoMn: 'Хөрсний бүтэц болон газрын рельефийг уугуул хэв шинжид нь бүрэн оруулж хэлбэржүүлсэн.',
+          infoEn: 'Land regrading and topsoil restoration completed over 743 hectares.',
+          stat: '743 га'
+        },
+        {
+          id: 6,
+          left: '60%',
+          top: '38%',
+          titleMn: '514 га Биологийн Сэргээлт',
+          titleEn: '514 ha Biological Restoration',
+          infoMn: 'Олон наст ашигт ургамал болон бэлчээрийн ургамлыг дахин нутагшуулсан.',
+          infoEn: 'Perennial pastures and native flora successfully re-established.',
+          stat: '514 га'
+        }
+      ]
+    }
+  ];
+
+  const currentScene = scenes[activeSceneIdx] || scenes[0];
+
+  useEffect(() => {
+    if (!autoRotate || isDragging) return;
+    const timer = setInterval(() => {
+      setPanX(prev => (prev - 0.5) % 2000);
+    }, 30);
+    return () => clearInterval(timer);
+  }, [autoRotate, isDragging]);
+
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setStartX(e.clientX - panX);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    setPanX(e.clientX - startX);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleTouchStart = (e) => {
+    if (e.touches.length === 1) {
+      setIsDragging(true);
+      setStartX(e.touches[0].clientX - panX);
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging || e.touches.length !== 1) return;
+    setPanX(e.touches[0].clientX - startX);
+  };
+
+  return (
+    <section id="visit" style={{
+      backgroundColor: '#070d1e',
+      color: '#ffffff',
+      padding: '90px 20px 110px 20px',
+      fontFamily: "'Montserrat', sans-serif",
+      position: 'relative',
+      overflow: 'hidden',
+      borderTop: '1px solid rgba(255, 255, 255, 0.1)'
+    }}>
+      {/* Background Ambient Glow */}
+      <div style={{
+        position: 'absolute',
+        top: '20%',
+        right: '10%',
+        width: '600px',
+        height: '600px',
+        background: 'radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, rgba(16, 185, 129, 0.08) 50%, rgba(0,0,0,0) 80%)',
+        pointerEvents: 'none',
+        borderRadius: '50%'
+      }} />
+
+      <div style={{ maxWidth: '1280px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
+        
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            backgroundColor: 'rgba(37, 99, 235, 0.18)',
+            border: '1px solid rgba(59, 130, 246, 0.35)',
+            borderRadius: '24px',
+            padding: '6px 22px',
+            fontSize: '13px',
+            fontWeight: '600',
+            color: '#60a5fa',
+            marginBottom: '16px'
+          }}>
+            <Globe size={16} />
+            {lang === 'mn' ? '360° ВИРТУАЛ АЯЛАЛ & 3D ЭКО ПАРК' : '360° VIRTUAL TOUR & 3D ECO-PARK'}
+          </div>
+
+          <h2 className="no-underline" style={{ fontSize: '36px', fontWeight: '800', color: '#ffffff', marginBottom: '12px', letterSpacing: '-0.5px' }}>
+            {lang === 'mn' ? 'Тосонгийн Орд & Эко Парк - 360° Интерактив Аялал' : 'Toson Mine & Eco-Park - 360° Interactive Tour'}
+          </h2>
+          
+          <p style={{ fontSize: '16px', color: '#94a3b8', maxWidth: '680px', margin: '0 auto', lineHeight: '1.6' }}>
+            {lang === 'mn'
+              ? 'Тосонгийн нөхөн сэргээлтийн бүс, 16 га Тосон нуур болон 5.5 км ойн төглийг интерактив 360° панорама орчинд мэдрэн үзээрэй.'
+              : 'Experience the model eco-restoration, 16-hectare lake, and 5.5 km forest belts in an interactive 360° virtual environment.'}
+          </p>
+        </div>
+
+        {/* 360° Panorama Viewer Container */}
+        <div style={{
+          position: isFullscreen ? 'fixed' : 'relative',
+          inset: isFullscreen ? 0 : 'auto',
+          zIndex: isFullscreen ? 99999 : 5,
+          width: '100%',
+          height: isFullscreen ? '100vh' : '560px',
+          borderRadius: isFullscreen ? '0px' : '28px',
+          overflow: 'hidden',
+          backgroundColor: '#000000',
+          border: isFullscreen ? 'none' : '1px solid rgba(255, 255, 255, 0.15)',
+          boxShadow: '0 25px 60px rgba(0,0,0,0.5)',
+          cursor: isDragging ? 'grabbing' : 'grab',
+          userSelect: 'none'
+        }}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleMouseUp}
+        >
+          {/* Background Pano Image with Motion Pan */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `url(${currentScene.panoUrl})`,
+            backgroundSize: `${zoomLevel * 140}% 100%`,
+            backgroundPosition: `${panX}px center`,
+            backgroundRepeat: 'repeat-x',
+            transition: isDragging ? 'none' : 'background-position 0.1s linear, background-size 0.3s ease',
+            transform: `scale(${zoomLevel})`,
+            transformOrigin: 'center center'
+          }} />
+
+          {/* Dark Overlay Gradient */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(180deg, rgba(7, 13, 30, 0.4) 0%, rgba(7, 13, 30, 0.1) 50%, rgba(7, 13, 30, 0.8) 100%)',
+            pointerEvents: 'none'
+          }} />
+
+          {/* Interactive Hotspots */}
+          {currentScene.hotspots.map((hs) => (
+            <motion.div
+              key={hs.id}
+              initial={{ scale: 0.8, opacity: 0.8 }}
+              animate={{ scale: [1, 1.15, 1], opacity: 1 }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedHotspot(hs);
+              }}
+              style={{
+                position: 'absolute',
+                left: hs.left,
+                top: hs.top,
+                zIndex: 20,
+                cursor: 'pointer'
+              }}
+            >
+              <div style={{
+                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                backdropFilter: 'blur(12px)',
+                border: '1px solid rgba(52, 211, 153, 0.6)',
+                borderRadius: '24px',
+                padding: '8px 16px',
+                boxShadow: '0 8px 25px rgba(0,0,0,0.5)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                color: '#ffffff',
+                fontSize: '13px',
+                fontWeight: '700'
+              }}>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#34d399', boxShadow: '0 0 10px #34d399' }} />
+                <span>{lang === 'mn' ? hs.titleMn : hs.titleEn}</span>
+              </div>
+            </motion.div>
+          ))}
+
+          {/* Control Toolbar Top Right */}
+          <div style={{
+            position: 'absolute',
+            top: '20px',
+            right: '20px',
+            zIndex: 30,
+            display: 'flex',
+            gap: '8px',
+            backgroundColor: 'rgba(15, 23, 42, 0.85)',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
+            borderRadius: '16px',
+            padding: '6px'
+          }}>
+            <button
+              onClick={() => setAutoRotate(!autoRotate)}
+              title={autoRotate ? "Панорама авто-эргэлт идэвхтэй" : "Авто-эргэлт эхлүүлэх"}
+              style={{
+                backgroundColor: autoRotate ? 'rgba(37, 99, 235, 0.3)' : 'transparent',
+                border: 'none',
+                color: autoRotate ? '#60a5fa' : '#ffffff',
+                padding: '8px 12px',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                fontSize: '12px',
+                fontWeight: '600',
+                fontFamily: "'Montserrat', sans-serif"
+              }}
+            >
+              <RotateCw size={16} className={autoRotate ? 'animate-spin-slow' : ''} />
+              <span>{autoRotate ? (lang === 'mn' ? 'Эргэж байна' : 'Rotating') : (lang === 'mn' ? 'Авто эргэлт' : 'Auto Rotate')}</span>
+            </button>
+
+            <button
+              onClick={() => setZoomLevel(prev => Math.min(1.4, prev + 0.15))}
+              style={{ backgroundColor: 'transparent', border: 'none', color: '#ffffff', padding: '8px', borderRadius: '10px', cursor: 'pointer' }}
+              title="Ойртуулах"
+            >
+              <ZoomIn size={18} />
+            </button>
+            <button
+              onClick={() => setZoomLevel(prev => Math.max(1.0, prev - 0.15))}
+              style={{ backgroundColor: 'transparent', border: 'none', color: '#ffffff', padding: '8px', borderRadius: '10px', cursor: 'pointer' }}
+              title="Холдуулах"
+            >
+              <ZoomOut size={18} />
+            </button>
+            <button
+              onClick={() => setIsFullscreen(!isFullscreen)}
+              style={{ backgroundColor: 'transparent', border: 'none', color: '#ffffff', padding: '8px', borderRadius: '10px', cursor: 'pointer' }}
+              title="Бүрэн дэлгэц"
+            >
+              {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+            </button>
+          </div>
+
+          {/* Bottom Scene Switcher Tabs inside Pano */}
+          <div style={{
+            position: 'absolute',
+            bottom: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 30,
+            display: 'flex',
+            gap: '10px',
+            maxWidth: '92%',
+            overflowX: 'auto',
+            backgroundColor: 'rgba(15, 23, 42, 0.85)',
+            backdropFilter: 'blur(16px)',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
+            borderRadius: '20px',
+            padding: '8px 12px'
+          }}>
+            {scenes.map((sc, idx) => {
+              const isActive = idx === activeSceneIdx;
+              return (
+                <button
+                  key={sc.id}
+                  onClick={() => {
+                    setActiveSceneIdx(idx);
+                    setSelectedHotspot(null);
+                  }}
+                  style={{
+                    backgroundColor: isActive ? '#2563eb' : 'rgba(255, 255, 255, 0.06)',
+                    border: isActive ? '1px solid #60a5fa' : '1px solid rgba(255, 255, 255, 0.08)',
+                    borderRadius: '14px',
+                    padding: '8px 16px',
+                    color: '#ffffff',
+                    fontSize: '13px',
+                    fontWeight: isActive ? '700' : '500',
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    transition: 'all 0.2s ease',
+                    fontFamily: "'Montserrat', sans-serif"
+                  }}
+                >
+                  {lang === 'mn' ? sc.titleMn : sc.titleEn}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Selected Hotspot Glass Detail Modal */}
+        {selectedHotspot && (
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            style={{
+              marginTop: '24px',
+              backgroundColor: 'rgba(15, 23, 42, 0.9)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(59, 130, 246, 0.4)',
+              borderRadius: '20px',
+              padding: '24px 30px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '20px',
+              boxShadow: '0 15px 35px rgba(0,0,0,0.4)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <div style={{
+                backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                border: '1px solid rgba(59, 130, 246, 0.4)',
+                color: '#60a5fa',
+                padding: '12px 18px',
+                borderRadius: '14px',
+                fontSize: '20px',
+                fontWeight: '800'
+              }}>
+                {selectedHotspot.stat}
+              </div>
+              <div>
+                <h4 style={{ fontSize: '18px', fontWeight: '800', color: '#ffffff', marginBottom: '4px' }}>
+                  {lang === 'mn' ? selectedHotspot.titleMn : selectedHotspot.titleEn}
+                </h4>
+                <p style={{ fontSize: '14px', color: '#cbd5e1', margin: 0, lineHeight: '1.5' }}>
+                  {lang === 'mn' ? selectedHotspot.infoMn : selectedHotspot.infoEn}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setSelectedHotspot(null)}
+              style={{
+                backgroundColor: 'rgba(255,255,255,0.1)',
+                border: 'none',
+                color: '#ffffff',
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}
+            >
+              <X size={18} />
+            </button>
+          </motion.div>
+        )}
+      </div>
+    </section>
   );
 }
