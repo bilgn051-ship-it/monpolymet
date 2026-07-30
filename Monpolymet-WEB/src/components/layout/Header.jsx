@@ -221,13 +221,6 @@ export default function Header({
                   </div>
                   {subs && isExpanded && (
                     <div className="mobile-submenu animate-slide-down">
-                      <button 
-                        className="mobile-sub-link overview-link"
-                        onClick={() => handleNavClick(item.target)}
-                        style={{ fontWeight: '700', color: '#2563eb' }}
-                      >
-                        {item.label}
-                      </button>
                       {subs.map(sub => (
                         <button 
                           key={sub.id}
