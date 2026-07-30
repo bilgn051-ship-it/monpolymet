@@ -184,7 +184,13 @@ export default function Header({
 
       {/* Mobile Drawer */}
       {menuOpen && (
-        <div className="mobile-drawer animate-slide-down">
+        <div className="mobile-drawer">
+          <div className="mobile-drawer-top">
+            <img src={odBlueLogo} alt="Monpolymet Logo" style={{ height: '30px' }} />
+            <button className="mobile-drawer-close" onClick={() => setMenuOpen(false)}>
+              <X size={22} />
+            </button>
+          </div>
           <nav className="mobile-nav">
             {navItems.map((item) => {
               const subs = subMenus[item.target];
