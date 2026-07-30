@@ -442,7 +442,7 @@ function InteractiveTitle({ text, className, style }) {
   return (
     <h2
       className={className}
-      style={{ ...style, position: 'relative', wordBreak: 'keep-all' }}
+      style={{ ...style, position: 'relative', wordBreak: 'normal', wordWrap: 'break-word', maxWidth: '100%' }}
       onMouseLeave={() => setHoveredIdx(null)}
     >
       {words.map((word, wordIdx) => {
@@ -772,13 +772,14 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
           <div style={{
             backgroundColor: 'transparent',
             borderRadius: '24px',
-            padding: '36px 36px 24px 36px',
+            padding: 'clamp(24px, 4vw, 36px) clamp(16px, 4vw, 36px) 24px clamp(16px, 4vw, 36px)',
             border: '1px solid #cbd5e1',
             textAlign: 'center',
             maxWidth: '1200px',
             margin: '40px auto 0 auto',
             transition: 'all 0.3s ease',
             boxShadow: 'none',
+            boxSizing: 'border-box',
             fontFamily: "'Montserrat', sans-serif"
           }}
           onMouseEnter={(e) => {
@@ -1075,15 +1076,16 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
             backgroundColor: '#ffffff',
             border: '1px solid #e2e8f0',
             borderRadius: '28px',
-            padding: '44px 36px',
-            boxShadow: 'none'
+            padding: 'clamp(24px, 4vw, 44px) clamp(16px, 4vw, 36px)',
+            boxShadow: 'none',
+            boxSizing: 'border-box'
           }}>
             <div style={{ textAlign: 'center', marginBottom: '36px' }}>
               <InteractiveTitle
                 text={lang === 'mn' ? 'Нийгмийн баталгаа ба Хөнгөлөлтүүд' : 'Social Guarantees & Benefits'}
                 className="no-underline"
                 style={{
-                  fontSize: 'clamp(22px, 3.5vw, 34px)',
+                  fontSize: 'clamp(20px, 3.5vw, 34px)',
                   fontWeight: '700',
                   color: '#0f172a',
                   letterSpacing: '-0.5px',
@@ -1099,7 +1101,7 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
               gap: '16px'
             }}>
               {guarantees.map((g, i) => {
