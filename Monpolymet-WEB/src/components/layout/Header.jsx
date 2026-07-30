@@ -200,20 +200,17 @@ export default function Header({
                   <div className="mobile-nav-header">
                     <button
                       className={`mobile-nav-link ${currentPage === item.target ? 'active' : ''}`}
-                      onClick={() => {
-                        if (subs) {
-                          setActiveDropdown(isExpanded ? null : item.id);
-                        } else {
-                          handleNavClick(item.target);
-                        }
-                      }}
+                      onClick={() => handleNavClick(item.target)}
                     >
                       {item.label}
                     </button>
                     {subs && (
                       <button 
                         className="mobile-toggle-btn"
-                        onClick={() => setActiveDropdown(isExpanded ? null : item.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveDropdown(isExpanded ? null : item.id);
+                        }}
                       >
                         <ChevronDown size={20} className={isExpanded ? 'rotated' : ''} />
                       </button>
