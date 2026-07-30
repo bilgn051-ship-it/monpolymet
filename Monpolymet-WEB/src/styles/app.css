@@ -3666,7 +3666,7 @@ h2::after {
   .drawer-backdrop {
     position: fixed;
     inset: 0;
-    background-color: rgba(15, 23, 42, 0.4);
+    background-color: rgba(15, 23, 42, 0.6);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     z-index: 9999;
@@ -3675,34 +3675,36 @@ h2::after {
   .mobile-drawer {
     position: fixed !important;
     top: 0 !important;
-    right: 0 !important;
-    left: auto !important;
+    left: 0 !important;
+    right: auto !important;
     bottom: 0 !important;
-    width: min(85vw, 320px) !important;
+    width: min(85vw, 300px) !important;
     height: 100vh !important;
     height: 100dvh !important;
-    background-color: rgba(255, 255, 255, 0.96) !important;
-    backdrop-filter: blur(24px) !important;
-    -webkit-backdrop-filter: blur(24px) !important;
+    background: linear-gradient(160deg, #010D56 0%, #001CE8 100%) !important;
+    color: #ffffff !important;
     z-index: 10000 !important;
-    padding: 20px 20px 30px 20px !important;
-    box-shadow: -10px 0 35px rgba(0, 0, 0, 0.15) !important;
-    border-left: 1px solid rgba(226, 232, 240, 0.8) !important;
+    padding: 24px 20px 30px 20px !important;
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.3) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
     overflow-y: auto !important;
-    animation: drawerSlideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    animation: drawerSlideInLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    font-family: 'Montserrat', sans-serif !important;
   }
 
   .mobile-drawer-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 16px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 20px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   }
 
   .mobile-drawer-close {
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.18);
     border: none;
     border-radius: 50%;
     width: 36px;
@@ -3710,31 +3712,106 @@ h2::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #475569;
+    color: #ffffff;
     cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .mobile-drawer-close:hover {
+    background: rgba(255, 255, 255, 0.3);
   }
 
   .mobile-nav {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .mobile-nav-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .mobile-nav-link {
     background: none;
     border: none;
-    font-family: inherit;
-    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
     font-weight: 600;
-    color: var(--text-color);
+    color: #ffffff;
     text-align: left;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    flex: 1;
+  }
+
+  .mobile-toggle-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-toggle-btn .rotated {
+    transform: rotate(180deg);
+    transition: transform 0.2s ease;
+  }
+
+  .mobile-submenu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 0 10px 14px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    margin-top: 4px;
+  }
+
+  .mobile-sub-link {
+    background: none;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: left;
+    padding: 4px 0;
     cursor: pointer;
   }
 
-  .mobile-nav-link.active {
-    color: var(--primary-color);
+  .mobile-sub-link:hover {
+    color: #ffffff;
+  }
+
+  .mobile-drawer-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mobile-footer-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .mobile-footer-item:hover {
+    color: #ffffff;
   }
 
   /* TOUCH SWIPE CARDS FOR TABLET & MOBILE */
@@ -5639,6 +5716,15 @@ h2::after {
 @keyframes drawerSlideInRight {
   from {
     transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes drawerSlideInLeft {
+  from {
+    transform: translateX(-100%);
   }
   to {
     transform: translateX(0);
