@@ -204,7 +204,7 @@ const mapHomeContent = (d) => ({
 
 export async function fetchHomeContent() {
   const data = await getJson('/public/home-content');
-  return mapHomeContent(data);
+  return data ? mapHomeContent(data) : null;
 }
 
 const mapCoreValue = (d) => ({
@@ -279,7 +279,7 @@ const mapAboutContent = (d) => ({
 
 export async function fetchAboutContent() {
   const data = await getJson('/public/about-content');
-  return mapAboutContent(data);
+  return data ? mapAboutContent(data) : null;
 }
 
 const mapSector = (d) => ({
@@ -375,29 +375,29 @@ const mapCareersContent = (d) => ({
 
 export async function fetchCareersContent() {
   const data = await getJson('/public/careers-content');
-  return mapCareersContent(data);
+  return data ? mapCareersContent(data) : null;
 }
 
 const mapSettings = (d) => ({
-  logoUrl: d.logoUrl,
-  footerDescriptionMn: d.footerDescription?.mn ?? '',
-  footerDescriptionEn: d.footerDescription?.en ?? '',
-  addressMn: d.address?.mn ?? '',
-  addressEn: d.address?.en ?? '',
-  phone: d.phone,
-  email: d.email,
-  socialLinks: d.socialLinks ?? [],
-  brandAssetsDescriptionMn: d.brandAssetsDescription?.mn ?? '',
-  brandAssetsDescriptionEn: d.brandAssetsDescription?.en ?? '',
-  brandAssets: d.brandAssets ?? [],
-  copyrightName: d.copyrightName,
-  navigation: d.navigation ?? [],
-  footerNavigation: d.footerNavigation ?? [],
+  logoUrl: d?.logoUrl,
+  footerDescriptionMn: d?.footerDescription?.mn ?? '',
+  footerDescriptionEn: d?.footerDescription?.en ?? '',
+  addressMn: d?.address?.mn ?? '',
+  addressEn: d?.address?.en ?? '',
+  phone: d?.phone,
+  email: d?.email,
+  socialLinks: d?.socialLinks ?? [],
+  brandAssetsDescriptionMn: d?.brandAssetsDescription?.mn ?? '',
+  brandAssetsDescriptionEn: d?.brandAssetsDescription?.en ?? '',
+  brandAssets: d?.brandAssets ?? [],
+  copyrightName: d?.copyrightName,
+  navigation: d?.navigation ?? [],
+  footerNavigation: d?.footerNavigation ?? [],
 });
 
 export async function fetchSettings() {
   const data = await getJson('/public/settings');
-  return mapSettings(data);
+  return data ? mapSettings(data) : null;
 }
 
 export async function updateSettings(settingsData) {

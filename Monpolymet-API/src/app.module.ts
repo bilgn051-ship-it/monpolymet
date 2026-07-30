@@ -20,6 +20,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { PublicModule } from './modules/public/public.module';
 import { UploadsModule } from './modules/uploads/uploads.module';
 import { TendersModule } from './modules/tenders/tenders.module';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { TendersModule } from './modules/tenders/tenders.module';
     DashboardModule,
     PublicModule,
     UploadsModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [
@@ -61,4 +63,4 @@ import { TendersModule } from './modules/tenders/tenders.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }

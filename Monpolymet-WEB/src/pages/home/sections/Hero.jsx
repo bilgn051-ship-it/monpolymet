@@ -6,31 +6,7 @@ const SLIDE_INTERVAL = 6000;
 export default function Hero({ lang, setCurrentPage }) {
   const [activeSlide, setActiveSlide] = useState(0);
 
-  const defaultSlides = [
-    {
-      video: "https://assets.mixkit.co/videos/preview/mixkit-heavy-excavator-digging-coal-in-a-quarry-41785-large.mp4",
-      titleMn: "Тогтвортой хөгжил – Эх орныхоо барилга бүтээн байгуулалтад",
-      titleEn: "Sustainable Development – Building Our Nation's Future",
-      subtitleMn: "Монполимет Групп нь Монгол улсын уул уурхай, барилгын материалын тэргүүлэгч үйлдвэрлэгч юм.",
-      subtitleEn: "Monpolymet Group is a leading producer of mining and building materials in Mongolia."
-    },
-    {
-      image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&auto=format&fit=crop&q=80",
-      titleMn: "Байгальд ээлтэй ногоон үйлдвэрлэл, нөхөн сэргээлт",
-      titleEn: "Eco-Friendly Green Industry & Restoration",
-      subtitleMn: "Бид олборлосон талбай бүртээ 100% биологийн нөхөн сэргээлт хийж, нуур ойг бүтээн байна.",
-      subtitleEn: "We perform 100% biological reclamation on every mined site, creating forests and lakes."
-    },
-    {
-      image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1600&auto=format&fit=crop&q=80",
-      titleMn: "Дэлхийн жишигт нийцсэн Монцемент үйлдвэр",
-      titleEn: "World-Class Moncement Dry-Process Plant",
-      subtitleMn: "Европын стандартын хуурай аргын технологиор жилд 1 сая тонн цемент үйлдвэрлэдэг.",
-      subtitleEn: "Producing 1 million tons of cement annually using European dry-process technology."
-    }
-  ];
-
-  const [slides, setSlides] = useState(defaultSlides);
+  const [slides, setSlides] = useState([]);
 
   useEffect(() => {
     fetchHeroSlides()

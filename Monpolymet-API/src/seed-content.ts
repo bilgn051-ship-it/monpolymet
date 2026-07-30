@@ -368,3 +368,4 @@ export async function seedContent(app: INestApplicationContext, logger: Logger) 
   await seedSingleton(app.get(CareersContentService, opts), CAREERS_CONTENT, 'careers content', logger);
   await seedSingleton(app.get(SettingsService, opts), SITE_SETTINGS, 'site settings', logger);
 }
+

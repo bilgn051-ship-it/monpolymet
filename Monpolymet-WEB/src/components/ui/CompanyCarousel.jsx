@@ -177,7 +177,7 @@ export default function CompanyCarousel({ lang, onActiveChange }) {
     return () => {
       el.removeEventListener('wheel', handleNativeWheel);
     };
-  }, [activeIndex, isTrapped]); // Rebind when activeIndex or isTrapped changes
+  }, [activeIndex, isTrapped, companies]); // Rebind when activeIndex or isTrapped changes
 
   const handleMouseLeave = () => {
     // When mouse leaves, re-arm the scroll trap for next time

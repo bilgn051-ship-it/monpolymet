@@ -326,10 +326,11 @@ function CsrVirtualTour({ lang }) {
   const scenes = [
     {
       id: 'lake',
-      titleMn: 'Тосон Нуур (16 га тунгалаг нуур)',
-      titleEn: 'Toson Lake (16 ha Freshwater)',
-      descMn: 'Алтан цагаан сувд мэт 16 га талбай бүхий тунгалаг нуур ба усны шувуудын цугларах бүс.',
+      titleMn: 'Тосон Нуур & Эко Парк (16 га)',
+      titleEn: 'Toson Lake & Eco-Park (16 ha)',
+      descMn: 'Алтан цагаан сувд мэт 16 га талбай бүхий тунгалаг хиймэл нуур ба шувуудын диваажин.',
       descEn: 'A pristine 16-hectare freshwater lake supporting local ecosystem biodiversity.',
+      thumbUrl: 'https://en.monpolymet.mn/wp-content/uploads/2021/12/img-slider-01-2.jpg',
       panoUrl: 'https://en.monpolymet.mn/wp-content/uploads/2021/12/img-slider-01-2.jpg',
       hotspots: [
         {
@@ -357,9 +358,10 @@ function CsrVirtualTour({ lang }) {
     {
       id: 'forest',
       titleMn: 'Ойн Төгөл ба Ногоон Бүс (5.5 км)',
-      titleEn: '5.5 km Forest Belts',
+      titleEn: '5.5 km Protective Forest Belts',
       descMn: '100,000 гаруй мод тариалж, хөрсний ургамалжлыг 100% сэргээсэн жишиг ойн төгөл.',
       descEn: 'Over 100,000 trees planted creating 5.5 km protective green forestry belts.',
+      thumbUrl: 'https://en.monpolymet.mn/wp-content/uploads/2021/12/news_20211113-1.jpg',
       panoUrl: 'https://en.monpolymet.mn/wp-content/uploads/2021/12/news_20211113-1.jpg',
       hotspots: [
         {
@@ -386,10 +388,11 @@ function CsrVirtualTour({ lang }) {
     },
     {
       id: 'reclamation',
-      titleMn: 'Биологийн Нөхөн Сэргээлтийн Бүс',
-      titleEn: 'Biological Reclamation Area',
+      titleMn: 'Биологийн Нөхөн Сэргээлт (743 га)',
+      titleEn: 'Biological Restoration Zone (743 ha)',
       descMn: 'Техникийн 743 га, биологийн 514 га талбайд 100% амжилттай хийсэн сэргээлтийн талбай.',
       descEn: 'Model 743 ha technical and 514 ha biological restoration zones.',
+      thumbUrl: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1920&auto=format&fit=crop',
       panoUrl: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1920&auto=format&fit=crop',
       hotspots: [
         {
@@ -411,6 +414,27 @@ function CsrVirtualTour({ lang }) {
           infoMn: 'Олон наст ашигт ургамал болон бэлчээрийн ургамлыг дахин нутагшуулсан.',
           infoEn: 'Perennial pastures and native flora successfully re-established.',
           stat: '514 га'
+        }
+      ]
+    },
+    {
+      id: 'moncement',
+      titleMn: 'Монцемент Үйлдвэрийн Цогцолбор',
+      titleEn: 'Moncement Industrial Plant',
+      descMn: 'Европын ISO стандартаар тоноглогдсон хуурай аргын бүрэн автомат эко цементийн үйлдвэр.',
+      descEn: 'European standard fully automated dry-process eco cement plant.',
+      thumbUrl: 'https://monpolymet.mn/wp-content/uploads/2022/05/Moncement-factory.jpg',
+      panoUrl: 'https://monpolymet.mn/wp-content/uploads/2022/05/Moncement-factory.jpg',
+      hotspots: [
+        {
+          id: 7,
+          left: '50%',
+          top: '45%',
+          titleMn: 'Хуурай Аргын Эко Үйлдвэрлэл',
+          titleEn: 'Dry-Process Eco Production',
+          infoMn: 'Усны хэрэглээг 5 дахин багасгасан хуурай аргын технологитой.',
+          infoEn: 'Reduces water consumption 5x through dry-process technology.',
+          stat: '5x хэмнэлт'
         }
       ]
     }
@@ -454,25 +478,13 @@ function CsrVirtualTour({ lang }) {
 
   return (
     <section id="visit" style={{
-      backgroundColor: '#070d1e',
-      color: '#ffffff',
-      padding: '90px 20px 110px 20px',
+      backgroundColor: '#ffffff',
+      color: '#0f172a',
+      padding: '80px 20px 90px 20px',
       fontFamily: "'Montserrat', sans-serif",
       position: 'relative',
-      overflow: 'hidden',
-      borderTop: '1px solid rgba(255, 255, 255, 0.1)'
+      overflow: 'hidden'
     }}>
-      {/* Background Ambient Glow */}
-      <div style={{
-        position: 'absolute',
-        top: '20%',
-        right: '10%',
-        width: '600px',
-        height: '600px',
-        background: 'radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, rgba(16, 185, 129, 0.08) 50%, rgba(0,0,0,0) 80%)',
-        pointerEvents: 'none',
-        borderRadius: '50%'
-      }} />
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
         
@@ -482,24 +494,24 @@ function CsrVirtualTour({ lang }) {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            backgroundColor: 'rgba(37, 99, 235, 0.18)',
-            border: '1px solid rgba(59, 130, 246, 0.35)',
+            backgroundColor: '#eff6ff',
+            border: '1px solid #bfdbfe',
             borderRadius: '24px',
             padding: '6px 22px',
             fontSize: '13px',
             fontWeight: '600',
-            color: '#60a5fa',
+            color: '#001CE8',
             marginBottom: '16px'
           }}>
             <Globe size={16} />
             {lang === 'mn' ? '360° ВИРТУАЛ АЯЛАЛ & 3D ЭКО ПАРК' : '360° VIRTUAL TOUR & 3D ECO-PARK'}
           </div>
 
-          <h2 className="no-underline" style={{ fontSize: '36px', fontWeight: '800', color: '#ffffff', marginBottom: '12px', letterSpacing: '-0.5px' }}>
+          <h2 className="no-underline" style={{ fontSize: '36px', fontWeight: '800', color: '#0f172a', marginBottom: '12px', letterSpacing: '-0.5px', fontFamily: "'Montserrat', sans-serif" }}>
             {lang === 'mn' ? 'Тосонгийн Орд & Эко Парк - 360° Интерактив Аялал' : 'Toson Mine & Eco-Park - 360° Interactive Tour'}
           </h2>
           
-          <p style={{ fontSize: '16px', color: '#94a3b8', maxWidth: '680px', margin: '0 auto', lineHeight: '1.6' }}>
+          <p style={{ fontSize: '16px', color: '#475569', maxWidth: '680px', margin: '0 auto', lineHeight: '1.6', fontFamily: "'Montserrat', sans-serif" }}>
             {lang === 'mn'
               ? 'Тосонгийн нөхөн сэргээлтийн бүс, 16 га Тосон нуур болон 5.5 км ойн төглийг интерактив 360° панорама орчинд мэдрэн үзээрэй.'
               : 'Experience the model eco-restoration, 16-hectare lake, and 5.5 km forest belts in an interactive 360° virtual environment.'}
@@ -648,51 +660,108 @@ function CsrVirtualTour({ lang }) {
             </button>
           </div>
 
-          {/* Bottom Scene Switcher Tabs inside Pano */}
+          {/* Bottom Scene Indicator Badge inside Pano */}
           <div style={{
             position: 'absolute',
             bottom: '20px',
-            left: '50%',
-            transform: 'translateX(-50%)',
+            left: '20px',
             zIndex: 30,
-            display: 'flex',
-            gap: '10px',
-            maxWidth: '92%',
-            overflowX: 'auto',
             backgroundColor: 'rgba(15, 23, 42, 0.85)',
             backdropFilter: 'blur(16px)',
             border: '1px solid rgba(255, 255, 255, 0.15)',
-            borderRadius: '20px',
-            padding: '8px 12px'
+            borderRadius: '14px',
+            padding: '8px 16px',
+            color: '#ffffff',
+            fontSize: '13px',
+            fontWeight: '600',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
           }}>
-            {scenes.map((sc, idx) => {
-              const isActive = idx === activeSceneIdx;
-              return (
-                <button
-                  key={sc.id}
-                  onClick={() => {
-                    setActiveSceneIdx(idx);
-                    setSelectedHotspot(null);
-                  }}
-                  style={{
-                    backgroundColor: isActive ? '#2563eb' : 'rgba(255, 255, 255, 0.06)',
-                    border: isActive ? '1px solid #60a5fa' : '1px solid rgba(255, 255, 255, 0.08)',
-                    borderRadius: '14px',
-                    padding: '8px 16px',
-                    color: '#ffffff',
-                    fontSize: '13px',
-                    fontWeight: isActive ? '700' : '500',
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap',
-                    transition: 'all 0.2s ease',
-                    fontFamily: "'Montserrat', sans-serif"
-                  }}
-                >
-                  {lang === 'mn' ? sc.titleMn : sc.titleEn}
-                </button>
-              );
-            })}
+            <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#60a5fa', boxShadow: '0 0 10px #60a5fa' }} />
+            <span>{lang === 'mn' ? currentScene.titleMn : currentScene.titleEn}</span>
           </div>
+        </div>
+
+        {/* Location Thumbnail Selection Grid below 360 Viewer */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: '16px',
+          marginTop: '24px'
+        }}>
+          {scenes.map((sc, idx) => {
+            const isActive = idx === activeSceneIdx;
+            return (
+              <div
+                key={sc.id}
+                onClick={() => {
+                  setActiveSceneIdx(idx);
+                  setSelectedHotspot(null);
+                }}
+                style={{
+                  backgroundColor: isActive ? '#ffffff' : '#f8fafc',
+                  border: isActive ? '2px solid #001CE8' : '1px solid #e2e8f0',
+                  borderRadius: '16px',
+                  padding: '12px 14px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '14px',
+                  cursor: 'pointer',
+                  transition: 'all 0.25s ease',
+                  boxShadow: 'none'
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.borderColor = '#001CE8';
+                    e.currentTarget.style.backgroundColor = '#ffffff';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.borderColor = '#e2e8f0';
+                    e.currentTarget.style.backgroundColor = '#f8fafc';
+                  }
+                }}
+              >
+                <div style={{
+                  width: '60px',
+                  height: '44px',
+                  borderRadius: '10px',
+                  backgroundImage: `url(${sc.thumbUrl})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  flexShrink: 0,
+                  border: isActive ? '1.5px solid #001CE8' : '1px solid #cbd5e1'
+                }} />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <h5 style={{
+                    fontSize: '13.5px',
+                    fontWeight: '700',
+                    color: isActive ? '#001CE8' : '#0f172a',
+                    margin: '0 0 2px 0',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    fontFamily: "'Montserrat', sans-serif"
+                  }}>
+                    {lang === 'mn' ? sc.titleMn : sc.titleEn}
+                  </h5>
+                  <p style={{
+                    fontSize: '11.5px',
+                    color: '#64748b',
+                    margin: 0,
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    fontFamily: "'Montserrat', sans-serif"
+                  }}>
+                    {lang === 'mn' ? sc.descMn : sc.descEn}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Selected Hotspot Glass Detail Modal */}

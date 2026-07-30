@@ -31,15 +31,14 @@ function App() {
   const [darkMode, setDarkMode] = useDarkMode();
 
   // News and open vacancies come live from the API (managed in the admin
-  // dashboard). The bundled mock data is the initial value and the fallback
-  // if the API is unreachable, so the site always renders.
-  const [news, setNews] = useState(initialNews);
-  const [jobs, setJobs] = useState(initialJobs);
+  // dashboard).
+  const [news, setNews] = useState([]);
+  const [jobs, setJobs] = useState([]);
   const [settings, setSettings] = useState(null);
   const [timeline, setTimeline] = useState([]);
   const [pages, setPages] = useState([]);
   const [procurementContent, setProcurementContent] = useState(null);
-  const [submissions, setSubmissions] = useLocalStorageState('submissions', initialSubmissions);
+  const [submissions, setSubmissions] = useLocalStorageState('submissions', []);
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0);

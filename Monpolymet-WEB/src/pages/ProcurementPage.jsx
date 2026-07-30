@@ -27,6 +27,7 @@ import partner16 from '../assets/partners/partner-16.jpg';
 import partner17 from '../assets/partners/partner-17.jpg';
 import tenderhubLogo from '../assets/tenderhub-logo.png';
 import tenderhubBg from '../assets/tenderhub-bg.png';
+import proHeroImg from '../assets/pro_hero.jpg';
 
 const row1Logos = [partner1, partner10, partner3, partner12, partner5, partner14, partner7, partner16, partner9];
 const row2Logos = [partner2, partner11, partner4, partner13, partner6, partner15, partner8, partner17];
@@ -287,7 +288,7 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
   useEffect(() => {
     fetchTenders()
       .then((data) => setLiveTenders(data || []))
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   useEffect(() => {
@@ -441,8 +442,11 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
     <>
       {/* 1. Full Bleed Hero Banner */}
       <div className="full-bleed-banner" style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1920&q=80')`,
-        backgroundColor: '#0f172a'
+        backgroundImage: `url('${proHeroImg}')`,
+        backgroundPosition: 'center -310px',
+        backgroundSize: '135% auto',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: '#0b1120'
       }}>
         <div className="full-bleed-banner-overlay"></div>
         <div className="full-bleed-banner-container">
@@ -499,20 +503,20 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                   boxShadow: 'none',
                   transition: 'all 0.3s ease'
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-6px)';
-                  e.currentTarget.style.borderColor = '#2563eb';
-                  e.currentTarget.style.boxShadow = 'none';
-                  const title = e.currentTarget.querySelector('h4');
-                  if (title) title.style.color = '#2563eb';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.borderColor = '#cbd5e1';
-                  e.currentTarget.style.boxShadow = 'none';
-                  const title = e.currentTarget.querySelector('h4');
-                  if (title) title.style.color = '#0f172a';
-                }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-6px)';
+                    e.currentTarget.style.borderColor = '#2563eb';
+                    e.currentTarget.style.boxShadow = 'none';
+                    const title = e.currentTarget.querySelector('h4');
+                    if (title) title.style.color = '#2563eb';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.borderColor = '#cbd5e1';
+                    e.currentTarget.style.boxShadow = 'none';
+                    const title = e.currentTarget.querySelector('h4');
+                    if (title) title.style.color = '#0f172a';
+                  }}
                 >
                   <div style={{
                     marginBottom: '20px',
@@ -546,16 +550,16 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
             transition: 'all 0.3s ease',
             boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.06)'
           }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-6px)';
-            e.currentTarget.style.borderColor = '#001CE8';
-            e.currentTarget.style.boxShadow = '0 15px 30px -8px rgba(0, 28, 232, 0.15)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.borderColor = '#cbd5e1';
-            e.currentTarget.style.boxShadow = '0 10px 30px -10px rgba(0, 0, 0, 0.06)';
-          }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-6px)';
+              e.currentTarget.style.borderColor = '#001CE8';
+              e.currentTarget.style.boxShadow = '0 15px 30px -8px rgba(0, 28, 232, 0.15)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.borderColor = '#cbd5e1';
+              e.currentTarget.style.boxShadow = '0 10px 30px -10px rgba(0, 0, 0, 0.06)';
+            }}
           >
             <h3 style={{ fontSize: '24px', fontWeight: '600', color: '#0f172a', marginBottom: '12px' }}>
               {lang === 'mn' ? 'Хамтран ажиллах нийлүүлэгчийн бүртгэл' : 'Supplier Partnership Registration'}
@@ -648,7 +652,7 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
             <div className="marquee-container-track" style={{ marginBottom: '24px' }}>
               <div className="marquee-row-1">
                 {[...row1Logos, ...row1Logos, ...row1Logos].map((src, i) => (
-                  <img key={i} src={src} alt={`Partner logo ${i+1}`} className="logo-item-img" />
+                  <img key={i} src={src} alt={`Partner logo ${i + 1}`} className="logo-item-img" />
                 ))}
               </div>
             </div>
@@ -657,7 +661,7 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
             <div className="marquee-container-track">
               <div className="marquee-row-2">
                 {[...row2Logos, ...row2Logos, ...row2Logos].map((src, i) => (
-                  <img key={i} src={src} alt={`Partner logo ${i+10}`} className="logo-item-img" />
+                  <img key={i} src={src} alt={`Partner logo ${i + 10}`} className="logo-item-img" />
                 ))}
               </div>
             </div>
@@ -810,202 +814,169 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                         const end = tender.deadlineDate ? new Date(tender.deadlineDate) : (tender.deadlineTime ? new Date(tender.deadlineTime) : null);
                         const isClosed = end ? now > end : false;
 
-                    const formattedStart = start ? `${start.getFullYear()}.${String(start.getMonth() + 1).padStart(2, '0')}.${String(start.getDate()).padStart(2, '0')} - ${String(start.getHours()).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}` : tender.startTime;
-                    const formattedEnd = end ? `${end.getFullYear()}.${String(end.getMonth() + 1).padStart(2, '0')}.${String(end.getDate()).padStart(2, '0')} - ${String(end.getHours()).padStart(2, '0')}:${String(end.getMinutes()).padStart(2, '0')}` : tender.deadline;
+                        const formattedStart = start ? `${start.getFullYear()}.${String(start.getMonth() + 1).padStart(2, '0')}.${String(start.getDate()).padStart(2, '0')} - ${String(start.getHours()).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}` : tender.startTime;
+                        const formattedEnd = end ? `${end.getFullYear()}.${String(end.getMonth() + 1).padStart(2, '0')}.${String(end.getDate()).padStart(2, '0')} - ${String(end.getHours()).padStart(2, '0')}:${String(end.getMinutes()).padStart(2, '0')}` : tender.deadline;
 
-                    let statusText = lang === 'mn' ? 'Нээлттэй' : 'Open';
-                    let statusBg = '#dcfce7';
-                    let statusColor = '#15803d';
-                    let dotColor = '#16a34a';
+                        let statusText = lang === 'mn' ? 'Нээлттэй' : 'Open';
+                        let statusBg = '#dcfce7';
+                        let statusColor = '#15803d';
+                        let dotColor = '#16a34a';
 
-                    if (isClosed) {
-                      statusText = lang === 'mn' ? 'Хаагдсан' : 'Closed';
-                      statusBg = '#fee2e2';
-                      statusColor = '#dc2626';
-                      dotColor = '#ef4444';
-                    }
+                        if (isClosed) {
+                          statusText = lang === 'mn' ? 'Хаагдсан' : 'Closed';
+                          statusBg = '#fee2e2';
+                          statusColor = '#dc2626';
+                          dotColor = '#ef4444';
+                        }
 
-                    return (
-                      <div key={tender.id || idx} style={{
-                        flex: '0 0 calc((100% - 48px) / 3)',
-                        minWidth: '300px',
-                        boxSizing: 'border-box',
-                        backgroundColor: '#ffffff',
-                        borderRadius: '20px',
-                        border: isClosed ? '1px solid #fca5a5' : '1px solid #e2e8f0',
-                        padding: '32px 28px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                        boxShadow: '0 10px 25px -5px rgba(0,0,0,0.03)',
-                        transition: 'all 0.3s ease',
-                        opacity: isClosed ? 0.85 : 1
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-4px)';
-                        e.currentTarget.style.borderColor = isClosed ? '#ef4444' : '#2563eb';
-                        e.currentTarget.style.boxShadow = isClosed
-                          ? '0 20px 30px -10px rgba(239, 68, 68, 0.15)'
-                          : '0 20px 30px -10px rgba(37, 99, 235, 0.12)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.borderColor = isClosed ? '#fca5a5' : '#e2e8f0';
-                        e.currentTarget.style.boxShadow = '0 10px 25px -5px rgba(0,0,0,0.03)';
-                      }}
-                      >
-                        <div>
-                          {/* Badge header */}
-                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                            <span style={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '6px',
-                              backgroundColor: statusBg,
-                              color: statusColor,
-                              padding: '4px 12px',
-                              borderRadius: '20px',
-                              fontSize: '12px',
-                              fontWeight: '700'
-                            }}>
-                              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: dotColor }}></span>
-                              {statusText}
-                            </span>
-                            <span style={{ fontSize: '13px', fontWeight: '700', color: isClosed ? '#dc2626' : '#2563eb', backgroundColor: isClosed ? '#fef2f2' : '#eff6ff', padding: '4px 10px', borderRadius: '6px' }}>
-                              {tender.code}
-                            </span>
-                          </div>
-
-                          <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', lineHeight: '1.4', marginBottom: '12px', fontFamily: "'Montserrat', sans-serif" }}>
-                            {lang === 'mn' ? tender.titleMn : tender.titleEn}
-                          </h3>
-
-                          <p style={{ fontSize: '14px', color: '#64748b', lineHeight: '1.6', marginBottom: '20px' }}>
-                            {lang === 'mn' ? tender.descMn : tender.descEn}
-                          </p>
-
-                          {/* Meta details */}
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '14px 16px', backgroundColor: isClosed ? '#fff5f5' : '#f8fafc', borderRadius: '12px', marginBottom: '24px' }}>
-                            {formattedStart && (
-                              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
-                                <span style={{ color: '#64748b', fontWeight: '500' }}>{lang === 'mn' ? 'Эхлэх хугацаа:' : 'Start Time:'}</span>
-                                <span style={{ color: '#2563eb', fontWeight: '700' }}>{formattedStart}</span>
-                              </div>
-                            )}
-                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
-                              <span style={{ color: '#64748b', fontWeight: '500' }}>{lang === 'mn' ? 'Дуусах огноо:' : 'Deadline:'}</span>
-                              <span style={{ color: isClosed ? '#dc2626' : '#0f172a', fontWeight: '700' }}>{formattedEnd}</span>
-                            </div>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
-                              <span style={{ color: '#64748b', fontWeight: '500' }}>{lang === 'mn' ? 'Байршил:' : 'Location:'}</span>
-                              <span style={{ color: '#0f172a', fontWeight: '600' }}>{lang === 'mn' ? tender.locationMn : tender.locationEn}</span>
-                            </div>
-
-                            {!isClosed && end && (end.getTime() > Date.now()) && (
-                              <div style={{
-                                marginTop: '6px',
-                                paddingTop: '8px',
-                                borderTop: '1px dashed #cbd5e1',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                fontSize: '12px',
-                                color: '#1d4ed8',
-                                fontWeight: '600'
-                              }}>
-                                <span>{lang === 'mn' ? 'Хугацаа дуусахад:' : 'Time Remaining:'}</span>
-                                <span style={{ background: '#dbeafe', padding: '2px 8px', borderRadius: '4px', color: '#1e40af', fontWeight: '700' }}>
-                                  {(() => {
-                                    const diffMs = end.getTime() - Date.now();
-                                    const d = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-                                    const h = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                    const m = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-                                    return d > 0 ? `${d}ө ${h}ц` : `${h}ц ${m}м`;
-                                  })()}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Actions */}
-                        <div style={{ display: 'flex', gap: '10px' }}>
-                          <button
-                            onClick={() => {
-                              if (!isClosed) {
-                                setSelectedTenderForApply(tender);
-                                setApplyFile(null);
-                                setApplyFileError('');
-                                setApplyFormData({ priceOffer: '', contactName: '', contactPhone: '', contactEmail: '' });
-                                setApplyFormSubmitted(false);
-                                setApplyModalOpen(true);
-                              }
-                            }}
-                            disabled={isClosed}
-                            style={{
-                              flex: 1,
-                              background: isClosed
-                                ? '#94a3b8'
-                                : 'linear-gradient(90deg, #010B40 0%, #001CE8 100%)',
-                              color: '#ffffff',
-                              border: 'none',
-                              borderRadius: '12px',
-                              padding: '12px',
-                              fontSize: '13px',
-                              fontWeight: '700',
-                              cursor: isClosed ? 'not-allowed' : 'pointer',
-                              textAlign: 'center',
-                              fontFamily: "'Montserrat', sans-serif",
-                              transition: 'opacity 0.2s',
-                              opacity: isClosed ? 0.75 : 1
-                            }}
-                          >
-                            {isClosed
-                              ? (lang === 'mn' ? 'Тендер хаагдсан' : 'Tender Closed')
-                              : (lang === 'mn' ? 'Тендерт оролцох' : 'Apply for Tender')}
-                          </button>
-                          <button
-                            onClick={() => {
-                              const docUrl = tender.fileUrl || tender.pdfUrl || tender.attachmentUrl;
-                              if (docUrl) {
-                                window.open(docUrl, '_blank');
-                              } else {
-                                alert(lang === 'mn' ? 'Энэ тендерийн хавсралт баримт бичиг одоогоор файлгүй байна.' : 'Tender attachment document is not attached.');
-                              }
-                            }}
-                            title={lang === 'mn' ? 'Тендерийн баримт бичиг татах' : 'Download Tender Document'}
-                            style={{
-                              backgroundColor: '#f1f5f9',
-                              color: '#001CE8',
-                              border: '1px solid #cbd5e1',
-                              borderRadius: '12px',
-                              padding: '12px 14px',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              cursor: 'pointer',
-                              transition: 'all 0.2s'
-                            }}
+                        return (
+                          <div key={tender.id || idx} style={{
+                            flex: '0 0 calc((100% - 48px) / 3)',
+                            minWidth: '300px',
+                            boxSizing: 'border-box',
+                            backgroundColor: '#ffffff',
+                            borderRadius: '20px',
+                            border: isClosed ? '1px solid #fca5a5' : '1px solid #e2e8f0',
+                            padding: '32px 28px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            boxShadow: '0 10px 25px -5px rgba(0,0,0,0.03)',
+                            transition: 'all 0.3s ease',
+                            opacity: isClosed ? 0.85 : 1
+                          }}
                             onMouseEnter={(e) => {
-                              e.currentTarget.style.backgroundColor = '#dbeafe';
-                              e.currentTarget.style.borderColor = '#001CE8';
+                              e.currentTarget.style.transform = 'translateY(-4px)';
+                              e.currentTarget.style.borderColor = isClosed ? '#ef4444' : '#2563eb';
+                              e.currentTarget.style.boxShadow = isClosed
+                                ? '0 20px 30px -10px rgba(239, 68, 68, 0.15)'
+                                : '0 20px 30px -10px rgba(37, 99, 235, 0.12)';
                             }}
                             onMouseLeave={(e) => {
-                              e.currentTarget.style.backgroundColor = '#f1f5f9';
-                              e.currentTarget.style.borderColor = '#cbd5e1';
+                              e.currentTarget.style.transform = 'translateY(0)';
+                              e.currentTarget.style.borderColor = isClosed ? '#fca5a5' : '#e2e8f0';
+                              e.currentTarget.style.boxShadow = '0 10px 25px -5px rgba(0,0,0,0.03)';
                             }}
                           >
-                            <FileText size={18} color="#001CE8" />
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  })}
+                            <div>
+                              {/* Badge header */}
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                                <span style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '6px',
+                                  backgroundColor: statusBg,
+                                  color: statusColor,
+                                  padding: '4px 12px',
+                                  borderRadius: '20px',
+                                  fontSize: '12px',
+                                  fontWeight: '700'
+                                }}>
+                                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: dotColor }}></span>
+                                  {statusText}
+                                </span>
+                                <span style={{ fontSize: '13px', fontWeight: '700', color: isClosed ? '#dc2626' : '#2563eb', backgroundColor: isClosed ? '#fef2f2' : '#eff6ff', padding: '4px 10px', borderRadius: '6px' }}>
+                                  {tender.code}
+                                </span>
+                              </div>
+
+                              <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', lineHeight: '1.4', marginBottom: '12px', fontFamily: "'Montserrat', sans-serif" }}>
+                                {lang === 'mn' ? tender.titleMn : tender.titleEn}
+                              </h3>
+
+                              <p style={{ fontSize: '14px', color: '#64748b', lineHeight: '1.6', marginBottom: '20px' }}>
+                                {lang === 'mn' ? tender.descMn : tender.descEn}
+                              </p>
+
+                              {/* Meta details */}
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '14px 16px', backgroundColor: isClosed ? '#fff5f5' : '#f8fafc', borderRadius: '12px', marginBottom: '24px' }}>
+                                {formattedStart && (
+                                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
+                                    <span style={{ color: '#64748b', fontWeight: '500' }}>{lang === 'mn' ? 'Эхлэх хугацаа:' : 'Start Time:'}</span>
+                                    <span style={{ color: '#2563eb', fontWeight: '700' }}>{formattedStart}</span>
+                                  </div>
+                                )}
+                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
+                                  <span style={{ color: '#64748b', fontWeight: '500' }}>{lang === 'mn' ? 'Дуусах огноо:' : 'Deadline:'}</span>
+                                  <span style={{ color: isClosed ? '#dc2626' : '#0f172a', fontWeight: '700' }}>{formattedEnd}</span>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
+                                  <span style={{ color: '#64748b', fontWeight: '500' }}>{lang === 'mn' ? 'Байршил:' : 'Location:'}</span>
+                                  <span style={{ color: '#0f172a', fontWeight: '600' }}>{lang === 'mn' ? tender.locationMn : tender.locationEn}</span>
+                                </div>
+
+                                {!isClosed && end && (end.getTime() > Date.now()) && (
+                                  <div style={{
+                                    marginTop: '6px',
+                                    paddingTop: '8px',
+                                    borderTop: '1px dashed #cbd5e1',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    fontSize: '12px',
+                                    color: '#1d4ed8',
+                                    fontWeight: '600'
+                                  }}>
+                                    <span>{lang === 'mn' ? 'Хугацаа дуусахад:' : 'Time Remaining:'}</span>
+                                    <span style={{ background: '#dbeafe', padding: '2px 8px', borderRadius: '4px', color: '#1e40af', fontWeight: '700' }}>
+                                      {(() => {
+                                        const diffMs = end.getTime() - Date.now();
+                                        const d = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                                        const h = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                        const m = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                                        return d > 0 ? `${d}ө ${h}ц` : `${h}ц ${m}м`;
+                                      })()}
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Actions */}
+                            <div style={{ display: 'flex', gap: '10px' }}>
+                              <button
+                                onClick={() => {
+                                  if (!isClosed) {
+                                    setSelectedTenderForApply(tender);
+                                    setApplyFile(null);
+                                    setApplyFileError('');
+                                    setApplyFormData({ priceOffer: '', contactName: '', contactPhone: '', contactEmail: '' });
+                                    setApplyFormSubmitted(false);
+                                    setApplyModalOpen(true);
+                                  }
+                                }}
+                                disabled={isClosed}
+                                style={{
+                                  flex: 1,
+                                  background: isClosed
+                                    ? '#94a3b8'
+                                    : 'linear-gradient(90deg, #010B40 0%, #001CE8 100%)',
+                                  color: '#ffffff',
+                                  border: 'none',
+                                  borderRadius: '12px',
+                                  padding: '12px',
+                                  fontSize: '13px',
+                                  fontWeight: '700',
+                                  cursor: isClosed ? 'not-allowed' : 'pointer',
+                                  textAlign: 'center',
+                                  fontFamily: "'Montserrat', sans-serif",
+                                  transition: 'opacity 0.2s',
+                                  opacity: isClosed ? 0.75 : 1
+                                }}
+                              >
+                                {isClosed
+                                  ? (lang === 'mn' ? 'Тендер хаагдсан' : 'Tender Closed')
+                                  : (lang === 'mn' ? 'Тендерт оролцох' : 'Apply for Tender')}
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            );
-          })()}
+              );
+            })()}
 
             {/* TenderHub External Portal Link Banner */}
             <div style={{ textAlign: 'center', marginTop: '45px' }}>

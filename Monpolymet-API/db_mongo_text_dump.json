@@ -1,0 +1,2685 @@
+{
+  "faqs": [
+    {
+      "_id": "6a4e4cf5b678d24436337781",
+      "question": {
+        "mn": "Хэрхэн ажилд орох вэ?",
+        "en": "How do I apply for a job?"
+      },
+      "answer": {
+        "mn": "Ажлын байр хэсгээс анкетаа илгээнэ үү",
+        "en": "Submit your application in the Careers section"
+      },
+      "order": 0,
+      "createdAt": "2026-07-08T13:13:25.513Z",
+      "updatedAt": "2026-07-08T13:13:25.513Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a4e4cf5b678d24436337782",
+      "question": {
+        "mn": "Дадлага хийх боломжтой юу?",
+        "en": "Do you offer internships?"
+      },
+      "answer": {
+        "mn": "Тийм, оюутнуудад зориулсан хөтөлбөртэй",
+        "en": "Yes, we have a student program"
+      },
+      "order": 1,
+      "createdAt": "2026-07-08T13:13:25.514Z",
+      "updatedAt": "2026-07-08T13:13:25.514Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a4e4cf5b678d24436337783",
+      "question": {
+        "mn": "Ажлын байр хаана байрладаг вэ?",
+        "en": "Where are the work sites?"
+      },
+      "answer": {
+        "mn": "Улаанбаатар болон уурхайн талбайд",
+        "en": "In Ulaanbaatar and at the mine sites"
+      },
+      "order": 2,
+      "createdAt": "2026-07-08T13:13:25.514Z",
+      "updatedAt": "2026-07-08T13:13:25.514Z",
+      "__v": 0
+    }
+  ],
+  "tourscenes": [
+    {
+      "_id": "6a4e4cf5b678d2443633777f",
+      "slug": "toson",
+      "title": {
+        "mn": "Тосон уурхай",
+        "en": "Toson Mine"
+      },
+      "panoramaUrl": "https://pannellum.org/images/alma.jpg",
+      "order": 0,
+      "isActive": true,
+      "createdAt": "2026-07-08T13:13:25.511Z",
+      "updatedAt": "2026-07-08T13:13:25.511Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a4e4cf5b678d24436337780",
+      "slug": "moncement",
+      "title": {
+        "mn": "Монцемент үйлдвэр",
+        "en": "Moncement Factory"
+      },
+      "panoramaUrl": "https://pannellum.org/images/cerro-toco-0.jpg",
+      "order": 1,
+      "isActive": true,
+      "createdAt": "2026-07-08T13:13:25.512Z",
+      "updatedAt": "2026-07-08T13:13:25.512Z",
+      "__v": 0
+    }
+  ],
+  "users": [
+    {
+      "_id": "6a61d597399da7341de338f3",
+      "email": "E.Bilguun@monpolymet.mn",
+      "name": "Билгүүн (Админ)",
+      "passwordHash": "$2a$10$htt3GhHLgbmAP8h4VkYdDOks2dhYRS5QtluxD7AfbCFCuCBr4bZvu",
+      "role": "admin",
+      "isActive": true
+    },
+    {
+      "_id": "6a61e883399da7341de338f5",
+      "email": "e.bilguun@monpolymet.mn",
+      "isActive": true,
+      "name": "Билгүүн (Админ)",
+      "passwordHash": "$2a$10$htt3GhHLgbmAP8h4VkYdDOks2dhYRS5QtluxD7AfbCFCuCBr4bZvu",
+      "role": "admin"
+    },
+    {
+      "_id": "6a61e883399da7341de338f6",
+      "email": "admin@monpolymet.mn",
+      "isActive": true,
+      "name": "Билгүүн (Админ)",
+      "passwordHash": "$2a$10$htt3GhHLgbmAP8h4VkYdDOks2dhYRS5QtluxD7AfbCFCuCBr4bZvu",
+      "role": "admin"
+    }
+  ],
+  "jobs": [
+    {
+      "_id": "6a4e43fd1721618fd68dc1e6",
+      "title": {
+        "mn": "Уул уурхайн Геологич инженер",
+        "en": "Mining Geological Engineer"
+      },
+      "category": {
+        "mn": "Уурхай",
+        "en": "Mine"
+      },
+      "location": {
+        "mn": "Тосон Уурхай",
+        "en": "Toson Mine Site"
+      },
+      "employmentType": {
+        "mn": "Бүтэн цаг (20/10 ээлж)",
+        "en": "Full-time (20/10 roster)"
+      },
+      "description": {
+        "mn": "Уурхайн олборлолт, хайгуулын ажилд хяналт тавих, геологийн зураглал бэлтгэх, нөөцийн тооцоолол хийх чиглэлээр ажиллана. Мэргэжлээрээ 3-аас дээш жил ажилласан туршлагатай байх шаардлагатай.",
+        "en": "Will work on monitoring mining extraction and exploration, preparing geological mapping, and calculating reserves. Requires more than 3 years of professional experience."
+      },
+      "isOpen": true,
+      "createdAt": "2026-07-08T12:35:09.700Z",
+      "updatedAt": "2026-07-08T12:35:09.700Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a4e43fd1721618fd68dc1e7",
+      "title": {
+        "mn": "Аюулгүй ажиллагааны инженер (ХАБЭА)",
+        "en": "Safety Officer (HSE)"
+      },
+      "category": {
+        "mn": "ХАБЭА",
+        "en": "HSE"
+      },
+      "location": {
+        "mn": "Монцемент Үйлдвэр",
+        "en": "Moncement Factory"
+      },
+      "employmentType": {
+        "mn": "Бүтэн цаг",
+        "en": "Full-time"
+      },
+      "description": {
+        "mn": "Үйлдвэрийн орчны аюулгүй байдлыг хангах, ХАБЭА-н дүрэм журмын хэрэгжилтийг хянах, ажилтнуудад зааварчилгаа өгөх чиглэлээр ажиллана. ISO 45001 стандартын мэдлэгтэй байх.",
+        "en": "Will work on ensuring the safety of the factory environment, monitoring the implementation of HSE rules and regulations, and instructing staff. Knowledge of the ISO 45001 standard is a plus."
+      },
+      "isOpen": true,
+      "createdAt": "2026-07-08T12:35:09.703Z",
+      "updatedAt": "2026-07-08T12:35:09.703Z",
+      "__v": 0
+    }
+  ],
+  "teammembers": [
+    {
+      "_id": "6a4e4cf5b678d24436337777",
+      "name": {
+        "mn": "Ц.Гарамжав",
+        "en": "Ts.Garamjav"
+      },
+      "role": {
+        "mn": "Үүсгэн байгуулагч, Тэргүүн",
+        "en": "Founder & Chairwoman"
+      },
+      "bio": {
+        "mn": "Компанийг үүсгэн байгуулснаас хойш тэргүүлж байна",
+        "en": "Has led the company since its founding"
+      },
+      "education": {
+        "mn": "Эдийн засгийн доктор",
+        "en": "PhD in Economics"
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&auto=format&fit=crop&q=70",
+      "isFounder": false,
+      "order": 0,
+      "createdAt": "2026-07-08T13:13:25.498Z",
+      "updatedAt": "2026-07-20T05:46:51.808Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a4e4cf5b678d24436337778",
+      "name": {
+        "mn": "Б.Дэлгэр",
+        "en": "B.Delger"
+      },
+      "role": {
+        "mn": "Гүйцэтгэх захирал",
+        "en": "Chief Executive Officer"
+      },
+      "bio": {
+        "mn": "Үйл ажиллагааны ерөнхий удирдлагыг хариуцдаг",
+        "en": "Responsible for overall operations"
+      },
+      "education": {
+        "mn": ".",
+        "en": "."
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&auto=format&fit=crop&q=70",
+      "isFounder": false,
+      "order": 4,
+      "createdAt": "2026-07-08T13:13:25.499Z",
+      "updatedAt": "2026-07-21T03:26:11.948Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a582fc7ee94b8ff69358fcd",
+      "name": {
+        "mn": "Ц.Халиун",
+        "en": "Ts.Haliun"
+      },
+      "role": {
+        "mn": "Үйл ажиллагаа эрхэлсэн захирал ",
+        "en": "Үйл ажиллагаа эрхэлсэн захирал "
+      },
+      "bio": {
+        "mn": "Үйл ажиллагаа эрхэлсэн захирал ",
+        "en": "Үйл ажиллагаа эрхэлсэн захирал "
+      },
+      "education": {
+        "mn": "Үйл ажиллагаа эрхэлсэн захирал ",
+        "en": "Үйл ажиллагаа эрхэлсэн захирал "
+      },
+      "imageUrl": "https://en.monpolymet.mn/?page_id=454",
+      "isFounder": false,
+      "order": 3,
+      "createdAt": "2026-07-16T01:11:35.437Z",
+      "updatedAt": "2026-07-20T10:50:48.629Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a58306fee94b8ff69358fce",
+      "name": {
+        "mn": "Н.Мөнхнасан",
+        "en": "Н.Мөнхнасан"
+      },
+      "role": {
+        "mn": "Туз-ын дарга ",
+        "en": "Н.Мөнхнасан"
+      },
+      "bio": {
+        "mn": "Н.Мөнхнасан",
+        "en": "Н.Мөнхнасан"
+      },
+      "education": {
+        "mn": "Н.Мөнхнасан",
+        "en": "Н.Мөнхнасан"
+      },
+      "imageUrl": "https://www.google.com/imgres?q=%D0%9D.%D0%9C%D3%A9%D0%BD%D1%85%D0%BD%D0%B0%D1%81%D0%B0%D0%BD&imgurl=https%3A%2F%2Fpbs.twimg.com%2Fprofile_images%2F1838729340361560064%2FCoBYzoFe.jpg&imgrefurl=https%3A%2F%2Fx.com%2FNasaa88&docid=Zny_9rdUDoFhXM&tbnid=CFY01MMY6p8UBM&vet=12ahUKEwi5k9jDgtaVAxWNmlYBHTtCMuAQnPAOegUIsQEQAA..i&w=399&h=399&hcb=2&ved=2ahUKEwi5k9jDgtaVAxWNmlYBHTtCMuAQnPAOegUIsQEQAA",
+      "isFounder": false,
+      "order": 1,
+      "createdAt": "2026-07-16T01:14:23.199Z",
+      "updatedAt": "2026-07-21T15:26:13.177Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a583121ee94b8ff69358fcf",
+      "name": {
+        "mn": "Б.Гандөш ",
+        "en": "Б.Гандөш "
+      },
+      "role": {
+        "mn": "Б.Гандөш ",
+        "en": "Б.Гандөш "
+      },
+      "bio": {
+        "mn": "Б.Гандөш ",
+        "en": "Б.Гандөш "
+      },
+      "education": {
+        "mn": "Б.Гандөш ",
+        "en": "Б.Гандөш "
+      },
+      "imageUrl": "https://www.google.com/imgres?q=%D0%9D.%D0%9C%D3%A9%D0%BD%D1%85%D0%BD%D0%B0%D1%81%D0%B0%D0%BD&imgurl=https%3A%2F%2Fpbs.twimg.com%2Fprofile_images%2F1838729340361560064%2FCoBYzoFe.jpg&imgrefurl=https%3A%2F%2Fx.com%2FNasaa88&docid=Zny_9rdUDoFhXM&tbnid=CFY01MMY6p8UBM&vet=12ahUKEwi5k9jDgtaVAxWNmlYBHTtCMuAQnPAOegUIsQEQAA..i&w=399&h=399&hcb=2&ved=2ahUKEwi5k9jDgtaVAxWNmlYBHTtCMuAQnPAOegUIsQEQAA",
+      "isFounder": false,
+      "order": 5,
+      "createdAt": "2026-07-16T01:17:21.333Z",
+      "updatedAt": "2026-07-21T03:26:29.107Z",
+      "__v": 0
+    }
+  ],
+  "csrhighlights": [],
+  "csrstats": [],
+  "settings": [],
+  "homepagecontents": [
+    {
+      "_id": "6a4e4cf5399da7341de338ee",
+      "key": "home",
+      "__v": 0,
+      "ceoSection": {
+        "sectionTitle": {
+          "mn": "Удирдлагын мэндчилгээ",
+          "en": "Message from Leadership"
+        },
+        "quote": {
+          "mn": "Бид эх орныхоо тогтвортой хөгжилд хувь нэмрээ оруулсаар ирсэн.",
+          "en": "We have consistently contributed to our nation’s sustainable development."
+        },
+        "name": {
+          "mn": "Ц.Гарамжав",
+          "en": "J. Odbayar"
+        },
+        "role": {
+          "mn": "Үүсгэн байгуулагч, Тэргүүн",
+          "en": "Founder & Chairwoman"
+        },
+        "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=3840&auto=format&fit=crop&q=100"
+      },
+      "createdAt": "2026-07-08T13:13:25.520Z",
+      "updatedAt": "2026-07-16T00:57:16.656Z"
+    }
+  ],
+  "jobapplications": [
+    {
+      "_id": "6a4e43fd1721618fd68dc1e8",
+      "name": "Г.Бат-Эрдэнэ",
+      "phone": "99112233",
+      "email": "bat-erdene@example.com",
+      "position": "Уул уурхайн Геологич инженер",
+      "message": "Уурхайн салбарт 4 жил ажилласан туршлагатай. Танай хамт олонтой нэгдэх хүсэлтэй байна.",
+      "status": "new",
+      "createdAt": "2026-07-08T12:35:09.707Z",
+      "updatedAt": "2026-07-08T12:35:09.707Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a4e503c45e09677e642dec8",
+      "name": "???? ?????????",
+      "phone": "99009900",
+      "position": "???????",
+      "message": "API-??? ??????",
+      "status": "new",
+      "createdAt": "2026-07-08T13:27:24.186Z",
+      "updatedAt": "2026-07-08T13:27:24.186Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a63359a12549cce1d479dcd",
+      "name": "asdas",
+      "phone": "awdwadawd",
+      "email": "bilgn051@gmail.com",
+      "position": "dawdaw",
+      "status": "new",
+      "createdAt": "2026-07-24T09:51:22.959Z",
+      "updatedAt": "2026-07-24T09:51:22.959Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a6336d212549cce1d479dce",
+      "name": "awdawd",
+      "phone": "dawdawd",
+      "email": "bilgn051@gmail.com",
+      "position": "ad",
+      "status": "new",
+      "createdAt": "2026-07-24T09:56:34.250Z",
+      "updatedAt": "2026-07-24T09:56:34.250Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a6338c111da6c42669acb06",
+      "name": "Baatarbold Bold",
+      "phone": "99112233",
+      "email": "test.candidate@example.com",
+      "position": "Inzhener",
+      "status": "new",
+      "createdAt": "2026-07-24T10:04:49.578Z",
+      "updatedAt": "2026-07-24T10:04:49.578Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a63394e11da6c42669acb07",
+      "name": "Baatarbold Bold",
+      "phone": "99112233",
+      "email": "test.candidate@example.com",
+      "position": "Inzhener",
+      "status": "new",
+      "createdAt": "2026-07-24T10:07:10.918Z",
+      "updatedAt": "2026-07-24T10:07:10.918Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a633d7211da6c42669acb08",
+      "name": "Baatarbold Bold",
+      "phone": "99112233",
+      "email": "test.candidate@example.com",
+      "position": "Inzhener",
+      "status": "new",
+      "createdAt": "2026-07-24T10:24:50.404Z",
+      "updatedAt": "2026-07-24T10:24:50.404Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a633ea711da6c42669acb09",
+      "name": "Baatarbold Bold",
+      "phone": "99112233",
+      "email": "test.candidate@example.com",
+      "position": "Inzhener",
+      "status": "new",
+      "createdAt": "2026-07-24T10:29:59.603Z",
+      "updatedAt": "2026-07-24T10:29:59.603Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a63452b11da6c42669acb0a",
+      "name": "sdfsfs",
+      "phone": "fsdf",
+      "email": "bilgn051@gmail.com",
+      "position": "adwd",
+      "status": "new",
+      "createdAt": "2026-07-24T10:57:47.564Z",
+      "updatedAt": "2026-07-24T10:57:47.564Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a6369e8cf5796c78fe7a826",
+      "name": "bilguun",
+      "phone": "55121254",
+      "email": "bilgn051@gmail.com",
+      "position": "марктинг",
+      "status": "new",
+      "createdAt": "2026-07-24T13:34:32.475Z",
+      "updatedAt": "2026-07-24T13:34:32.475Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a636b267ae87ebba48c32cb",
+      "name": "Билгүүн",
+      "phone": "55121254",
+      "email": "bilgn051@gmail.com",
+      "position": "жолооч",
+      "message": "жолооч хийж байсан бас мөнгө лдйтөозтыботөзыбЗӨТЫОБТӨОдтЫОӨТдыуТЗӨОтЫУЗТӨпЫУТӨтьЫУТӨУЫЬТдьөЫУДЬЛөЫУӨЫУӨыуө",
+      "previousCompany": "мак",
+      "profession": "жолооч",
+      "expectedSalary": "3,500,000",
+      "availableDate": "2026,7,25",
+      "status": "new",
+      "createdAt": "2026-07-24T13:39:50.568Z",
+      "updatedAt": "2026-07-24T13:39:50.568Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a636b297ae87ebba48c32cc",
+      "name": "Билгүүн",
+      "phone": "55121254",
+      "email": "bilgn051@gmail.com",
+      "position": "жолооч",
+      "status": "new",
+      "createdAt": "2026-07-24T13:39:53.134Z",
+      "updatedAt": "2026-07-24T13:39:53.134Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a636c387ae87ebba48c32cd",
+      "name": "Билгүүн",
+      "phone": "55121254",
+      "email": "bilgn051@gmail.com",
+      "position": "йцбйцбйцб",
+      "message": "йцбйцбйцйцбйцбйцбйөбйыӨпҮОЫБТПӨыбялоөтодыблтөдлобытөдыбтөлотыбДЛӨтылбятөотяылботөяытоөтыялоөыяөыөө",
+      "previousCompany": "йбцйцбйцбй",
+      "profession": "цбйцбцйбйц",
+      "expectedSalary": "250000000",
+      "availableDate": "2256232",
+      "status": "new",
+      "createdAt": "2026-07-24T13:44:24.897Z",
+      "updatedAt": "2026-07-24T13:44:24.897Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a636c3b7ae87ebba48c32ce",
+      "name": "Билгүүн",
+      "phone": "55121254",
+      "email": "bilgn051@gmail.com",
+      "position": "йцбйцбйцб",
+      "status": "new",
+      "createdAt": "2026-07-24T13:44:27.194Z",
+      "updatedAt": "2026-07-24T13:44:27.194Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a636c9e7ae87ebba48c32cf",
+      "name": "Тест Ажилтан",
+      "phone": "99112233",
+      "email": "test@monpolymet.mn",
+      "position": "Инженер",
+      "message": "10 жил ажилласан туршлагатай",
+      "previousCompany": "Монцемент ХХК",
+      "profession": "Барилгын инженер",
+      "expectedSalary": "3,500,000₮",
+      "availableDate": "Маргааш",
+      "status": "new",
+      "createdAt": "2026-07-24T13:46:06.257Z",
+      "updatedAt": "2026-07-24T13:46:06.257Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a637b2a8449b9228383ee87",
+      "name": "Йцбйцбйцбйцбйц",
+      "phone": "adawd",
+      "email": "bilgn051@gmail.comdawdawd",
+      "position": "dawdaw",
+      "message": "adwad",
+      "previousCompany": "dawdawda",
+      "profession": "dawd",
+      "expectedSalary": "awdawdawd",
+      "availableDate": "awdawd",
+      "status": "new",
+      "createdAt": "2026-07-24T14:48:10.022Z",
+      "updatedAt": "2026-07-24T14:48:10.022Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a637b2c8449b9228383ee88",
+      "name": "Йцбйцбйцбйцбйц",
+      "phone": "adawd",
+      "email": "bilgn051@gmail.comdawdawd",
+      "position": "dawdaw",
+      "status": "new",
+      "createdAt": "2026-07-24T14:48:12.621Z",
+      "updatedAt": "2026-07-24T14:48:12.621Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a637b328449b9228383ee89",
+      "name": "Доржийн Бат",
+      "phone": "99112233",
+      "email": "bat@test.mn",
+      "position": "Ахлах инженер",
+      "message": "Ажлын туршлага өндөртэй.",
+      "previousCompany": "Эрдэнэт үйлдвэр",
+      "profession": "Уул уурхайн инженер",
+      "expectedSalary": "3,500,000₮",
+      "availableDate": "2026.08.15",
+      "status": "new",
+      "createdAt": "2026-07-24T14:48:18.795Z",
+      "updatedAt": "2026-07-24T14:48:18.795Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a6ad28bffa29a98888f29c3",
+      "name": "ddd",
+      "phone": "ddd",
+      "email": "bilgn05@gmail.com",
+      "position": "dd",
+      "message": "ddd",
+      "previousCompany": "dd",
+      "profession": "ddd",
+      "expectedSalary": "ddd",
+      "availableDate": "dddd",
+      "status": "new",
+      "createdAt": "2026-07-30T04:26:51.692Z",
+      "updatedAt": "2026-07-30T04:26:51.692Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a6ad290ffa29a98888f29c4",
+      "name": "ddd",
+      "phone": "ddd",
+      "email": "bilgn05@gmail.com",
+      "position": "dd",
+      "status": "new",
+      "createdAt": "2026-07-30T04:26:56.329Z",
+      "updatedAt": "2026-07-30T04:26:56.329Z",
+      "__v": 0
+    }
+  ],
+  "pages": [
+    {
+      "_id": "6a590a4536240633a61391a0",
+      "key": "about",
+      "navLabel": {
+        "mn": "Бидний тухай",
+        "en": "About Us"
+      },
+      "header": {
+        "tag": {
+          "mn": "Бидний тухай",
+          "en": "About Us"
+        },
+        "title": {
+          "mn": "Бидний тухай",
+          "en": "About Us"
+        },
+        "subtitle": {
+          "mn": "",
+          "en": ""
+        }
+      },
+      "isActive": true,
+      "createdAt": "2026-07-16T16:43:49.231Z",
+      "updatedAt": "2026-07-17T03:09:20.345Z",
+      "__v": 0,
+      "seo": {
+        "title": {
+          "mn": "",
+          "en": ""
+        },
+        "description": {
+          "mn": "",
+          "en": ""
+        }
+      }
+    },
+    {
+      "_id": "6a590a4536240633a61391a1",
+      "key": "careers",
+      "navLabel": {
+        "mn": "Хүний нөөц",
+        "en": "Careers"
+      },
+      "header": {
+        "tag": {
+          "mn": "Хүний нөөц",
+          "en": "Careers"
+        },
+        "title": {
+          "mn": "Хүний нөөц",
+          "en": "Careers"
+        },
+        "subtitle": {
+          "mn": "",
+          "en": ""
+        }
+      },
+      "isActive": true,
+      "createdAt": "2026-07-16T16:43:49.240Z",
+      "updatedAt": "2026-07-17T03:09:28.488Z",
+      "__v": 0,
+      "seo": {
+        "title": {
+          "mn": "",
+          "en": ""
+        },
+        "description": {
+          "mn": "",
+          "en": ""
+        }
+      }
+    },
+    {
+      "_id": "6a590a4536240633a61391a2",
+      "key": "home",
+      "navLabel": {
+        "mn": "Нүүр хуудас",
+        "en": "Home"
+      },
+      "header": {
+        "tag": {
+          "mn": "Нүүр",
+          "en": "Home"
+        },
+        "title": {
+          "mn": "Нүүр хуудас",
+          "en": "Home"
+        },
+        "subtitle": {
+          "mn": "",
+          "en": ""
+        }
+      },
+      "isActive": true,
+      "createdAt": "2026-07-16T16:43:49.244Z",
+      "updatedAt": "2026-07-17T03:09:36.416Z",
+      "__v": 0,
+      "seo": {
+        "title": {
+          "mn": "",
+          "en": ""
+        },
+        "description": {
+          "mn": "",
+          "en": ""
+        }
+      }
+    },
+    {
+      "_id": "6a590a4536240633a61391a3",
+      "key": "companies",
+      "navLabel": {
+        "mn": "Компаниуд",
+        "en": "Companies"
+      },
+      "header": {
+        "tag": {
+          "mn": "Компаниуд",
+          "en": "Companies"
+        },
+        "title": {
+          "mn": "Компаниуд",
+          "en": "Companies"
+        },
+        "subtitle": {
+          "mn": "",
+          "en": ""
+        }
+      },
+      "isActive": true,
+      "createdAt": "2026-07-16T16:43:49.246Z",
+      "updatedAt": "2026-07-17T03:09:41.472Z",
+      "__v": 0,
+      "seo": {
+        "title": {
+          "mn": "",
+          "en": ""
+        },
+        "description": {
+          "mn": "",
+          "en": ""
+        }
+      }
+    },
+    {
+      "_id": "6a590a4536240633a61391a4",
+      "key": "csr",
+      "navLabel": {
+        "mn": "Тогтвортой хөгжил",
+        "en": "CSR"
+      },
+      "header": {
+        "tag": {
+          "mn": "Тогтвортой хөгжил",
+          "en": "CSR"
+        },
+        "title": {
+          "mn": "Тогтвортой хөгжил",
+          "en": "Corporate Social Responsibility"
+        },
+        "subtitle": {
+          "mn": "",
+          "en": ""
+        }
+      },
+      "isActive": true,
+      "createdAt": "2026-07-16T16:43:49.249Z",
+      "updatedAt": "2026-07-17T03:09:45.969Z",
+      "__v": 0,
+      "seo": {
+        "title": {
+          "mn": "",
+          "en": ""
+        },
+        "description": {
+          "mn": "",
+          "en": ""
+        }
+      }
+    },
+    {
+      "_id": "6a590a4536240633a61391a5",
+      "key": "news",
+      "navLabel": {
+        "mn": "Мэдээ мэдээлэл",
+        "en": "News"
+      },
+      "header": {
+        "tag": {
+          "mn": "Мэдээ",
+          "en": "News"
+        },
+        "title": {
+          "mn": "Мэдээ мэдээлэл",
+          "en": "News & Updates"
+        },
+        "subtitle": {
+          "mn": "",
+          "en": ""
+        }
+      },
+      "isActive": true,
+      "createdAt": "2026-07-16T16:43:49.251Z",
+      "updatedAt": "2026-07-17T03:09:50.399Z",
+      "__v": 0,
+      "seo": {
+        "title": {
+          "mn": "",
+          "en": ""
+        },
+        "description": {
+          "mn": "",
+          "en": ""
+        }
+      }
+    },
+    {
+      "_id": "6a590a4536240633a61391a6",
+      "key": "procurement",
+      "navLabel": {
+        "mn": "Худалдан авалт",
+        "en": "Procurement"
+      },
+      "header": {
+        "tag": {
+          "mn": "Худалдан авалт",
+          "en": "Procurement"
+        },
+        "title": {
+          "mn": "Худалдан авалт",
+          "en": "Procurement"
+        },
+        "subtitle": {
+          "mn": "",
+          "en": ""
+        }
+      },
+      "isActive": true,
+      "createdAt": "2026-07-16T16:43:49.254Z",
+      "updatedAt": "2026-07-17T03:09:56.050Z",
+      "__v": 0,
+      "seo": {
+        "title": {
+          "mn": "",
+          "en": ""
+        },
+        "description": {
+          "mn": "",
+          "en": ""
+        }
+      }
+    }
+  ],
+  "hsepagecontents": [
+    {
+      "_id": "6a4e4cf5399da7341de338f0",
+      "key": "hse",
+      "__v": 0,
+      "createdAt": "2026-07-08T13:13:25.532Z",
+      "documentsTitle": {
+        "mn": "Баримт бичиг, тайлан",
+        "en": "Documents & Reports"
+      },
+      "policies": [
+        {
+          "mn": "Ажилтны аюулгүй байдлыг нэн тэргүүнд тавина",
+          "en": "Employee safety is our top priority"
+        },
+        {
+          "mn": "Байгаль орчинд үзүүлэх нөлөөллийг бууруулна",
+          "en": "We minimize environmental impact"
+        },
+        {
+          "mn": "Олон улсын стандартыг мөрдөнө",
+          "en": "We follow international standards"
+        }
+      ],
+      "policiesTitle": {
+        "mn": "ХАБЭА бодлого",
+        "en": "HSE Policy"
+      },
+      "updatedAt": "2026-07-08T13:13:25.532Z"
+    }
+  ],
+  "corevalues": [
+    {
+      "_id": "6a4e4cf5b678d2443633776f",
+      "title": {
+        "mn": "Аюулгүй байдал",
+        "en": "Safety"
+      },
+      "description": {
+        "mn": "Хүний амь нас, эрүүл мэнд хамгийн чухал",
+        "en": "People’s life and health come first"
+      },
+      "icon": "ShieldAlert",
+      "order": 0,
+      "createdAt": "2026-07-08T13:13:25.491Z",
+      "updatedAt": "2026-07-08T13:13:25.491Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a4e4cf5b678d24436337770",
+      "title": {
+        "mn": "Тогтвортой байдал",
+        "en": "Sustainability"
+      },
+      "description": {
+        "mn": "Байгальд ээлтэй, ирээдүйд хариуцлагатай",
+        "en": "Eco-friendly and future-responsible"
+      },
+      "icon": "Leaf",
+      "order": 1,
+      "createdAt": "2026-07-08T13:13:25.491Z",
+      "updatedAt": "2026-07-08T13:13:25.491Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a4e4cf5b678d24436337771",
+      "title": {
+        "mn": "Чанар",
+        "en": "Quality"
+      },
+      "description": {
+        "mn": "Олон улсын стандартад нийцсэн бүтээгдэхүүн",
+        "en": "Products meeting international standards"
+      },
+      "icon": "Award",
+      "order": 2,
+      "createdAt": "2026-07-08T13:13:25.492Z",
+      "updatedAt": "2026-07-08T13:13:25.492Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a4e4cf5b678d24436337772",
+      "title": {
+        "mn": "Хариуцлага",
+        "en": "Responsibility"
+      },
+      "description": {
+        "mn": "Нийгэм, орон нутагтаа хариуцлагатай",
+        "en": "Accountable to society and community"
+      },
+      "icon": "HeartHandshake",
+      "order": 3,
+      "createdAt": "2026-07-08T13:13:25.492Z",
+      "updatedAt": "2026-07-08T13:13:25.492Z",
+      "__v": 0
+    }
+  ],
+  "csrinitiatives": [
+    {
+      "_id": "6a4e4cf5b678d2443633777b",
+      "icon": "Trees",
+      "title": {
+        "mn": "Экологийн нөхөн сэргээлт",
+        "en": "Ecological restoration"
+      },
+      "description": {
+        "mn": "Уурхайн талбайд мод тарьж, хиймэл нуур байгуулав",
+        "en": "Planted trees and built an artificial lake at the mine site"
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1506146332389-18140dc7b2fb?w=3840&auto=format&fit=crop&q=100",
+      "stats": [
+        {
+          "value": "15,000+",
+          "label": {
+            "mn": "Тарьсан мод",
+            "en": "Trees planted"
+          }
+        }
+      ],
+      "order": 0,
+      "isActive": true,
+      "createdAt": "2026-07-08T13:13:25.506Z",
+      "updatedAt": "2026-07-08T13:13:25.506Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a4e4cf5b678d2443633777c",
+      "icon": "HeartHandshake",
+      "title": {
+        "mn": "Орон нутгийн дэмжлэг",
+        "en": "Community support"
+      },
+      "description": {
+        "mn": "Сургууль, эмнэлгийн тоног төхөөрөмжийг дэмжив",
+        "en": "Supported schools and hospitals with equipment"
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=3840&auto=format&fit=crop&q=100",
+      "stats": [
+        {
+          "value": "40+",
+          "label": {
+            "mn": "Ажлын байр",
+            "en": "Jobs created"
+          }
+        }
+      ],
+      "order": 1,
+      "isActive": true,
+      "createdAt": "2026-07-08T13:13:25.507Z",
+      "updatedAt": "2026-07-08T13:13:25.507Z",
+      "__v": 0
+    }
+  ],
+  "tenders": [
+    {
+      "_id": "6a61afd46a28a78bb5faa037",
+      "code": "ТШ-2026/08",
+      "title": {
+        "mn": "Тосон уурхайн хүнд машины шүүр, тос тосолгооны материал нийлүүлэх",
+        "en": "Supply of heavy machinery filters & lubricants for Toson Mine"
+      },
+      "category": {
+        "mn": "Уул Уурхай & Сэлбэг",
+        "en": "Mining & Spare Parts"
+      },
+      "description": {
+        "mn": "2026-2027 оны олборлолтын улирлын хэрэгцээнд зориулсан CAT, Komatsu тоног төхөөрөмжийн шүүр, гидравлик тосны нийлүүлэгчийг сонгон шалгаруулна.",
+        "en": "Selecting suppliers for CAT & Komatsu machinery filters and hydraulic fluids for 2026-2027 mining season."
+      },
+      "location": {
+        "mn": "Төв аймаг, Заамар сум",
+        "en": "Zaamar sum, Tuv province"
+      },
+      "startDate": "2026-06-30T21:00:00.000Z",
+      "deadlineDate": "2026-07-26T04:32:00.000Z",
+      "isPublished": true,
+      "createdAt": "2026-07-23T06:08:20.939Z",
+      "updatedAt": "2026-07-26T04:31:49.039Z",
+      "__v": 0,
+      "pdfUrl": ""
+    },
+    {
+      "_id": "6a61afd46a28a78bb5faa038",
+      "code": "ТШ-2026/09",
+      "title": {
+        "mn": "Монцемент үйлдвэрийн 2026 оны гипсэн чулуу (гөлтгөнө) нийлүүлэлт",
+        "en": "Supply of gypsum raw materials for Moncement factory 2026"
+      },
+      "category": {
+        "mn": "Үйлдвэрлэлийн Түүхий Эд",
+        "en": "Factory Raw Materials"
+      },
+      "description": {
+        "mn": "Жилд 100,000 тонн өндөр чанарын гөлтгөнө (CaSO4·2H2O > 85%) нийлүүлэх туршлагатай байгууллагуудыг сонгон шалгаруулалтад урьж байна.",
+        "en": "Inviting experienced suppliers for annual supply of 100,000 tons high-grade gypsum for cement production."
+      },
+      "location": {
+        "mn": "Дорноговь аймаг, Өргөн сум",
+        "en": "Urgun sum, Dornogovi province"
+      },
+      "startDate": "2026-07-15T09:00:00.000Z",
+      "deadlineDate": "2026-07-26T04:32:00.000Z",
+      "isPublished": true,
+      "createdAt": "2026-07-23T06:08:20.945Z",
+      "updatedAt": "2026-07-26T04:31:30.269Z",
+      "__v": 0,
+      "pdfUrl": ""
+    },
+    {
+      "_id": "6a61afd46a28a78bb5faa039",
+      "code": "ТШ-2026/10",
+      "title": {
+        "mn": "Вагон болон авто замын тээврийн бөөний логистикийн үйлчилгээ",
+        "en": "Railway cargo & heavy auto transport logistics service"
+      },
+      "category": {
+        "mn": "Тээвэр & Логистик",
+        "en": "Transport & Logistics"
+      },
+      "description": {
+        "mn": "Бүтээгдэхүүн ба түүхий эдийн төмөр замын болон авто замын тээвэрлэлтийг гүйцэтгэх найдвартай логистикийн түнш сонгон шалгаруулна.",
+        "en": "Selecting reliable logistics partners for bulk cargo transport via railway and heavy truck fleet."
+      },
+      "location": {
+        "mn": "Улаанбаатар - Дорноговь",
+        "en": "Ulaanbaatar - Dornogovi"
+      },
+      "startDate": "2026-07-20T09:00:00.000Z",
+      "deadlineDate": "2026-07-26T04:32:00.000Z",
+      "isPublished": true,
+      "createdAt": "2026-07-23T06:08:20.946Z",
+      "updatedAt": "2026-07-26T04:31:42.451Z",
+      "__v": 0,
+      "pdfUrl": ""
+    },
+    {
+      "_id": "6a61afd46a28a78bb5faa03a",
+      "code": "ТШ-2026/11",
+      "title": {
+        "mn": "Монцемент үйлдвэрийн авто савлагаа, лабораторийн тоног төхөөрөмж нийлүүлэлт",
+        "en": "Supply of automated packaging and laboratory test equipment for Moncement Plant"
+      },
+      "category": {
+        "mn": "Барилга & Дэд Бүтэц",
+        "en": "Construction & Infrastructure"
+      },
+      "description": {
+        "mn": "Цементийн үйлдвэрийн лабораторийн чанарын хяналтын анализатор болон автомат савлагааны төхөөрөмжийн нийлүүлэгчийг сонгон шалгаруулна.",
+        "en": "Selecting suppliers for cement quality control laboratory analyzers and automatic packing machinery."
+      },
+      "location": {
+        "mn": "Дорноговь аймаг, Өргөн сум",
+        "en": "Urgun sum, Dornogovi province"
+      },
+      "startDate": "2026-08-01T09:00:00.000Z",
+      "deadlineDate": "2026-09-30T18:00:00.000Z",
+      "isPublished": true,
+      "createdAt": "2026-07-23T06:08:20.948Z",
+      "updatedAt": "2026-07-23T07:35:32.417Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a61afd46a28a78bb5faa03b",
+      "code": "ТШ-2026/12",
+      "title": {
+        "mn": "Үйлдвэр ба уурхайн бүсийн 110/35кВ дэд станцын тоног төхөөрөмж ба дизель станц",
+        "en": "Supply of 110/35kV substation equipment and backup diesel generators"
+      },
+      "category": {
+        "mn": "Эрчим хүч & Автоматик",
+        "en": "Energy & Automation"
+      },
+      "description": {
+        "mn": "Уурхай ба үйлдвэрийн тасралтгүй ажиллагааг хангах 110/35кВ дэд станцын сэлбэг, бэлтгэл дизель станцын нийлүүлэгч сонгон шалгаруулна.",
+        "en": "Procuring 110/35kV substation spare parts and backup diesel generator sets."
+      },
+      "location": {
+        "mn": "Төв аймаг & Дорноговь",
+        "en": "Tuv & Dornogovi provinces"
+      },
+      "startDate": "2026-08-10T09:00:00.000Z",
+      "deadlineDate": "2026-10-15T18:00:00.000Z",
+      "isPublished": true,
+      "createdAt": "2026-07-23T06:08:20.949Z",
+      "updatedAt": "2026-07-23T07:35:35.061Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a6374747ae87ebba48c32d0",
+      "code": "ТШ-2026/99",
+      "title": {
+        "mn": "Туршилтын тендер 2026",
+        "en": "Test Tender 2026"
+      },
+      "category": {
+        "mn": "Барилга",
+        "en": "Construction"
+      },
+      "description": {
+        "mn": "Туршилтын тайлбар",
+        "en": "Test desc"
+      },
+      "location": {
+        "mn": "Улаанбаатар",
+        "en": "Ulaanbaatar"
+      },
+      "startDate": "2026-07-24T14:23:00.000Z",
+      "deadlineDate": "2026-07-26T04:30:00.000Z",
+      "isPublished": true,
+      "createdAt": "2026-07-24T14:19:32.838Z",
+      "updatedAt": "2026-07-26T04:27:30.981Z",
+      "__v": 0,
+      "pdfUrl": "/doc.png"
+    }
+  ],
+  "statcards": [
+    {
+      "_id": "6a55006558c3a7e3050a89b8",
+      "order": 1,
+      "isActive": true,
+      "variant": "tall",
+      "colorTheme": "light-blue",
+      "icon": "Leaf",
+      "statValue": "1,000+ га",
+      "title": {
+        "mn": "Нөхөн сэргээсэн талбай",
+        "en": "Reclaimed Area"
+      },
+      "description": {
+        "mn": "Байгальд ээлтэй үйл ажиллагаа",
+        "en": "Eco-friendly operations"
+      },
+      "targetPage": "csr",
+      "imageUrl": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800"
+    },
+    {
+      "_id": "6a55006558c3a7e3050a89b9",
+      "order": 2,
+      "isActive": true,
+      "variant": "standard",
+      "colorTheme": "orange",
+      "icon": "Award",
+      "statValue": "30+",
+      "title": {
+        "mn": "Жилийн туршлага",
+        "en": "Years of Operation"
+      },
+      "description": {
+        "mn": "1993 оноос хойш",
+        "en": "Since 1993"
+      },
+      "targetPage": "about"
+    },
+    {
+      "_id": "6a55006558c3a7e3050a89ba",
+      "order": 3,
+      "isActive": true,
+      "variant": "standard",
+      "colorTheme": "white",
+      "icon": "Users",
+      "statValue": "2,000+",
+      "title": {
+        "mn": "Ажилтан",
+        "en": "Employees"
+      },
+      "description": {
+        "mn": "Хамт олон",
+        "en": "Our team"
+      },
+      "targetPage": "careers"
+    },
+    {
+      "_id": "6a55006558c3a7e3050a89bb",
+      "order": 4,
+      "isActive": true,
+      "variant": "standard",
+      "colorTheme": "beige",
+      "icon": "TrendingUp",
+      "statValue": "",
+      "title": {
+        "mn": "Интерактив бүтэц",
+        "en": "Group Structure"
+      },
+      "description": {
+        "mn": "Уул уурхай, барилга, үйлдвэрлэлийн салбарт тэргүүлэгч салбар компаниудын үйл ажиллагаа.",
+        "en": "Operations of subsidiaries."
+      },
+      "targetPage": "companies"
+    },
+    {
+      "_id": "6a55006558c3a7e3050a89bc",
+      "order": 5,
+      "isActive": true,
+      "variant": "ticker",
+      "colorTheme": "dark",
+      "icon": "",
+      "statValue": "1.0M",
+      "title": {
+        "mn": "тонн / жил",
+        "en": "tons / year"
+      },
+      "description": {
+        "mn": "Монцемент хуурай аргын цементийн үйлдвэрийн жилийн хүчин чадал. 100% Дотоодын үйлдвэр",
+        "en": "Dry process plant capacity. 100% Domestic"
+      },
+      "targetPage": ""
+    }
+  ],
+  "timelineevents": [
+    {
+      "_id": "6a4f941a23aa86128e8584ad",
+      "year": "1992",
+      "title": {
+        "mn": "1992 онд үүсгэн байгуулагдав.",
+        "en": "1992 онд үүсгэн байгуулагдав."
+      },
+      "description": {
+        "mn": "Монполимет ХХК үүсгэн байгуулагдав.",
+        "en": "Монполимет ХХК үүсгэн байгуулагдав."
+      },
+      "order": 0,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584ae",
+      "year": "1995",
+      "title": {
+        "mn": "Нарийвчилсан хайгуул",
+        "en": "Нарийвчилсан хайгуул"
+      },
+      "description": {
+        "mn": "Сэлэнгэ аймгийн Бүдүүний алтны шороон ордод нарийвчилсан хайгуул хийж, нөөцийг баталгаажуулсан.",
+        "en": "Сэлэнгэ аймгийн Бүдүүний алтны шороон ордод нарийвчилсан хайгуул хийж, нөөцийг баталгаажуулсан."
+      },
+      "order": 1,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584af",
+      "year": "1996",
+      "title": {
+        "mn": "KOMATSU техникийг хэрэглэж эхэлсэн.",
+        "en": "KOMATSU техникийг хэрэглэж эхэлсэн."
+      },
+      "description": {
+        "mn": "1996-1998 онд Орчин үеийн уул уурхайн техникүүд болох “KOMATSU” техникийг хэрэглэж эхэлсэн.",
+        "en": "1996-1998 онд Орчин үеийн уул уурхайн техникүүд болох “KOMATSU” техникийг хэрэглэж эхэлсэн."
+      },
+      "order": 2,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584b0",
+      "year": "1999",
+      "title": {
+        "mn": "CATERPILLAR техникийг хэрэглэж эхэлсэн.",
+        "en": "CATERPILLAR техникийг хэрэглэж эхэлсэн."
+      },
+      "description": {
+        "mn": "Катерфиллерийн өндөр хүчин чадалтай техникүүдийг иж бүрнээр нь уул уурхайн үйлдвэрлэлд нэвтрүүлэв.",
+        "en": "Катерфиллерийн өндөр хүчин чадалтай техникүүдийг иж бүрнээр нь уул уурхайн үйлдвэрлэлд нэвтрүүлэв."
+      },
+      "order": 3,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584b1",
+      "year": "2000",
+      "title": {
+        "mn": "Тосонгийн ордыг олборлож эхлэв.",
+        "en": "Тосонгийн ордыг олборлож эхлэв."
+      },
+      "description": {
+        "mn": "Байгаль орчинд сөрөг нөлөөгүй Драг 250Д баяжуулах үйлдвэрийн төсөл эхлэв.Тосон үйлдвэрийн ажилчдын тосгон ашиглалтад оров.Тосонгийн дэнжийн ордыг олборлож эхлэв.",
+        "en": "Байгаль орчинд сөрөг нөлөөгүй Драг 250Д баяжуулах үйлдвэрийн төсөл эхлэв.Тосон үйлдвэрийн ажилчдын тосгон ашиглалтад оров.Тосонгийн дэнжийн ордыг олборлож эхлэв."
+      },
+      "order": 4,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584b2",
+      "year": "2001",
+      "title": {
+        "mn": "Тосонгийн ордыг роздельны аргаар олборлож эхлэв.",
+        "en": "Тосонгийн ордыг роздельны аргаар олборлож эхлэв."
+      },
+      "description": {
+        "mn": "Инженер техникийн ажилтнууд ашиглалтын норм дууссан НКМЗ 10/70 алхагч экскаваторыг задлан зөөвөрлөж, засварлаж тристоравтомат удирдлагатай болгон шинэчлэн, ашиглалтад оруулав.Тосонгийн голдиролын ордыг роздельны аргаар олборлож эхлэв.",
+        "en": "Инженер техникийн ажилтнууд ашиглалтын норм дууссан НКМЗ 10/70 алхагч экскаваторыг задлан зөөвөрлөж, засварлаж тристоравтомат удирдлагатай болгон шинэчлэн, ашиглалтад оруулав.Тосонгийн голдиролын ордыг роздельны аргаар олборлож эхлэв."
+      },
+      "order": 5,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584b3",
+      "year": "2001",
+      "title": {
+        "mn": "Шилдэг хөрөнго оруулагч",
+        "en": "Шилдэг хөрөнго оруулагч"
+      },
+      "description": {
+        "mn": "Үйлдвэрлэл Худалдааны Яам “2001 ОНЫ ШИЛДЭГ ХӨРӨНГӨ ОРУУЛАГЧ” өргөмжлөл",
+        "en": "Үйлдвэрлэл Худалдааны Яам “2001 ОНЫ ШИЛДЭГ ХӨРӨНГӨ ОРУУЛАГЧ” өргөмжлөл"
+      },
+      "order": 6,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584b4",
+      "year": "2002",
+      "title": {
+        "mn": "10 жилийн ой",
+        "en": "10 жилийн ой"
+      },
+      "description": {
+        "mn": "Монполимет компани үүсгэн байгуулагдсаны 10 жилийн ой тохиов.",
+        "en": "Монполимет компани үүсгэн байгуулагдсаны 10 жилийн ой тохиов."
+      },
+      "order": 7,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584b5",
+      "year": "2002",
+      "title": {
+        "mn": "Шилдэг татвар төлөгч",
+        "en": "Шилдэг татвар төлөгч"
+      },
+      "description": {
+        "mn": "Шилдэг татвар төлөгч компани",
+        "en": "Шилдэг татвар төлөгч компани"
+      },
+      "order": 8,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584b6",
+      "year": "2003",
+      "title": {
+        "mn": "Тосонгийн ордыг роздельны аргаар олборлож эхлэв.",
+        "en": "Тосонгийн ордыг роздельны аргаар олборлож эхлэв."
+      },
+      "description": {
+        "mn": "Байгаль орчинд сөрөг нөлөөгүй Драг 250Д баяжуулах үйлдвэрийг ашиглалтад оруулав.Япон улсын Иточу компанитай хамтран Тосон-Алт ХХК-ийг үүсгэн байгуулав.",
+        "en": "Байгаль орчинд сөрөг нөлөөгүй Драг 250Д баяжуулах үйлдвэрийг ашиглалтад оруулав.Япон улсын Иточу компанитай хамтран Тосон-Алт ХХК-ийг үүсгэн байгуулав."
+      },
+      "order": 9,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584b7",
+      "year": "2003",
+      "title": {
+        "mn": "ТОП 100 Аж Ахуйн нэгж",
+        "en": "ТОП 100 Аж Ахуйн нэгж"
+      },
+      "description": {
+        "mn": "Үндэсний ТОП 100 Аж Ахуйн нэгж өргөмжлөл2003 оны Шилдэг Хөрөнгө Оруулагч өргөмжлөл",
+        "en": "Үндэсний ТОП 100 Аж Ахуйн нэгж өргөмжлөл2003 оны Шилдэг Хөрөнгө Оруулагч өргөмжлөл"
+      },
+      "order": 10,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584b8",
+      "year": "2004",
+      "title": {
+        "mn": "“Advanced Natural Nutrition“ ХХК үүсгэн байгуулагдав.",
+        "en": "“Advanced Natural Nutrition“ ХХК үүсгэн байгуулагдав."
+      },
+      "description": {
+        "mn": "“Advanced Natural Nutrition” ХХК үүсгэн байгуулагдав.Булган аймгийн Дашинчилэн суманд бага сургуулийн байрыг ашиглалт өгөв.",
+        "en": "“Advanced Natural Nutrition” ХХК үүсгэн байгуулагдав.Булган аймгийн Дашинчилэн суманд бага сургуулийн байрыг ашиглалт өгөв."
+      },
+      "order": 11,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584b9",
+      "year": "2004",
+      "title": {
+        "mn": "Нөхөн сэргээдэг тэргүүний аж ахуйн нэгж",
+        "en": "Нөхөн сэргээдэг тэргүүний аж ахуйн нэгж"
+      },
+      "description": {
+        "mn": "Байгаль орчноо хайрлан хамгаалж, нөхөн сэргээдэг тэргүүний Аж Ахуйн Нэгж",
+        "en": "Байгаль орчноо хайрлан хамгаалж, нөхөн сэргээдэг тэргүүний Аж Ахуйн Нэгж"
+      },
+      "order": 12,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584ba",
+      "year": "2005",
+      "title": {
+        "mn": "“Нар Урт“ ХХК үүсгэн байгуулагдав.",
+        "en": "“Нар Урт“ ХХК үүсгэн байгуулагдав."
+      },
+      "description": {
+        "mn": "“Нар-Урт” ХХК үүсгэн байгуулагдав.Байгаль орчинд сөрөг нөлөөгүй Драг 250Д хоёр дахь баяжуулах үйлдвэрээ ашиглалтад оруулав.",
+        "en": "“Нар-Урт” ХХК үүсгэн байгуулагдав.Байгаль орчинд сөрөг нөлөөгүй Драг 250Д хоёр дахь баяжуулах үйлдвэрээ ашиглалтад оруулав."
+      },
+      "order": 13,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584bb",
+      "year": "2005",
+      "title": {
+        "mn": "ТОП 100 Аж Ахуйн нэгж",
+        "en": "ТОП 100 Аж Ахуйн нэгж"
+      },
+      "description": {
+        "mn": "Үндэсний ТОП 100 Аж Ахуйн нэгж өргөмжлөл",
+        "en": "Үндэсний ТОП 100 Аж Ахуйн нэгж өргөмжлөл"
+      },
+      "order": 14,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584bc",
+      "year": "2006",
+      "title": {
+        "mn": "“Ногоон төсөл“-ийг хэрэгжүүлж эхлэв.",
+        "en": "“Ногоон төсөл“-ийг хэрэгжүүлж эхлэв."
+      },
+      "description": {
+        "mn": "Техникийн болон биологийн нөхөн сэргээлтийн “Ногоон төсөл”-ийг хэрэгжүүлж эхлэв.",
+        "en": "Техникийн болон биологийн нөхөн сэргээлтийн “Ногоон төсөл”-ийг хэрэгжүүлж эхлэв."
+      },
+      "order": 15,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584bd",
+      "year": "2006",
+      "title": {
+        "mn": "ТОП 100 Аж Ахуйн нэгж",
+        "en": "ТОП 100 Аж Ахуйн нэгж"
+      },
+      "description": {
+        "mn": "Шилдгийн шилдэг Аж Ахуйн НэгжҮндэсний ТОП 100 Аж Ахуйн нэгж өргөмжлөлТэргүүний нөхөн сэргээлт хийсэн компаниШилдэг татвар төлөгч компани",
+        "en": "Шилдгийн шилдэг Аж Ахуйн НэгжҮндэсний ТОП 100 Аж Ахуйн нэгж өргөмжлөлТэргүүний нөхөн сэргээлт хийсэн компаниШилдэг татвар төлөгч компани"
+      },
+      "order": 16,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584be",
+      "year": "2007",
+      "title": {
+        "mn": "Дорноговь аймгийн Өргөн суманд шохойн чулууны ордын судалгаа хийж эхлэв.",
+        "en": "Дорноговь аймгийн Өргөн суманд шохойн чулууны ордын судалгаа хийж эхлэв."
+      },
+      "description": {
+        "mn": "Дорноговь аймгийн Өргөн сум дахь Сэнжит худгийн шохойн чулууны ордын судалгаа хийж эхлэв.Улсын хэмжээний байгаль орчны нөхөн сэргээлтийн II үзүүлэх сургалтыг Тосон уурхай дээр амжилттай зохион байгууллаа.Биологийн нөхөн сэргээлтээр нийт 79 га талбайд америкийн саваа мод 10000, сибирийн цагаан улиас 6000, бургас 3000 ширхгийг тарьж ургуулав.Гал нохой жилийн “Шилдэг барилга”-аар 96 айлын 9 давхар орон сууц шалгарав.",
+        "en": "Дорноговь аймгийн Өргөн сум дахь Сэнжит худгийн шохойн чулууны ордын судалгаа хийж эхлэв.Улсын хэмжээний байгаль орчны нөхөн сэргээлтийн II үзүүлэх сургалтыг Тосон уурхай дээр амжилттай зохион байгууллаа.Биологийн нөхөн сэргээлтээр нийт 79 га талбайд америкийн саваа мод 10000, сибирийн цагаан улиас 6000, бургас 3000 ширхгийг тарьж ургуулав.Гал нохой жилийн “Шилдэг барилга”-аар 96 айлын 9 давхар орон сууц шалгарав."
+      },
+      "order": 17,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584bf",
+      "year": "2007",
+      "title": {
+        "mn": "ТОП 100 Аж Ахуйн нэгж",
+        "en": "ТОП 100 Аж Ахуйн нэгж"
+      },
+      "description": {
+        "mn": "Топ 10 Уул уурхайн компанийн хүндэт шагналНийгмийн хариуцлагын онцлох компаниБайгаль орчноо хайрлан хамгаалж, нөхөн сэргээдэг тэргүүний аж ахуйн нэгжОны шилдэг байгууллагаҮндэсний ТОП 100 Аж Ахуйн нэгж өргөмжлөл",
+        "en": "Топ 10 Уул уурхайн компанийн хүндэт шагналНийгмийн хариуцлагын онцлох компаниБайгаль орчноо хайрлан хамгаалж, нөхөн сэргээдэг тэргүүний аж ахуйн нэгжОны шилдэг байгууллагаҮндэсний ТОП 100 Аж Ахуйн нэгж өргөмжлөл"
+      },
+      "order": 18,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584c0",
+      "year": "2008",
+      "title": {
+        "mn": "“Сэнж-Сант“ ХХК үүсгэн байгуулагдав",
+        "en": "“Сэнж-Сант“ ХХК үүсгэн байгуулагдав"
+      },
+      "description": {
+        "mn": "Дорноговь аймгийн Өргөн сумын Сэнжит худгийн шохойн чулууны ордын нөөцийг ҮХЯ, АМГТХЭГ баталлаа.“Сэнж-Сант” ХХК үүсгэн байгуулагдав.",
+        "en": "Дорноговь аймгийн Өргөн сумын Сэнжит худгийн шохойн чулууны ордын нөөцийг ҮХЯ, АМГТХЭГ баталлаа.“Сэнж-Сант” ХХК үүсгэн байгуулагдав."
+      },
+      "order": 19,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584c1",
+      "year": "2008",
+      "title": {
+        "mn": "ТОП 100 Аж Ахуйн нэгж",
+        "en": "ТОП 100 Аж Ахуйн нэгж"
+      },
+      "description": {
+        "mn": "Топ 10 Уул уурхайн компанийн хүндэт шагналНийгмийн хариуцлагын онцлох компаниБайгаль орчноо хайрлан хамгаалж, нөхөн сэргээдэг тэргүүний аж ахуйн нэгжОны шилдэг байгууллагаҮндэсний ТОП 100 Аж Ахуйн нэгж өргөмжлөл",
+        "en": "Топ 10 Уул уурхайн компанийн хүндэт шагналНийгмийн хариуцлагын онцлох компаниБайгаль орчноо хайрлан хамгаалж, нөхөн сэргээдэг тэргүүний аж ахуйн нэгжОны шилдэг байгууллагаҮндэсний ТОП 100 Аж Ахуйн нэгж өргөмжлөл"
+      },
+      "order": 20,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584c2",
+      "year": "2009",
+      "title": {
+        "mn": "Цементийн үйлдвэрийн шав тавив",
+        "en": "Цементийн үйлдвэрийн шав тавив"
+      },
+      "description": {
+        "mn": "Дорноговь аймгийн Өргөн суманд интернет, шилэн кабель нэвтрүүлэв.Дорноговь аймгийн Өргөн суманд өдөрт 2500 тн чулуунцар үйлдвэрлэх цементийн үйлдвэрийн шав тавив.",
+        "en": "Дорноговь аймгийн Өргөн суманд интернет, шилэн кабель нэвтрүүлэв.Дорноговь аймгийн Өргөн суманд өдөрт 2500 тн чулуунцар үйлдвэрлэх цементийн үйлдвэрийн шав тавив."
+      },
+      "order": 21,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584c3",
+      "year": "2009",
+      "title": {
+        "mn": "ТОП 100 Аж Ахуйн нэгж",
+        "en": "ТОП 100 Аж Ахуйн нэгж"
+      },
+      "description": {
+        "mn": "2009 оны шилдэг бизнес эрхлэгч компаниХүрэл Меркури хүндэт шагналҮндэсний ТОП 100 Аж Ахуйн нэгж өргөмжлөл",
+        "en": "2009 оны шилдэг бизнес эрхлэгч компаниХүрэл Меркури хүндэт шагналҮндэсний ТОП 100 Аж Ахуйн нэгж өргөмжлөл"
+      },
+      "order": 22,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584c4",
+      "year": "2010",
+      "title": {
+        "mn": "“Монцемент“ төслийн ТЭЗҮ батлагдав",
+        "en": "“Монцемент“ төслийн ТЭЗҮ батлагдав"
+      },
+      "description": {
+        "mn": "“Монцемент” төслийн ТЭЗҮ Монгол Улсын Эрдэс Баялаг, Эрчим хүчний Яамаар батлагдав.Европ стандартыг хангасан, хуурай технологийн үйлдвэрийн түүхий эд материалын хими, физик, минералогийн шинжилгээний туршилт явагдав.Монцемент төслийн дагуу: Геологи, гидрогеологи, геофизикийн хайгуул, судалгаа, байгаль орчны нарийвчилсан үнэлгээ, 110 кВ-ын эрчим хүчний төвлөрсөн эх үүсвэрт холбох ТЭЗҮ, 3.5 км урт төмөр зам, 10000м2 талбай бүхий тосгон, лаборатори барих ажлын суурь тавигдав.МПМ оффис, “Соёл амралт спорт цогцолбор”-ын төсөл хэрэгжиж эхлэв.",
+        "en": "“Монцемент” төслийн ТЭЗҮ Монгол Улсын Эрдэс Баялаг, Эрчим хүчний Яамаар батлагдав.Европ стандартыг хангасан, хуурай технологийн үйлдвэрийн түүхий эд материалын хими, физик, минералогийн шинжилгээний туршилт явагдав.Монцемент төслийн дагуу: Геологи, гидрогеологи, геофизикийн хайгуул, судалгаа, байгаль орчны нарийвчилсан үнэлгээ, 110 кВ-ын эрчим хүчний төвлөрсөн эх үүсвэрт холбох ТЭЗҮ, 3.5 км урт төмөр зам, 10000м2 талбай бүхий тосгон, лаборатори барих ажлын суурь тавигдав.МПМ оффис, “Соёл амралт спорт цогцолбор”-ын төсөл хэрэгжиж эхлэв."
+      },
+      "order": 23,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584c5",
+      "year": "2010",
+      "title": {
+        "mn": "Тэргүүний нөхөн сэргээгч аж ахуйн нэгж",
+        "en": "Тэргүүний нөхөн сэргээгч аж ахуйн нэгж"
+      },
+      "description": {
+        "mn": "Тэргүүний нөхөн сэргээгч аж ахуйн нэгж2010 оны шилдэг бизнес эрхлэгч компани",
+        "en": "Тэргүүний нөхөн сэргээгч аж ахуйн нэгж2010 оны шилдэг бизнес эрхлэгч компани"
+      },
+      "order": 24,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584c6",
+      "year": "2011",
+      "title": {
+        "mn": "“МОНЦЕМЕНТ” төслийг санаачилав",
+        "en": "“МОНЦЕМЕНТ” төслийг санаачилав"
+      },
+      "description": {
+        "mn": "Монгол Улсад анх удаа Дуслын усжуулалтын системийг нэвтрүүлэв.“МОНЦЕМЕНТ” төслийг санаачилав.“Сэнжит Худаг”-н шохойн чулууны ордын нөөцийн үнэлгээг Австралийн Майкромайн Кансалтинг Сервисиз компаниар олон улсын ЖОРК /JORC/ стандартын дагуу хийлгэж 264 сая тн нөөцийг тогтоолгов.Дорноговь аймгийн Өргөн суманд цэвэр усны 10 цооногийн худаг ашиглалтад оруулав.",
+        "en": "Монгол Улсад анх удаа Дуслын усжуулалтын системийг нэвтрүүлэв.“МОНЦЕМЕНТ” төслийг санаачилав.“Сэнжит Худаг”-н шохойн чулууны ордын нөөцийн үнэлгээг Австралийн Майкромайн Кансалтинг Сервисиз компаниар олон улсын ЖОРК /JORC/ стандартын дагуу хийлгэж 264 сая тн нөөцийг тогтоолгов.Дорноговь аймгийн Өргөн суманд цэвэр усны 10 цооногийн худаг ашиглалтад оруулав."
+      },
+      "order": 25,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584c7",
+      "year": "2011",
+      "title": {
+        "mn": "ТОП 150 Аж Ахуйн нэгж",
+        "en": "ТОП 150 Аж Ахуйн нэгж"
+      },
+      "description": {
+        "mn": "2011 оны Тэргүүний нөхөн сэргээгч аж ахуйн нэгжҮндэсний ТОП 150 Аж Ахуйн нэгж өргөмжлөл.",
+        "en": "2011 оны Тэргүүний нөхөн сэргээгч аж ахуйн нэгжҮндэсний ТОП 150 Аж Ахуйн нэгж өргөмжлөл."
+      },
+      "order": 26,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584c8",
+      "year": "2012",
+      "title": {
+        "mn": "“Монполимет цогцолбор”",
+        "en": "“Монполимет цогцолбор”"
+      },
+      "description": {
+        "mn": "“Монполимет цогцолбор” барилгын төслийн I барилга ашиглалтад оров.",
+        "en": "“Монполимет цогцолбор” барилгын төслийн I барилга ашиглалтад оров."
+      },
+      "order": 27,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584c9",
+      "year": "2012",
+      "title": {
+        "mn": "Оны онцлох байгальд хөрөнгө оруулагч",
+        "en": "Оны онцлох байгальд хөрөнгө оруулагч"
+      },
+      "description": {
+        "mn": "ЭКО Уурхай-20122012 оны Оны онцлох байгальд хөрөнгө оруулагч-Ногоон хөгжлийн яам",
+        "en": "ЭКО Уурхай-20122012 оны Оны онцлох байгальд хөрөнгө оруулагч-Ногоон хөгжлийн яам"
+      },
+      "order": 28,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584ca",
+      "year": "2013",
+      "title": {
+        "mn": "“Монполимет цогцолбор”",
+        "en": "“Монполимет цогцолбор”"
+      },
+      "description": {
+        "mn": "Монцемент төслийн гүйцэтгэгчээр дэлхийд цемент үйлдвэрлэлээрээ тэргүүлэгч Швейцарь улсын Holcim компанийн охин компани болох Хуашин компани сонгогдон хамтын ажиллагааны гэрээ байгуулагдав.Монцемент төслийн хөндлөнгийн хяналтаар Энэтхэг улсын Холтек компани сонгогдон гэрээ байгуулагдав.",
+        "en": "Монцемент төслийн гүйцэтгэгчээр дэлхийд цемент үйлдвэрлэлээрээ тэргүүлэгч Швейцарь улсын Holcim компанийн охин компани болох Хуашин компани сонгогдон хамтын ажиллагааны гэрээ байгуулагдав.Монцемент төслийн хөндлөнгийн хяналтаар Энэтхэг улсын Холтек компани сонгогдон гэрээ байгуулагдав."
+      },
+      "order": 29,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584cb",
+      "year": "2013",
+      "title": {
+        "mn": "ТОП 150 Аж Ахуйн нэгж",
+        "en": "ТОП 150 Аж Ахуйн нэгж"
+      },
+      "description": {
+        "mn": "ХАБЭАБО-ны хэрэгжилтээр тэргүүлэгч байгууллага2013 оны Үндэсний ТОП 150 Аж Ахуйн нэгж өргөмжлөл2013 оны Ногоон хөгжлийн яам – Оны онцлох байгальд хөрөнгө оруулагч",
+        "en": "ХАБЭАБО-ны хэрэгжилтээр тэргүүлэгч байгууллага2013 оны Үндэсний ТОП 150 Аж Ахуйн нэгж өргөмжлөл2013 оны Ногоон хөгжлийн яам – Оны онцлох байгальд хөрөнгө оруулагч"
+      },
+      "order": 30,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584cc",
+      "year": "2014",
+      "title": {
+        "mn": "Монцемент төслийн талбайд түр тосгоныг байгуулав",
+        "en": "Монцемент төслийн талбайд түр тосгоныг байгуулав"
+      },
+      "description": {
+        "mn": "Монгол Улсын МХЕГ, БНГУ-ын хамтын ажиллагааны “BGR” төсөлтэй хамтран “Уурхайн хаалт ба Байгаль орчны хамгаалал” сэдэвт IX их хурлыг хамтран зохион байгуулж, нөхөн сэргээлтийн үзүүлэх сургалтыг Тосонгийн орд газарт хоёр дахь удаагаа амжилттай зохион байгуулав.Монцемент төсөл, ЕСБХБ-тай хөрөнгө оруулалтын гэрээ байгууллаа.Монцемент төслийн талбайд иж бүрэн тоноглогдсон 150 хүний түр тосгоныг байгуулав.",
+        "en": "Монгол Улсын МХЕГ, БНГУ-ын хамтын ажиллагааны “BGR” төсөлтэй хамтран “Уурхайн хаалт ба Байгаль орчны хамгаалал” сэдэвт IX их хурлыг хамтран зохион байгуулж, нөхөн сэргээлтийн үзүүлэх сургалтыг Тосонгийн орд газарт хоёр дахь удаагаа амжилттай зохион байгуулав.Монцемент төсөл, ЕСБХБ-тай хөрөнгө оруулалтын гэрээ байгууллаа.Монцемент төслийн талбайд иж бүрэн тоноглогдсон 150 хүний түр тосгоныг байгуулав."
+      },
+      "order": 31,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584cd",
+      "year": "2014",
+      "title": {
+        "mn": "Уул уурхайн салбарын шилдэг байгууллага",
+        "en": "Уул уурхайн салбарын шилдэг байгууллага"
+      },
+      "description": {
+        "mn": "Монгол Улсын Уул уурхайн салбарын шилдэг байгууллага2014 оны Ногоон хөгжлийн яам – Оны онцлох байгальд хөрөнгө оруулагч",
+        "en": "Монгол Улсын Уул уурхайн салбарын шилдэг байгууллага2014 оны Ногоон хөгжлийн яам – Оны онцлох байгальд хөрөнгө оруулагч"
+      },
+      "order": 32,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584ce",
+      "year": "2015",
+      "title": {
+        "mn": "Монцемент үйлдвэр ашиглалтад оров.",
+        "en": "Монцемент үйлдвэр ашиглалтад оров."
+      },
+      "description": {
+        "mn": "Жилд 1 сая тн цемент үйлдвэрлэх хүчин чадал бүхий Монцемент үйлдвэрийг ашиглалтад оруулав.Үйлдвэрийн 3,5 км төмөр замыг улсын комисст хүлээлгэн өглөө.Булагт 110кв-ын дэд станцыг улсын комисст хүлээлгэн өгсөн.Монцемент төсөл, Монгол Улсын Засгийн газартай хөрөнгө оруулалтын гэрээ байгууллаа.",
+        "en": "Жилд 1 сая тн цемент үйлдвэрлэх хүчин чадал бүхий Монцемент үйлдвэрийг ашиглалтад оруулав.Үйлдвэрийн 3,5 км төмөр замыг улсын комисст хүлээлгэн өглөө.Булагт 110кв-ын дэд станцыг улсын комисст хүлээлгэн өгсөн.Монцемент төсөл, Монгол Улсын Засгийн газартай хөрөнгө оруулалтын гэрээ байгууллаа."
+      },
+      "order": 33,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584cf",
+      "year": "2015",
+      "title": {
+        "mn": "ТОП 100 Аж Ахуйн нэгж",
+        "en": "ТОП 100 Аж Ахуйн нэгж"
+      },
+      "description": {
+        "mn": "Шилдэг ЭКО уурхайҮндэсний ТОП 100 Аж Ахуйн нэгж өргөмжлөлМонголын Форбес сэтгүүлийн Топ 20 группГранд экспо 2015- Оны шилдэг төсөл шагнал",
+        "en": "Шилдэг ЭКО уурхайҮндэсний ТОП 100 Аж Ахуйн нэгж өргөмжлөлМонголын Форбес сэтгүүлийн Топ 20 группГранд экспо 2015- Оны шилдэг төсөл шагнал"
+      },
+      "order": 34,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584d0",
+      "year": "2016",
+      "title": {
+        "mn": "MPM 16 давхар оффисийн барилгыг ашиглалтад оруулав",
+        "en": "MPM 16 давхар оффисийн барилгыг ашиглалтад оруулав"
+      },
+      "description": {
+        "mn": "Дулаанаас 5МвТ-н эрчим хүч үйлдвэрлэх үйлдвэр Өргөн ДЦС – WHR ашиглалтанд оров.Задгай цемент ачих зориулалттай хамгийн сүүлийн үеийн загварын европ стандартын 40 ширхэг хоппер вагоныг Украйн улсад үйлдвэрлүүлэн Монголд оруулж ирэв.Монполимет группийн оффисийн зориулалттай 16 давхар барилгыг ашиглалтад оруулж, Улсын комисст хүлээлгэн өгөв.Дорноговь аймгийн Өргөн суманд Монцемент үйлдвэрийн ажилчдын 44х2 нийт 88-н айлын орон сууцыг барьж Улсын комисст хүлээлгэн өглөө.",
+        "en": "Дулаанаас 5МвТ-н эрчим хүч үйлдвэрлэх үйлдвэр Өргөн ДЦС – WHR ашиглалтанд оров.Задгай цемент ачих зориулалттай хамгийн сүүлийн үеийн загварын европ стандартын 40 ширхэг хоппер вагоныг Украйн улсад үйлдвэрлүүлэн Монголд оруулж ирэв.Монполимет группийн оффисийн зориулалттай 16 давхар барилгыг ашиглалтад оруулж, Улсын комисст хүлээлгэн өгөв.Дорноговь аймгийн Өргөн суманд Монцемент үйлдвэрийн ажилчдын 44х2 нийт 88-н айлын орон сууцыг барьж Улсын комисст хүлээлгэн өглөө."
+      },
+      "order": 35,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584d1",
+      "year": "2016",
+      "title": {
+        "mn": "2016 оны ТОП 10 компанийн нэг",
+        "en": "2016 оны ТОП 10 компанийн нэг"
+      },
+      "description": {
+        "mn": "2016 оны ТОП 10 компанийн нэг2016 оны шилдэг бизнес эрхлэгч компани2016 оны шилдэг бизнес эрхлэгч эмэгтэй шагнал",
+        "en": "2016 оны ТОП 10 компанийн нэг2016 оны шилдэг бизнес эрхлэгч компани2016 оны шилдэг бизнес эрхлэгч эмэгтэй шагнал"
+      },
+      "order": 36,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584d2",
+      "year": "2017",
+      "title": {
+        "mn": "УБ дахь Клинкер боловсруулах үйлдвэр анхны цементээ үйлдвэрлэв",
+        "en": "УБ дахь Клинкер боловсруулах үйлдвэр анхны цементээ үйлдвэрлэв"
+      },
+      "description": {
+        "mn": "Монгол инженерүүд Монголд ДРАГ-ийн аварга холхивчийг суурилуулж угсарсан.Нөхөн сэргээлтийн дэвшилтэт технологи, инноваци Монгол Улсдаа анх удаа уул уурхайн салбарт бионүүрсэн бортогыг амжилттай нэвтрүүлсэн.Монгол Улсын Гавьяат агрономич Жамьянтай хамтран манай оронд нэн ховордоод байгаа олон наст ургамлуудыг тарьж эхэлсэн.Монполимет цогцолбор барилгын төслийн III барилгыг ашиглалтад өгсөн.УБ дахь Клинкер боловсруулах үйлдвэр анхны цементээ үйлдвэрлэсэн.УБ дахь Клинкер боловсруулах үйлдвэрийн ПРП 110/10 кВ –ын дэд станцыг ашиглалтад оруулав.Орчин үеийн тоног төхөөрөмжөөр тоноглогдсон мэргэжлийн ProFIT фитнес төв нээлтээ хийлээ.",
+        "en": "Монгол инженерүүд Монголд ДРАГ-ийн аварга холхивчийг суурилуулж угсарсан.Нөхөн сэргээлтийн дэвшилтэт технологи, инноваци Монгол Улсдаа анх удаа уул уурхайн салбарт бионүүрсэн бортогыг амжилттай нэвтрүүлсэн.Монгол Улсын Гавьяат агрономич Жамьянтай хамтран манай оронд нэн ховордоод байгаа олон наст ургамлуудыг тарьж эхэлсэн.Монполимет цогцолбор барилгын төслийн III барилгыг ашиглалтад өгсөн.УБ дахь Клинкер боловсруулах үйлдвэр анхны цементээ үйлдвэрлэсэн.УБ дахь Клинкер боловсруулах үйлдвэрийн ПРП 110/10 кВ –ын дэд станцыг ашиглалтад оруулав.Орчин үеийн тоног төхөөрөмжөөр тоноглогдсон мэргэжлийн ProFIT фитнес төв нээлтээ хийлээ."
+      },
+      "order": 37,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584d3",
+      "year": "2017",
+      "title": {
+        "mn": "Экологи, нийгмийн тэргүүний туршлагыг хэрэгжүүлэн  тогтвортой хөгжлийг дэмжигч компани",
+        "en": "Экологи, нийгмийн тэргүүний туршлагыг хэрэгжүүлэн  тогтвортой хөгжлийг дэмжигч компани"
+      },
+      "description": {
+        "mn": "ЕСБХБ-ны дээд шагнал болох Экологи, нийгмийн тэргүүний туршлагыг хэрэгжүүлэн  тогтвортой хөгжлийг дэмжигч компани",
+        "en": "ЕСБХБ-ны дээд шагнал болох Экологи, нийгмийн тэргүүний туршлагыг хэрэгжүүлэн  тогтвортой хөгжлийг дэмжигч компани"
+      },
+      "order": 38,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584d4",
+      "year": "2018",
+      "title": {
+        "mn": "Монцемент үйлдвэрийн гөлтгөнийн хэрэглээг 20 гаруй жил тасралтгүй хангах боломж бүрдлээ.",
+        "en": "Монцемент үйлдвэрийн гөлтгөнийн хэрэглээг 20 гаруй жил тасралтгүй хангах боломж бүрдлээ."
+      },
+      "description": {
+        "mn": "Тосонгийн уурхайн Драгийн баяжуулах үйлдвэрийн торхон шигшүүрийн засвар үйлчилгээг өөрсдөө чанарын өндөр түвшинд хийдэг боллоо.Монцементийн үйлдвэрийн үндсэн түүхий эд болох шохойн чулууны Сэнжит Худгийн уурхайд 100% өөрсдөө тэсэлгээг хийдэг болов.Дундговь аймгийн Дэлгэрхангай сумын нутагт “Урт тарагт”-ын гөлтгөнийн ордын хайгуулыг хийж лабораторийн шинжилгээ болон технологийн туршилтаар ОРС-42.5, РС-42.5, РС-52.5 маркын цемент үйлдвэрлэхэд чанарын хувьд бүрэн боломжтой III зэргийн гөлтгөнө чулуу болохыг тогтоосноор Монцемент үйлдвэрийн гөлтгөнийн хэрэглээг 20 гаруй жил тасралтгүй хангах боломж бүрдлээ.",
+        "en": "Тосонгийн уурхайн Драгийн баяжуулах үйлдвэрийн торхон шигшүүрийн засвар үйлчилгээг өөрсдөө чанарын өндөр түвшинд хийдэг боллоо.Монцементийн үйлдвэрийн үндсэн түүхий эд болох шохойн чулууны Сэнжит Худгийн уурхайд 100% өөрсдөө тэсэлгээг хийдэг болов.Дундговь аймгийн Дэлгэрхангай сумын нутагт “Урт тарагт”-ын гөлтгөнийн ордын хайгуулыг хийж лабораторийн шинжилгээ болон технологийн туршилтаар ОРС-42.5, РС-42.5, РС-52.5 маркын цемент үйлдвэрлэхэд чанарын хувьд бүрэн боломжтой III зэргийн гөлтгөнө чулуу болохыг тогтоосноор Монцемент үйлдвэрийн гөлтгөнийн хэрэглээг 20 гаруй жил тасралтгүй хангах боломж бүрдлээ."
+      },
+      "order": 39,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584d5",
+      "year": "2018",
+      "title": {
+        "mn": "Шилдэг нөхөн сэргээгч байгууллага",
+        "en": "Шилдэг нөхөн сэргээгч байгууллага"
+      },
+      "description": {
+        "mn": "GREENPRENEUER-2018 БОАЖЯ-аас “Шилдэг нөхөн сэргээгч байгууллага” Меркури 6 удааУУХҮЯ, АМГТГ-аас “ШИЛДЭГ НӨХӨН СЭРГЭЭГЧ БАЙГУУЛЛАГА-2018”“Мэргэжлийн уул уурхай ба байгаль орчин -2018” Онол практиктийн үзүүлэх сургалт",
+        "en": "GREENPRENEUER-2018 БОАЖЯ-аас “Шилдэг нөхөн сэргээгч байгууллага” Меркури 6 удааУУХҮЯ, АМГТГ-аас “ШИЛДЭГ НӨХӨН СЭРГЭЭГЧ БАЙГУУЛЛАГА-2018”“Мэргэжлийн уул уурхай ба байгаль орчин -2018” Онол практиктийн үзүүлэх сургалт"
+      },
+      "order": 40,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584d6",
+      "year": "2019",
+      "title": {
+        "mn": "“Мандала“ Vip lounge-г ашиглалтад оруулав",
+        "en": "“Мандала“ Vip lounge-г ашиглалтад оруулав"
+      },
+      "description": {
+        "mn": "Дундговь аймгийн Дэлгэрхангай суманд “Урд тарагт” гөлтгөнийн уурхайн үйл ажиллагааг эхлүүлсэн.Монгол орны баруун, баруун өмнөд, хангайн бүсийн геологийн судалгаа /БӨМ-2019/-ны ажлыг эхлүүлсэн.“Сэнжит худаг” уурхайд СБШ-250 тэсэлгээний өрмийг шинэчлэн угсрах ажил эхэллээ.МПМ оффисын 16-р давхарт Мандала Vip lounge-г ашиглалтад оруулсан.",
+        "en": "Дундговь аймгийн Дэлгэрхангай суманд “Урд тарагт” гөлтгөнийн уурхайн үйл ажиллагааг эхлүүлсэн.Монгол орны баруун, баруун өмнөд, хангайн бүсийн геологийн судалгаа /БӨМ-2019/-ны ажлыг эхлүүлсэн.“Сэнжит худаг” уурхайд СБШ-250 тэсэлгээний өрмийг шинэчлэн угсрах ажил эхэллээ.МПМ оффисын 16-р давхарт Мандала Vip lounge-г ашиглалтад оруулсан."
+      },
+      "order": 41,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584d7",
+      "year": "2019",
+      "title": {
+        "mn": "ТОП 100 Аж Ахуйн нэгж",
+        "en": "ТОП 100 Аж Ахуйн нэгж"
+      },
+      "description": {
+        "mn": "Монгол Улсын ЗГ, МХАҮТ-с хамтран шалгаруулдаг ТОП-100 ААН-ээр шалгарлаа.",
+        "en": "Монгол Улсын ЗГ, МХАҮТ-с хамтран шалгаруулдаг ТОП-100 ААН-ээр шалгарлаа."
+      },
+      "order": 42,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584d8",
+      "year": "2020",
+      "title": {
+        "mn": "Мандала Vip lounge-г ашиглалтад оруулав",
+        "en": "Мандала Vip lounge-г ашиглалтад оруулав"
+      },
+      "description": {
+        "mn": "Уулын баяжуулах үйлдвэр “Драг 2”-ийн дээд бондажны бүтэн гагнуурын ажлыг өөрсдөө хиййж гүйцэтгэв. Энэ ажил нь Драгийн үйлдвэрт анх удаа хийгдсэн ажил юм.Биологийн нөхөн сэргээлт ойжуулалтын ажлын хүрээнд 20х26см, 50х50см хэмжээтэй хоёр төрлийн уутан бортогыг нэвтрүүлсэнСБШ-250 цахилгаан өрмийн угсралт, тохируулгын ажлыг дуусгаж ашиглалтад орууллаа.",
+        "en": "Уулын баяжуулах үйлдвэр “Драг 2”-ийн дээд бондажны бүтэн гагнуурын ажлыг өөрсдөө хиййж гүйцэтгэв. Энэ ажил нь Драгийн үйлдвэрт анх удаа хийгдсэн ажил юм.Биологийн нөхөн сэргээлт ойжуулалтын ажлын хүрээнд 20х26см, 50х50см хэмжээтэй хоёр төрлийн уутан бортогыг нэвтрүүлсэнСБШ-250 цахилгаан өрмийн угсралт, тохируулгын ажлыг дуусгаж ашиглалтад орууллаа."
+      },
+      "order": 43,
+      "__v": 0
+    },
+    {
+      "_id": "6a4f941a23aa86128e8584d9",
+      "year": "2021",
+      "title": {
+        "mn": "“Урд Тарагт“ уурхайг Улсын комисст хүлээлгэн өгөв",
+        "en": "“Урд Тарагт“ уурхайг Улсын комисст хүлээлгэн өгөв"
+      },
+      "description": {
+        "mn": "“Эхлэл Ургац Энержи” ХХК-ийн Дундговь аймгийн Дэлгэрхангай суманд байрлах “Урд Тарагт” уурхайг Улсын комисст хүлээлгэн өгсөн.",
+        "en": "“Эхлэл Ургац Энержи” ХХК-ийн Дундговь аймгийн Дэлгэрхангай суманд байрлах “Урд Тарагт” уурхайг Улсын комисст хүлээлгэн өгсөн."
+      },
+      "order": 44,
+      "__v": 0
+    }
+  ],
+  "careerspagecontents": [
+    {
+      "_id": "6a4e4cf5399da7341de338f1",
+      "key": "careers",
+      "__v": 0,
+      "createdAt": "2026-07-08T13:13:25.535Z",
+      "faqTitle": {
+        "mn": "Түгээмэл асуултууд",
+        "en": "Frequently Asked Questions"
+      },
+      "steps": [
+        {
+          "step": "01",
+          "title": {
+            "mn": "Анкет илгээх",
+            "en": "Apply"
+          },
+          "description": {
+            "mn": "Онлайнаар анкетаа илгээнэ",
+            "en": "Submit your application online"
+          }
+        },
+        {
+          "step": "02",
+          "title": {
+            "mn": "Ярилцлага",
+            "en": "Interview"
+          },
+          "description": {
+            "mn": "Мэргэжлийн ярилцлагад оролцоно",
+            "en": "Attend a professional interview"
+          }
+        },
+        {
+          "step": "03",
+          "title": {
+            "mn": "Ажлын санал",
+            "en": "Offer"
+          },
+          "description": {
+            "mn": "Амжилттай бол ажлын санал хүлээн авна",
+            "en": "Receive an offer if successful"
+          }
+        }
+      ],
+      "stepsTitle": {
+        "mn": "Ажилд авах үйл явц",
+        "en": "Recruitment Process"
+      },
+      "updatedAt": "2026-07-08T13:13:25.535Z",
+      "whyUs": {
+        "title": {
+          "mn": "Яагаад бид гэж?",
+          "en": "Why join us?"
+        },
+        "text": {
+          "mn": "Тогтвортой ажлын байр, мэргэжлийн хөгжлийн боломж, найрсаг хамт олон.",
+          "en": "Stable jobs, professional growth, and a friendly team."
+        },
+        "imageUrl": "https://images.unsplash.com/photo-1421757350652-9f65a35effc7?w=3840&auto=format&fit=crop&q=100"
+      },
+      "header": {
+        "imageUrl": "/careers-hero.png"
+      }
+    }
+  ],
+  "newsarticles": [
+    {
+      "_id": "6a5a3ce08967650a3be9d598",
+      "title": {
+        "mn": "Монполимет группийн үүсгэн байгуулагч Ц.Гарамжав Хөдөлмөрийн баатар цол хүртлээ",
+        "en": "Founder of Monpolymet Group Ts.Garamjav awarded the Hero of Labor of Mongolia"
+      },
+      "category": {
+        "mn": "Амжилт",
+        "en": "Awards"
+      },
+      "publishedAt": "2026-07-06T00:00:00.000Z",
+      "imageUrl": "http://localhost:4000/uploads/garamjav_hero_award.jpg",
+      "content": {
+        "mn": "Манай Монполимет группийн үүсгэн байгуулагч, Аж үйлдвэрийн гавьяат ажилтан, Монгол Улсын зөвлөх инженер Ц.Гарамжав өнөөдөр /2026.07.06/ Монгол Улсын Хөдөлмөрийн баатар цол хүртлээ. Тэрбээр Монгол Улсын хөгжил цэцэглэлтэд үнэтэй хувь нэмэр оруулсан билээ.",
+        "en": "Founder of Monpolymet Group, Honored Industrial Worker, and Consulting Engineer of Mongolia Ts.Garamjav was awarded the Hero of Labor of Mongolia today (2026.07.06). She has made a valuable contribution to the development and prosperity of Mongolia."
+      },
+      "isPublished": true,
+      "__v": 0,
+      "updatedAt": "2026-07-25T11:09:03.209Z",
+      "views": 39
+    },
+    {
+      "_id": "6a5a3ce08967650a3be9d599",
+      "title": {
+        "mn": "Монполимет групп ТОП-100 аж ахуйн нэгжээр 21 дэх удаагаа шалгарлаа",
+        "en": "Monpolymet Group was selected as a TOP 100 enterprise for the 21st time"
+      },
+      "category": {
+        "mn": "Амжилт",
+        "en": "Awards"
+      },
+      "publishedAt": "2026-06-25T00:00:00.000Z",
+      "imageUrl": "http://localhost:4000/uploads/top100_award.jpg",
+      "content": {
+        "mn": "ТОП-100 аж ахуйн нэгжээр 21 дэх удаагаа шалгарсан нь Монполимет группийн тогтвортой өсөлт, хариуцлагатай бизнесийн зарчим, хамтын ажиллагааны үр дүн юм.",
+        "en": "Being selected as a TOP 100 enterprise for the 21st time is a result of Monpolymet Group's sustainable growth, responsible business principles, and collaboration."
+      },
+      "isPublished": true,
+      "__v": 0,
+      "updatedAt": "2026-07-25T11:15:06.265Z",
+      "views": 53
+    },
+    {
+      "_id": "6a5a3ce08967650a3be9d59a",
+      "title": {
+        "mn": "Монполимет групп “Монцемент Билдинг Материалс” ххк ТОП 100 аж ахуйн нэгжээр шалгарлаа.",
+        "en": "Monpolymet Group, 'Moncement Building Materials' LLC was selected as a TOP 100 enterprise."
+      },
+      "category": {
+        "mn": "Амжилт",
+        "en": "Awards"
+      },
+      "publishedAt": "2024-11-21T00:00:00.000Z",
+      "imageUrl": "https://monpolymet.mn/wp-content/uploads/2024/11/467316563_1117016913764982_6953976156202560817_n-640x360.jpg",
+      "content": {
+        "mn": "Монполимет Группийн хэмжээнд үйлдвэр бүтээн байгуулалтын салбарт үйл ажиллагаа явуулж эхэлсэн цагаас хойш 20 гаруй удаа Монгол Улсын “ТОП-100” аж ахуйн нэгж, шилдэг хариуцлагатай татвар төлөгчөөр шалгарсан билээ.",
+        "en": "Monpolymet Group has been selected as one of the TOP 100 enterprises and best responsible taxpayers in Mongolia more than 20 times since it started operating in the industrial construction sector."
+      },
+      "isPublished": true,
+      "__v": 0,
+      "updatedAt": "2026-07-23T01:47:35.513Z",
+      "views": 28
+    },
+    {
+      "_id": "6a5a3ce08967650a3be9d59b",
+      "title": {
+        "mn": "Гэр бүлд ээлтэй шилдэг ажил олгогч Монцемент Билдинг Материалс ХХК",
+        "en": "MONCEMENT BUILDING MATERIALS LLC, THE BEST FAMILY-FRIENDLY EMPLOYER"
+      },
+      "category": {
+        "mn": "Амжилт",
+        "en": "Awards"
+      },
+      "publishedAt": "2023-05-29T00:00:00.000Z",
+      "imageUrl": "https://monpolymet.mn/wp-content/uploads/2023/05/GWA-640x438.jpg",
+      "content": {
+        "mn": "Үндэсний үйлдвэрлэгч #Монцемент_Билдинг_Материалс_ХХК “New Work Summit: Good Workplace Awards 2023” үйл ажиллагааны “Good workplace for Family support” буюу Гэр бүлд ээлтэй шилдэг ажил олгогчоор шалгарлаа. Манай хамт олон энэ шагналыг хоёр дахь удаагаа гардаж байна.",
+        "en": "Moncement Building Materials LLC, a major manufacturer was named the most family-friendly employer at the New York Summit: Good Workplace Awards 2023 activities. This is our team’s 2nd time presenting the honor."
+      },
+      "isPublished": true,
+      "__v": 0,
+      "updatedAt": "2026-07-21T09:14:41.857Z",
+      "views": 2
+    },
+    {
+      "_id": "6a5a3ce08967650a3be9d59c",
+      "title": {
+        "mn": "“Нэг мод – Нэг амь- 2023” аян",
+        "en": "Campaign “One Tree – One Life 2023”"
+      },
+      "category": {
+        "mn": "Нийгмийн хариуцлага",
+        "en": "CSR"
+      },
+      "publishedAt": "2023-05-29T00:00:00.000Z",
+      "imageUrl": "https://monpolymet.mn/wp-content/uploads/2023/05/MicrosoftTeams-image-16-640x608.png",
+      "content": {
+        "mn": "Монполимет Группээс жил бүр зохион байгуулдаг “Нэг мод – Нэг амь” уламжлалт аян эхэлж байна.",
+        "en": "Monpolymet Group’s traditional campaign “One tree – One life” has begun."
+      },
+      "isPublished": true,
+      "__v": 0,
+      "updatedAt": "2026-07-20T04:14:37.709Z",
+      "views": 4
+    },
+    {
+      "_id": "6a5a3ce08967650a3be9d59d",
+      "title": {
+        "mn": "Монгол Улсын 2022 оны “Топ-100” аж ахуйн нэгжийн нэг боллоо",
+        "en": "MONPOLYMET GROUP HAS BECOME THE ONE OF THE TOP 100 BUSINESSES IN MONGOLIA."
+      },
+      "category": {
+        "mn": "Амжилт",
+        "en": "Awards"
+      },
+      "publishedAt": "2023-05-29T00:00:00.000Z",
+      "imageUrl": "https://monpolymet.mn/wp-content/uploads/2023/05/MicrosoftTeams-image-25-640x368.jpg",
+      "content": {
+        "mn": "Үндэсний үйлдвэрлэгч Монполимет Групп Монгол Улсын 2022 оны “Топ-100” аж ахуйн нэгжийн нэг боллоо. Ийнхүү бид “Топ-100” аж ахуйн нэгжид 16 дахь удаагаа эрэмбэлэгдэж байна.",
+        "en": "A national manufacturer Monpolymet Group has been named one of the Mongolia’s “TOP 100” companies for 2022. We have been named to the list for the 16th time."
+      },
+      "isPublished": true,
+      "__v": 0,
+      "updatedAt": "2026-07-21T09:14:29.893Z",
+      "views": 2
+    },
+    {
+      "_id": "6a5a3ce08967650a3be9d59e",
+      "title": {
+        "mn": "Ойн цэвэрлэгээ хийв",
+        "en": "FOREST CLEANING"
+      },
+      "category": {
+        "mn": "Нийгмийн хариуцлага",
+        "en": "CSR"
+      },
+      "publishedAt": "2023-04-18T00:00:00.000Z",
+      "imageUrl": "https://monpolymet.mn/wp-content/uploads/2023/04/339772062_23853979202440031_9152250015155330780_n.jpg",
+      "content": {
+        "mn": "Тарьж, ургуулсан ойн төгөлүүддээ ойн цэвэрлэгээ хийлээ. Ойн цэвэрлэгээг жил бүр хийдэг бөгөөд ойг хамгаалах, хөнөөлт шавжийн хор хохирлоос сэргийлэх, түймрийн эрсдэлийг бууруулах, ойн төлөв байдлыг сайжруулах, моддыг доройтож хөгшрөхөөс хамгаалах олон чухал ач холбогдолтой юм.",
+        "en": "We have just carried out over all cleaning in our small forest areas that we created and nourished. We carry out forest cleaning on annual basis to protect the trees, prevent from insect infestation, reduce fire risks, improve general wellbeing of the forest, and to prevent the forest from fast aging."
+      },
+      "isPublished": true,
+      "__v": 0
+    },
+    {
+      "_id": "6a5a3ce08967650a3be9d59f",
+      "title": {
+        "mn": "Тэтгэлэгт тэнцсэн оюутнууддаа ажлын байрны урилга гардууллаа",
+        "en": "Students who are qualified for the scholarships that are announced by Monpolymet group and Eternal Sustainable Development Fund were awarded with their scholarship certificates and invitations to work in the company after their graduation."
+      },
+      "category": {
+        "mn": "Нийгмийн хариуцлага",
+        "en": "CSR"
+      },
+      "publishedAt": "2023-04-18T00:00:00.000Z",
+      "imageUrl": "https://monpolymet.mn/wp-content/uploads/2023/04/zurag-ok-640x220.jpg",
+      "content": {
+        "mn": "Монполимет Групп, Мөнх тогтвортой хөгжил сангийн нэрэмжит тэтгэлэгт тэнцсэн оюутнууддаа батламж болон сургуулиа төгсөөд группийн салбар компаниудад ажиллах ажлын байрны урилгыг гардуулан өглөө.",
+        "en": "We didn’t only focus on the grades when we selected the scholarship candidates. We also considered their social participations, their personal attitudes, and abilities on working in teams."
+      },
+      "isPublished": true,
+      "__v": 0,
+      "updatedAt": "2026-07-20T01:16:06.693Z",
+      "views": 5
+    }
+  ],
+  "sitesettings": [
+    {
+      "_id": "6a4e4cf5399da7341de338f2",
+      "key": "site",
+      "__v": 0,
+      "address": {
+        "mn": "Улаанбаатар хот, Хан-Уул дүүрэг, Монполимет тауэр",
+        "en": "Monpolymet Tower, Khan-Uul District, Ulaanbaatar"
+      },
+      "brandAssets": [
+        {
+          "label": "Logo Kit (PNG, SVG)",
+          "fileUrl": "/logo-monpolymet.zip"
+        },
+        {
+          "label": "Brand Guidelines",
+          "fileUrl": "/brandbook-monpolymet.pdf"
+        }
+      ],
+      "brandAssetsDescription": {
+        "mn": "Манай логоны өндөр чанартай хувилбарууд болон брэндбүүкийг татаж авах.",
+        "en": "Download high-quality versions of our logo and brand book."
+      },
+      "copyrightName": "MONPOLYMET GROUP",
+      "createdAt": "2026-07-08T13:13:25.538Z",
+      "email": "info@monpolymet.mn",
+      "footerDescription": {
+        "mn": "Тогтвортой хөгжил, эх орныхоо барилга бүтээн байгуулалтын түүчээ.",
+        "en": "Pioneering sustainable development and national construction."
+      },
+      "logoUrl": "/logo.png",
+      "phone": "+976 7011 8012",
+      "socialLinks": [
+        {
+          "platform": "facebook",
+          "url": "https://facebook.com/monpolymet"
+        },
+        {
+          "platform": "instagram",
+          "url": "https://instagram.com/monpolymet"
+        },
+        {
+          "platform": "youtube",
+          "url": "https://youtube.com/monpolymet"
+        }
+      ],
+      "updatedAt": "2026-07-20T15:31:20.888Z",
+      "navigation": [
+        {
+          "id": "about",
+          "label": {
+            "mn": "Бидний тухай",
+            "en": "About us"
+          },
+          "target": "about",
+          "order": 1,
+          "isActive": true
+        },
+        {
+          "id": "companies",
+          "label": {
+            "mn": "Үйл ажиллагаа",
+            "en": "Companies"
+          },
+          "target": "companies",
+          "order": 2,
+          "isActive": true
+        },
+        {
+          "id": "csr",
+          "label": {
+            "mn": "Тогтвортой хөгжил",
+            "en": "CSR"
+          },
+          "target": "csr",
+          "order": 3,
+          "isActive": true
+        },
+        {
+          "id": "news",
+          "label": {
+            "mn": "Мэдээлэл",
+            "en": "News"
+          },
+          "target": "news",
+          "order": 4,
+          "isActive": true
+        },
+        {
+          "id": "hr",
+          "label": {
+            "mn": "Хүний нөөц",
+            "en": "Human Resources"
+          },
+          "target": "careers",
+          "order": 8,
+          "isActive": true
+        },
+        {
+          "id": "procurement",
+          "label": {
+            "mn": "Худалдан авалт",
+            "en": "Procurement"
+          },
+          "target": "procurement",
+          "order": 9,
+          "isActive": true
+        }
+      ],
+      "footerNavigation": [
+        {
+          "id": "about",
+          "label": {
+            "mn": "Бидний тухай",
+            "en": "About us"
+          },
+          "target": "about",
+          "order": 1,
+          "isActive": true
+        },
+        {
+          "id": "companies",
+          "label": {
+            "mn": "Үйл ажиллагаа",
+            "en": "Companies"
+          },
+          "target": "companies",
+          "order": 2,
+          "isActive": true
+        },
+        {
+          "id": "csr",
+          "label": {
+            "mn": "Тогтвортой хөгжил",
+            "en": "CSR"
+          },
+          "target": "csr",
+          "order": 3,
+          "isActive": true
+        },
+        {
+          "id": "hse",
+          "label": {
+            "mn": "ЭМААБЦ",
+            "en": "HSE"
+          },
+          "target": "hse",
+          "order": 4,
+          "isActive": true
+        },
+        {
+          "id": "careers",
+          "label": {
+            "mn": "Ажлын байр",
+            "en": "Careers"
+          },
+          "target": "careers",
+          "order": 5,
+          "isActive": true
+        },
+        {
+          "id": "contact",
+          "label": {
+            "mn": "Холбоо барих",
+            "en": "Contact"
+          },
+          "target": "contact",
+          "order": 6,
+          "isActive": true
+        }
+      ]
+    }
+  ],
+  "aboutpagecontents": [
+    {
+      "_id": "6a4e4cf5399da7341de338ef",
+      "key": "about",
+      "__v": 0,
+      "createdAt": "2026-07-08T13:13:25.529Z",
+      "historyTitle": {
+        "mn": "Түүхэн замнал",
+        "en": "Our History"
+      },
+      "intro": {
+        "title": {
+          "mn": "Бидний тухай",
+          "en": "About Us"
+        },
+        "text": {
+          "mn": "Монполимет Групп нь 1993 оноос хойш уул уурхай, барилгын материалын салбарт тэргүүлэн ажиллаж байна.",
+          "en": "Since 1993, Monpolymet Group has led the mining and construction-materials sector."
+        },
+        "imageUrl": "https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=3840&auto=format&fit=crop&q=100"
+      },
+      "leadershipGreeting": {
+        "title": {
+          "mn": "Тэргүүний мэндчилгээ",
+          "en": "Chairwoman’s Greeting"
+        },
+        "text": {
+          "mn": "Танд энэ өдрийн мэнд хүргэе. Бид хамтдаа ирээдүйг бүтээнэ.",
+          "en": "Warm greetings. Together we build the future."
+        }
+      },
+      "leadershipTitle": {
+        "mn": "Удирдлагын баг",
+        "en": "Leadership Team"
+      },
+      "mission": {
+        "title": {
+          "mn": "Эрхэм зорилго",
+          "en": "Mission"
+        },
+        "text": {
+          "mn": "Байгальд ээлтэй, чанартай бүтээгдэхүүнээр эх орноо хөгжүүлэх",
+          "en": "To develop our nation with eco-friendly, quality products"
+        }
+      },
+      "updatedAt": "2026-07-15T13:47:14.080Z",
+      "valuesTitle": {
+        "mn": "Үнэт зүйлс",
+        "en": "Core Values"
+      },
+      "vision": {
+        "title": {
+          "mn": "Алсын хараа",
+          "en": "Vision"
+        },
+        "text": {
+          "mn": "Шинэ технологи, шилдэг санаа, ногоон хөгжилд суурилсан үйлдвэрлэл, бүтээн байгуулалтыг Монголдоо хамтдаа бүтээцгээе.",
+          "en": "To be a model company for sustainable development"
+        }
+      }
+    }
+  ],
+  "sectors": [
+    {
+      "_id": "6a4e4cf5b678d24436337779",
+      "slug": "moncement",
+      "title": {
+        "mn": "Монцемент",
+        "en": "Moncement"
+      },
+      "description": {
+        "mn": "Дотоодын хэрэгцээг хангах цементийн үйлдвэр",
+        "en": "A cement factory meeting domestic demand"
+      },
+      "projects": {
+        "mn": "50+ томоохон төсөл",
+        "en": "50+ major projects"
+      },
+      "websiteUrl": "https://moncement.mn",
+      "icon": "Factory",
+      "imageUrl": "https://images.unsplash.com/photo-1421757350652-9f65a35effc7?w=3840&auto=format&fit=crop&q=100",
+      "metrics": [
+        {
+          "label": {
+            "mn": "Хүчин чадал",
+            "en": "Capacity"
+          },
+          "value": {
+            "mn": "1 сая тонн/жил",
+            "en": "1M tonnes/year"
+          }
+        },
+        {
+          "label": {
+            "mn": "Технологи",
+            "en": "Technology"
+          },
+          "value": {
+            "mn": "Хуурай арга",
+            "en": "Dry process"
+          }
+        }
+      ],
+      "highlights": [
+        {
+          "mn": "Импорт орлох бүтээгдэхүүн",
+          "en": "Import-substituting product"
+        },
+        {
+          "mn": "Олон улсын стандарт",
+          "en": "International standards"
+        }
+      ],
+      "order": 0,
+      "isActive": true,
+      "createdAt": "2026-07-08T13:13:25.502Z",
+      "updatedAt": "2026-07-08T19:20:58.752Z",
+      "__v": 0,
+      "logoUrl": "http://localhost:4000/uploads/1783538274598-71b6c8621a56.png"
+    },
+    {
+      "_id": "6a4e4cf5b678d2443633777a",
+      "slug": "toson",
+      "title": {
+        "mn": "Тосон уурхай",
+        "en": "Toson Mine"
+      },
+      "description": {
+        "mn": "Хариуцлагатай уул уурхайн үйл ажиллагаа",
+        "en": "Responsible mining operations"
+      },
+      "projects": {
+        "mn": "Нөхөн сэргээлтийн тэргүүлэгч",
+        "en": "Reclamation leader"
+      },
+      "websiteUrl": "https://monpolymet.mn",
+      "icon": "HardHat",
+      "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=3840&auto=format&fit=crop&q=100",
+      "metrics": [
+        {
+          "label": {
+            "mn": "Нөхөн сэргээлт",
+            "en": "Reclamation"
+          },
+          "value": {
+            "mn": "1,000+ га",
+            "en": "1,000+ ha"
+          }
+        }
+      ],
+      "highlights": [
+        {
+          "mn": "Байгальд ээлтэй",
+          "en": "Eco-friendly"
+        },
+        {
+          "mn": "Орон нутгийн хөгжил",
+          "en": "Local development"
+        }
+      ],
+      "order": 1,
+      "isActive": true,
+      "createdAt": "2026-07-08T13:13:25.503Z",
+      "updatedAt": "2026-07-08T19:20:58.770Z",
+      "__v": 0,
+      "logoUrl": ""
+    },
+    {
+      "_id": "6a4ea06faa807e72cc562d3b",
+      "slug": "test",
+      "title": {
+        "mn": "test",
+        "en": "test"
+      },
+      "description": {
+        "mn": "estte",
+        "en": "abdj"
+      },
+      "projects": {
+        "mn": "msadl",
+        "en": "dknask"
+      },
+      "websiteUrl": "https://artificialanalysis.ai/agents/coding-agents",
+      "icon": "Factory",
+      "imageUrl": "https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=3840&auto=format&fit=crop&q=100",
+      "metrics": [],
+      "highlights": [],
+      "order": 2,
+      "isActive": true,
+      "createdAt": "2026-07-08T19:09:35.889Z",
+      "updatedAt": "2026-07-08T19:09:35.889Z",
+      "__v": 0
+    }
+  ],
+  "heroslides": [
+    {
+      "_id": "6a4e4cf5b678d2443633776a",
+      "mediaType": "image",
+      "mediaUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=3840&auto=format&fit=crop&q=100",
+      "title": {
+        "mn": "Жишиг нөхөн сэргээгч үндэсний компани",
+        "en": "Pioneer of national development"
+      },
+      "subtitle": {
+        "mn": "Уул уурхай, барилгын материалын үйлдвэрлэлийн салбарын тэргүүлэгч",
+        "en": "A leader in mining and construction-material manufacturing"
+      },
+      "ctas": [
+        {
+          "label": {
+            "mn": "Бидний тухай",
+            "en": "About us"
+          },
+          "targetPage": "about",
+          "style": "primary"
+        }
+      ],
+      "order": 0,
+      "isActive": true,
+      "createdAt": "2026-07-08T13:13:25.481Z",
+      "updatedAt": "2026-07-20T11:27:21.032Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a4e4cf5b678d2443633776b",
+      "mediaType": "image",
+      "mediaUrl": "https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=3840&auto=format&fit=crop&q=100",
+      "title": {
+        "mn": "Тогтвортой хөгжлийг эрхэмлэнэ",
+        "en": "Committed to sustainability"
+      },
+      "subtitle": {
+        "mn": "Байгальд ээлтэй, хариуцлагатай уул уурхай",
+        "en": "Responsible, eco-friendly mining"
+      },
+      "ctas": [
+        {
+          "label": {
+            "mn": "Дэлгэрэнгүй",
+            "en": "Learn more"
+          },
+          "targetPage": "csr",
+          "style": "primary"
+        }
+      ],
+      "order": 1,
+      "isActive": true,
+      "createdAt": "2026-07-08T13:13:25.484Z",
+      "updatedAt": "2026-07-20T11:34:29.157Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a4e55befb0e764cc011617b",
+      "mediaType": "image",
+      "mediaUrl": "https://images.unsplash.com/photo-1506146332389-18140dc7b2fb?w=3840&auto=format&fit=crop&q=100",
+      "title": {
+        "mn": "bi baataraaaa bn",
+        "en": "asdm"
+      },
+      "subtitle": {
+        "mn": "alsmdl;",
+        "en": "dmasldm"
+      },
+      "ctas": [],
+      "order": 2,
+      "isActive": true,
+      "createdAt": "2026-07-08T13:50:54.973Z",
+      "updatedAt": "2026-07-20T11:38:40.757Z",
+      "__v": 0
+    }
+  ],
+  "news": [
+    {
+      "_id": "6a58f492b3f90e476b66fb36",
+      "title": {
+        "mn": "Монполимет групп “Монцемент Билдинг Материалс” ххк ТОП 100 аж ахуйн нэгжээр шалгарлаа.",
+        "en": "Monpolymet Group, 'Moncement Building Materials' LLC was selected as a TOP 100 enterprise."
+      },
+      "category": {
+        "mn": "Амжилт",
+        "en": "Awards"
+      },
+      "publishedAt": "2024-11-21T00:00:00.000Z",
+      "imageUrl": "https://monpolymet.mn/wp-content/uploads/2024/11/467316563_1117016913764982_6953976156202560817_n-640x360.jpg",
+      "content": {
+        "mn": "Монполимет Группийн хэмжээнд үйлдвэр бүтээн байгуулалтын салбарт үйл ажиллагаа явуулж эхэлсэн цагаас хойш 20 гаруй удаа Монгол Улсын “ТОП-100” аж ахуйн нэгж, шилдэг хариуцлагатай татвар төлөгчөөр шалгарсан билээ.",
+        "en": "Monpolymet Group has been selected as one of the TOP 100 enterprises and best responsible taxpayers in Mongolia more than 20 times since it started operating in the industrial construction sector."
+      },
+      "__v": 0
+    },
+    {
+      "_id": "6a58f492b3f90e476b66fb37",
+      "title": {
+        "mn": "Гэр бүлд ээлтэй шилдэг ажил олгогч Монцемент Билдинг Материалс ХХК",
+        "en": "MONCEMENT BUILDING MATERIALS LLC, THE BEST FAMILY-FRIENDLY EMPLOYER"
+      },
+      "category": {
+        "mn": "Амжилт",
+        "en": "Awards"
+      },
+      "publishedAt": "2023-05-29T00:00:00.000Z",
+      "imageUrl": "https://monpolymet.mn/wp-content/uploads/2023/05/GWA-640x438.jpg",
+      "content": {
+        "mn": "Үндэсний үйлдвэрлэгч #Монцемент_Билдинг_Материалс_ХХК “New Work Summit: Good Workplace Awards 2023” үйл ажиллагааны “Good workplace for Family support” буюу Гэр бүлд ээлтэй шилдэг ажил олгогчоор шалгарлаа. Манай хамт олон энэ шагналыг хоёр дахь удаагаа гардаж байна.",
+        "en": "Moncement Building Materials LLC, a major manufacturer was named the most family-friendly employer at the New York Summit: Good Workplace Awards 2023 activities. This is our team’s 2nd time presenting the honor."
+      },
+      "__v": 0
+    },
+    {
+      "_id": "6a58f492b3f90e476b66fb38",
+      "title": {
+        "mn": "“Нэг мод – Нэг амь- 2023” аян",
+        "en": "Campaign “One Tree – One Life 2023”"
+      },
+      "category": {
+        "mn": "Тогтвортой хөгжил",
+        "en": "CSR"
+      },
+      "publishedAt": "2023-05-29T00:00:00.000Z",
+      "imageUrl": "https://monpolymet.mn/wp-content/uploads/2023/05/MicrosoftTeams-image-16-640x608.png",
+      "content": {
+        "mn": "Монполимет Группээс жил бүр зохион байгуулдаг “Нэг мод – Нэг амь” уламжлалт аян эхэлж байна.",
+        "en": "Monpolymet Group’s traditional campaign “One tree – One life” has begun."
+      },
+      "__v": 0
+    },
+    {
+      "_id": "6a58f492b3f90e476b66fb39",
+      "title": {
+        "mn": "Монгол Улсын 2022 оны “Топ-100” аж ахуйн нэгжийн нэг боллоо",
+        "en": "MONPOLYMET GROUP HAS BECOME THE ONE OF THE TOP 100 BUSINESSES IN MONGOLIA."
+      },
+      "category": {
+        "mn": "Амжилт",
+        "en": "Awards"
+      },
+      "publishedAt": "2023-05-29T00:00:00.000Z",
+      "imageUrl": "https://monpolymet.mn/wp-content/uploads/2023/05/MicrosoftTeams-image-25-640x368.jpg",
+      "content": {
+        "mn": "Үндэсний үйлдвэрлэгч Монполимет Групп Монгол Улсын 2022 оны “Топ-100” аж ахуйн нэгжийн нэг боллоо. Ийнхүү бид “Топ-100” аж ахуйн нэгжид 16 дахь удаагаа эрэмбэлэгдэж байна.",
+        "en": "A national manufacturer Monpolymet Group has been named one of the Mongolia’s “TOP 100” companies for 2022. We have been named to the list for the 16th time."
+      },
+      "__v": 0
+    },
+    {
+      "_id": "6a58f492b3f90e476b66fb3a",
+      "title": {
+        "mn": "Ойн цэвэрлэгээ хийв",
+        "en": "FOREST CLEANING"
+      },
+      "category": {
+        "mn": "Тогтвортой хөгжил",
+        "en": "CSR"
+      },
+      "publishedAt": "2023-04-18T00:00:00.000Z",
+      "imageUrl": "https://monpolymet.mn/wp-content/uploads/2023/04/339772062_23853979202440031_9152250015155330780_n.jpg",
+      "content": {
+        "mn": "Тарьж, ургуулсан ойн төгөлүүддээ ойн цэвэрлэгээ хийлээ. Ойн цэвэрлэгээг жил бүр хийдэг бөгөөд ойг хамгаалах, хөнөөлт шавжийн хор хохирлоос сэргийлэх, түймрийн эрсдэлийг бууруулах, ойн төлөв байдлыг сайжруулах, моддыг доройтож хөгшрөхөөс хамгаалах олон чухал ач холбогдолтой юм.",
+        "en": "We have just carried out over all cleaning in our small forest areas that we created and nourished. We carry out forest cleaning on annual basis to protect the trees, prevent from insect infestation, reduce fire risks, improve general wellbeing of the forest, and to prevent the forest from fast aging."
+      },
+      "__v": 0
+    },
+    {
+      "_id": "6a58f492b3f90e476b66fb3b",
+      "title": {
+        "mn": "Тэтгэлэгт тэнцсэн оюутнууддаа ажлын байрны урилга гардууллаа",
+        "en": "Students who are qualified for the scholarships that are announced by Monpolymet group and Eternal Sustainable Development Fund were awarded with their scholarship certificates and invitations to work in the company after their graduation."
+      },
+      "category": {
+        "mn": "Тогтвортой хөгжил",
+        "en": "CSR"
+      },
+      "publishedAt": "2023-04-18T00:00:00.000Z",
+      "imageUrl": "https://monpolymet.mn/wp-content/uploads/2023/04/zurag-ok-640x220.jpg",
+      "content": {
+        "mn": "Монполимет Групп, Мөнх тогтвортой хөгжил сангийн нэрэмжит тэтгэлэгт тэнцсэн оюутнууддаа батламж болон сургуулиа төгсөөд группийн салбар компаниудад ажиллах ажлын байрны урилгыг гардуулан өглөө.",
+        "en": "We didn’t only focus on the grades when we selected the scholarship candidates. We also considered their social participations, their personal attitudes, and abilities on working in teams."
+      },
+      "__v": 0
+    }
+  ],
+  "procurementcontents": [],
+  "hsedocuments": [
+    {
+      "_id": "6a4e4cf5b678d2443633777d",
+      "title": {
+        "mn": "ХАБЭА бодлогын баримт бичиг",
+        "en": "HSE Policy Document"
+      },
+      "fileUrl": "/docs/hse-policy.pdf",
+      "fileSize": "1.2 MB",
+      "fileType": "PDF",
+      "order": 0,
+      "createdAt": "2026-07-08T13:13:25.509Z",
+      "updatedAt": "2026-07-08T13:13:25.509Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a4e4cf5b678d2443633777e",
+      "title": {
+        "mn": "Жил тутмын тогтвортой хөгжлийн тайлан",
+        "en": "Annual Sustainability Report"
+      },
+      "fileUrl": "/docs/sustainability-2025.pdf",
+      "fileSize": "3.4 MB",
+      "fileType": "PDF",
+      "order": 1,
+      "createdAt": "2026-07-08T13:13:25.509Z",
+      "updatedAt": "2026-07-08T13:13:25.509Z",
+      "__v": 0
+    }
+  ]
+}

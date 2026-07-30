@@ -235,9 +235,10 @@ const styles = `
 .guarantees-box {
   flex: 1.8;
   background: white;
+  border: 1px solid #e2e8f0;
   border-radius: 24px;
-  padding: 48px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  padding: 32px;
+  box-shadow: none;
 }
 .guarantees-grid {
   display: grid;
@@ -252,6 +253,7 @@ const styles = `
   flex-direction: column;
   align-items: center;
   text-align: center;
+  box-shadow: none;
 }
 .guarantee-icon {
   width: 48px;
@@ -263,7 +265,7 @@ const styles = `
   align-items: center;
   justify-content: center;
   margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: none;
 }
 .guarantee-card h4 {
   font-size: 13px;
@@ -598,14 +600,62 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
   ];
 
   const guarantees = [
-    { icon: HeartPulse, titleMn: 'Эрүүл мэндийн даатгал', titleEn: 'Health Insurance' },
-    { icon: Gift, titleMn: 'Нэмэлт тэтгэмж, урамшуулал', titleEn: 'Bonuses & Benefits' },
-    { icon: Coffee, titleMn: 'Хоолны хөнгөлөлт', titleEn: 'Food Allowance' },
-    { icon: GraduationCap, titleMn: 'Сургалт, хөгжлийн боломж', titleEn: 'Training Opportunities' },
-    { icon: Shield, titleMn: 'Аюулгүй ажлын орчин', titleEn: 'Safe Environment' },
-    { icon: Dumbbell, titleMn: 'Спорт, амралтын хөтөлбөр', titleEn: 'Sports & Recreation' },
-    { icon: Scale, titleMn: 'Ажил-Амьдралын тэнцвэр', titleEn: 'Work-Life Balance' },
-    { icon: Shirt, titleMn: 'Хувцас, хамгаалах хэрэгсэл', titleEn: 'PPE' }
+    {
+      icon: HeartPulse,
+      titleMn: 'Эрүүл мэндийн даатгал',
+      titleEn: 'Health Insurance',
+      descMn: 'Нийт ажилтнууд болон тэдний гэр бүлд зориулсан эрүүл мэндийн иж бүрэн даатгалын хөтөлбөр.',
+      descEn: 'Comprehensive health insurance coverage for employees and their families.'
+    },
+    {
+      icon: Gift,
+      titleMn: 'Нэмэлт тэтгэмж, урамшуулал',
+      titleEn: 'Bonuses & Benefits',
+      descMn: 'Гүйцэтгэлийн үр дүнд суурилсан улирал, жилийн бонус болон нийгмийн дэмжлэгт тэтгэмж.',
+      descEn: 'Performance-based quarterly, annual bonuses, and social support benefits.'
+    },
+    {
+      icon: Coffee,
+      titleMn: 'Хоолны хөнгөлөлт',
+      titleEn: 'Food Allowance',
+      descMn: 'Өдөр тутмын эрүүл, тэжээллэг халуун хоол болон ундааны хөнгөлөлт бүхий тусгай үйлчилгээ.',
+      descEn: 'Daily nutritious hot meals and beverage allowances provided at all locations.'
+    },
+    {
+      icon: GraduationCap,
+      titleMn: 'Сургалт, хөгжлийн боломж',
+      titleEn: 'Training Opportunities',
+      descMn: 'Дотоод болон гадаадын мэргэшүүлэх академик сургалтууд, карьер өсөлтийн систем.',
+      descEn: 'Domestic and international professional development courses and career growth.'
+    },
+    {
+      icon: Shield,
+      titleMn: 'Аюулгүй ажлын орчин',
+      titleEn: 'Safe Work Environment',
+      descMn: 'Хөдөлмөрийн аюулгүй байдал, эрүүл ахуйн олон улсын ISO стандартын дагуух орчин.',
+      descEn: 'International ISO standard safety, health, and hygiene standards in all workplaces.'
+    },
+    {
+      icon: Dumbbell,
+      titleMn: 'Спорт, амралтын хөтөлбөр',
+      titleEn: 'Sports & Recreation',
+      descMn: 'Байгууллагын спорт наадам, фитнес хөнгөлөлт болон баг хамт олны аялал арга хэмжээ.',
+      descEn: 'Company sports tournaments, fitness memberships, and team retreat events.'
+    },
+    {
+      icon: Scale,
+      titleMn: 'Ажил-Амьдралын тэнцвэр',
+      titleEn: 'Work-Life Balance',
+      descMn: 'Уян хатан цагийн хуваарь, амралтын өдрүүдийн зохицуулалт болон гэр бүлд ээлтэй бодлого.',
+      descEn: 'Flexible working arrangements, vacation policies, and family-friendly culture.'
+    },
+    {
+      icon: Shirt,
+      titleMn: 'Хувцас, хамгаалах хэрэгсэл',
+      titleEn: 'PPE & Work Uniforms',
+      descMn: 'Ажлын байрны онцлогт тохирсон чанартай нэгэн ижил дулаан хувцас, иж бүрэн хэрэгсэл.',
+      descEn: 'High-quality seasonal workwear and full personal protective equipment.'
+    }
   ];
 
   return (
@@ -722,7 +772,7 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
           <div style={{
             backgroundColor: 'transparent',
             borderRadius: '24px',
-            padding: '48px 36px',
+            padding: '36px 36px 24px 36px',
             border: '1px solid #cbd5e1',
             textAlign: 'center',
             maxWidth: '1200px',
@@ -750,27 +800,103 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
                 ? 'Монполимет Группийн нээлттэй ажлын байранд хүсэлт илгээж, ажилд орох анкетыг онлайнаар бөглөнө\u00A0үү. Анкетын мэдээлэл mpm-hr@monpolymet.mn хаяг руу шууд илгээгдэнэ.'
                 : 'Submit your application and fill out the online candidate form for open vacancies at Monpolymet Group. Application details are sent directly to mpm-hr@monpolymet.mn.'}
             </p>
-            <button
-              onClick={() => openApplyModal()}
-              style={{
-                background: 'linear-gradient(90deg, #010B40 0%, #001CE8 100%)',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '14px',
-                padding: '14px 32px',
-                fontSize: '15px',
-                fontWeight: '700',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '10px',
-                transition: 'all 0.2s ease',
-                fontFamily: "'Montserrat', sans-serif"
-              }}
-            >
-              <UserCheck size={18} />
-              {lang === 'mn' ? 'Ажил горилогчийн товч анкет бөглөх' : 'Fill Candidate Application Form'}
-            </button>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => openApplyModal()}
+                style={{
+                  height: '56px',
+                  padding: '0 28px',
+                  borderRadius: '16px',
+                  background: 'linear-gradient(180deg, #010D56 0%, #001CE8 100%)',
+                  color: '#ffffff',
+                  border: 'none',
+                  fontSize: '15px',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  transition: 'all 0.25s ease',
+                  fontFamily: "'Montserrat', sans-serif",
+                  boxShadow: '0 8px 24px rgba(1, 11, 64, 0.25)',
+                  boxSizing: 'border-box'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow = '0 12px 28px rgba(0, 28, 232, 0.35)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(1, 11, 64, 0.25)';
+                }}
+              >
+                <div style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '8px',
+                  background: 'rgba(255, 255, 255, 0.15)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  <UserCheck size={20} color="#ffffff" />
+                </div>
+                <span>{lang === 'mn' ? 'Ажил горилогчийн товч анкет бөглөх' : 'Fill Candidate Application Form'}</span>
+              </button>
+
+              <a
+                href="https://www.zangia.mn/company/monpolymetgroup"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  height: '56px',
+                  padding: '0 28px',
+                  borderRadius: '16px',
+                  background: 'linear-gradient(180deg, #010D56 0%, #001CE8 100%)',
+                  color: '#ffffff',
+                  border: 'none',
+                  fontSize: '15px',
+                  fontWeight: '700',
+                  textDecoration: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  transition: 'all 0.25s ease',
+                  fontFamily: "'Montserrat', sans-serif",
+                  boxShadow: '0 8px 24px rgba(1, 11, 64, 0.25)',
+                  boxSizing: 'border-box'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow = '0 12px 28px rgba(0, 28, 232, 0.35)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(1, 11, 64, 0.25)';
+                }}
+              >
+                <img src={zangiaLogo} alt="Zangia Logo" style={{ width: '36px', height: '36px', objectFit: 'contain', borderRadius: '8px', flexShrink: 0 }} />
+                <span>{lang === 'mn' ? 'Нээлттэй ажлын байрыг харах' : 'View Open Vacancies'}</span>
+                <ArrowUpRight size={18} style={{ flexShrink: 0 }} />
+              </a>
+            </div>
+
+            <p style={{
+              fontSize: '13px',
+              fontWeight: '500',
+              color: '#475569',
+              opacity: 0.8,
+              marginTop: '16px',
+              marginBottom: '0',
+              textAlign: 'center',
+              letterSpacing: '-0.2px',
+              fontFamily: "'Montserrat', sans-serif"
+            }}>
+              {lang === 'mn'
+                ? 'Хүний нөөцтэй холбоотой дэлгэрэнгүй мэдээлэл авах утас, мэйл: 75855858 /1007/, mpm-hr@monpolymet.mn'
+                : 'For detailed HR inquiries, phone & email: 75855858 /1007/, mpm-hr@monpolymet.mn'}
+            </p>
           </div>
         </section>
 
@@ -939,65 +1065,94 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
               </div>
             </div>
 
-            {/* Sector Tags Bar */}
-            <div style={{
-              backgroundColor: '#f8fafc',
-              border: '1px solid #e2e8f0',
-              borderRadius: '16px',
-              padding: '16px 24px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-              gap: '10px 16px'
-            }}>
-              <span style={{ fontSize: '12.5px', fontWeight: '700', color: '#010B40', textTransform: 'uppercase', letterSpacing: '0.5px', fontFamily: "'Montserrat', sans-serif" }}>
-                {lang === 'mn' ? 'Үйл ажиллагааны салбарууд:' : 'Operating Sectors:'}
-              </span>
-              {[
-                lang === 'mn' ? 'Уул уурхай' : 'Mining',
-                lang === 'mn' ? 'Үйлдвэрлэл' : 'Manufacturing',
-                lang === 'mn' ? 'Нөхөн сэргээлт' : 'Rehabilitation',
-                lang === 'mn' ? 'Барилга' : 'Construction',
-                lang === 'mn' ? 'Худалдаа үйлчилгээ' : 'Trade & Services',
-                lang === 'mn' ? 'Хоол үйлдвэрлэл' : 'Catering'
-              ].map((sector, idx) => (
-                <span
-                  key={idx}
-                  style={{
-                    backgroundColor: '#ffffff',
-                    border: '1px solid #cbd5e1',
-                    borderRadius: '20px',
-                    padding: '4px 14px',
-                    fontSize: '12px',
-                    fontWeight: '600',
-                    color: '#334155',
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.02)',
-                    fontFamily: "'Montserrat', sans-serif"
-                  }}
-                >
-                  {sector}
-                </span>
-              ))}
-            </div>
+
           </div>
         </section>
 
         {/* GUARANTEES SECTION */}
-        <section id="join-us" className="join-guarantees-container" style={{ margin: '0 5% 40px' }}>
-          <div className="guarantees-box" style={{ flex: 1, width: '100%' }}>
-            <h2 style={{ fontSize: '24px', fontWeight: '800', color: '#0f172a', marginBottom: '32px' }}>
-              {lang === 'mn' ? 'Нийгмийн баталгаа' : 'Social Guarantees'}
-            </h2>
-            <div className="guarantees-grid">
+        <section id="join-us" style={{ margin: '0 5% 60px' }}>
+          <div style={{
+            backgroundColor: '#ffffff',
+            border: '1px solid #e2e8f0',
+            borderRadius: '28px',
+            padding: '44px 36px',
+            boxShadow: 'none'
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+              <InteractiveTitle
+                text={lang === 'mn' ? 'Нийгмийн баталгаа ба Хөнгөлөлтүүд' : 'Social Guarantees & Benefits'}
+                className="no-underline"
+                style={{
+                  fontSize: 'clamp(22px, 3.5vw, 34px)',
+                  fontWeight: '700',
+                  color: '#0f172a',
+                  letterSpacing: '-0.5px',
+                  fontFamily: "'Montserrat', sans-serif"
+                }}
+              />
+              <p style={{ fontSize: '14.5px', color: '#64748b', marginTop: '10px', maxWidth: '700px', margin: '10px auto 0 auto', fontFamily: "'Montserrat', sans-serif" }}>
+                {lang === 'mn'
+                  ? 'Монполимет Групп нь ажилтнуудынхаа эрүүл мэнд, аюулгүй байдал болон нийгмийн хангамжийг нэн түрүүнд тавьдаг.'
+                  : 'Monpolymet Group prioritizes employee health, workplace safety, and comprehensive social welfare benefits.'}
+              </p>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))',
+              gap: '16px'
+            }}>
               {guarantees.map((g, i) => {
                 const GIcon = g.icon;
                 return (
-                  <div key={i} className="guarantee-card">
-                    <div className="guarantee-icon">
-                      <GIcon size={24} strokeWidth={1.5} />
+                  <div
+                    key={i}
+                    style={{
+                      backgroundColor: '#f8fafc',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '18px',
+                      padding: '20px 22px',
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '18px',
+                      boxShadow: 'none',
+                      transition: 'all 0.25s ease',
+                      cursor: 'default'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = '#001CE8';
+                      e.currentTarget.style.backgroundColor = '#ffffff';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = '#e2e8f0';
+                      e.currentTarget.style.backgroundColor = '#f8fafc';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
+                    <div style={{
+                      width: '48px',
+                      height: '48px',
+                      borderRadius: '14px',
+                      background: 'linear-gradient(135deg, #010B40 0%, #001CE8 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#ffffff',
+                      flexShrink: 0
+                    }}>
+                      <GIcon size={22} strokeWidth={1.8} color="#ffffff" />
                     </div>
-                    <h4>{lang === 'mn' ? g.titleMn : g.titleEn}</h4>
+                    <div style={{ flex: 1 }}>
+                      <h4 style={{ fontSize: '15.5px', fontWeight: '700', color: '#0f172a', marginBottom: '4px', fontFamily: "'Montserrat', sans-serif" }}>
+                        {lang === 'mn' ? g.titleMn : g.titleEn}
+                      </h4>
+                      <p style={{ fontSize: '13px', color: '#64748b', lineHeight: '1.5', margin: 0, fontFamily: "'Montserrat', sans-serif" }}>
+                        {lang === 'mn' ? g.descMn : g.descEn}
+                      </p>
+                    </div>
                   </div>
                 );
               })}
@@ -1005,60 +1160,9 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
           </div>
         </section>
 
-        {/* Zangia.mn External Portal Link Banner (Matching TenderHub Button Style & Footer Color) */}
-        <div style={{ textAlign: 'center', margin: '30px 5% 30px' }}>
-          <a
-            href="https://www.zangia.mn/company/monpolymetgroup"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '12px',
-              background: 'linear-gradient(90deg, #010B40 0%, #001CE8 100%)',
-              color: '#ffffff',
-              border: 'none',
-              borderRadius: '14px',
-              padding: '14px 28px',
-              fontSize: '15px',
-              fontWeight: '700',
-              textDecoration: 'none',
-              boxShadow: '0 6px 20px rgba(1, 11, 64, 0.25)',
-              transition: 'all 0.25s ease',
-              fontFamily: "'Montserrat', sans-serif"
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-3px)';
-              e.currentTarget.style.boxShadow = '0 10px 25px rgba(0, 28, 232, 0.35)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 6px 20px rgba(1, 11, 64, 0.25)';
-            }}
-          >
-            <img src={zangiaLogo} alt="Zangia Logo" style={{ width: '36px', height: '36px', objectFit: 'contain', borderRadius: '8px' }} />
-            <span>{lang === 'mn' ? 'Zangia.mn платформоос бүх нээлттэй ажлын байрыг харах' : 'View all open vacancies on Zangia.mn'}</span>
-            <ArrowUpRight size={18} />
-          </a>
-        </div>
 
-        {/* HR CONTACT INFO TEXT BOX BELOW JOIN US BANNER */}
-        <div style={{ margin: '0 5% 24px', textAlign: 'center' }}>
-          <p style={{
-            fontSize: '13.5px',
-            fontWeight: '600',
-            color: '#475569',
-            opacity: 0.8,
-            margin: 0,
-            display: 'inline-block',
-            letterSpacing: '-0.2px',
-            fontFamily: "'Montserrat', sans-serif"
-          }}>
-            {lang === 'mn'
-              ? 'Хүний нөөцтэй холбоотой дэлгэрэнгүй мэдээлэл авах утас, мэйл: 75855858 /1007/, mpm-hr@monpolymet.mn'
-              : 'For detailed HR inquiries, phone & email: 75855858 /1007/, mpm-hr@monpolymet.mn'}
-          </p>
-        </div>
+
+
 
 
         </div>
