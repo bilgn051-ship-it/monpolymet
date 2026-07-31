@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import odLogo from '../../assets/od.png';
 import odBlueLogo from '../../assets/od-blue.png';
-import { Globe, Menu, X, ChevronDown, Mail, Phone } from 'lucide-react';
+import { Globe, Menu, X, ChevronDown } from 'lucide-react';
 
 export default function Header({
   lang,
@@ -113,10 +113,10 @@ export default function Header({
         <div className="header-container">
           {/* Logo Section */}
           <div className="logo-section" onClick={() => handleNavClick('home')}>
-            <img 
-              src={logoUrl} 
-              alt="Monpolymet Logo" 
-              className="header-logo-img" 
+            <img
+              src={logoUrl}
+              alt="Monpolymet Logo"
+              className="header-logo-img"
             />
           </div>
 
@@ -126,8 +126,8 @@ export default function Header({
               const subs = subMenus[item.target];
 
               return (
-                <div 
-                  key={item.id} 
+                <div
+                  key={item.id}
                   className={`nav-item-wrapper ${subs ? 'has-dropdown' : ''}`}
                   onMouseEnter={() => setActiveDropdown(item.id)}
                   onMouseLeave={() => setActiveDropdown(null)}
@@ -182,13 +182,13 @@ export default function Header({
         <div className="drawer-backdrop" onClick={() => setMenuOpen(false)}></div>
       )}
 
-      {/* Mobile Drawer (Moncement Style) */}
+      {/* Mobile Drawer */}
       {menuOpen && (
         <div className="mobile-drawer">
           <div className="mobile-drawer-top">
-            <img src={odLogo} alt="Monpolymet Logo" style={{ height: '32px', filter: 'brightness(0) invert(1)' }} />
+            <img src={odBlueLogo} alt="Monpolymet Logo" style={{ height: '30px' }} />
             <button className="mobile-drawer-close" onClick={() => setMenuOpen(false)}>
-              <X size={20} />
+              <X size={22} />
             </button>
           </div>
           <nav className="mobile-nav">
@@ -200,26 +200,29 @@ export default function Header({
                   <div className="mobile-nav-header">
                     <button
                       className={`mobile-nav-link ${currentPage === item.target ? 'active' : ''}`}
-                      onClick={() => handleNavClick(item.target)}
+                      onClick={() => {
+                        if (subs) {
+                          setActiveDropdown(isExpanded ? null : item.id);
+                        } else {
+                          handleNavClick(item.target);
+                        }
+                      }}
                     >
                       {item.label}
                     </button>
                     {subs && (
-                      <button 
+                      <button
                         className="mobile-toggle-btn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveDropdown(isExpanded ? null : item.id);
-                        }}
+                        onClick={() => setActiveDropdown(isExpanded ? null : item.id)}
                       >
-                        <ChevronDown size={18} className={isExpanded ? 'rotated' : ''} />
+                        <ChevronDown size={20} className={isExpanded ? 'rotated' : ''} />
                       </button>
                     )}
                   </div>
                   {subs && isExpanded && (
                     <div className="mobile-submenu animate-slide-down">
                       {subs.map(sub => (
-                        <button 
+                        <button
                           key={sub.id}
                           className="mobile-sub-link"
                           onClick={(e) => handleSubmenuClick(e, item.target, sub.hash)}
@@ -233,17 +236,6 @@ export default function Header({
               );
             })}
           </nav>
-
-          <div className="mobile-drawer-footer">
-            <a href="mailto:info@monpolymet.mn" className="mobile-footer-item">
-              <Mail size={15} />
-              <span>info@monpolymet.mn</span>
-            </a>
-            <a href="tel:+97670118012" className="mobile-footer-item">
-              <Phone size={15} />
-              <span>+976 7011 8012</span>
-            </a>
-          </div>
         </div>
       )}
     </>

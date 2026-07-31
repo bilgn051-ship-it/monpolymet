@@ -446,7 +446,7 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
         backgroundPosition: 'center -310px',
         backgroundSize: '135% auto',
         backgroundRepeat: 'no-repeat',
-        backgroundColor: '#0b1120'
+        backgroundColor: '#f8fafc'
       }}>
         <div className="full-bleed-banner-overlay"></div>
         <div className="full-bleed-banner-container">
