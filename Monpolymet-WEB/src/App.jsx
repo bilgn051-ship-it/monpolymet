@@ -32,8 +32,8 @@ function App() {
 
   // News and open vacancies come live from the API (managed in the admin
   // dashboard).
-  const [news, setNews] = useState([]);
-  const [jobs, setJobs] = useState([]);
+  const [news, setNews] = useState(initialNews);
+  const [jobs, setJobs] = useState(initialJobs);
   const [settings, setSettings] = useState(null);
   const [timeline, setTimeline] = useState([]);
   const [pages, setPages] = useState([]);
@@ -46,8 +46,8 @@ function App() {
 
   useEffect(() => {
     fetchNews()
-      .then((data) => data.length && setNews(data))
-      .catch(() => { });
+      .then((data) => (data && data.length) ? setNews(data) : setNews(initialNews))
+      .catch(() => setNews(initialNews));
     fetchJobs()
       .then((data) => setJobs(data))
       .catch(() => { });
