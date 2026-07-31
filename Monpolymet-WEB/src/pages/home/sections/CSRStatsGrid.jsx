@@ -43,7 +43,7 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
           font-size: 40px;
           font-weight: 600;
           font-family: 'Montserrat', sans-serif;
-          color: #1f4494;
+          color: #000000;
           margin-bottom: 12px;
           line-height: 1.2;
           word-break: normal;
@@ -95,7 +95,7 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
 
         <div className="csr-stats-grid-container" style={{ maxWidth: '1100px', margin: '0 auto' }}>
           {(data && data.length > 0 ? data : statsData).map((stat, idx) => (
-            <div 
+            <div
               key={idx}
               style={{
                 backgroundColor: '#ffffff',
