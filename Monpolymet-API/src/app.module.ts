@@ -35,6 +35,8 @@ import { ChatModule } from './modules/chat/chat.module';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         uri: config.get<string>('MONGODB_URI', 'mongodb://localhost:27017/monpolymet'),
+        serverSelectionTimeoutMS: 4000,
+        retryAttempts: 2,
       }),
     }),
     AuthModule,
