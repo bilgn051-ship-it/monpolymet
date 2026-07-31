@@ -443,10 +443,10 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
       {/* 1. Full Bleed Hero Banner */}
       <div className="full-bleed-banner" style={{
         backgroundImage: `url('${proHeroImg}')`,
-        backgroundPosition: 'center -310px',
-        backgroundSize: '135% auto',
+        backgroundPosition: 'center center',
+        backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-        backgroundColor: '#f8fafc'
+        backgroundColor: '#ffffff'
       }}>
         <div className="full-bleed-banner-overlay"></div>
         <div className="full-bleed-banner-container">
