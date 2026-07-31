@@ -736,6 +736,51 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                   locationEn: 'Ulaanbaatar - Dornogovi',
                   descMn: 'Бүтээгдэхүүн ба түүхий эдийн төмөр замын болон авто замын тээвэрлэлтийг гүйцэтгэх найдвартай логистикийн түнш сонгон шалгаруулна.',
                   descEn: 'Selecting reliable logistics partners for bulk cargo transport via railway and heavy truck fleet.'
+                },
+                {
+                  code: 'ТШ-2026/01',
+                  categoryMn: 'Мэдээллийн Технологи',
+                  categoryEn: 'IT & Automation',
+                  titleMn: 'Улаанбаатар дахь оффисын компьютер, серверийн тоног төхөөрөмж нийлүүлэх',
+                  titleEn: 'Supply of office computers & server hardware in Ulaanbaatar',
+                  startTime: '2026.02.01 09:00',
+                  startDate: '2026-02-01T09:00:00',
+                  deadline: '2026.03.15 18:00',
+                  deadlineDate: '2026-03-15T18:00:00',
+                  locationMn: 'Улаанбаатар хот',
+                  locationEn: 'Ulaanbaatar city',
+                  descMn: 'Монполимет Группийн төв оффисын МТ системийн шинэчлэлтийн хүрээнд сервер болон суурин компьютер нийлүүлэх сонгон шалгаруулалт хаагдсан.',
+                  descEn: 'Tender for supplying servers and desktop computers for central office IT upgrade has closed.'
+                },
+                {
+                  code: 'ТШ-2026/02',
+                  categoryMn: 'Үйлдвэрлэлийн Түүхий Эд',
+                  categoryEn: 'Factory Materials',
+                  titleMn: 'Монцемент үйлдвэрийн лабораторийн урвалж болон шалгагч багаж хэрэгсэл',
+                  titleEn: 'Supply of laboratory reagents and testing equipment for Moncement',
+                  startTime: '2026.03.01 09:00',
+                  startDate: '2026-03-01T09:00:00',
+                  deadline: '2026.04.10 18:00',
+                  deadlineDate: '2026-04-10T18:00:00',
+                  locationMn: 'Дорноговь аймаг, Өргөн сум',
+                  locationEn: 'Urgun sum, Dornogovi province',
+                  descMn: 'Цементийн чанарын хяналтын лабораторийн химийн урвалж болон ISO стандартын хэмжүүр нийлүүлэх сонгон шалгаруулалт хаагдсан.',
+                  descEn: 'Tender for supplying chemical reagents and ISO testing tools for cement quality lab has closed.'
+                },
+                {
+                  code: 'ТШ-2026/03',
+                  categoryMn: 'Хөдөлмөр Хамгаалал',
+                  categoryEn: 'Safety & PPE',
+                  titleMn: 'Заамар дахь салбарын ажилчдын ажлын хувцас, ХАБЭА хэрэгсэл нийлүүлэлт',
+                  titleEn: 'Supply of workwear and PPE equipment for Zaamar branch employees',
+                  startTime: '2026.03.15 09:00',
+                  startDate: '2026-03-15T09:00:00',
+                  deadline: '2026.05.01 18:00',
+                  deadlineDate: '2026-05-01T18:00:00',
+                  locationMn: 'Төв аймаг, Заамар сум',
+                  locationEn: 'Zaamar sum, Tuv province',
+                  descMn: 'Уул уурхайн хээрийн нөхцөлд ажиллах 500 гаруй ажилтнуудын тусгай зориулалтын ажлын хувцас нийлүүлэх сонгон шалгаруулалт дууссан.',
+                  descEn: 'Tender for supplying specialized safety workwear for 500+ mining field staff has completed.'
                 }
               ];
 
