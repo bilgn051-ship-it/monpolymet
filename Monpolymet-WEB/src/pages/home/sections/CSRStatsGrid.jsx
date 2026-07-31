@@ -43,7 +43,7 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
           font-size: 44px;
           font-weight: 800;
           font-family: 'Montserrat', sans-serif;
-          color: #010B40;
+          color: #000000;
           margin-bottom: 12px;
           line-height: 1.2;
           word-break: normal;
