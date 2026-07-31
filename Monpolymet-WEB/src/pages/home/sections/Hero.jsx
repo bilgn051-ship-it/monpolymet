@@ -25,14 +25,9 @@ export default function Hero({ lang, setCurrentPage }) {
             }));
           setSlides(mapped);
           setActiveSlide(0);
-        } else {
-          setSlides(DEFAULT_SLIDES);
         }
       })
-      .catch((e) => {
-        console.error("Failed to fetch hero slides:", e);
-        setSlides(DEFAULT_SLIDES);
-      });
+      .catch((e) => console.error("Failed to fetch hero slides:", e));
   }, []);
 
   // Auto-advance. The timer resets on every slide change (auto or manual) so the
