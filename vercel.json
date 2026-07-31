@@ -1,0 +1,10 @@
+{
+  "buildCommand": "cd Monpolymet-WEB && npm install && npm run build",
+  "outputDirectory": "Monpolymet-WEB/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
