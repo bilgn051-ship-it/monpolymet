@@ -40,8 +40,8 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
           gap: 24px;
         }
         .csr-stat-number {
-          font-size: 44px;
-          font-weight: 800;
+          font-size: 40px;
+          font-weight: 600;
           font-family: 'Montserrat', sans-serif;
           color: #000000;
           margin-bottom: 12px;
