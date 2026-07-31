@@ -5207,38 +5207,25 @@ h2::after {
 .news-separated-card {
   display: flex;
   flex-direction: column;
-  gap: 0 !important;
+  gap: 6px;
   cursor: pointer;
   height: 100%;
-  background: #ffffff !important;
-  border-radius: 16px !important;
-  overflow: hidden !important;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-.news-separated-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 30px rgba(0, 28, 232, 0.12);
-  border-color: #001CE8;
 }
 
 .news-separated-card:hover .news-card-image img {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
-.news-separated-card:hover .news-card-title {
-  color: #001CE8;
+.news-separated-card:hover .news-card-text-box {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
 
 .news-card-image {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 2 / 1;
   overflow: hidden;
-  border-radius: 0 !important;
-  margin: 0 !important;
-  background-color: #f1f5f9;
+  border-radius: 16px;
 }
 
 .news-card-image img {
@@ -5249,37 +5236,34 @@ h2::after {
 }
 
 .news-card-text-box {
-  background: transparent !important;
-  border-radius: 0 !important;
-  padding: 20px 24px !important;
-  margin: 0 !important;
-  box-shadow: none !important;
-  transform: none !important;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   flex-grow: 1;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
   font-family: 'Montserrat', sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .news-card-date {
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #64748b;
-  letter-spacing: -0.2px;
 }
 
 .news-card-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #040C29;
-  line-height: 1.4;
+  line-height: 1.35;
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  transition: color 0.3s ease;
 }
 
 .news-preview-footer {
