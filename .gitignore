@@ -21,7 +21,8 @@ Thumbs.db
 .idea/
 
 # Uploads
-uploads/
+/uploads
+!**/src/modules/uploads/**
 
 # Temporary
 temp/
