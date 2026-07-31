@@ -8,10 +8,17 @@ const defaultHost = typeof window !== 'undefined' && window.location.hostname ? 
 const BASE_URL = import.meta.env.VITE_API_URL ?? `http://${defaultHost}:4000/api`;
 
 export async function getJson(path) {
-  const res = await fetch(`${BASE_URL}${path}`);
-  if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-  const text = await res.text();
-  return text ? JSON.parse(text) : null;
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2500);
+    const res = await fetch(`${BASE_URL}${path}`, { signal: controller.signal });
+    clearTimeout(timeoutId);
+    if (!res.ok) return null;
+    const text = await res.text();
+    return text ? JSON.parse(text) : null;
+  } catch {
+    return null;
+  }
 }
 
 const mapNews = (d) => ({
@@ -42,8 +49,13 @@ const mapJob = (d) => ({
 });
 
 export async function fetchNews() {
-  const data = await getJson('/public/news');
-  return data.map(mapNews);
+  try {
+    const data = await getJson('/public/news');
+    if (!Array.isArray(data)) return null;
+    return data.map(mapNews);
+  } catch {
+    return null;
+  }
 }
 
 export async function incrementNewsView(id) {
@@ -58,8 +70,13 @@ export async function incrementNewsView(id) {
 }
 
 export async function fetchJobs() {
-  const data = await getJson('/public/jobs');
-  return data.map(mapJob);
+  try {
+    const data = await getJson('/public/jobs');
+    if (!Array.isArray(data)) return null;
+    return data.map(mapJob);
+  } catch {
+    return null;
+  }
 }
 
 const mapTender = (d) => ({
@@ -104,8 +121,13 @@ const mapTimeline = (d) => ({
 });
 
 export async function fetchTimeline() {
-  const data = await getJson('/public/timeline');
-  return data.map(mapTimeline);
+  try {
+    const data = await getJson('/public/timeline');
+    if (!Array.isArray(data)) return null;
+    return data.map(mapTimeline);
+  } catch {
+    return null;
+  }
 }
 
 const mapHeroSlide = (d) => ({
@@ -126,8 +148,13 @@ const mapHeroSlide = (d) => ({
 });
 
 export async function fetchHeroSlides() {
-  const data = await getJson('/public/hero-slides');
-  return data.map(mapHeroSlide);
+  try {
+    const data = await getJson('/public/hero-slides');
+    if (!Array.isArray(data)) return null;
+    return data.map(mapHeroSlide);
+  } catch {
+    return null;
+  }
 }
 
 const mapStatCard = (d) => ({
@@ -147,8 +174,13 @@ const mapStatCard = (d) => ({
 });
 
 export async function fetchStatCards() {
-  const data = await getJson('/public/stat-cards');
-  return data.map(mapStatCard);
+  try {
+    const data = await getJson('/public/stat-cards');
+    if (!Array.isArray(data)) return null;
+    return data.map(mapStatCard);
+  } catch {
+    return null;
+  }
 }
 
 const mapCsrStat = (d) => ({
@@ -164,8 +196,13 @@ const mapCsrStat = (d) => ({
 });
 
 export async function fetchCsrStats() {
-  const data = await getJson('/public/csr-stats');
-  return data.map(mapCsrStat);
+  try {
+    const data = await getJson('/public/csr-stats');
+    if (!Array.isArray(data)) return null;
+    return data.map(mapCsrStat);
+  } catch {
+    return null;
+  }
 }
 
 const mapCsrHighlight = (d) => ({
@@ -184,8 +221,12 @@ const mapCsrHighlight = (d) => ({
 });
 
 export async function fetchCsrHighlight() {
-  const data = await getJson('/public/csr-highlight');
-  return data ? mapCsrHighlight(data) : null;
+  try {
+    const data = await getJson('/public/csr-highlight');
+    return data ? mapCsrHighlight(data) : null;
+  } catch {
+    return null;
+  }
 }
 
 const mapHomeContent = (d) => ({
@@ -203,8 +244,12 @@ const mapHomeContent = (d) => ({
 });
 
 export async function fetchHomeContent() {
-  const data = await getJson('/public/home-content');
-  return data ? mapHomeContent(data) : null;
+  try {
+    const data = await getJson('/public/home-content');
+    return data ? mapHomeContent(data) : null;
+  } catch {
+    return null;
+  }
 }
 
 const mapCoreValue = (d) => ({
@@ -218,8 +263,13 @@ const mapCoreValue = (d) => ({
 });
 
 export async function fetchCoreValues() {
-  const data = await getJson('/public/core-values');
-  return data.map(mapCoreValue);
+  try {
+    const data = await getJson('/public/core-values');
+    if (!Array.isArray(data)) return null;
+    return data.map(mapCoreValue);
+  } catch {
+    return null;
+  }
 }
 
 const mapTeam = (d) => ({
@@ -238,8 +288,13 @@ const mapTeam = (d) => ({
 });
 
 export async function fetchTeam() {
-  const data = await getJson('/public/team');
-  return data.map(mapTeam);
+  try {
+    const data = await getJson('/public/team');
+    if (!Array.isArray(data)) return null;
+    return data.map(mapTeam);
+  } catch {
+    return null;
+  }
 }
 
 const mapAboutContent = (d) => ({
@@ -278,8 +333,12 @@ const mapAboutContent = (d) => ({
 });
 
 export async function fetchAboutContent() {
-  const data = await getJson('/public/about-content');
-  return data ? mapAboutContent(data) : null;
+  try {
+    const data = await getJson('/public/about-content');
+    return data ? mapAboutContent(data) : null;
+  } catch {
+    return null;
+  }
 }
 
 const mapSector = (d) => ({
@@ -307,8 +366,13 @@ const mapSector = (d) => ({
 });
 
 export async function fetchSectors() {
-  const data = await getJson('/public/sectors');
-  return data.map(mapSector);
+  try {
+    const data = await getJson('/public/sectors');
+    if (!Array.isArray(data)) return null;
+    return data.map(mapSector);
+  } catch {
+    return null;
+  }
 }
 
 const mapCsr = (d) => ({
@@ -328,8 +392,13 @@ const mapCsr = (d) => ({
 });
 
 export async function fetchCsr() {
-  const data = await getJson('/public/csr');
-  return data.map(mapCsr);
+  try {
+    const data = await getJson('/public/csr');
+    if (!Array.isArray(data)) return null;
+    return data.map(mapCsr);
+  } catch {
+    return null;
+  }
 }
 
 
@@ -343,8 +412,13 @@ const mapTour = (d) => ({
 });
 
 export async function fetchTour() {
-  const data = await getJson('/public/tour');
-  return data.map(mapTour);
+  try {
+    const data = await getJson('/public/tour');
+    if (!Array.isArray(data)) return null;
+    return data.map(mapTour);
+  } catch {
+    return null;
+  }
 }
 
 const mapFaq = (d) => ({
@@ -357,8 +431,13 @@ const mapFaq = (d) => ({
 });
 
 export async function fetchFaqs() {
-  const data = await getJson('/public/faqs');
-  return data.map(mapFaq);
+  try {
+    const data = await getJson('/public/faqs');
+    if (!Array.isArray(data)) return null;
+    return data.map(mapFaq);
+  } catch {
+    return null;
+  }
 }
 
 const mapCareersContent = (d) => ({
@@ -374,8 +453,12 @@ const mapCareersContent = (d) => ({
 });
 
 export async function fetchCareersContent() {
-  const data = await getJson('/public/careers-content');
-  return data ? mapCareersContent(data) : null;
+  try {
+    const data = await getJson('/public/careers-content');
+    return data ? mapCareersContent(data) : null;
+  } catch {
+    return null;
+  }
 }
 
 const mapSettings = (d) => ({
