@@ -27,7 +27,7 @@ async function bootstrap() {
   const allowedOrigins = config
     .get<string>(
       'CORS_ORIGINS',
-      'http://localhost:5173,http://localhost:5174,https://monpolymet.mn,https://admin.monpolymet.mn',
+      'http://localhost:5173,http://localhost:5174,https://mpm-chi.vercel.app,https://monpolymet.mn,https://admin.monpolymet.mn',
     )
     .split(',')
     .map((origin) => origin.trim());
