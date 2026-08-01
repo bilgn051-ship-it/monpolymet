@@ -52,6 +52,11 @@ export default function Hero({ lang, setCurrentPage }) {
               subtitleEn: s.subtitleEn,
               ctas: s.ctas,
             }));
+          
+          const hasSwan = mapped.some(s => s.image && (s.image.includes('swan') || s.image.includes('media__1785573478233')));
+          if (!hasSwan) {
+            mapped.splice(1, 0, DEFAULT_SLIDES[1]);
+          }
           setSlides(mapped);
           setActiveSlide(0);
         } else {

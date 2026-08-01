@@ -534,8 +534,8 @@ function CsrVirtualTour({ lang }) {
           border: isFullscreen ? 'none' : '1px solid #e2e8f0',
           userSelect: 'none'
         }}>
-          {/* True WebGL 3D Spherical 360 Panorama VR Renderer */}
-          <WebGL360Viewer
+          {/* Clean Distortion-Free 360 Panorama Viewer */}
+          <Clean360Panorama
             imageSrc={currentScene.panoUrl}
             autoRotate={autoRotate}
             zoomLevel={zoomLevel}
@@ -770,145 +770,116 @@ function CsrVirtualTour({ lang }) {
   );
 }
 
-// 🌐 THREE.JS PROFESSIONAL 3D SPHERICAL PANORAMA VIEWER (RenderStuff Standard)
-function WebGL360Viewer({ imageSrc, autoRotate, zoomLevel }) {
-  const mountRef = useRef(null);
-  const isUserInteractingRef = useRef(false);
-  const onPointerDownPointerXRef = useRef(0);
-  const onPointerDownPointerYRef = useRef(0);
-  const lonRef = useRef(0);
-  const onPointerDownLonRef = useRef(0);
-  const latRef = useRef(0);
-  const onPointerDownLatRef = useRef(0);
-  const phiRef = useRef(0);
-  const thetaRef = useRef(0);
+// 📸 CLEAN DISTORTION-FREE 360 PANORAMA VIEWER (No fisheye curve, sharp & seamless 360 drag)
+function Clean360Panorama({ imageSrc, autoRotate, zoomLevel }) {
+  const canvasRef = useRef(null);
+  const imgRef = useRef(null);
+  const panXRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const animFrameRef = useRef(null);
 
   useEffect(() => {
-    const container = mountRef.current;
-    if (!container) return;
+    const img = new Image();
+    img.src = typeof imageSrc === 'string' ? imageSrc : imageSrc;
+    img.onload = () => {
+      imgRef.current = img;
+    };
+  }, [imageSrc]);
 
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+  useEffect(() => {
+    function render() {
+      const canvas = canvasRef.current;
+      const img = imgRef.current;
 
-    // 1. Perspective Camera
-    const camera = new THREE.PerspectiveCamera(75, width / height, 1, 1100);
+      if (canvas && img && img.complete) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          const dpr = window.devicePixelRatio || 1;
+          const rect = canvas.getBoundingClientRect();
+          const cw = rect.width;
+          const ch = rect.height;
 
-    // 2. Scene
-    const scene = new THREE.Scene();
+          if (canvas.width !== Math.floor(cw * dpr) || canvas.height !== Math.floor(ch * dpr)) {
+            canvas.width = Math.floor(cw * dpr);
+            canvas.height = Math.floor(ch * dpr);
+          }
 
-    // 3. Inverted 3D Sphere Geometry for 360 Panorama
-    const geometry = new THREE.SphereGeometry(500, 60, 40);
-    geometry.scale(-1, 1, 1);
+          ctx.save();
+          ctx.scale(dpr, dpr);
 
-    // 4. Texture Loader & High Quality Linear Filter
-    const textureLoader = new THREE.TextureLoader();
-    const texture = textureLoader.load(
-      typeof imageSrc === 'string' ? imageSrc : imageSrc,
-      () => {
-        texture.minFilter = THREE.LinearFilter;
-        texture.magFilter = THREE.LinearFilter;
-        texture.generateMipmaps = false;
-        texture.colorSpace = THREE.SRGBColorSpace;
+          // High-quality crisp sharp rendering
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          ctx.filter = 'contrast(1.05) saturate(1.08)';
+
+          // Auto-rotate if enabled and not dragging
+          if (autoRotate && !isDraggingRef.current) {
+            panXRef.current -= 0.8;
+          }
+
+          // Calculate render scale to fit container height
+          const zoom = zoomLevel || 1;
+          const drawH = ch * zoom;
+          const drawW = drawH * (img.width / img.height);
+
+          // Seamless infinite 360 wrap calculation
+          let offsetX = panXRef.current % drawW;
+          if (offsetX > 0) offsetX -= drawW;
+
+          ctx.fillStyle = '#0f172a';
+          ctx.fillRect(0, 0, cw, ch);
+
+          const startY = (ch - drawH) / 2;
+
+          for (let x = offsetX; x < cw; x += drawW) {
+            ctx.drawImage(img, x, startY, drawW, drawH);
+          }
+
+          ctx.restore();
+        }
       }
-    );
 
-    const material = new THREE.MeshBasicMaterial({ map: texture });
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
-
-    // 5. WebGL Renderer with High DPI Anti-Aliasing
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(window.devicePixelRatio || 1);
-    renderer.setSize(width, height);
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    container.appendChild(renderer.domElement);
-
-    let animationFrameId;
-
-    function animate() {
-      animationFrameId = requestAnimationFrame(animate);
-
-      if (autoRotate && !isUserInteractingRef.current) {
-        lonRef.current += 0.1;
-      }
-
-      latRef.current = Math.max(-85, Math.min(85, latRef.current));
-      phiRef.current = THREE.MathUtils.degToRad(90 - latRef.current);
-      thetaRef.current = THREE.MathUtils.degToRad(lonRef.current);
-
-      camera.fov = 75 / (zoomLevel || 1);
-      camera.updateProjectionMatrix();
-
-      camera.position.x = 500 * Math.sin(phiRef.current) * Math.cos(thetaRef.current);
-      camera.position.y = 500 * Math.cos(phiRef.current);
-      camera.position.z = 500 * Math.sin(phiRef.current) * Math.sin(thetaRef.current);
-
-      camera.lookAt(0, 0, 0);
-      renderer.render(scene, camera);
+      animFrameRef.current = requestAnimationFrame(render);
     }
 
-    animate();
-
-    const handleResize = () => {
-      if (!container) return;
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    };
-
-    window.addEventListener('resize', handleResize);
-
+    animFrameRef.current = requestAnimationFrame(render);
     return () => {
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
-      if (renderer.domElement && container.contains(renderer.domElement)) {
-        container.removeChild(renderer.domElement);
-      }
-      geometry.dispose();
-      material.dispose();
-      texture.dispose();
-      renderer.dispose();
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     };
-  }, [imageSrc, autoRotate, zoomLevel]);
+  }, [autoRotate, zoomLevel]);
 
-  const onPointerDown = (e) => {
-    isUserInteractingRef.current = true;
+  const handlePointerDown = (e) => {
+    isDraggingRef.current = true;
     const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-    onPointerDownPointerXRef.current = clientX;
-    onPointerDownPointerYRef.current = clientY;
-    onPointerDownLonRef.current = lonRef.current;
-    onPointerDownLatRef.current = latRef.current;
+    startXRef.current = clientX - panXRef.current;
   };
 
-  const onPointerMove = (e) => {
-    if (!isUserInteractingRef.current) return;
+  const handlePointerMove = (e) => {
+    if (!isDraggingRef.current) return;
     const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-    lonRef.current = (onPointerDownPointerXRef.current - clientX) * 0.15 + onPointerDownLonRef.current;
-    latRef.current = (clientY - onPointerDownPointerYRef.current) * 0.15 + onPointerDownLatRef.current;
+    panXRef.current = clientX - startXRef.current;
   };
 
-  const onPointerUp = () => {
-    isUserInteractingRef.current = false;
+  const handlePointerUp = () => {
+    isDraggingRef.current = false;
   };
 
   return (
-    <div
-      ref={mountRef}
-      onMouseDown={onPointerDown}
-      onMouseMove={onPointerMove}
-      onMouseUp={onPointerUp}
-      onMouseLeave={onPointerUp}
-      onTouchStart={onPointerDown}
-      onTouchMove={onPointerMove}
-      onTouchEnd={onPointerUp}
+    <canvas
+      ref={canvasRef}
+      onMouseDown={handlePointerDown}
+      onMouseMove={handlePointerMove}
+      onMouseUp={handlePointerUp}
+      onMouseLeave={handlePointerUp}
+      onTouchStart={handlePointerDown}
+      onTouchMove={handlePointerMove}
+      onTouchEnd={handlePointerUp}
       style={{
         width: '100%',
         height: '100%',
-        cursor: isUserInteractingRef.current ? 'grabbing' : 'grab',
+        display: 'block',
+        cursor: isDraggingRef.current ? 'grabbing' : 'grab',
         touchAction: 'none'
       }}
     />
