@@ -534,11 +534,10 @@ function CsrVirtualTour({ lang }) {
           border: isFullscreen ? 'none' : '1px solid #e2e8f0',
           userSelect: 'none'
         }}>
-          {/* Clean Distortion-Free 360 Panorama Viewer */}
-          <Clean360Panorama
+          {/* Renderstuff Official Pannellum 360 WebGL Panorama Viewer */}
+          <RenderstuffPannellumViewer
             imageSrc={currentScene.panoUrl}
             autoRotate={autoRotate}
-            zoomLevel={zoomLevel}
           />
 
 
@@ -770,117 +769,74 @@ function CsrVirtualTour({ lang }) {
   );
 }
 
-// 📸 CLEAN DISTORTION-FREE 360 PANORAMA VIEWER (No fisheye curve, sharp & seamless 360 drag)
-function Clean360Panorama({ imageSrc, autoRotate, zoomLevel }) {
-  const canvasRef = useRef(null);
-  const imgRef = useRef(null);
-  const panXRef = useRef(0);
-  const isDraggingRef = useRef(false);
-  const startXRef = useRef(0);
-  const animFrameRef = useRef(null);
+// 🌐 RENDERSTUFF OFFICIAL PANNELLUM 360 WEBGL VIEWER
+function RenderstuffPannellumViewer({ imageSrc, autoRotate }) {
+  const containerRef = useRef(null);
+  const viewerRef = useRef(null);
 
   useEffect(() => {
-    const img = new Image();
-    img.src = typeof imageSrc === 'string' ? imageSrc : imageSrc;
-    img.onload = () => {
-      imgRef.current = img;
-    };
-  }, [imageSrc]);
-
-  useEffect(() => {
-    function render() {
-      const canvas = canvasRef.current;
-      const img = imgRef.current;
-
-      if (canvas && img && img.complete) {
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          const dpr = window.devicePixelRatio || 1;
-          const rect = canvas.getBoundingClientRect();
-          const cw = rect.width;
-          const ch = rect.height;
-
-          if (canvas.width !== Math.floor(cw * dpr) || canvas.height !== Math.floor(ch * dpr)) {
-            canvas.width = Math.floor(cw * dpr);
-            canvas.height = Math.floor(ch * dpr);
-          }
-
-          ctx.save();
-          ctx.scale(dpr, dpr);
-
-          // High-quality crisp sharp rendering
-          ctx.imageSmoothingEnabled = true;
-          ctx.imageSmoothingQuality = 'high';
-          ctx.filter = 'contrast(1.05) saturate(1.08)';
-
-          // Auto-rotate if enabled and not dragging
-          if (autoRotate && !isDraggingRef.current) {
-            panXRef.current -= 0.8;
-          }
-
-          // Calculate render scale to fit container height
-          const zoom = zoomLevel || 1;
-          const drawH = ch * zoom;
-          const drawW = drawH * (img.width / img.height);
-
-          // Seamless infinite 360 wrap calculation
-          let offsetX = panXRef.current % drawW;
-          if (offsetX > 0) offsetX -= drawW;
-
-          ctx.fillStyle = '#0f172a';
-          ctx.fillRect(0, 0, cw, ch);
-
-          const startY = (ch - drawH) / 2;
-
-          for (let x = offsetX; x < cw; x += drawW) {
-            ctx.drawImage(img, x, startY, drawW, drawH);
-          }
-
-          ctx.restore();
-        }
-      }
-
-      animFrameRef.current = requestAnimationFrame(render);
+    // Inject Pannellum CSS if not present
+    if (!document.getElementById('pannellum-css')) {
+      const link = document.createElement('link');
+      link.id = 'pannellum-css';
+      link.rel = 'stylesheet';
+      link.href = 'https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css';
+      document.head.appendChild(link);
     }
 
-    animFrameRef.current = requestAnimationFrame(render);
-    return () => {
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    const initViewer = () => {
+      if (!containerRef.current || !window.pannellum) return;
+      if (viewerRef.current) {
+        try { viewerRef.current.destroy(); } catch {}
+      }
+
+      const panoPath = typeof imageSrc === 'string' ? imageSrc : (imageSrc.default || imageSrc);
+
+      viewerRef.current = window.pannellum.viewer(containerRef.current, {
+        type: 'equirectangular',
+        panorama: panoPath,
+        autoLoad: true,
+        autoRotate: autoRotate ? -2 : 0,
+        showControls: true,
+        showZoomCtrl: true,
+        showFullscreenCtrl: true,
+        mouseZoom: true,
+        friction: 0.15,
+        hfov: 100,
+        minHfov: 50,
+        maxHfov: 120,
+        compass: false,
+        backgroundColor: [15, 23, 42]
+      });
     };
-  }, [autoRotate, zoomLevel]);
 
-  const handlePointerDown = (e) => {
-    isDraggingRef.current = true;
-    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-    startXRef.current = clientX - panXRef.current;
-  };
+    if (window.pannellum) {
+      initViewer();
+    } else {
+      let script = document.getElementById('pannellum-js');
+      if (!script) {
+        script = document.createElement('script');
+        script.id = 'pannellum-js';
+        script.src = 'https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js';
+        document.head.appendChild(script);
+      }
+      script.addEventListener('load', initViewer);
+    }
 
-  const handlePointerMove = (e) => {
-    if (!isDraggingRef.current) return;
-    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-    panXRef.current = clientX - startXRef.current;
-  };
-
-  const handlePointerUp = () => {
-    isDraggingRef.current = false;
-  };
+    return () => {
+      if (viewerRef.current) {
+        try { viewerRef.current.destroy(); } catch {}
+      }
+    };
+  }, [imageSrc, autoRotate]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      onMouseDown={handlePointerDown}
-      onMouseMove={handlePointerMove}
-      onMouseUp={handlePointerUp}
-      onMouseLeave={handlePointerUp}
-      onTouchStart={handlePointerDown}
-      onTouchMove={handlePointerMove}
-      onTouchEnd={handlePointerUp}
+    <div
+      ref={containerRef}
       style={{
         width: '100%',
         height: '100%',
-        display: 'block',
-        cursor: isDraggingRef.current ? 'grabbing' : 'grab',
-        touchAction: 'none'
+        position: 'relative'
       }}
     />
   );
