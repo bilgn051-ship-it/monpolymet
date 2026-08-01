@@ -127,7 +127,7 @@ export default function CsrPage({ lang, t, pageMetadata }) {
       {/* 4. UN Sustainable Development Goals (SDGs) Bento Grid */}
       <section style={{ backgroundColor: '#f8fafc', padding: '80px 20px', fontFamily: "'Montserrat', sans-serif", borderTop: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-          
+
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <div style={{
               display: 'inline-flex',
@@ -490,7 +490,7 @@ function CsrVirtualTour({ lang }) {
     }}>
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-        
+
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <div style={{
@@ -513,7 +513,7 @@ function CsrVirtualTour({ lang }) {
           <h2 className="no-underline" style={{ fontSize: '36px', fontWeight: '800', color: '#0f172a', marginBottom: '12px', letterSpacing: '-0.5px', fontFamily: "'Montserrat', sans-serif" }}>
             {lang === 'mn' ? 'Тосонгийн Орд & Эко Парк - 360° Интерактив Аялал' : 'Toson Mine & Eco-Park - 360° Interactive Tour'}
           </h2>
-          
+
           <p style={{ fontSize: '16px', color: '#475569', maxWidth: '680px', margin: '0 auto', lineHeight: '1.6', fontFamily: "'Montserrat', sans-serif" }}>
             {lang === 'mn'
               ? 'Тосонгийн нөхөн сэргээлтийн бүс, 16 га Тосон нуур болон 5.5 км ойн төглийг интерактив 360° панорама орчинд мэдрэн үзээрэй.'
@@ -787,7 +787,7 @@ function RenderstuffPannellumViewer({ imageSrc, autoRotate }) {
     const initViewer = () => {
       if (!containerRef.current || !window.pannellum) return;
       if (viewerRef.current) {
-        try { viewerRef.current.destroy(); } catch {}
+        try { viewerRef.current.destroy(); } catch { }
       }
 
       const panoPath = typeof imageSrc === 'string' ? imageSrc : (imageSrc.default || imageSrc);
@@ -825,7 +825,7 @@ function RenderstuffPannellumViewer({ imageSrc, autoRotate }) {
 
     return () => {
       if (viewerRef.current) {
-        try { viewerRef.current.destroy(); } catch {}
+        try { viewerRef.current.destroy(); } catch { }
       }
     };
   }, [imageSrc, autoRotate]);
