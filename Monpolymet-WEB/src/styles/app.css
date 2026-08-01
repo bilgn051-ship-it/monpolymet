@@ -625,7 +625,7 @@ h2::after {
   position: absolute;
   inset: 0;
   background-size: cover;
-  background-position: center center;
+  background-position: center 35%;
   opacity: 0;
   transition: opacity 0.85s ease-in-out;
 }
