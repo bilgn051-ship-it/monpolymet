@@ -1,32 +1,32 @@
 import { createTheme } from '@mantine/core';
 
 /**
- * Monpolymet admin theme. `brand` is the corporate blue scale (light → dark)
- * used for primary buttons, active nav, links and accents.
+ * Monpolymet Corporate Theme. `brand` is the Royal Monpolymet Blue scale
+ * (#001CE8) used for primary buttons, active navigation, links, and accents.
  */
 export const theme = createTheme({
   primaryColor: 'brand',
   primaryShade: { light: 6, dark: 5 },
   colors: {
     brand: [
-      '#e8f1ff',
-      '#d0e0ff',
-      '#a1beff',
-      '#6f9bfd',
-      '#487dfb',
-      '#2f6bfa',
-      '#1f62fb',
-      '#1152e0',
-      '#0448c9',
-      '#003db2',
+      '#eef2ff', // 0
+      '#e0e7ff', // 1
+      '#c7d2fe', // 2
+      '#a5b4fc', // 3
+      '#6366f1', // 4
+      '#4338ca', // 5
+      '#001CE8', // 6 - Primary Monpolymet Royal Blue
+      '#0018c4', // 7
+      '#0014a0', // 8
+      '#000f7c', // 9
     ],
   },
   fontFamily:
-    '"Montserrat", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif',
+    '"Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
   headings: {
     fontFamily:
-      '"Montserrat", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif',
+      '"Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     fontWeight: '700',
   },
-  defaultRadius: 'xl',
+  defaultRadius: 'md',
 });

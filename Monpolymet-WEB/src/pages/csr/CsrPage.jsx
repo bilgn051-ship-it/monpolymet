@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import * as THREE from 'three';
 import { motion } from 'framer-motion';
 import { Trees, HeartHandshake, Leaf, Droplets, Building2, Cpu, ArrowUpRight, Sparkles, Globe, ShieldCheck, Sun, Sprout, Award, CheckCircle2, RotateCw, Maximize2, Minimize2, ZoomIn, ZoomOut, X } from 'lucide-react';
 import { fetchCsr } from '../../api';
+import toson360LakeImg from '../../assets/toson-360-lake.jpg';
 
 export default function CsrPage({ lang, t, pageMetadata }) {
   const [csrItems, setCsrItems] = useState([]);
@@ -23,7 +25,7 @@ export default function CsrPage({ lang, t, pageMetadata }) {
       titleEn: 'Model Eco-Restoration - Toson Deposit',
       descMn: 'Тосонгийн ордод 931.67 га талбайд ашиглалт явуулснаас техникийн нөхөн сэргээлтийг 743 га талбайд, биологийн нөхөн сэргээлтийг 514 га талбайд хийсэн. 100,000 гаруй мод тариалж 5.5 км урт 7 хэсэг ойн төглүүд ургуулсан бөгөөд 16 га талбайтай Тосон нуурыг бий болгоод байна.',
       descEn: 'Out of 931.67 ha exploited at Toson placer deposit, technical reclamation covers 743 ha and biological reclamation 514 ha. Over 100,000 trees planted across 5.5 km forest belts, alongside creating the 16 ha freshwater Toson Lake.',
-      imageUrl: "https://en.monpolymet.mn/wp-content/uploads/2021/12/img-slider-01-2.jpg",
+      imageUrl: toson360LakeImg,
       stats: [
         { value: "743 га", labelMn: "Техникийн нөхөн сэргээлт", labelEn: "Technical Restoration" },
         { value: "514 га", labelMn: "Биологийн нөхөн сэргээлт", labelEn: "Biological Restoration" },
@@ -54,7 +56,8 @@ export default function CsrPage({ lang, t, pageMetadata }) {
     }
   ];
 
-  const displayCsr = csrItems && csrItems.length > 0 ? csrItems : defaultCsr;
+  const rawCsr = csrItems && csrItems.length > 0 ? csrItems : defaultCsr;
+  const displayCsr = rawCsr.map((item, idx) => idx === 0 ? { ...item, imageUrl: '/toson-360-lake.jpg' } : item);
 
 
 
@@ -318,7 +321,7 @@ function CsrVirtualTour({ lang }) {
   const [panX, setPanX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
-  const [autoRotate, setAutoRotate] = useState(true);
+  const [autoRotate, setAutoRotate] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedHotspot, setSelectedHotspot] = useState(null);
@@ -330,8 +333,8 @@ function CsrVirtualTour({ lang }) {
       titleEn: 'Toson Lake & Eco-Park (16 ha)',
       descMn: 'Алтан цагаан сувд мэт 16 га талбай бүхий тунгалаг хиймэл нуур ба шувуудын диваажин.',
       descEn: 'A pristine 16-hectare freshwater lake supporting local ecosystem biodiversity.',
-      thumbUrl: 'https://en.monpolymet.mn/wp-content/uploads/2021/12/img-slider-01-2.jpg',
-      panoUrl: 'https://en.monpolymet.mn/wp-content/uploads/2021/12/img-slider-01-2.jpg',
+      thumbUrl: toson360LakeImg,
+      panoUrl: toson360LakeImg,
       hotspots: [
         {
           id: 1,
@@ -528,78 +531,17 @@ function CsrVirtualTour({ lang }) {
           borderRadius: isFullscreen ? '0px' : '28px',
           overflow: 'hidden',
           backgroundColor: '#000000',
-          border: isFullscreen ? 'none' : '1px solid rgba(255, 255, 255, 0.15)',
-          boxShadow: '0 25px 60px rgba(0,0,0,0.5)',
-          cursor: isDragging ? 'grabbing' : 'grab',
+          border: isFullscreen ? 'none' : '1px solid #e2e8f0',
           userSelect: 'none'
-        }}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleMouseUp}
-        >
-          {/* Background Pano Image with Motion Pan */}
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: `url(${currentScene.panoUrl})`,
-            backgroundSize: `${zoomLevel * 140}% 100%`,
-            backgroundPosition: `${panX}px center`,
-            backgroundRepeat: 'repeat-x',
-            transition: isDragging ? 'none' : 'background-position 0.1s linear, background-size 0.3s ease',
-            transform: `scale(${zoomLevel})`,
-            transformOrigin: 'center center'
-          }} />
+        }}>
+          {/* True WebGL 3D Spherical 360 Panorama VR Renderer */}
+          <WebGL360Viewer
+            imageSrc={currentScene.panoUrl}
+            autoRotate={autoRotate}
+            zoomLevel={zoomLevel}
+          />
 
-          {/* Dark Overlay Gradient */}
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(180deg, rgba(7, 13, 30, 0.4) 0%, rgba(7, 13, 30, 0.1) 50%, rgba(7, 13, 30, 0.8) 100%)',
-            pointerEvents: 'none'
-          }} />
 
-          {/* Interactive Hotspots */}
-          {currentScene.hotspots.map((hs) => (
-            <motion.div
-              key={hs.id}
-              initial={{ scale: 0.8, opacity: 0.8 }}
-              animate={{ scale: [1, 1.15, 1], opacity: 1 }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedHotspot(hs);
-              }}
-              style={{
-                position: 'absolute',
-                left: hs.left,
-                top: hs.top,
-                zIndex: 20,
-                cursor: 'pointer'
-              }}
-            >
-              <div style={{
-                backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                backdropFilter: 'blur(12px)',
-                border: '1px solid rgba(52, 211, 153, 0.6)',
-                borderRadius: '24px',
-                padding: '8px 16px',
-                boxShadow: '0 8px 25px rgba(0,0,0,0.5)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                color: '#ffffff',
-                fontSize: '13px',
-                fontWeight: '700'
-              }}>
-                <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#34d399', boxShadow: '0 0 10px #34d399' }} />
-                <span>{lang === 'mn' ? hs.titleMn : hs.titleEn}</span>
-              </div>
-            </motion.div>
-          ))}
 
           {/* Control Toolbar Top Right */}
           <div style={{
@@ -779,8 +721,7 @@ function CsrVirtualTour({ lang }) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              gap: '20px',
-              boxShadow: '0 15px 35px rgba(0,0,0,0.4)'
+              gap: '20px'
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
@@ -826,5 +767,150 @@ function CsrVirtualTour({ lang }) {
         )}
       </div>
     </section>
+  );
+}
+
+// 🌐 THREE.JS PROFESSIONAL 3D SPHERICAL PANORAMA VIEWER (RenderStuff Standard)
+function WebGL360Viewer({ imageSrc, autoRotate, zoomLevel }) {
+  const mountRef = useRef(null);
+  const isUserInteractingRef = useRef(false);
+  const onPointerDownPointerXRef = useRef(0);
+  const onPointerDownPointerYRef = useRef(0);
+  const lonRef = useRef(0);
+  const onPointerDownLonRef = useRef(0);
+  const latRef = useRef(0);
+  const onPointerDownLatRef = useRef(0);
+  const phiRef = useRef(0);
+  const thetaRef = useRef(0);
+
+  useEffect(() => {
+    const container = mountRef.current;
+    if (!container) return;
+
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    // 1. Perspective Camera
+    const camera = new THREE.PerspectiveCamera(75, width / height, 1, 1100);
+
+    // 2. Scene
+    const scene = new THREE.Scene();
+
+    // 3. Inverted 3D Sphere Geometry for 360 Panorama
+    const geometry = new THREE.SphereGeometry(500, 60, 40);
+    geometry.scale(-1, 1, 1);
+
+    // 4. Texture Loader & High Quality Linear Filter
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load(
+      typeof imageSrc === 'string' ? imageSrc : imageSrc,
+      () => {
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        texture.generateMipmaps = false;
+        texture.colorSpace = THREE.SRGBColorSpace;
+      }
+    );
+
+    const material = new THREE.MeshBasicMaterial({ map: texture });
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    // 5. WebGL Renderer with High DPI Anti-Aliasing
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(window.devicePixelRatio || 1);
+    renderer.setSize(width, height);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    container.appendChild(renderer.domElement);
+
+    let animationFrameId;
+
+    function animate() {
+      animationFrameId = requestAnimationFrame(animate);
+
+      if (autoRotate && !isUserInteractingRef.current) {
+        lonRef.current += 0.1;
+      }
+
+      latRef.current = Math.max(-85, Math.min(85, latRef.current));
+      phiRef.current = THREE.MathUtils.degToRad(90 - latRef.current);
+      thetaRef.current = THREE.MathUtils.degToRad(lonRef.current);
+
+      camera.fov = 75 / (zoomLevel || 1);
+      camera.updateProjectionMatrix();
+
+      camera.position.x = 500 * Math.sin(phiRef.current) * Math.cos(thetaRef.current);
+      camera.position.y = 500 * Math.cos(phiRef.current);
+      camera.position.z = 500 * Math.sin(phiRef.current) * Math.sin(thetaRef.current);
+
+      camera.lookAt(0, 0, 0);
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    const handleResize = () => {
+      if (!container) return;
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationFrameId);
+      if (renderer.domElement && container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
+      }
+      geometry.dispose();
+      material.dispose();
+      texture.dispose();
+      renderer.dispose();
+    };
+  }, [imageSrc, autoRotate, zoomLevel]);
+
+  const onPointerDown = (e) => {
+    isUserInteractingRef.current = true;
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+    onPointerDownPointerXRef.current = clientX;
+    onPointerDownPointerYRef.current = clientY;
+    onPointerDownLonRef.current = lonRef.current;
+    onPointerDownLatRef.current = latRef.current;
+  };
+
+  const onPointerMove = (e) => {
+    if (!isUserInteractingRef.current) return;
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+    lonRef.current = (onPointerDownPointerXRef.current - clientX) * 0.15 + onPointerDownLonRef.current;
+    latRef.current = (clientY - onPointerDownPointerYRef.current) * 0.15 + onPointerDownLatRef.current;
+  };
+
+  const onPointerUp = () => {
+    isUserInteractingRef.current = false;
+  };
+
+  return (
+    <div
+      ref={mountRef}
+      onMouseDown={onPointerDown}
+      onMouseMove={onPointerMove}
+      onMouseUp={onPointerUp}
+      onMouseLeave={onPointerUp}
+      onTouchStart={onPointerDown}
+      onTouchMove={onPointerMove}
+      onTouchEnd={onPointerUp}
+      style={{
+        width: '100%',
+        height: '100%',
+        cursor: isUserInteractingRef.current ? 'grabbing' : 'grab',
+        touchAction: 'none'
+      }}
+    />
   );
 }

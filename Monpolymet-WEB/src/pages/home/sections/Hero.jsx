@@ -1,12 +1,41 @@
 import { useEffect, useState } from 'react';
 import { fetchHeroSlides } from '../../../api';
+import mglHero from '../../../assets/mgl_hero.jpg';
+import proHero from '../../../assets/pro_hero.jpg';
+import swanHero from '../../../assets/swan_hero.jpg';
+import heroVideo from '../../../assets/WEB.mp4';
 
 const SLIDE_INTERVAL = 6000;
+
+const DEFAULT_SLIDES = [
+  {
+    video: heroVideo,
+    image: mglHero,
+    titleMn: 'Эх Орны Өв Бэлэг, Ирээдүйн Бүтээн Байгуулалт',
+    titleEn: 'Heritage of the Homeland, Future Construction',
+    subtitleMn: 'Байгаль орчинд ээлтэй, тогтвортой хөгжлийг түүчээлэгч Монполимет Групп',
+    subtitleEn: 'Monpolymet Group, leading eco-friendly and sustainable development',
+  },
+  {
+    image: swanHero,
+    titleMn: 'Байгаль Орчны Нөхөн Сэргээлт & Эко Систем',
+    titleEn: 'Environmental Reclamation & Eco System',
+    subtitleMn: 'Тосон уурхайн биологийн иж бүрэн нөхөн сэргээлт - Хун шувууд чуулсан эко нуур',
+    subtitleEn: 'Comprehensive biological reclamation at Toson mine - Swan lake eco habitat',
+  },
+  {
+    image: proHero,
+    titleMn: 'Монцемент Үйлдвэр & Үндэсний Бүтээн Байгуулалт',
+    titleEn: 'Moncement Plant & National Development',
+    subtitleMn: 'Дэвшилтэт технологи, 100% үндэсний бүтээн байгуулалт',
+    subtitleEn: 'Advanced technology, 100% national development',
+  }
+];
 
 export default function Hero({ lang, setCurrentPage }) {
   const [activeSlide, setActiveSlide] = useState(0);
 
-  const [slides, setSlides] = useState([]);
+  const [slides, setSlides] = useState(DEFAULT_SLIDES);
 
   useEffect(() => {
     fetchHeroSlides()
@@ -25,9 +54,14 @@ export default function Hero({ lang, setCurrentPage }) {
             }));
           setSlides(mapped);
           setActiveSlide(0);
+        } else {
+          setSlides(DEFAULT_SLIDES);
         }
       })
-      .catch((e) => console.error("Failed to fetch hero slides:", e));
+      .catch((e) => {
+        console.error("Failed to fetch hero slides:", e);
+        setSlides(DEFAULT_SLIDES);
+      });
   }, []);
 
   // Auto-advance. The timer resets on every slide change (auto or manual) so the

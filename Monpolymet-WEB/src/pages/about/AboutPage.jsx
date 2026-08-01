@@ -201,21 +201,21 @@ export default function AboutPage({ lang, t, pageMetadata }) {
 
   const historyData = timeline && timeline.length > 0
     ? timeline.map(h => ({
-        id: h._id || h.id,
-        year: h.year,
-        titleMn: (typeof h.title === 'object' ? h.title?.mn : h.titleMn) || h.title,
-        titleEn: (typeof h.title === 'object' ? h.title?.en : h.titleEn) || h.title,
-        descMn: (typeof h.desc === 'object' ? h.desc?.mn : h.descMn) || h.description || h.desc,
-        descEn: (typeof h.desc === 'object' ? h.desc?.en : h.descEn) || h.description || h.desc,
-        imageUrl: h.imageUrl
-      }))
+      id: h._id || h.id,
+      year: h.year,
+      titleMn: (typeof h.title === 'object' ? h.title?.mn : h.titleMn) || h.title,
+      titleEn: (typeof h.title === 'object' ? h.title?.en : h.titleEn) || h.title,
+      descMn: (typeof h.desc === 'object' ? h.desc?.mn : h.descMn) || h.description || h.desc,
+      descEn: (typeof h.desc === 'object' ? h.desc?.en : h.descEn) || h.description || h.desc,
+      imageUrl: h.imageUrl
+    }))
     : (t.about.history || []).map(h => ({
-        year: h.year,
-        titleMn: h.title,
-        titleEn: h.title,
-        descMn: h.desc,
-        descEn: h.desc,
-      }));
+      year: h.year,
+      titleMn: h.title,
+      titleEn: h.title,
+      descMn: h.desc,
+      descEn: h.desc,
+    }));
 
   /* const valuesData = coreValues && coreValues.length > 0
     ? coreValues.sort((a, b) => a.order - b.order).map(v => ({
@@ -227,12 +227,12 @@ export default function AboutPage({ lang, t, pageMetadata }) {
 
   const parsedTeam = team && team.length > 0
     ? team.map(m => {
-        const name = (typeof m.name === 'object' ? (lang === 'mn' ? m.name?.mn : m.name?.en) : (lang === 'mn' ? m.nameMn : m.nameEn)) || (typeof m.name === 'string' ? m.name : '');
-        const role = (typeof m.role === 'object' ? (lang === 'mn' ? m.role?.mn : m.role?.en) : (lang === 'mn' ? m.roleMn : m.roleEn)) || (typeof m.role === 'string' ? m.role : '');
-        const bio = (typeof m.bio === 'object' ? (lang === 'mn' ? m.bio?.mn : m.bio?.en) : (lang === 'mn' ? m.bioMn : m.bioEn)) || (typeof m.bio === 'string' ? m.bio : '');
-        const edu = (typeof m.edu === 'object' ? (lang === 'mn' ? m.edu?.mn : m.edu?.en) : (lang === 'mn' ? m.eduMn : m.eduEn)) || m.education || (typeof m.edu === 'string' ? m.edu : '');
-        return { name, role, bio, edu, imageUrl: m.imageUrl };
-      }).filter(m => m.name && !m.name.includes('?'))
+      const name = (typeof m.name === 'object' ? (lang === 'mn' ? m.name?.mn : m.name?.en) : (lang === 'mn' ? m.nameMn : m.nameEn)) || (typeof m.name === 'string' ? m.name : '');
+      const role = (typeof m.role === 'object' ? (lang === 'mn' ? m.role?.mn : m.role?.en) : (lang === 'mn' ? m.roleMn : m.roleEn)) || (typeof m.role === 'string' ? m.role : '');
+      const bio = (typeof m.bio === 'object' ? (lang === 'mn' ? m.bio?.mn : m.bio?.en) : (lang === 'mn' ? m.bioMn : m.bioEn)) || (typeof m.bio === 'string' ? m.bio : '');
+      const edu = (typeof m.edu === 'object' ? (lang === 'mn' ? m.edu?.mn : m.edu?.en) : (lang === 'mn' ? m.eduMn : m.eduEn)) || m.education || (typeof m.edu === 'string' ? m.edu : '');
+      return { name, role, bio, edu, imageUrl: m.imageUrl };
+    }).filter(m => m.name && !m.name.includes('?'))
     : [];
 
   const teamData = (parsedTeam && parsedTeam.length > 0) ? parsedTeam : t.about.team;
@@ -316,8 +316,8 @@ export default function AboutPage({ lang, t, pageMetadata }) {
 
             {/* Group Intro Heading */}
             <div id="vision" style={{ textAlign: 'center', maxWidth: '1200px', margin: '0 auto' }}>
-              <InteractiveTitle 
-                className="no-underline" 
+              <InteractiveTitle
+                className="no-underline"
                 style={{ fontSize: '50px', fontWeight: '600', letterSpacing: '-0.02em', fontFamily: "'Montserrat', sans-serif", color: '#000000', margin: '0' }}
                 text={lang === 'mn' ? 'Группийн танилцуулга' : 'Group Introduction'}
               />
@@ -327,12 +327,14 @@ export default function AboutPage({ lang, t, pageMetadata }) {
                 color: '#475569',
                 fontFamily: "'Inter', sans-serif",
                 textAlign: 'center',
-                margin: '24px auto 40px auto'
+                margin: '24px auto 55px auto'
               }}>
                 {lang === 'mn' ? (
                   <>
-                    <p style={{ marginBottom: '12px' }}>Монполимет Групп нь 1992 онд байгуулагдсан. Уул уурхай, байгаль орчны нөхөн сэргээлт, барилгын материал үйлдвэрлэл, барилга байгууламж, гадаад худалдааны чиглэлээр үйл ажиллагаа явуулж буй үндэсний үйлдвэрлэгч – хөрөнгө оруулагч компани юм.</p>
-                    <p>Манай компани үйл ажиллагаа явуулж буй салбар бүртээ байгальд ээлтэй эко шийдэл бүхий шинэ нөү-хау, инноваци, дэвшилтэт технологийг нэвтрүүлэх, ногоон хөгжлийг дэмжихийг эрхэм зорилгоо болгон ажиллаж байна.</p>
+                    <p style={{ marginBottom: '12px' }}>Монполимет групп нь 1992 онд үүсгэн байгуулагдсан, уул уурхай, байгаль орчны нөхөн сэргээлт, барилгын материалын үйлдвэрлэл, барилга угсралт, гадаад худалдааны чиглэлээр үйл ажиллагаа явуулж 1000 гаруй ажилтан, албан хаагчийг тогтвортой, ээлтэй ажлын байраар хангаж буй үндэсний үйлдвэрлэгч, хөрөнгө оруулагч компани юм.
+                      Бид уул уурхайн үйлдвэрлэлийг шинжлэх ухааны үндэслэлтэйгээр хариуцлагатайгаар хэрэгжүүлж, байгаль орчны нөхөн сэргээлтийн жишгийг тогтоон, экосистемийг сэргээж, биологийн олон янз байдлыг бий болгож цөлжилттэй тэмцэх, газрын доройтлыг бууруулах, уур амьсгалын өөрчлөлтийг сааруулах зэрэг үйлсэд өөрсдийн хувь нэмрээ оруулсаар байна.
+                      Дэлхийн жишигт нийцсэн техник технологи, арга туршлагыг өөрсдийн мэдлэг чадвартай хослуулан эх орондоо нутагшуулж монгол хүний хөгжил, байгаль орчны хамгаалал, нийгмийн сайн сайхан, Монгол Улсын хөгжилд бодит хувь нэмэр оруулан ажиллаж байна.
+                    </p>
                   </>
                 ) : (
                   <p>Monpolymet Group was established in 1992. It is a national producer-investor company operating in the fields of mining, environmental rehabilitation, building materials production, construction, and foreign trade. Our company's main goal is to introduce new know-how, innovation, and advanced technology with eco-friendly solutions in every sector we operate in, supporting green development.</p>
@@ -478,8 +480,8 @@ export default function AboutPage({ lang, t, pageMetadata }) {
         {/* History Timeline Section */}
         <section id="history" style={{ backgroundColor: '#ffffff', padding: '24px 5% 40px 5%', marginTop: '-30px' }}>
           <div style={{ textAlign: 'center', maxWidth: '1200px', margin: '0 auto' }}>
-            <InteractiveTitle 
-              className="no-underline" 
+            <InteractiveTitle
+              className="no-underline"
               style={{ fontSize: '50px', fontWeight: '600', letterSpacing: '-0.02em', fontFamily: "'Montserrat', sans-serif", color: '#000000', margin: '0' }}
               text={lang === 'mn' ? 'Түүхэн замнал' : 'Historical Journey'}
             />

@@ -7,25 +7,28 @@ import {
   Drawer,
   Group,
   Stack,
-  Switch,
   Table,
   Text,
   TextInput,
   Popover,
   Select,
   Divider,
+  SegmentedControl,
+  Paper,
+  Tooltip
 } from '@mantine/core';
 import { isNotEmpty, useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { modals } from '@mantine/modals';
-import { Pencil, Plus, Trash2, Filter, Search, RotateCcw } from 'lucide-react';
+import { Pencil, Plus, Trash2, Filter, Search, RotateCcw, FileText, CheckCircle2, Clock } from 'lucide-react';
 import { api } from '../../api/client';
 import { useCollection } from '../../lib/useCollection';
 import { toDateInput, formatDate } from '../../lib/format';
 import PageHeader from '../../components/PageHeader';
 import DataState from '../../components/DataState';
 import LocalizedInput from '../../components/LocalizedInput';
+import ImageUploader from '../../components/ImageUploader';
 import { t } from '../../i18n';
 
 const EMPTY = {
@@ -34,6 +37,7 @@ const EMPTY = {
   content: { mn: '', en: '' },
   imageUrl: '',
   publishedAt: '',
+  status: 'published', // 'draft' | 'reviewed' | 'published'
   isPublished: true,
 };
 
@@ -73,13 +77,15 @@ export default function NewsPage() {
 
   const openEdit = (item) => {
     setEditing(item);
+    const itemStatus = item.status || (item.isPublished ? 'published' : 'draft');
     form.setValues({
       title: { mn: item.title?.mn ?? '', en: item.title?.en ?? '' },
       category: { mn: item.category?.mn ?? '', en: item.category?.en ?? '' },
       content: { mn: item.content?.mn ?? '', en: item.content?.en ?? '' },
       imageUrl: item.imageUrl ?? '',
       publishedAt: toDateInput(item.publishedAt),
-      isPublished: item.isPublished ?? true,
+      status: itemStatus,
+      isPublished: itemStatus === 'published',
     });
     open();
   };
@@ -89,7 +95,8 @@ export default function NewsPage() {
     try {
       const payload = {
         ...values,
-        publishedAt: values.publishedAt ? new Date(values.publishedAt).toISOString() : null,
+        isPublished: values.status === 'published',
+        publishedAt: values.publishedAt ? new Date(values.publishedAt).toISOString() : new Date().toISOString(),
       };
       if (editing) await api.patch(`/news/${editing._id}`, payload);
       else await api.post('/news', payload);
@@ -128,11 +135,8 @@ export default function NewsPage() {
     });
 
   const filteredItems = (items || []).filter((item) => {
-    if (filterStatus === 'active') {
-      if (item.isPublished !== true) return false;
-    } else if (filterStatus === 'inactive') {
-      if (item.isPublished !== false) return false;
-    }
+    const itemSt = item.status || (item.isPublished ? 'published' : 'draft');
+    if (filterStatus !== 'all' && itemSt !== filterStatus) return false;
 
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
@@ -147,6 +151,17 @@ export default function NewsPage() {
     return true;
   });
 
+  const getStatusBadge = (item) => {
+    const st = item.status || (item.isPublished ? 'published' : 'draft');
+    if (st === 'published') {
+      return <Badge color="green" variant="light" leftSection={<CheckCircle2 size={12} />}>Нийтэлсэн</Badge>;
+    }
+    if (st === 'reviewed') {
+      return <Badge color="cyan" variant="light" leftSection={<Clock size={12} />}>Хянасан (Бэлэн)</Badge>;
+    }
+    return <Badge color="gray" variant="light" leftSection={<FileText size={12} />}>Ноорог (Draft)</Badge>;
+  };
+
   const filterArea = (
     <Popover width={300} position="bottom-start" withArrow shadow="md" trapFocus>
       <Popover.Target>
@@ -160,7 +175,7 @@ export default function NewsPage() {
       </Popover.Target>
       <Popover.Dropdown>
         <Stack gap="sm">
-          <Text size="sm" fw={700}>Хайлт болон шүүлтүүр</Text>
+          <Text size="sm" fw={700}>Хайлт болон нийтлэлийн төлөв</Text>
 
           <TextInput
             label="Хайх утга"
@@ -171,14 +186,15 @@ export default function NewsPage() {
           />
 
           <Select
-            label="Төлөв"
+            label="Нийтлэх төлөв"
             placeholder="Төлвөөр шүүх"
             value={filterStatus}
             onChange={setFilterStatus}
             data={[
               { value: 'all', label: 'Бүгд' },
-              { value: 'active', label: 'Нийтлэгдсэн (Идэвхтэй)' },
-              { value: 'inactive', label: 'Ноорог (Идэвхгүй)' }
+              { value: 'published', label: 'Нийтлэгдсэн (Published)' },
+              { value: 'reviewed', label: 'Хянасан (Reviewed)' },
+              { value: 'draft', label: 'Ноорог (Draft)' }
             ]}
             allowDeselect={false}
           />
@@ -251,16 +267,11 @@ export default function NewsPage() {
                       </Text>
                     </Table.Td>
                     <Table.Td>
-                      <Badge variant="light">{item.category?.mn}</Badge>
+                      <Badge variant="light" color="blue">{item.category?.mn}</Badge>
                     </Table.Td>
                     <Table.Td>{formatDate(item.publishedAt)}</Table.Td>
                     <Table.Td>
-                      <Badge
-                        variant="light"
-                        color={item.isPublished ? 'teal' : 'gray'}
-                      >
-                        {item.isPublished ? t.common.published : t.common.draft}
-                      </Badge>
+                      {getStatusBadge(item)}
                     </Table.Td>
                     <Table.Td>
                       <Group gap={4} justify="flex-end" wrap="nowrap">
@@ -306,6 +317,7 @@ export default function NewsPage() {
       >
         <form onSubmit={form.onSubmit(submit)}>
           <Stack gap="md">
+            {/* 🌐 BILINGUAL INPUTS (SIDE-BY-SIDE & TABBED VIEW) */}
             <LocalizedInput form={form} base="title" label={t.news.fTitle} required />
             <LocalizedInput
               form={form}
@@ -321,29 +333,46 @@ export default function NewsPage() {
               textarea
               minRows={5}
             />
-            <TextInput
+
+            {/* 🖼️ DRAG AND DROP IMAGE UPLOADER */}
+            <ImageUploader
+              value={form.values.imageUrl}
+              onChange={(url) => form.setFieldValue('imageUrl', url)}
               label={t.news.fImage}
-              placeholder="https://..."
-              withAsterisk
-              {...form.getInputProps('imageUrl')}
+              required
             />
-            <Group grow align="center">
-              <TextInput
-                type="date"
-                label={t.news.fPublishedAt}
-                {...form.getInputProps('publishedAt')}
+
+            {/* 🚦 3-STAGE STATUS WORKFLOW SELECTOR */}
+            <Paper p="xs" radius="sm" style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0' }}>
+              <Text size="xs" fw={700} c="#475569" tt="uppercase" mb={6}>
+                Нийтлэх төлөв (Status Workflow)
+              </Text>
+              <SegmentedControl
+                value={form.values.status}
+                onChange={(val) => form.setFieldValue('status', val)}
+                data={[
+                  { label: '📝 Ноорог (Draft)', value: 'draft' },
+                  { label: '🔍 Хянасан (Reviewed)', value: 'reviewed' },
+                  { label: '🚀 Нийтлэх (Published)', value: 'published' }
+                ]}
+                fullWidth
+                size="sm"
+                radius="sm"
+                color={form.values.status === 'published' ? 'green' : form.values.status === 'reviewed' ? 'cyan' : 'gray'}
               />
-              <Switch
-                mt={26}
-                label={t.news.fPublished}
-                {...form.getInputProps('isPublished', { type: 'checkbox' })}
-              />
-            </Group>
+            </Paper>
+
+            <TextInput
+              type="date"
+              label={t.news.fPublishedAt}
+              {...form.getInputProps('publishedAt')}
+            />
+
             <Group justify="flex-end" mt="sm">
               <Button variant="default" onClick={close}>
                 {t.common.cancel}
               </Button>
-              <Button type="submit" loading={saving}>
+              <Button type="submit" loading={saving} color="blue">
                 {t.common.save}
               </Button>
             </Group>

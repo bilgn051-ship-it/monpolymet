@@ -33,6 +33,10 @@ export class NewsArticle {
   @Prop({ default: true })
   isPublished!: boolean;
 
+  /** Status workflow: draft | reviewed | published */
+  @Prop({ default: 'published' })
+  status?: string;
+
   /** Real-time view count, incremented each time the article is opened. */
   @Prop({ default: 0 })
   views!: number;
