@@ -1,6 +1,34 @@
 import { useEffect, useRef, useState } from 'react';
 
+const CountUp = ({ end, prefix = "", suffix = "", isVisible }) => {
+  const countRef = useRef(null);
 
+  useEffect(() => {
+    if (!isVisible || !countRef.current) return;
+    let startTimestamp = null;
+    const duration = 2000;
+
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+
+      const easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      const currentCount = Math.floor(easeOut * end);
+
+      if (countRef.current) {
+        countRef.current.innerText = prefix + currentCount.toLocaleString('en-US') + suffix;
+      }
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+
+    window.requestAnimationFrame(step);
+  }, [end, isVisible, prefix, suffix]);
+
+  return <span ref={countRef}>{prefix}0{suffix}</span>;
+};
 
 const statsData = [
   { value: 60, prefix: '', suffix: '%', titleMn: 'Биологийн нөхөн сэргээлт', subMn: 'хийсэн талбайн эзлэх хувь', titleEn: 'Biological reclamation', subEn: 'percentage of the area' },
@@ -40,10 +68,10 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
           gap: 24px;
         }
         .csr-stat-number {
-          font-size: 40px;
+          font-size: 38px;
           font-weight: 600;
           font-family: 'Montserrat', sans-serif;
-          color: #000000;
+          color: #2563eb;
           margin-bottom: 12px;
           line-height: 1.2;
           word-break: normal;
@@ -120,7 +148,7 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
               }}
             >
               <div className="csr-stat-number">
-                {stat.prefix}{stat.value.toLocaleString('en-US')}{stat.suffix}
+                <CountUp end={stat.value} prefix={stat.prefix || ''} suffix={stat.suffix || ''} isVisible={revealed} />
               </div>
               <div style={{
                 fontSize: '18px',

@@ -6,10 +6,12 @@ import { NewsController } from './news.controller';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: NewsArticle.name, schema: NewsArticleSchema }]),
+    MongooseModule.forFeature([
+      { name: NewsArticle.name, schema: NewsArticleSchema },
+    ]),
   ],
-  controllers: [NewsController],
   providers: [NewsService],
+  controllers: [NewsController],
   exports: [NewsService, MongooseModule],
 })
 export class NewsModule {}

@@ -33,6 +33,7 @@ export default function Header({
     { id: 'about', label: t.nav.about, target: 'about' },
     { id: 'companies', label: t.nav.companies, target: 'companies' },
     { id: 'csr', label: t.nav.csr, target: 'csr' },
+    { id: 'hse', label: lang === 'mn' ? 'БОНС' : 'Environment & Rehabilitation', target: 'hse' },
     { id: 'news', label: t.nav.news, target: 'news' },
     { id: 'careers', label: t.nav.careers, target: 'careers' },
     { id: 'procurement', label: lang === 'mn' ? 'Худалдан авалт' : 'Procurement', target: 'procurement' }
@@ -41,7 +42,7 @@ export default function Header({
   const subMenus = {
     'about': [
       { id: 'intro', label: lang === 'mn' ? 'Группийн танилцуулга' : 'Group Introduction', hash: '#vision' },
-      { id: 'values', label: lang === 'mn' ? 'Алсын хараа, үнэт зүйлс, зарчим' : 'Vision, Values & Principles', hash: '#values' },
+      { id: 'values', label: lang === 'mn' ? 'Алсын хараа, үнэт зүйлс, уриа' : 'Vision, Values & Motto', hash: '#values' },
       { id: 'history', label: lang === 'mn' ? 'Түүхэн замнал' : 'Historical Journey', hash: '#history' },
       { id: 'leadership', label: lang === 'mn' ? 'Удирдлагын баг' : 'Leadership', hash: '#leadership' }
     ],
@@ -54,17 +55,25 @@ export default function Header({
     ],
     'csr': [
       { id: 'fund', label: lang === 'mn' ? 'Мөнх тогтвортой хөгжил сан' : 'Sustainable Development Fund', hash: '#fund' },
-      { id: 'environment', label: lang === 'mn' ? 'Байгаль орчны бодлого' : 'Environmental Policy', hash: '#environment' },
-      { id: 'report', label: lang === 'mn' ? 'Тогтвортой хөгжлийн тайлан' : 'Sustainability Report', hash: '#report' },
+      { id: 'report', label: lang === 'mn' ? 'Тогтвортой хөгжлийн тайлан' : 'Sustainability Report', hash: '#report' }
+    ],
+    'environment': [
+      { id: 'policy', label: lang === 'mn' ? 'Байгаль орчны бодлого' : 'Environmental Policy', hash: '#policy' },
+      { id: 'reclamation', label: lang === 'mn' ? 'Нөхөн сэргээлтийн туршлага' : 'Reclamation Experience', hash: '#experience' },
+      { id: 'visit', label: lang === 'mn' ? 'Тосон үйлдвэрт зочлох 360' : 'Visit Toson Factory 360', hash: '#visit' }
+    ],
+    'hse': [
+      { id: 'policy', label: lang === 'mn' ? 'Байгаль орчны бодлого' : 'Environmental Policy', hash: '#policy' },
+      { id: 'reclamation', label: lang === 'mn' ? 'Нөхөн сэргээлтийн туршлага' : 'Reclamation Experience', hash: '#experience' },
       { id: 'visit', label: lang === 'mn' ? 'Тосон үйлдвэрт зочлох 360' : 'Visit Toson Factory 360', hash: '#visit' }
     ],
     'news': [
       { id: 'news-list', label: lang === 'mn' ? 'Мэдээ' : 'News', hash: '#news-list' }
     ],
     'careers': [
-      { id: 'process', label: lang === 'mn' ? 'Сонгон шалгаруулалтын үе шат' : 'Selection Process', hash: '#selection' },
       { id: 'policy', label: lang === 'mn' ? 'Хүний нөөцийн бодлого' : 'HR Policy', hash: '#hr-policy' },
-      { id: 'join', label: lang === 'mn' ? 'Бидэнтэй нэгдэх' : 'Join Us', hash: '#join-us' }
+      { id: 'join', label: lang === 'mn' ? 'Нийгмийн баталгаа' : 'Social Benefits', hash: '#join-us' },
+      { id: 'process', label: lang === 'mn' ? 'Сонгон шалгаруулалт' : 'Selection Process', hash: '#selection' }
     ],
     'procurement': [
       { id: 'policy', label: lang === 'mn' ? 'Худалдан авалтын бодлого' : 'Procurement Policy', hash: '#procurement-policy' },
@@ -72,7 +81,26 @@ export default function Header({
     ]
   };
 
-  const navItems = defaultNavItems;
+  const customNav = settings?.navigation && Array.isArray(settings.navigation) && settings.navigation.length > 0
+    ? settings.navigation
+      .filter(item => item.isActive !== false)
+      .sort((a, b) => (a.order || 0) - (b.order || 0))
+      .map(item => {
+        const rawLabel = typeof item.label === 'object' ? (lang === 'mn' ? (item.label?.mn || item.label?.en) : (item.label?.en || item.label?.mn)) : item.label;
+        const target = item.target || item.id;
+        let finalLabel = rawLabel;
+        if (lang === 'mn' && (target === 'hse' || target === 'environment' || (rawLabel && rawLabel.toLowerCase() === 'бонс'))) {
+          finalLabel = 'БОНС';
+        }
+        return {
+          id: item.id || target,
+          label: finalLabel,
+          target
+        };
+      })
+    : null;
+
+  const navItems = customNav && customNav.length > 0 ? customNav : defaultNavItems;
 
   const handleNavClick = (target) => {
     setMenuOpen(false);
@@ -102,7 +130,7 @@ export default function Header({
   };
 
   // Determine if header should be transparent
-  const pagesWithBanner = ['home', 'about', 'csr', 'companies', 'procurement', 'news', 'careers', 'contact', 'tour'];
+  const pagesWithBanner = ['home', 'about', 'csr', 'environment', 'hse', 'companies', 'procurement', 'news', 'careers', 'contact', 'tour'];
   const hasBanner = pagesWithBanner.includes(currentPage);
   const isTransparent = hasBanner ? isTop : false;
   const logoUrl = isTransparent ? odLogo : odBlueLogo;

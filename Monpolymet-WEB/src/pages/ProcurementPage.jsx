@@ -6,6 +6,7 @@ import {
   ClipboardList, SearchCheck, Handshake, ShoppingCart, BadgeCheck, Upload
 } from 'lucide-react';
 import { submitSupplierRegistration, fetchTenders } from '../api';
+import InteractiveTitle from '../components/ui/InteractiveTitle';
 import '../styles/procurement-pro.css';
 
 import partner1 from '../assets/partners/partner-1.jpg';
@@ -26,7 +27,6 @@ import partner15 from '../assets/partners/partner-15.jpg';
 import partner16 from '../assets/partners/partner-16.jpg';
 import partner17 from '../assets/partners/partner-17.jpg';
 import tenderhubLogo from '../assets/tenderhub-logo.png';
-import tenderhubBg from '../assets/tenderhub-bg.png';
 import proHeroImg from '../assets/pro_hero.jpg';
 
 const row1Logos = [partner1, partner10, partner3, partner12, partner5, partner14, partner7, partner16, partner9];
@@ -222,57 +222,6 @@ function generateTenderPdf(tender) {
   printWindow.document.open();
   printWindow.document.write(html);
   printWindow.document.close();
-}
-
-function InteractiveTitle({ text, className, style }) {
-  const [hoveredIdx, setHoveredIdx] = useState(null);
-
-  const words = (text || '').split(' ');
-  let globalCharCount = 0;
-
-  return (
-    <h2
-      className={className}
-      style={{ ...style, position: 'relative', wordBreak: 'keep-all' }}
-      onMouseLeave={() => setHoveredIdx(null)}
-    >
-      {words.map((word, wordIdx) => {
-        const wordCharStartIndex = globalCharCount;
-        globalCharCount += word.length + 1;
-
-        return (
-          <span key={wordIdx} style={{ display: 'inline-flex', flexWrap: 'nowrap', whiteSpace: 'nowrap', marginRight: '0.3em' }}>
-            {word.split('').map((char, charIdx) => {
-              const overallIdx = wordCharStartIndex + charIdx;
-              let color = (style && style.color) || '#0f172a';
-
-              if (hoveredIdx !== null) {
-                const dist = Math.abs(hoveredIdx - overallIdx);
-                if (dist === 0) color = '#001CE8';
-                else if (dist === 1) color = '#2563eb';
-                else if (dist === 2) color = '#60a5fa';
-              }
-
-              return (
-                <span
-                  key={charIdx}
-                  onMouseEnter={() => setHoveredIdx(overallIdx)}
-                  style={{
-                    display: 'inline-block',
-                    transition: 'color 0.15s ease-out',
-                    color: color,
-                    cursor: 'default',
-                  }}
-                >
-                  {char}
-                </span>
-              );
-            })}
-          </span>
-        );
-      })}
-    </h2>
-  );
 }
 
 export default function ProcurementPage({ lang = 'mn', t, procurementContent, pageMetadata }) {
@@ -474,10 +423,10 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                 text={lang === 'mn' ? 'Худалдан авалтын үе шат' : 'Procurement Stages'}
                 className="no-underline"
                 style={{
-                  fontSize: 'clamp(24px, 4vw, 48px)',
+                  fontSize: 'clamp(24px, 3.5vw, 36px)',
                   fontWeight: '600',
                   color: '#0f172a',
-                  letterSpacing: '-0.5px',
+                  letterSpacing: '-0.02em',
                   fontFamily: "'Montserrat', sans-serif"
                 }}
               />
@@ -674,10 +623,10 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
                 text={lang === 'mn' ? 'Нээлттэй тендер' : 'Open Tenders'}
                 className="no-underline"
                 style={{
-                  fontSize: '48px',
+                  fontSize: 'clamp(24px, 3.5vw, 36px)',
                   fontWeight: '600',
                   color: '#0f172a',
-                  letterSpacing: '-0.5px',
+                  letterSpacing: '-0.02em',
                   marginBottom: '12px',
                   fontFamily: "'Montserrat', sans-serif"
                 }}

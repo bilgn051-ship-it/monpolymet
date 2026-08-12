@@ -6,6 +6,7 @@ import HomePage from './pages/home/HomePage';
 import AboutPage from './pages/about/AboutPage';
 import CompaniesPage from './pages/companies/CompaniesPage';
 import CsrPage from './pages/csr/CsrPage';
+import EnvironmentPage from './pages/csr/EnvironmentPageClean';
 import NewsPage from './pages/news/NewsPage';
 import NewsDetailPage from './pages/news/NewsDetailPage';
 import CareersPage from './pages/careers/CareersPage';
@@ -16,7 +17,7 @@ import ProcurementPage from './pages/ProcurementPage';
 import { useLocalStorageState } from './hooks/useLocalStorageState';
 import { useDarkMode } from './hooks/useDarkMode';
 import { useHideHeaderOnScroll } from './hooks/useHideHeaderOnScroll';
-import { translations } from './i18n/translations';
+import { translations } from './i18n/translations.jsx';
 import { initialNews, initialJobs, initialSubmissions } from './data/mockData';
 import { fetchNews, fetchJobs, fetchSettings, fetchPages, fetchProcurementContent, submitApplication } from './api';
 import './styles/app.css';
@@ -130,8 +131,9 @@ function App() {
         return <CareersPage lang={lang} t={t} jobs={jobs} onApply={handleApply} pageMetadata={pageMetadata} />;
       case 'contact':
         return <ContactPage lang={lang} t={t} settings={settings} pageMetadata={pageMetadata} />;
-      // case 'hse':
-      //   return <HsePage lang={lang} t={t} pageMetadata={pageMetadata} />;
+      case 'environment':
+      case 'hse':
+        return <EnvironmentPage lang={lang} t={t} pageMetadata={pageMetadata} />;
 
 
       case 'procurement':

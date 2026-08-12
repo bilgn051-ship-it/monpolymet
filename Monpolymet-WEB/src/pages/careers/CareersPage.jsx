@@ -8,8 +8,9 @@ import {
   X, CheckCircle, Calendar, ClipboardEdit, UserCog, ClipboardCheck, UserCheck
 } from 'lucide-react';
 import { fetchStatCards, fetchCareersContent, submitCandidateApplication } from '../../api';
-import DynamicIcon from '../../components/ui/DynamicIcon';
+import InteractiveTitle from '../../components/ui/InteractiveTitle';
 import zangiaLogo from '../../assets/zangia-logo.png';
+import careersHeroImg from '../../assets/careers-hero.png';
 
 const styles = `
 .cp-wrapper {
@@ -431,59 +432,6 @@ const styles = `
 }
 `;
 
-
-
-function InteractiveTitle({ text, className, style }) {
-  const [hoveredIdx, setHoveredIdx] = useState(null);
-
-  const words = (text || '').split(' ');
-  let globalCharCount = 0;
-
-  return (
-    <h2
-      className={className}
-      style={{ ...style, position: 'relative', wordBreak: 'normal', wordWrap: 'break-word', maxWidth: '100%' }}
-      onMouseLeave={() => setHoveredIdx(null)}
-    >
-      {words.map((word, wordIdx) => {
-        const wordCharStartIndex = globalCharCount;
-        globalCharCount += word.length + 1;
-
-        return (
-          <span key={wordIdx} style={{ display: 'inline-flex', flexWrap: 'nowrap', whiteSpace: 'nowrap', marginRight: '0.3em' }}>
-            {word.split('').map((char, charIdx) => {
-              const overallIdx = wordCharStartIndex + charIdx;
-              let color = (style && style.color) || '#0f172a';
-
-              if (hoveredIdx !== null) {
-                const dist = Math.abs(hoveredIdx - overallIdx);
-                if (dist === 0) color = '#001CE8';
-                else if (dist === 1) color = '#2563eb';
-                else if (dist === 2) color = '#60a5fa';
-              }
-
-              return (
-                <span
-                  key={charIdx}
-                  onMouseEnter={() => setHoveredIdx(overallIdx)}
-                  style={{
-                    display: 'inline-block',
-                    transition: 'color 0.15s ease-out',
-                    color: color,
-                    cursor: 'default',
-                  }}
-                >
-                  {char}
-                </span>
-              );
-            })}
-          </span>
-        );
-      })}
-    </h2>
-  );
-}
-
 export default function CareersPage({ lang, t, onApply, pageMetadata }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -602,59 +550,59 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
   const guarantees = [
     {
       icon: HeartPulse,
-      titleMn: 'Эрүүл мэндийн даатгал',
-      titleEn: 'Health Insurance',
-      descMn: 'Нийт ажилтнууд болон тэдний гэр бүлд зориулсан эрүүл мэндийн иж бүрэн даатгалын хөтөлбөр.',
-      descEn: 'Comprehensive health insurance coverage for employees and their families.'
-    },
-    {
-      icon: Gift,
-      titleMn: 'Нэмэлт тэтгэмж, урамшуулал',
-      titleEn: 'Bonuses & Benefits',
-      descMn: 'Гүйцэтгэлийн үр дүнд суурилсан улирал, жилийн бонус болон нийгмийн дэмжлэгт тэтгэмж.',
-      descEn: 'Performance-based quarterly, annual bonuses, and social support benefits.'
-    },
-    {
-      icon: Coffee,
-      titleMn: 'Хоолны хөнгөлөлт',
-      titleEn: 'Food Allowance',
-      descMn: 'Өдөр тутмын эрүүл, тэжээллэг халуун хоол болон ундааны хөнгөлөлт бүхий тусгай үйлчилгээ.',
-      descEn: 'Daily nutritious hot meals and beverage allowances provided at all locations.'
-    },
-    {
-      icon: GraduationCap,
-      titleMn: 'Сургалт, хөгжлийн боломж',
-      titleEn: 'Training Opportunities',
-      descMn: 'Дотоод болон гадаадын мэргэшүүлэх академик сургалтууд, карьер өсөлтийн систем.',
-      descEn: 'Domestic and international professional development courses and career growth.'
+      titleMn: 'Эрүүл мэнд, даатгал',
+      titleEn: 'Health & Insurance',
+      descMn: 'Эрүүл мэндийн үзлэг, даатгал, зөвлөгөө',
+      descEn: 'Health checkups, insurance, and medical consultations'
     },
     {
       icon: Shield,
-      titleMn: 'Аюулгүй ажлын орчин',
-      titleEn: 'Safe Work Environment',
-      descMn: 'Хөдөлмөрийн аюулгүй байдал, эрүүл ахуйн олон улсын ISO стандартын дагуух орчин.',
-      descEn: 'International ISO standard safety, health, and hygiene standards in all workplaces.'
+      titleMn: 'Нэгдүгээрт аюулгүй ажиллагаа',
+      titleEn: 'Safety First',
+      descMn: 'Хөдөлмөрийн аюулгүй байдал, эрүүл ахуйн олон улсын стандартууд',
+      descEn: 'International occupational safety and health standards'
+    },
+    {
+      icon: GraduationCap,
+      titleMn: 'Сургалт, карьер хөгжил',
+      titleEn: 'Training & Career Development',
+      descMn: 'Мэргэжлийн сургалт, хөтөлбөр, менторшип, карьер төлөвлөлт',
+      descEn: 'Professional training, programs, mentorship, and career planning'
     },
     {
       icon: Dumbbell,
-      titleMn: 'Спорт, амралтын хөтөлбөр',
-      titleEn: 'Sports & Recreation',
-      descMn: 'Байгууллагын спорт наадам, фитнес хөнгөлөлт болон баг хамт олны аялал арга хэмжээ.',
-      descEn: 'Company sports tournaments, fitness memberships, and team retreat events.'
+      titleMn: 'Ажилтны сайн сайхан байдал',
+      titleEn: 'Employee Well-Being',
+      descMn: 'Спорт, фитнессийн дэмжлэг, эрүүл амьдралын хэв маягийг дэмжсэн хөтөлбөрүүд',
+      descEn: 'Sports and fitness support, programs promoting a healthy lifestyle'
+    },
+    {
+      icon: Users,
+      titleMn: 'Гэр бүлд ээлтэй бодлого',
+      titleEn: 'Family-Friendly Policy',
+      descMn: 'Ажилтнуудын хүүхдийн боловсрол, эрүүл мэндэд, хөгжилд зориулсан сургалт, дугуйлан, бүтээн байгуулалт',
+      descEn: 'Education, health, development, training, clubs, and facilities for employees children'
+    },
+    {
+      icon: Gift,
+      titleMn: 'Урамшуулал, хөнгөлөлт',
+      titleEn: 'Rewards & Discounts',
+      descMn: 'Бүтээгдэхүүн, үйлчилгээний хөнгөлөлт, шагнал, урамшуулал, санхүүгийн дэмжлэг',
+      descEn: 'Product and service discounts, awards, bonuses, and financial support'
+    },
+    {
+      icon: Coffee,
+      titleMn: 'Ажлын таатай орчин, нөхцөл',
+      titleEn: 'Favorable Work Environment & Conditions',
+      descMn: 'Тав тухтай орчин, амт, чанартай, эрүүл хоол хүнс, хувцас, хамгаалах хэрэгсэл',
+      descEn: 'Comfortable environment, delicious nutritious food, seasonal workwear, and protective equipment'
     },
     {
       icon: Scale,
-      titleMn: 'Ажил-Амьдралын тэнцвэр',
+      titleMn: 'Ажил амьдралын тэнцвэр',
       titleEn: 'Work-Life Balance',
-      descMn: 'Уян хатан цагийн хуваарь, амралтын өдрүүдийн зохицуулалт болон гэр бүлд ээлтэй бодлого.',
-      descEn: 'Flexible working arrangements, vacation policies, and family-friendly culture.'
-    },
-    {
-      icon: Shirt,
-      titleMn: 'Хувцас, хамгаалах хэрэгсэл',
-      titleEn: 'PPE & Work Uniforms',
-      descMn: 'Ажлын байрны онцлогт тохирсон чанартай нэгэн ижил дулаан хувцас, иж бүрэн хэрэгсэл.',
-      descEn: 'High-quality seasonal workwear and full personal protective equipment.'
+      descMn: 'Уян хатан цагийн хуваарь, зайнаас ажиллах боломж, ажил, амьдралын тэнцвэр, гэр бүлд ээлтэй бодлого',
+      descEn: 'Flexible working hours, remote work opportunities, work-life balance, and family-friendly policy'
     }
   ];
 
@@ -664,7 +612,10 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
 
       {/* TOP BANNER */}
       <div className="full-bleed-banner" style={{
-        backgroundImage: `url('https://en.monpolymet.mn/wp-content/uploads/2022/05/IMG_1235-s-scaled.jpg')`,
+        backgroundImage: `url(${careersHeroImg})`,
+        backgroundPosition: 'center center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
         backgroundColor: '#0f172a'
       }}>
         <div className="full-bleed-banner-overlay"></div>
@@ -686,423 +637,216 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
       <div className="cp-wrapper" style={{ backgroundColor: '#ffffff', padding: '60px 5% 0 5%', fontFamily: "'Montserrat', sans-serif" }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
 
-          {/* STAGES SECTION */}
-          <section id="selection" style={{ marginBottom: '60px' }}>
+          {/* 1. HR POLICY SECTION */}
+          <section id="hr-policy" style={{ marginBottom: '60px' }}>
             <div style={{ textAlign: 'center', marginBottom: '50px' }}>
               <InteractiveTitle
-                text={lang === 'mn' ? 'Сонгон шалгаруулалтын үе шат' : 'Selection Process Stages'}
-                className="no-underline"
+                text={lang === 'mn' ? 'Хүний нөөцийн бодлого' : 'HR Policy'}
                 style={{
-                  fontSize: 'clamp(24px, 4vw, 48px)',
+                  fontSize: 'clamp(24px, 3.5vw, 36px)',
                   fontWeight: '600',
                   color: '#0f172a',
-                  letterSpacing: '-0.5px',
+                  letterSpacing: '-0.02em',
                   fontFamily: "'Montserrat', sans-serif"
                 }}
               />
             </div>
-          <div className="proc-steps-grid">
-            {hrStages.map((stage, idx) => {
-              const SIcon = stage.icon;
-              return (
-                <div
-                  key={idx}
-                  className="proc-step-card"
-                  style={{
-                    backgroundColor: 'transparent',
-                    borderRadius: '24px',
-                    padding: '36px 24px',
-                    border: '1px solid #cbd5e1',
-                    textAlign: 'center',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    boxShadow: 'none',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-6px)';
-                    e.currentTarget.style.borderColor = '#2563eb';
-                    e.currentTarget.style.boxShadow = 'none';
-                    const title = e.currentTarget.querySelector('h4');
-                    if (title) title.style.color = '#2563eb';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.borderColor = '#cbd5e1';
-                    e.currentTarget.style.boxShadow = 'none';
-                    const title = e.currentTarget.querySelector('h4');
-                    if (title) title.style.color = '#0f172a';
-                  }}
-                >
+
+            {/* HR Policy Premium Feature Cards Block */}
+            <div style={{ maxWidth: '1140px', margin: '0 auto' }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gap: '24px',
+                marginBottom: '20px'
+              }}>
+                {/* Pillar 1: Growth & Mobility */}
+                <div style={{
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '20px',
+                  padding: '22px 24px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  boxShadow: 'none',
+                  transition: 'all 0.3s ease',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
                   <div style={{
-                    marginBottom: '20px',
+                    color: '#064ced',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    transition: 'all 0.3s ease'
+                    marginBottom: '12px'
                   }}>
-                    <SIcon size={28} color="#2563eb" />
+                    <GraduationCap size={32} color="#064ced" />
                   </div>
                   <h4 style={{
                     fontSize: '16px',
                     fontWeight: '700',
                     color: '#0f172a',
                     marginBottom: '10px',
-                    transition: 'color 0.3s ease',
-                    fontFamily: "'Montserrat', sans-serif"
+                    textAlign: 'center',
+                    fontFamily: "'Montserrat', sans-serif",
+                    height: '46px',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'center',
+                    lineHeight: '1.3'
                   }}>
-                    {lang === 'mn' ? stage.titleMn : stage.titleEn}
+                    {lang === 'mn' ? 'Тогтвортой, ээлтэй ажлын байр' : 'Sustainable & Friendly Workplace'}
                   </h4>
                   <p style={{
-                    fontSize: '13px',
-                    color: '#64748b',
-                    lineHeight: '1.5',
-                    margin: 0
+                    fontSize: '13.5px',
+                    color: '#475569',
+                    lineHeight: '1.6',
+                    margin: 0,
+                    textAlign: 'center',
+                    fontFamily: "'Montserrat', sans-serif"
                   }}>
-                    {lang === 'mn' ? stage.descMn : stage.descEn}
+                    {lang === 'mn'
+                      ? 'Бүтээмжтэй, итгэлтэй, тав тухтай, тэнцвэртэй ажиллах орчин.'
+                      : 'Productive, confident, comfortable, and balanced work environment.'}
                   </p>
                 </div>
-              );
-            })}
-          </div>
 
-          {/* Job Applicant Application Form CTA Card under 5 stages (Transparent Background & No Shadow) */}
-          <div style={{
-            backgroundColor: 'transparent',
-            borderRadius: '24px',
-            padding: 'clamp(24px, 4vw, 36px) clamp(16px, 4vw, 36px) 24px clamp(16px, 4vw, 36px)',
-            border: '1px solid #cbd5e1',
-            textAlign: 'center',
-            maxWidth: '1200px',
-            margin: '40px auto 0 auto',
-            transition: 'all 0.3s ease',
-            boxShadow: 'none',
-            boxSizing: 'border-box',
-            fontFamily: "'Montserrat', sans-serif"
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-6px)';
-            e.currentTarget.style.borderColor = '#001CE8';
-            e.currentTarget.style.boxShadow = 'none';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.borderColor = '#cbd5e1';
-            e.currentTarget.style.boxShadow = 'none';
-          }}
-          >
-            <h3 style={{ fontSize: '24px', fontWeight: '600', color: '#0f172a', marginBottom: '12px' }}>
-              {lang === 'mn' ? 'Ажил горилогчийн товч анкет' : 'Candidate Application Form'}
-            </h3>
-            <p style={{ fontSize: '15px', color: '#64748b', lineHeight: '1.6', marginBottom: '28px', maxWidth: '920px', margin: '0 auto 28px auto' }}>
-              {lang === 'mn'
-                ? 'Монполимет Группийн нээлттэй ажлын байранд хүсэлт илгээж, ажилд орох анкетыг онлайнаар бөглөнө\u00A0үү. Анкетын мэдээлэл mpm-hr@monpolymet.mn хаяг руу шууд илгээгдэнэ.'
-                : 'Submit your application and fill out the online candidate form for open vacancies at Monpolymet Group. Application details are sent directly to mpm-hr@monpolymet.mn.'}
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-              <button
-                onClick={() => openApplyModal()}
-                style={{
-                  height: '56px',
-                  padding: '0 28px',
-                  borderRadius: '16px',
-                  background: 'linear-gradient(180deg, #010D56 0%, #001CE8 100%)',
-                  color: '#ffffff',
-                  border: 'none',
-                  fontSize: '15px',
-                  fontWeight: '700',
-                  cursor: 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  transition: 'all 0.25s ease',
-                  fontFamily: "'Montserrat', sans-serif",
-                  boxShadow: '0 8px 24px rgba(1, 11, 64, 0.25)',
-                  boxSizing: 'border-box'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 12px 28px rgba(0, 28, 232, 0.35)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(1, 11, 64, 0.25)';
-                }}
-              >
+                {/* Pillar 2: Stable & Responsible Workforce */}
                 <div style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: '8px',
-                  background: 'rgba(255, 255, 255, 0.15)',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '20px',
+                  padding: '22px 24px',
                   display: 'flex',
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
+                  textAlign: 'center',
+                  boxShadow: 'none',
+                  transition: 'all 0.3s ease',
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}>
-                  <UserCheck size={20} color="#ffffff" />
+                  <div style={{
+                    color: '#064ced',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: '12px'
+                  }}>
+                    <ShieldCheck size={32} color="#064ced" />
+                  </div>
+                  <h4 style={{
+                    fontSize: '16px',
+                    fontWeight: '700',
+                    color: '#0f172a',
+                    marginBottom: '10px',
+                    textAlign: 'center',
+                    fontFamily: "'Montserrat', sans-serif",
+                    height: '46px',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'center',
+                    lineHeight: '1.3'
+                  }}>
+                    {lang === 'mn' ? 'Мэргэжлийн хариуцлага – аюулгүй ажиллагаа' : 'Professional Responsibility – Safety Operations'}
+                  </h4>
+                  <p style={{
+                    fontSize: '13.5px',
+                    color: '#475569',
+                    lineHeight: '1.6',
+                    margin: 0,
+                    textAlign: 'center',
+                    fontFamily: "'Montserrat', sans-serif"
+                  }}>
+                    {lang === 'mn'
+                      ? 'Хөдөлмөрийн аюулгүй байдал, эрүүл ахуйн стандартыг хэвшил болгосон мэргэжлийн, хариуцлагатай хамт олон.'
+                      : 'A professional and responsible team that has normalized occupational safety and health standards.'}
+                  </p>
                 </div>
-                <span>{lang === 'mn' ? 'Ажил горилогчийн товч анкет бөглөх' : 'Fill Candidate Application Form'}</span>
-              </button>
 
-              <a
-                href="https://www.zangia.mn/company/monpolymetgroup"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  height: '56px',
-                  padding: '0 28px',
-                  borderRadius: '16px',
-                  background: 'linear-gradient(180deg, #010D56 0%, #001CE8 100%)',
-                  color: '#ffffff',
-                  border: 'none',
-                  fontSize: '15px',
-                  fontWeight: '700',
-                  textDecoration: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  transition: 'all 0.25s ease',
-                  fontFamily: "'Montserrat', sans-serif",
-                  boxShadow: '0 8px 24px rgba(1, 11, 64, 0.25)',
-                  boxSizing: 'border-box'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 12px 28px rgba(0, 28, 232, 0.35)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(1, 11, 64, 0.25)';
-                }}
-              >
-                <img src={zangiaLogo} alt="Zangia Logo" style={{ width: '36px', height: '36px', objectFit: 'contain', borderRadius: '8px', flexShrink: 0 }} />
-                <span>{lang === 'mn' ? 'Нээлттэй ажлын байрыг харах' : 'View Open Vacancies'}</span>
-                <ArrowUpRight size={18} style={{ flexShrink: 0 }} />
-              </a>
-            </div>
-
-            <p style={{
-              fontSize: '13px',
-              fontWeight: '500',
-              color: '#475569',
-              opacity: 0.8,
-              marginTop: '16px',
-              marginBottom: '0',
-              textAlign: 'center',
-              letterSpacing: '-0.2px',
-              fontFamily: "'Montserrat', sans-serif"
-            }}>
-              {lang === 'mn'
-                ? 'Хүний нөөцтэй холбоотой дэлгэрэнгүй мэдээлэл авах утас, мэйл: 75855858 /1007/, mpm-hr@monpolymet.mn'
-                : 'For detailed HR inquiries, phone & email: 75855858 /1007/, mpm-hr@monpolymet.mn'}
-            </p>
-          </div>
-        </section>
-
-        {/* HR POLICY SECTION */}
-        <section id="hr-policy" style={{ marginBottom: '60px' }}>
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-            <InteractiveTitle
-              text={lang === 'mn' ? 'Хүний нөөцийн бодлого' : 'HR Policy'}
-              style={{
-                fontSize: 'clamp(24px, 4vw, 48px)',
-                fontWeight: '600',
-                color: '#0f172a',
-                letterSpacing: '-0.5px',
-                fontFamily: "'Montserrat', sans-serif"
-              }}
-            />
-          </div>
-
-          {/* 2. HR Policy Premium Feature Cards Block */}
-          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '20px',
-              marginBottom: '20px'
-            }}>
-              {/* Pillar 1: Growth & Mobility */}
-              <div style={{
-                backgroundColor: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '20px',
-                padding: '28px',
-                display: 'flex',
-                flexDirection: 'column',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
-                transition: 'all 0.3s ease',
-                position: 'relative',
-                overflow: 'hidden'
-              }}>
+                {/* Pillar 3: Pride of Professional Staff */}
                 <div style={{
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '12px',
-                  backgroundColor: '#eff6ff',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '20px',
+                  padding: '22px 24px',
                   display: 'flex',
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: '16px'
+                  textAlign: 'center',
+                  boxShadow: 'none',
+                  transition: 'all 0.3s ease',
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}>
-                  <GraduationCap size={22} color="#2563eb" />
+                  <div style={{
+                    color: '#064ced',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: '12px'
+                  }}>
+                    <Award size={32} color="#064ced" />
+                  </div>
+                  <h4 style={{
+                    fontSize: '16px',
+                    fontWeight: '700',
+                    color: '#0f172a',
+                    marginBottom: '10px',
+                    textAlign: 'center',
+                    fontFamily: "'Montserrat', sans-serif",
+                    height: '46px',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'center',
+                    lineHeight: '1.3'
+                  }}>
+                    {lang === 'mn' ? 'Мэдлэг боловсрол – ур чадвар' : 'Knowledge & Skills'}
+                  </h4>
+                  <p style={{
+                    fontSize: '13.5px',
+                    color: '#475569',
+                    lineHeight: '1.6',
+                    margin: 0,
+                    textAlign: 'center',
+                    fontFamily: "'Montserrat', sans-serif"
+                  }}>
+                    {lang === 'mn'
+                      ? 'Мэргэжлийн болон хувь хүний хөгжлийг дэмжсэн дотоод, гадаадын сургалт, хөгжлийн боломжууд.'
+                      : 'Domestic and international training and development opportunities supporting professional and personal growth.'}
+                  </p>
                 </div>
-                <h4 style={{
-                  fontSize: '16px',
-                  fontWeight: '700',
-                  color: '#0f172a',
-                  marginBottom: '10px',
-                  fontFamily: "'Montserrat', sans-serif"
-                }}>
-                  {lang === 'mn' ? 'Сургалт & Хөгжлийн Боломж' : 'Training & Career Growth'}
-                </h4>
-                <p style={{
-                  fontSize: '13.5px',
-                  color: '#475569',
-                  lineHeight: '1.6',
-                  margin: 0,
-                  fontFamily: "'Montserrat', sans-serif"
-                }}>
-                  {lang === 'mn'
-                    ? 'Дотоод ажилчдаа бүхий л салбартаа хөрвөн ажиллах боломжийг бүрдүүлж, гадаад дотоодын сургалт хөгжлөөр тасралтгүй хангаж урамшуулна.'
-                    : 'Providing internal employees opportunities to work across sectors, offering continuous domestic & international training and development.'}
-                </p>
-              </div>
-
-              {/* Pillar 2: Stable & Responsible Workforce */}
-              <div style={{
-                backgroundColor: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '20px',
-                padding: '28px',
-                display: 'flex',
-                flexDirection: 'column',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
-                transition: 'all 0.3s ease',
-                position: 'relative',
-                overflow: 'hidden'
-              }}>
-                <div style={{
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '12px',
-                  backgroundColor: '#eff6ff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: '16px'
-                }}>
-                  <ShieldCheck size={22} color="#2563eb" />
-                </div>
-                <h4 style={{
-                  fontSize: '16px',
-                  fontWeight: '700',
-                  color: '#0f172a',
-                  marginBottom: '10px',
-                  fontFamily: "'Montserrat', sans-serif"
-                }}>
-                  {lang === 'mn' ? 'Тогтвортой & Найдвартай Ажлын Байр' : 'Stable & Reliable Employment'}
-                </h4>
-                <p style={{
-                  fontSize: '13.5px',
-                  color: '#475569',
-                  lineHeight: '1.6',
-                  margin: 0,
-                  fontFamily: "'Montserrat', sans-serif"
-                }}>
-                  {lang === 'mn'
-                    ? 'Тогтвортой, хариуцлагатай, үлгэр жишээ ажиллах хүчнийг бэлтгэн эх орны бүтээн байгуулалтад үнэтэй хувь нэмэр оруулах баталгааг хангана.'
-                    : 'Preparing a stable, responsible, and exemplary workforce that contributes meaningfully to national construction and development.'}
-                </p>
-              </div>
-
-              {/* Pillar 3: Pride of Professional Staff */}
-              <div style={{
-                backgroundColor: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '20px',
-                padding: '28px',
-                display: 'flex',
-                flexDirection: 'column',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
-                transition: 'all 0.3s ease',
-                position: 'relative',
-                overflow: 'hidden'
-              }}>
-                <div style={{
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '12px',
-                  backgroundColor: '#eff6ff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: '16px'
-                }}>
-                  <Award size={22} color="#2563eb" />
-                </div>
-                <h4 style={{
-                  fontSize: '16px',
-                  fontWeight: '700',
-                  color: '#0f172a',
-                  marginBottom: '10px',
-                  fontFamily: "'Montserrat', sans-serif"
-                }}>
-                  {lang === 'mn' ? 'Мэргэшсэн Хамт Олны Бахархал' : 'Our Professional Pride'}
-                </h4>
-                <p style={{
-                  fontSize: '13.5px',
-                  color: '#475569',
-                  lineHeight: '1.6',
-                  margin: 0,
-                  fontFamily: "'Montserrat', sans-serif"
-                }}>
-                  {lang === 'mn'
-                    ? 'Бүхий л салбарт тогтвортой, мэргэжлийн өндөр түвшинд ажиллах мэргэшсэн үлгэр жишээ ажилтнууд бол манай байгууллагын гол бахархал юм.'
-                    : 'Professional, specialized, and exemplary employees who work sustainably across all our group sectors are the ultimate pride of our group.'}
-                </p>
               </div>
             </div>
+          </section>
 
-
-          </div>
-        </section>
-
-        {/* GUARANTEES SECTION */}
-        <section id="join-us" style={{ margin: '0 5% 60px' }}>
-          <div style={{
-            backgroundColor: '#ffffff',
-            border: '1px solid #e2e8f0',
-            borderRadius: '28px',
-            padding: 'clamp(24px, 4vw, 44px) clamp(16px, 4vw, 36px)',
-            boxShadow: 'none',
-            boxSizing: 'border-box'
-          }}>
-            <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+          {/* 2. GUARANTEES SECTION */}
+          <section id="join-us" style={{ maxWidth: '1140px', margin: '0 auto 70px', padding: '0 20px', boxSizing: 'border-box' }}>
+            <div style={{ textAlign: 'center', marginBottom: '44px' }}>
               <InteractiveTitle
-                text={lang === 'mn' ? 'Нийгмийн баталгаа ба Хөнгөлөлтүүд' : 'Social Guarantees & Benefits'}
+                text={lang === 'mn' ? 'Нийгмийн баталгаа, хөнгөлөлт, дэмжлэг' : 'Social Guarantees, Benefits & Support'}
                 className="no-underline"
                 style={{
-                  fontSize: 'clamp(20px, 3.5vw, 34px)',
-                  fontWeight: '700',
+                  fontSize: 'clamp(24px, 3.5vw, 36px)',
+                  fontWeight: '600',
                   color: '#0f172a',
-                  letterSpacing: '-0.5px',
+                  letterSpacing: '-0.02em',
                   fontFamily: "'Montserrat', sans-serif"
                 }}
               />
-              <p style={{ fontSize: '14.5px', color: '#64748b', marginTop: '10px', maxWidth: '700px', margin: '10px auto 0 auto', fontFamily: "'Montserrat', sans-serif" }}>
+              <p style={{ fontSize: '15px', color: '#64748b', marginTop: '12px', maxWidth: '720px', margin: '12px auto 0 auto', fontFamily: "'Montserrat', sans-serif", lineHeight: '1.6' }}>
                 {lang === 'mn'
-                  ? 'Монполимет Групп нь ажилтнуудынхаа эрүүл мэнд, аюулгүй байдал болон нийгмийн хангамжийг нэн түрүүнд тавьдаг.'
-                  : 'Monpolymet Group prioritizes employee health, workplace safety, and comprehensive social welfare benefits.'}
+                  ? 'Ажилтныхаа тогтвортой хөдөлмөр эрхлэлт, эрүүл мэнд, аюулгүй байдал, амьдралын чанар, сайн сайхан байдлыг нэн тэргүүнд тавьдаг.'
+                  : 'Prioritizing employee sustainable employment, health, safety, quality of life, and well-being.'}
               </p>
             </div>
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
-              gap: '16px'
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))',
+              gap: '20px'
             }}>
               {guarantees.map((g, i) => {
                 const GIcon = g.icon;
@@ -1110,48 +854,76 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
                   <div
                     key={i}
                     style={{
-                      backgroundColor: '#f8fafc',
+                      backgroundColor: '#ffffff',
                       border: '1px solid #e2e8f0',
-                      borderRadius: '18px',
-                      padding: '20px 22px',
+                      borderRadius: '20px',
+                      padding: '30px 22px',
                       display: 'flex',
-                      alignItems: 'flex-start',
-                      gap: '18px',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      textAlign: 'center',
                       boxShadow: 'none',
-                      transition: 'all 0.25s ease',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                       cursor: 'default'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = '#001CE8';
-                      e.currentTarget.style.backgroundColor = '#ffffff';
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow = 'none';
+                      e.currentTarget.style.borderColor = '#3b82f6';
+                      e.currentTarget.style.transform = 'translateY(-4px)';
+                      e.currentTarget.style.boxShadow = '0 12px 24px -6px rgba(37, 99, 235, 0.08)';
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.borderColor = '#e2e8f0';
-                      e.currentTarget.style.backgroundColor = '#f8fafc';
                       e.currentTarget.style.transform = 'translateY(0)';
                       e.currentTarget.style.boxShadow = 'none';
                     }}
                   >
-                    <div style={{
-                      width: '48px',
-                      height: '48px',
-                      borderRadius: '14px',
-                      background: 'linear-gradient(135deg, #010B40 0%, #001CE8 100%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '#ffffff',
-                      flexShrink: 0
-                    }}>
-                      <GIcon size={22} strokeWidth={1.8} color="#ffffff" />
+                    <div
+                      className="guarantee-icon-bg"
+                      style={{
+                        width: '52px',
+                        height: '52px',
+                        borderRadius: '16px',
+                        backgroundColor: '#eff6ff',
+                        border: '1px solid #dbeafe',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#2563eb',
+                        flexShrink: 0,
+                        marginBottom: '18px',
+                        transition: 'all 0.3s ease'
+                      }}
+                    >
+                      <GIcon size={24} strokeWidth={2} color="#2563eb" />
                     </div>
-                    <div style={{ flex: 1 }}>
-                      <h4 style={{ fontSize: '15.5px', fontWeight: '700', color: '#0f172a', marginBottom: '4px', fontFamily: "'Montserrat', sans-serif" }}>
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                      <h4 style={{
+                        fontSize: '16px',
+                        fontWeight: '700',
+                        color: '#0f172a',
+                        marginBottom: '8px',
+                        fontFamily: "'Montserrat', sans-serif",
+                        textAlign: 'center',
+                        height: '46px',
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        lineHeight: '1.3'
+                      }}>
                         {lang === 'mn' ? g.titleMn : g.titleEn}
                       </h4>
-                      <p style={{ fontSize: '13px', color: '#64748b', lineHeight: '1.5', margin: 0, fontFamily: "'Montserrat', sans-serif" }}>
+                      <p style={{
+                        fontSize: '13.5px',
+                        color: '#64748b',
+                        lineHeight: '1.5',
+                        margin: 0,
+                        textAlign: 'center',
+                        fontFamily: "'Montserrat', sans-serif",
+                        minHeight: '62px',
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        justifyContent: 'center'
+                      }}>
                         {lang === 'mn' ? g.descMn : g.descEn}
                       </p>
                     </div>
@@ -1159,8 +931,220 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
                 );
               })}
             </div>
-          </div>
-        </section>
+          </section>
+
+          {/* 3. STAGES SECTION */}
+          <section id="selection" style={{ marginBottom: '60px' }}>
+            <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+              <InteractiveTitle
+                text={lang === 'mn' ? 'Сонгон шалгаруулалтын үе шат' : 'Selection Process Stages'}
+                className="no-underline"
+                style={{
+                  fontSize: 'clamp(24px, 3.5vw, 36px)',
+                  fontWeight: '600',
+                  color: '#0f172a',
+                  letterSpacing: '-0.02em',
+                  fontFamily: "'Montserrat', sans-serif"
+                }}
+              />
+            </div>
+            <div className="proc-steps-grid">
+              {hrStages.map((stage, idx) => {
+                const SIcon = stage.icon;
+                return (
+                  <div
+                    key={idx}
+                    className="proc-step-card"
+                    style={{
+                      backgroundColor: 'transparent',
+                      borderRadius: '24px',
+                      padding: '36px 24px',
+                      border: '1px solid #cbd5e1',
+                      textAlign: 'center',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      boxShadow: 'none',
+                      transition: 'all 0.3s ease',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-6px)';
+                      e.currentTarget.style.borderColor = '#2563eb';
+                      e.currentTarget.style.boxShadow = 'none';
+                      const title = e.currentTarget.querySelector('h4');
+                      if (title) title.style.color = '#2563eb';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.borderColor = '#cbd5e1';
+                      e.currentTarget.style.boxShadow = 'none';
+                      const title = e.currentTarget.querySelector('h4');
+                      if (title) title.style.color = '#0f172a';
+                    }}
+                  >
+                    <div style={{
+                      marginBottom: '20px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'all 0.3s ease'
+                    }}>
+                      <SIcon size={28} color="#2563eb" />
+                    </div>
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#0f172a',
+                      marginBottom: '10px',
+                      transition: 'color 0.3s ease',
+                      fontFamily: "'Montserrat', sans-serif"
+                    }}>
+                      {lang === 'mn' ? stage.titleMn : stage.titleEn}
+                    </h4>
+                    <p style={{
+                      fontSize: '13px',
+                      color: '#64748b',
+                      lineHeight: '1.5',
+                      margin: 0
+                    }}>
+                      {lang === 'mn' ? stage.descMn : stage.descEn}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Job Applicant Application Form CTA Card under 5 stages (No Border / Clean Slate) */}
+            <div style={{
+              backgroundColor: 'transparent',
+              borderRadius: '24px',
+              padding: 'clamp(24px, 4vw, 36px) clamp(16px, 4vw, 36px) 24px clamp(16px, 4vw, 36px)',
+              border: 'none',
+              textAlign: 'center',
+              maxWidth: '1200px',
+              margin: '40px auto 0 auto',
+              transition: 'all 0.3s ease',
+              boxShadow: 'none',
+              boxSizing: 'border-box',
+              fontFamily: "'Montserrat', sans-serif"
+            }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-3px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+            >
+              <h3 style={{ fontSize: '24px', fontWeight: '600', color: '#0f172a', marginBottom: '12px' }}>
+                {lang === 'mn' ? 'Ажил горилогчийн товч анкет' : 'Candidate Application Form'}
+              </h3>
+              <p style={{ fontSize: '15px', color: '#64748b', lineHeight: '1.6', marginBottom: '28px', maxWidth: '920px', margin: '0 auto 28px auto' }}>
+                {lang === 'mn'
+                  ? 'Монполимет Группийн нээлттэй ажлын байранд хүсэлт илгээж, ажилд орох анкетыг онлайнаар бөглөнө\u00A0үү. Анкетын мэдээлэл mpm-hr@monpolymet.mn хаяг руу шууд илгээгдэнэ.'
+                  : 'Submit your application and fill out the online candidate form for open vacancies at Monpolymet Group. Application details are sent directly to mpm-hr@monpolymet.mn.'}
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => openApplyModal()}
+                  style={{
+                    height: '56px',
+                    padding: '0 28px',
+                    borderRadius: '16px',
+                    background: 'linear-gradient(180deg, #010D56 0%, #001CE8 100%)',
+                    color: '#ffffff',
+                    border: 'none',
+                    fontSize: '15px',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    transition: 'all 0.25s ease',
+                    fontFamily: "'Montserrat', sans-serif",
+                    boxShadow: '0 8px 24px rgba(1, 11, 64, 0.25)',
+                    boxSizing: 'border-box'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 12px 28px rgba(0, 28, 232, 0.35)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(1, 11, 64, 0.25)';
+                  }}
+                >
+                  <div style={{
+                    width: '36px',
+                    height: '36px',
+                    borderRadius: '8px',
+                    background: 'rgba(255, 255, 255, 0.15)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0
+                  }}>
+                    <UserCheck size={20} color="#ffffff" />
+                  </div>
+                  <span>{lang === 'mn' ? 'Ажил горилогчийн товч анкет бөглөх' : 'Fill Candidate Application Form'}</span>
+                </button>
+
+                <a
+                  href="https://www.zangia.mn/company/monpolymetgroup"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    height: '56px',
+                    padding: '0 28px',
+                    borderRadius: '16px',
+                    background: 'linear-gradient(180deg, #010D56 0%, #001CE8 100%)',
+                    color: '#ffffff',
+                    border: 'none',
+                    fontSize: '15px',
+                    fontWeight: '700',
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    transition: 'all 0.25s ease',
+                    fontFamily: "'Montserrat', sans-serif",
+                    boxShadow: '0 8px 24px rgba(1, 11, 64, 0.25)',
+                    boxSizing: 'border-box'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 12px 28px rgba(0, 28, 232, 0.35)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(1, 11, 64, 0.25)';
+                  }}
+                >
+                  <img src={zangiaLogo} alt="Zangia Logo" style={{ width: '36px', height: '36px', objectFit: 'contain', borderRadius: '8px', flexShrink: 0 }} />
+                  <span>{lang === 'mn' ? 'Нээлттэй ажлын байрыг харах' : 'View Open Vacancies'}</span>
+                  <ArrowUpRight size={18} style={{ flexShrink: 0 }} />
+                </a>
+              </div>
+            </div>
+
+            {/* HR Contact Notice outside Card (Identical to ProcurementPage) */}
+            <div style={{ margin: '36px 0 36px 0', textAlign: 'center' }}>
+              <p style={{
+                fontSize: '13px',
+                fontWeight: '600',
+                color: '#475569',
+                opacity: 0.8,
+                margin: 0,
+                display: 'inline-block',
+                letterSpacing: '-0.2px',
+                fontFamily: "'Montserrat', sans-serif"
+              }}>
+                {lang === 'mn'
+                  ? 'Хүний нөөцтэй холбоотой дэлгэрэнгүй мэдээлэл авах утас, мэйл: 75855858 /1007/, mpm-hr@monpolymet.mn'
+                  : 'For detailed HR inquiries, phone & email: 75855858 /1007/, mpm-hr@monpolymet.mn'}
+              </p>
+            </div>
+          </section>
 
 
 

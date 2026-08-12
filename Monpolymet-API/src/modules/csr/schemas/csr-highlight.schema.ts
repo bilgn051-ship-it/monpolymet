@@ -22,14 +22,17 @@ export class CsrHighlight {
   @Prop({ required: true, unique: true, default: 'csrHighlight' })
   key!: string;
 
-  @Prop({ type: LocalizedStringSchema, required: true })
-  title!: LocalizedString;
+  @Prop({ type: LocalizedStringSchema })
+  title?: LocalizedString;
 
-  @Prop({ type: LocalizedStringSchema, required: true })
-  subtitle!: LocalizedString;
+  @Prop({ type: LocalizedStringSchema })
+  subtitle?: LocalizedString;
 
-  @Prop({ required: true })
-  imageUrl!: string;
+  @Prop({ default: '' })
+  imageUrl?: string;
+
+  @Prop({ default: '' })
+  pano360Url?: string;
 
   @Prop({ type: [CsrHighlightBulletSchema], default: [] })
   bullets!: CsrHighlightBullet[];

@@ -8,48 +8,49 @@ import { UpdateJobDto } from './dto/update-job.dto';
 @Injectable()
 export class JobsService {
   constructor(
-    @InjectModel(Job.name) private readonly model: Model<JobDocument>,
+    @InjectModel(Job.name) private readonly jobModel: Model<JobDocument>,
   ) {}
 
-  /** Admin list — includes closed vacancies. */
   findAll() {
-    return this.model.find().sort({ createdAt: -1 }).exec();
+    return this.jobModel.find().sort({ createdAt: -1 }).exec();
   }
 
-  /** Public list — open vacancies only. */
   findOpen() {
-    return this.model.find({ isOpen: true }).sort({ createdAt: -1 }).exec();
+    return this.jobModel
+      .find({ isOpen: true })
+      .sort({ createdAt: -1 })
+      .exec();
   }
 
   async findOne(id: string) {
-    const doc = await this.model.findById(id).exec();
-    if (!doc) throw new NotFoundException('Job not found');
+    const doc = await this.jobModel.findById(id).exec();
+    if (!doc) throw new NotFoundException('Job vacancy not found');
     return doc;
   }
 
   create(dto: CreateJobDto) {
-    return this.model.create(dto);
+    return this.jobModel.create(dto);
   }
 
   async update(id: string, dto: UpdateJobDto) {
-    const doc = await this.model
+    const doc = await this.jobModel
       .findByIdAndUpdate(id, dto, { new: true, runValidators: true })
       .exec();
-    if (!doc) throw new NotFoundException('Job not found');
+    if (!doc) throw new NotFoundException('Job vacancy not found');
     return doc;
   }
 
   async remove(id: string) {
-    const doc = await this.model.findByIdAndDelete(id).exec();
-    if (!doc) throw new NotFoundException('Job not found');
+    const doc = await this.jobModel.findByIdAndDelete(id).exec();
+    if (!doc) throw new NotFoundException('Job vacancy not found');
     return { id };
   }
 
   count() {
-    return this.model.countDocuments().exec();
+    return this.jobModel.countDocuments().exec();
   }
 
   countOpen() {
-    return this.model.countDocuments({ isOpen: true }).exec();
+    return this.jobModel.countDocuments({ isOpen: true }).exec();
   }
 }

@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { HeroSlide, HeroSlideSchema } from './schemas/hero-slide.schema';
-import { HomePageContent, HomePageContentSchema } from './schemas/home-page-content.schema';
 import { StatCard, StatCardSchema } from './schemas/stat-card.schema';
+import {
+  HomePageContent,
+  HomePageContentSchema,
+} from './schemas/home-page-content.schema';
 import { HOME_CONTROLLERS, HOME_PROVIDERS } from './home.crud';
 
 @Module({
@@ -13,8 +16,8 @@ import { HOME_CONTROLLERS, HOME_PROVIDERS } from './home.crud';
       { name: HomePageContent.name, schema: HomePageContentSchema },
     ]),
   ],
-  controllers: [...HOME_CONTROLLERS],
-  providers: [...HOME_PROVIDERS],
+  providers: HOME_PROVIDERS,
+  controllers: HOME_CONTROLLERS,
   exports: [MongooseModule, ...HOME_PROVIDERS],
 })
 export class HomeModule {}

@@ -27,8 +27,8 @@ import { ChatModule } from './modules/chat/chat.module';
     ConfigModule.forRoot({ isGlobal: true }),
     ThrottlerModule.forRoot([
       {
-        ttl: 60000, // 1 minute
-        limit: 120, // max 120 requests per minute per IP to prevent rate limit / brute force attacks
+        ttl: 60000,
+        limit: 120,
       },
     ]),
     MongooseModule.forRootAsync({
@@ -65,4 +65,4 @@ import { ChatModule } from './modules/chat/chat.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

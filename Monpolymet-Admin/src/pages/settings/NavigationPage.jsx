@@ -140,9 +140,11 @@ export default function NavigationPage() {
       
       updatedList.sort((a, b) => (a.order || 0) - (b.order || 0));
       
+      const existingSettings = (await api.get('/settings')) || {};
+
       const payload = activeTab === 'main' 
-        ? { navigation: updatedList }
-        : { footerNavigation: updatedList };
+        ? { ...existingSettings, navigation: updatedList }
+        : { ...existingSettings, footerNavigation: updatedList };
 
       await api.put('/settings', payload);
       
@@ -153,7 +155,8 @@ export default function NavigationPage() {
       });
       close();
     } catch (err) {
-      notifications.show({ color: 'red', title: 'Алдаа', message: err.message });
+      console.error('Navigation save error:', err);
+      notifications.show({ color: 'red', title: 'Алдаа', message: err.message || 'Хадгалахад алдаа гарлаа' });
     } finally {
       setSaving(false);
     }
@@ -163,12 +166,16 @@ export default function NavigationPage() {
     if (!window.confirm('Энэ цэсийг устгахдаа итгэлтэй байна уу?')) return;
     try {
       const updatedList = items[activeTab].filter(item => item.id !== id);
-      const payload = activeTab === 'main' ? { navigation: updatedList } : { footerNavigation: updatedList };
+      const existingSettings = (await api.get('/settings')) || {};
+      const payload = activeTab === 'main' 
+        ? { ...existingSettings, navigation: updatedList } 
+        : { ...existingSettings, footerNavigation: updatedList };
+
       await api.put('/settings', payload);
       setItems(prev => ({ ...prev, [activeTab]: updatedList }));
       notifications.show({ color: 'green', message: 'Амжилттай устгагдлаа' });
     } catch (err) {
-      notifications.show({ color: 'red', title: 'Алдаа', message: err.message });
+      notifications.show({ color: 'red', title: 'Алдаа', message: err.message || 'Устгахад алдаа гарлаа' });
     }
   };
 
@@ -183,8 +190,12 @@ export default function NavigationPage() {
       
       setItems(prev => ({ ...prev, [activeTab]: updatedList }));
       
-      const payload = activeTab === 'main' ? { navigation: updatedList } : { footerNavigation: updatedList };
       try {
+        const existingSettings = (await api.get('/settings')) || {};
+        const payload = activeTab === 'main' 
+          ? { ...existingSettings, navigation: updatedList } 
+          : { ...existingSettings, footerNavigation: updatedList };
+
         await api.put('/settings', payload);
         notifications.show({ color: 'green', message: 'Дараалал хадгалагдлаа' });
       } catch (err) {

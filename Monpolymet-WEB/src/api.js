@@ -210,7 +210,8 @@ const mapCsrHighlight = (d) => ({
   titleEn: d.title?.en ?? '',
   subtitleMn: d.subtitle?.mn ?? '',
   subtitleEn: d.subtitle?.en ?? '',
-  imageUrl: d.imageUrl,
+  imageUrl: d.imageUrl ?? '',
+  pano360Url: d.pano360Url ?? '',
   buttonTextMn: d.buttonText?.mn ?? '',
   buttonTextEn: d.buttonText?.en ?? '',
   bullets: (d.bullets ?? []).map(b => ({

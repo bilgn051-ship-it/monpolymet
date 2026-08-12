@@ -1,15 +1,11 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
-/**
- * Validated shape for every bilingual field in request bodies. Mirrors the
- * LocalizedString Mongoose sub-schema: both languages are required.
- */
 export class LocalizedStringDto {
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  mn!: string;
+  mn?: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  en!: string;
+  en?: string;
 }

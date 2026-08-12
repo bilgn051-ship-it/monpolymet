@@ -36,11 +36,8 @@ const HERO_SLIDES = [
     mediaType: 'image',
     mediaUrl:
       'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&auto=format&fit=crop&q=70',
-    title: ls('Эх орныхоо бүтээн байгуулалтын түүчээ', 'Pioneer of national development'),
-    subtitle: ls(
-      'Уул уурхай, барилгын материалын үйлдвэрлэлийн салбарын тэргүүлэгч',
-      'A leader in mining and construction-material manufacturing',
-    ),
+    title: ls('Жишиг нөхөн сэргээгч Үндэсний компани', 'Benchmark Rehabilitation National Company'),
+    subtitle: ls('', ''),
     ctas: [{ label: ls('Бидний тухай', 'About us'), targetPage: 'about', style: 'primary' }],
     order: 0,
     isActive: true,
@@ -49,10 +46,26 @@ const HERO_SLIDES = [
     mediaType: 'image',
     mediaUrl:
       'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&auto=format&fit=crop&q=70',
-    title: ls('Тогтвортой хөгжлийг эрхэмлэнэ', 'Committed to sustainability'),
-    subtitle: ls('Байгальд ээлтэй, хариуцлагатай уул уурхай', 'Responsible, eco-friendly mining'),
+    title: ls(
+      'Монгол Улсад аж үйлдвэрийн сэргэлтийг авчирч, импортын хараат байдлыг халсан Монцемент',
+      'Moncement bringing industrial revival to Mongolia and ending import dependence',
+    ),
+    subtitle: ls('', ''),
     ctas: [{ label: ls('Дэлгэрэнгүй', 'Learn more'), targetPage: 'csr', style: 'primary' }],
     order: 1,
+    isActive: true,
+  },
+  {
+    mediaType: 'image',
+    mediaUrl:
+      '/hero-slide-3.jpg',
+    title: ls(
+      'Бат бэх хөгжлийн суурийг хамтдаа бүтээцгээе',
+      'Building strong foundations for development together',
+    ),
+    subtitle: ls('', ''),
+    ctas: [{ label: ls('Салбар компаниуд', 'Group Companies'), targetPage: 'companies', style: 'primary' }],
+    order: 2,
     isActive: true,
   },
 ];
@@ -105,8 +118,14 @@ const TIMELINE = [
 ];
 
 const TEAM = [
-  { name: ls('Ж. Одбаяр', 'J. Odbayar'), role: ls('Үүсгэн байгуулагч, Тэргүүн', 'Founder & Chairwoman'), bio: ls('Компанийг үүсгэн байгуулснаас хойш тэргүүлж байна', 'Has led the company since its founding'), education: ls('Эдийн засгийн доктор', 'PhD in Economics'), imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&auto=format&fit=crop&q=70', isFounder: true, order: 0 },
-  { name: ls('Б. Ганбат', 'B. Ganbat'), role: ls('Гүйцэтгэх захирал', 'Chief Executive Officer'), bio: ls('Үйл ажиллагааны ерөнхий удирдлагыг хариуцдаг', 'Responsible for overall operations'), education: ls('Уул уурхайн инженер', 'Mining Engineer'), imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&auto=format&fit=crop&q=70', isFounder: false, order: 1 },
+  { name: ls('Ц.Гарамжав', 'Garamjav Ts.'), role: ls('Үүсгэн байгуулагч, ТУЗ-ийн Дарга', 'Founder & Chairwoman of the Board'), bio: ls('', ''), education: ls('', ''), imageUrl: '/garamjav.png', isFounder: true, order: 0 },
+  { name: ls('Н.Мөнхнасан', 'Munkhnasan N.'), role: ls('Ерөнхий Захирал', 'Chief Executive Officer'), bio: ls('', ''), education: ls('', ''), imageUrl: '/monhnasan.png', isFounder: false, order: 1 },
+  { name: ls('Э.Билгүүн', 'Bilguun E.'), role: ls('Гүйцэтгэх Захирал', 'Executive Director'), bio: ls('', ''), education: ls('', ''), imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&auto=format&fit=crop&q=80', isFounder: false, order: 2 },
+  { name: ls('Б.Цэцэгсүрэн', 'Tsetsegsuren B.'), role: ls('Санхүүгийн Захирал', 'Chief Financial Officer'), bio: ls('', ''), education: ls('', ''), imageUrl: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&auto=format&fit=crop&q=80', isFounder: false, order: 3 },
+  { name: ls('С.Баярбат', 'Bayarbat S.'), role: ls('Үйлдвэрлэл Хариуцсан Захирал', 'VP of Operations'), bio: ls('', ''), education: ls('', ''), imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80', isFounder: false, order: 4 },
+  { name: ls('Г.Отгонбаяр', 'Otgonbayar G.'), role: ls('Хүний Нөөцийн Захирал', 'Human Resources Director'), bio: ls('', ''), education: ls('', ''), imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80', isFounder: false, order: 5 },
+  { name: ls('Д.Эрдэнэбат', 'Erdenebat D.'), role: ls('Техник, Технологийн Захирал', 'Chief Technology Officer'), bio: ls('', ''), education: ls('', ''), imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&auto=format&fit=crop&q=80', isFounder: false, order: 6 },
+  { name: ls('М.Батзориг', 'Batzorig M.'), role: ls('Байгаль Орчны Менежер', 'Environmental Manager'), bio: ls('', ''), education: ls('', ''), imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&auto=format&fit=crop&q=80', isFounder: false, order: 7 },
 ];
 
 const SECTORS = [
@@ -190,11 +209,14 @@ const PAGES = [
 
 const HOME_CONTENT = {
   ceoSection: {
-    sectionTitle: ls('Удирдлагын мэндчилгээ', 'Message from Leadership'),
-    quote: ls('Бид эх орныхоо тогтвортой хөгжилд хувь нэмрээ оруулсаар ирсэн.', 'We have consistently contributed to our nation’s sustainable development.'),
-    name: ls('Ж. Одбаяр', 'J. Odbayar'),
-    role: ls('Үүсгэн байгуулагч, Тэргүүн', 'Founder & Chairwoman'),
-    imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&auto=format&fit=crop&q=70',
+    sectionTitle: ls('Үүсгэн байгуулагчийн мэндчилгээ', 'Message from the Founder'),
+    quote: ls(
+      'Бид үйл ажиллагаа явуулж буй бүхий л салбартаа хүн, байгаль, нийгмийн харилцан хөгжил, ирээдүйн сайн сайхныг эрхэмлэдэг билээ. Байгалийн нөөцийг тогтвортой ашиглаж, мэргэжлийн бөгөөд хариуцлагатай уул уурхайн зарчмыг төлөвшүүлж, байгаль орчны нөхөн сэргээлтийн жишгийг тогтоон, ашиглалт олборлолтоос нэмүү өртөг шингэсэн стратегийн бүтээгдэхүүн үйлдвэрлэлийг цогцлоосон.\n\nМонполимет группийн үйл ажиллагаа монгол хүний хөгжилд, эх дэлхий, байгалийн тогтвортой оршихуйд, үндэсний үйлдвэрийн бие даасан байдлыг хамгаалахад, Монгол Улсын эдийн засгийн тусгаар тогтнолд, нийгмийн сайн сайхныг бүтээхэд томоохон хувь нэмрийг оруулсаар байна.\n\nИймдээ ч монгол хүн бүрийн сэтгэлд эх орныхоо хөгжлийн төлөөх санал, санаачлага үргэлж байдаг гэдэгт итгэдэг.',
+      'We prioritize the mutual development of people, nature, and society, as well as future well-being across all sectors of our operations. By utilizing natural resources sustainably, instilling professional and responsible mining principles, establishing standards for environmental restoration, and creating value-added strategic product manufacturing from extraction.\n\nMonpolymet Group\'s operations continue to make significant contributions to the development of Mongolian citizens, the sustainable existence of our Mother Earth, the protection of national industrial independence, the economic sovereignty of Mongolia, and the creation of social well-being.\n\nTherefore, we believe that thoughts and initiatives for our nation\'s development are always present in the heart of every Mongolian.'
+    ),
+    name: ls('Ц.Гарамжав', 'Ts. Garamjav'),
+    role: ls('Үүсгэн байгуулагч, Монгол Улсын Хөдөлмөрийн Баатар', 'Founder, Hero of Labor of Mongolia'),
+    imageUrl: '/garamjav.png',
   },
 };
 

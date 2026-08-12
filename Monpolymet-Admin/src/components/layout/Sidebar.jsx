@@ -50,7 +50,7 @@ const GROUPS = [
   {
     label: 'СИСТЕМ & ТОХИРГОО',
     items: [
-      { to: '/navigation-settings', label: 'Цэсний тохиргоо', icon: ListOrdered },
+      { to: '/navigation-settings', label: 'Цэсний удирдлага', icon: ListOrdered },
       { to: '/users', label: 'Хэрэглэгчийн эрх', icon: UserCog },
     ],
   },
@@ -61,7 +61,7 @@ export default function Sidebar({ onNavigate }) {
 
   return (
     <Box style={{ height: '100%', display: 'flex', flexDirection: 'column', backgroundColor: '#ffffff' }}>
-      
+
       <ScrollArea type="scroll" style={{ flex: 1 }}>
         <Box p="xs" py="md">
           {GROUPS.map((group, index) => (

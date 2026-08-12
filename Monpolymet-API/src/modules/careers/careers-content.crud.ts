@@ -40,5 +40,5 @@ export class CareersContentController extends BaseSingletonController<CareersPag
   }
 }
 
-export const CAREERS_EXTRA_PROVIDERS = [FaqsService, CareersContentService];
-export const CAREERS_EXTRA_CONTROLLERS = [FaqsController, CareersContentController];
+export const CAREERS_PROVIDERS = [FaqsService, CareersContentService];
+export const CAREERS_CONTROLLERS = [FaqsController, CareersContentController];

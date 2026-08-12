@@ -11,7 +11,8 @@ export class TourService extends BaseCrudService<TourSceneDocument> {
     super(model);
   }
 }
-@Controller('tour-scenes')
+
+@Controller('tour')
 export class TourController extends BaseCrudController<TourSceneDocument> {
   constructor(service: TourService) {
     super(service);

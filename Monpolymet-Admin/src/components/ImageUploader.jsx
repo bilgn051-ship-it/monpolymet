@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   Box,
   Button,
@@ -13,7 +13,7 @@ import {
   Tooltip,
   Badge
 } from '@mantine/core';
-import { Upload, Link as LinkIcon, Trash2, CheckCircle2, FileImage, Sparkles } from 'lucide-react';
+import { Upload, Link as LinkIcon, Trash2, CheckCircle2, RefreshCw } from 'lucide-react';
 import { api } from '../api/client';
 import { notifications } from '@mantine/notifications';
 
@@ -21,6 +21,19 @@ export default function ImageUploader({ value, onChange, label = 'Зураг о�
   const [mode, setMode] = useState('upload'); // 'upload' | 'url'
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
+  
+  // Unique ID per instance so multiple ImageUploaders on the same page don't conflict
+  const fileInputId = useRef(`image-uploader-file-input-${Math.random().toString(36).substring(2, 9)}`).current;
+
+  // Resolve preview URL so port 5174 admin correctly resolves /uploads/... from port 4000 backend
+  const getPreviewUrl = (val) => {
+    if (!val) return '';
+    if (typeof val === 'string' && val.startsWith('/uploads/')) {
+      const defaultHost = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+      return `http://${defaultHost}:4000${val}`;
+    }
+    return val;
+  };
 
   const handleFileChange = async (file) => {
     if (!file) return;
@@ -45,7 +58,14 @@ export default function ImageUploader({ value, onChange, label = 'Зураг о�
         notifications.show({
           color: 'green',
           title: 'Амжилттай',
-          message: 'Зураг амжилттай хуулагдлаа',
+          message: 'Зураг амжилттай хуулагдлаа. "Хадгалах" товчийг дараарай.',
+        });
+      } else if (res && res.filename) {
+        onChange(`/uploads/${res.filename}`);
+        notifications.show({
+          color: 'green',
+          title: 'Амжилттай',
+          message: 'Зураг амжилттай хуулагдлаа. "Хадгалах" товчийг дараарай.',
         });
       }
     } catch (err) {
@@ -79,6 +99,20 @@ export default function ImageUploader({ value, onChange, label = 'Зураг о�
 
   return (
     <Box mb="sm">
+      {/* Hidden File Input for this specific instance */}
+      <input
+        id={fileInputId}
+        type="file"
+        accept="image/*"
+        style={{ display: 'none' }}
+        onChange={(e) => {
+          if (e.target.files?.[0]) {
+            handleFileChange(e.target.files[0]);
+            e.target.value = ''; // Reset input so same file can be re-selected
+          }
+        }}
+      />
+
       <Group justify="space-between" align="center" mb={6}>
         <Text size="xs" fw={700} c="#475569" style={{ textTransform: 'uppercase', letterSpacing: '0.5px' }}>
           {label} {required && <span style={{ color: '#ef4444' }}>*</span>}
@@ -101,7 +135,7 @@ export default function ImageUploader({ value, onChange, label = 'Зураг о�
       {value ? (
         <Paper p="xs" radius="md" style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', position: 'relative' }}>
           <Group align="center" justify="space-between" wrap="nowrap">
-            <Group gap="sm" wrap="nowrap">
+            <Group gap="sm" wrap="nowrap" style={{ overflow: 'hidden' }}>
               <Box
                 style={{
                   width: 64,
@@ -112,36 +146,55 @@ export default function ImageUploader({ value, onChange, label = 'Зураг о�
                   border: '1px solid #e2e8f0',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  flexShrink: 0
                 }}
               >
                 <Image
-                  src={value}
+                  src={getPreviewUrl(value)}
                   alt="Uploaded preview"
                   fit="cover"
                   h={64}
                   w={64}
-                  fallbackSrc="https://placehold.co/100x100?text=No+Image"
+                  fallbackSrc="https://placehold.co/100x100?text=Uploaded"
                 />
               </Box>
 
-              <div>
+              <div style={{ overflow: 'hidden' }}>
                 <Group gap="xs" mb={2}>
                   <Badge size="xs" color="green" variant="light" leftSection={<CheckCircle2 size={10} />}>
                     Идэвхтэй зураг
                   </Badge>
                 </Group>
-                <Text size="xs" c="dimmed" style={{ wordBreak: 'break-all', maxWidth: 280 }} lineClamp={1}>
+                <Text size="xs" c="dimmed" style={{ wordBreak: 'break-all' }} lineClamp={1}>
                   {value}
                 </Text>
               </div>
             </Group>
 
-            <Tooltip label="Зургийг цэвэрлэх">
-              <ActionIcon color="red" variant="subtle" onClick={() => onChange('')}>
-                <Trash2 size={16} />
-              </ActionIcon>
-            </Tooltip>
+            <Group gap="xs" wrap="nowrap">
+              <Button
+                size="xs"
+                variant="light"
+                color="blue"
+                leftSection={<RefreshCw size={14} />}
+                loading={uploading}
+                onClick={() => document.getElementById(fileInputId)?.click()}
+              >
+                Солих
+              </Button>
+
+              <Tooltip label="Зургийг устгах / Цэвэрлэх">
+                <ActionIcon
+                  color="red"
+                  variant="filled"
+                  size="md"
+                  onClick={() => onChange('')}
+                >
+                  <Trash2 size={16} />
+                </ActionIcon>
+              </Tooltip>
+            </Group>
           </Group>
         </Paper>
       ) : mode === 'upload' ? (
@@ -159,16 +212,8 @@ export default function ImageUploader({ value, onChange, label = 'Зураг о�
             cursor: 'pointer',
             transition: 'all 0.2s ease'
           }}
-          onClick={() => document.getElementById('image-uploader-file-input')?.click()}
+          onClick={() => document.getElementById(fileInputId)?.click()}
         >
-          <input
-            id="image-uploader-file-input"
-            type="file"
-            accept="image/*"
-            style={{ display: 'none' }}
-            onChange={(e) => e.target.files?.[0] && handleFileChange(e.target.files[0])}
-          />
-
           <Stack align="center" gap={6}>
             <Box
               style={{

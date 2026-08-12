@@ -72,7 +72,8 @@ export default function ResourcePage({ config }) {
     setSaving(true);
     const payload = cleanPayload(config.fields, values);
     try {
-      if (editing) await api.patch(`${config.path}/${editing._id}`, payload);
+      const itemId = editing?._id || editing?.id;
+      if (itemId) await api.patch(`${config.path}/${itemId}`, payload);
       else await api.post(config.path, payload);
       notifications.show({
         color: 'green',
@@ -87,7 +88,8 @@ export default function ResourcePage({ config }) {
     }
   };
 
-  const confirmDelete = (item) =>
+  const confirmDelete = (item) => {
+    const itemId = item?._id || item?.id;
     modals.openConfirmModal({
       title: t.common.confirmDeleteTitle,
       children: <Text size="sm">{t.common.confirmDeleteBody}</Text>,
@@ -95,7 +97,7 @@ export default function ResourcePage({ config }) {
       confirmProps: { color: 'red' },
       onConfirm: async () => {
         try {
-          await api.delete(`${config.path}/${item._id}`);
+          await api.delete(`${config.path}/${itemId}`);
           notifications.show({ color: 'green', message: t.toast.deleted });
           reload();
         } catch (err) {
@@ -103,6 +105,7 @@ export default function ResourcePage({ config }) {
         }
       },
     });
+  };
 
   const filteredItems = (items || []).filter((item) => {
     if (filterStatus === 'active') {

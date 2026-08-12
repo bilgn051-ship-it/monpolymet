@@ -7,8 +7,17 @@ export default function CSRHighlight({ lang, data }) {
   const containerRef = useRef(null);
   const [revealed, setRevealed] = useState(false);
 
-  const bgUrl = data?.imageUrl || webVideo;
-  const isVideo = bgUrl.match(/\.(mp4|webm|ogg)(\?.*)?$/i) || bgUrl === webVideo;
+  let customUrl = data?.imageUrl || '';
+  if (customUrl && typeof customUrl === 'string' && customUrl.startsWith('/uploads/')) {
+    const defaultHost = typeof window !== 'undefined' && window.location.hostname ? window.location.hostname : 'localhost';
+    customUrl = `http://${defaultHost}:4000${customUrl}`;
+  }
+
+  const isCustomVideo = customUrl ? Boolean(customUrl.match(/\.(mp4|webm|ogg)(\?.*)?$/i)) : false;
+  const isCustomImage = Boolean(customUrl && !isCustomVideo);
+
+  const bgUrl = isCustomVideo ? customUrl : (isCustomImage ? customUrl : webVideo);
+  const isVideo = !isCustomImage;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -40,7 +49,8 @@ export default function CSRHighlight({ lang, data }) {
           flexDirection: 'column',
           alignItems: 'flex-start',
           padding: '60px',
-          backgroundImage: !isVideo ? `url("${bgUrl}")` : 'none',
+          backgroundColor: bgUrl ? 'transparent' : '#0f172a',
+          backgroundImage: (bgUrl && !isVideo) ? `url("${bgUrl}")` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           boxShadow: '0 24px 50px rgba(0,0,0,0.1)',
@@ -82,7 +92,7 @@ export default function CSRHighlight({ lang, data }) {
 
         {/* Content */}
         <div style={{ position: 'relative', zIndex: 2, maxWidth: '900px', width: '100%', color: '#ffffff' }}>
-          
+
           {/* Badge / Title */}
           <div style={{
             display: 'inline-flex',
@@ -95,11 +105,11 @@ export default function CSRHighlight({ lang, data }) {
           </div>
 
           {/* Long Gray Line */}
-          <div style={{ 
-            width: '100%', 
-            height: '1px', 
-            backgroundColor: 'rgba(255, 255, 255, 0.2)', 
-            marginBottom: '32px' 
+          <div style={{
+            width: '100%',
+            height: '1px',
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            marginBottom: '32px'
           }}></div>
 
           {/* Paragraph */}
@@ -109,10 +119,15 @@ export default function CSRHighlight({ lang, data }) {
             color: 'rgba(255,255,255,0.9)',
             fontFamily: "'Montserrat', sans-serif",
             maxWidth: '850px',
-            marginBottom: '32px'
+            marginBottom: '32px',
+            textAlign: 'justify',
+            textJustify: 'inter-word',
+            hyphens: 'none',
+            WebkitHyphens: 'none',
+            wordBreak: 'normal'
           }}>
-            {lang === 'mn' 
-              ? (data?.subtitleMn || 'Тосонгийн ордод 931,67 га талбайд ашиглалт явуулсанаас техникийн нөхөн сэргээлтийг 743 га талбайд, биологийн нөхөн сэргээлтийг 514 га талбайд хийсэн. 100 000 гаруй мод тариалж 5,5 км урт 7 хэсэг ойн төглүүд ургуулсан бөгөөд 16 га талбайтай Тосон нуурыг бий болгоод байна.') 
+            {lang === 'mn'
+              ? (data?.subtitleMn || 'Тосонгийн ордод 931,67 га талбайд ашиглалт явуулсанаас техникийн нөхөн сэргээлтийг 743 га талбайд, биологийн нөхөн сэргээлтийг 514 га талбайд хийсэн. 100 000 гаруй мод тариалж 5,5 км урт 7 хэсэг ойн төглүүд ургуулсан бөгөөд 16 га талбайтай Тосон нуурыг бий болгоод байна.')
               : (data?.subtitleEn || 'Reclamation works at Toson mine.')}
           </p>
 
@@ -131,18 +146,18 @@ export default function CSRHighlight({ lang, data }) {
             })}
             {!data?.bullets?.length && (
               <>
-                 <div style={{ fontSize: '16px', fontWeight: '400', lineHeight: 1.5, fontFamily: "'Montserrat', sans-serif", color: '#ffffff', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px' }}><LucideIcons.Leaf size={20} color="#ffffff" /></span>
-                   <span>Техникийн нөхөн сэргээлт 870.3 га талбайд 85.2%</span>
-                 </div>
-                 <div style={{ fontSize: '16px', fontWeight: '400', lineHeight: 1.5, fontFamily: "'Montserrat', sans-serif", color: '#ffffff', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px' }}><LucideIcons.Leaf size={20} color="#ffffff" /></span>
-                   <span>Биологийн нөхөн сэргээлт, ургамалжуулалт 561 га талбайд 69%</span>
-                 </div>
-                 <div style={{ fontSize: '16px', fontWeight: '400', lineHeight: 1.5, fontFamily: "'Montserrat', sans-serif", color: '#ffffff', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                   <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px' }}><LucideIcons.Leaf size={20} color="#ffffff" /></span>
-                   <span>300,000+ мод тариалсан 100%</span>
-                 </div>
+                <div style={{ fontSize: '16px', fontWeight: '400', lineHeight: 1.5, fontFamily: "'Montserrat', sans-serif", color: '#ffffff', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px' }}><LucideIcons.Leaf size={20} color="#ffffff" /></span>
+                  <span>Техникийн нөхөн сэргээлт 870.3 га талбайд 85.2%</span>
+                </div>
+                <div style={{ fontSize: '16px', fontWeight: '400', lineHeight: 1.5, fontFamily: "'Montserrat', sans-serif", color: '#ffffff', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px' }}><LucideIcons.Leaf size={20} color="#ffffff" /></span>
+                  <span>Биологийн нөхөн сэргээлт, ургамалжуулалт 561 га талбайд 69%</span>
+                </div>
+                <div style={{ fontSize: '16px', fontWeight: '400', lineHeight: 1.5, fontFamily: "'Montserrat', sans-serif", color: '#ffffff', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '24px', height: '24px' }}><LucideIcons.Leaf size={20} color="#ffffff" /></span>
+                  <span>300,000+ мод тариалсан 100%</span>
+                </div>
               </>
             )}
           </div>

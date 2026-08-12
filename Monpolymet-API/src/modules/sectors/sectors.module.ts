@@ -4,9 +4,11 @@ import { Sector, SectorSchema } from './schemas/sector.schema';
 import { SectorsController, SectorsService } from './sectors.crud';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Sector.name, schema: SectorSchema }])],
-  controllers: [SectorsController],
+  imports: [
+    MongooseModule.forFeature([{ name: Sector.name, schema: SectorSchema }]),
+  ],
   providers: [SectorsService],
+  controllers: [SectorsController],
   exports: [MongooseModule, SectorsService],
 })
 export class SectorsModule {}

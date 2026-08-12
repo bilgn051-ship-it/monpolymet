@@ -87,7 +87,8 @@ export default function JobsPage() {
   const submit = async (values) => {
     setSaving(true);
     try {
-      if (editing) await api.patch(`/jobs/${editing._id}`, values);
+      const itemId = editing?._id || editing?.id;
+      if (itemId) await api.patch(`/jobs/${itemId}`, values);
       else await api.post('/jobs', values);
       notifications.show({
         color: 'green',
@@ -106,7 +107,8 @@ export default function JobsPage() {
     }
   };
 
-  const confirmDelete = (item) =>
+  const confirmDelete = (item) => {
+    const itemId = item?._id || item?.id;
     modals.openConfirmModal({
       title: t.common.confirmDeleteTitle,
       children: <Text size="sm">{t.common.confirmDeleteBody}</Text>,
@@ -114,7 +116,7 @@ export default function JobsPage() {
       confirmProps: { color: 'red' },
       onConfirm: async () => {
         try {
-          await api.delete(`/jobs/${item._id}`);
+          await api.delete(`/jobs/${itemId}`);
           notifications.show({ color: 'green', message: t.toast.deleted });
           reload();
         } catch (err) {
@@ -126,6 +128,7 @@ export default function JobsPage() {
         }
       },
     });
+  };
 
   const filteredItems = (items || []).filter((item) => {
     if (filterStatus === 'active') {

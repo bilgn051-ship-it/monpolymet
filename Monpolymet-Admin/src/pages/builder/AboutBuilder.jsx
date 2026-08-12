@@ -44,8 +44,8 @@ export default function AboutBuilder() {
     quoteEn: 'Dear clients and partners, welcome to Monpolymet Group...',
     nameMn: 'Ц.Гарамжав',
     nameEn: 'Garamjav Ts.',
-    roleMn: 'Үүсгэн байгуулагч, ТУЗ-ийн Дарга, Монгол Улсын Хөдөлмөрийн Баатар',
-    roleEn: 'Founder, Chairwoman of the Board, Hero of Labor of Mongolia',
+    roleMn: 'Үүсгэн байгуулагч, Монгол Улсын Хөдөлмөрийн Баатар',
+    roleEn: 'Founder, Hero of Labor of Mongolia',
     imageUrl: '/garamjav.png',
   });
 
@@ -63,10 +63,11 @@ export default function AboutBuilder() {
   ]);
 
   const [teamMembers, setTeamMembers] = useState([
-    { nameMn: 'Ц.Гарамжав', nameEn: 'Garamjav Ts.', roleMn: 'Үүсгэн байгуулагч, ТУЗ-ийн Дарга', roleEn: 'Founder, Chairwoman', imageUrl: '/garamjav.png' },
-    { nameMn: 'Н.Мөнхнасан', nameEn: 'Munkhnasan N.', roleMn: 'СЕО, Гүйцэтгэх захирал', roleEn: 'CEO', imageUrl: '/monhnasan.png' },
-    { nameMn: 'Б.Дельгэр', nameEn: 'Delger B.', roleMn: 'Тэргүүн дэд захирал', roleEn: 'First Deputy Director', imageUrl: '/dosh.png' },
-    { nameMn: 'Ц.Халиун', nameEn: 'Haliun Ts.', roleMn: 'Дэд захирал', roleEn: 'Deputy Director', imageUrl: '/haliun.png' },
+    { nameMn: 'Ц.Гарамжав', nameEn: 'Ts. Garamjav', roleMn: 'Үүсгэн байгуулагч', roleEn: 'Founder', imageUrl: '/garamjav.png' },
+    { nameMn: 'Н.Мөнхнасан', nameEn: 'N. Munkhnasan', roleMn: 'ТУЗ-ын дарга', roleEn: 'Chairwoman of the Board', imageUrl: '/monhnasan.png' },
+    { nameMn: 'Ц.Халиун', nameEn: 'Ts. Haliun', roleMn: 'Гүйцэтгэх захирал', roleEn: 'Executive Director', imageUrl: '/haliun.png' },
+    { nameMn: 'Б.Дэлгэр', nameEn: 'B. Delger', roleMn: 'Гүйцэтгэх захирал', roleEn: 'Executive Director', imageUrl: '/delger.png' },
+    { nameMn: 'Б.Гандөш', nameEn: 'B. Gandush', roleMn: 'Гүйцэтгэх захирал', roleEn: 'Executive Director', imageUrl: '/dosh.png' },
   ]);
 
   useEffect(() => {
@@ -434,24 +435,47 @@ export default function AboutBuilder() {
                           <Trash2 size={16} />
                         </ActionIcon>
                       </Group>
-                      <TextInput
-                        label="Нэр (Монгол)"
-                        value={member.nameMn}
-                        onChange={(e) => {
-                          const next = [...teamMembers];
-                          next[index].nameMn = e.target.value;
-                          setTeamMembers(next);
-                        }}
-                      />
-                      <TextInput
-                        label="Албан тушаал (Монгол)"
-                        value={member.roleMn}
-                        onChange={(e) => {
-                          const next = [...teamMembers];
-                          next[index].roleMn = e.target.value;
-                          setTeamMembers(next);
-                        }}
-                      />
+                      <SimpleGrid cols={{ base: 1, md: 2 }}>
+                        <TextInput
+                          label="Нэр (Монгол)"
+                          value={member.nameMn}
+                          onChange={(e) => {
+                            const next = [...teamMembers];
+                            next[index].nameMn = e.target.value;
+                            setTeamMembers(next);
+                          }}
+                        />
+                        <TextInput
+                          label="Нэр (Англи)"
+                          value={member.nameEn || ''}
+                          onChange={(e) => {
+                            const next = [...teamMembers];
+                            next[index].nameEn = e.target.value;
+                            setTeamMembers(next);
+                          }}
+                        />
+                      </SimpleGrid>
+
+                      <SimpleGrid cols={{ base: 1, md: 2 }}>
+                        <TextInput
+                          label="Албан тушаал (Монгол)"
+                          value={member.roleMn}
+                          onChange={(e) => {
+                            const next = [...teamMembers];
+                            next[index].roleMn = e.target.value;
+                            setTeamMembers(next);
+                          }}
+                        />
+                        <TextInput
+                          label="Албан тушаал (Англи)"
+                          value={member.roleEn || ''}
+                          onChange={(e) => {
+                            const next = [...teamMembers];
+                            next[index].roleEn = e.target.value;
+                            setTeamMembers(next);
+                          }}
+                        />
+                      </SimpleGrid>
                       <TextInput
                         label="Зургийн файл / URL"
                         value={member.imageUrl}

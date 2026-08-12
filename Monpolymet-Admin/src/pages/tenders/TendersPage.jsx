@@ -142,8 +142,9 @@ export default function TendersPage() {
         isPublished: values.isPublished !== false,
       };
 
-      if (editing && editing._id) {
-        await api.patch(`/tenders/${editing._id}`, payload);
+      const itemId = editing?._id || editing?.id;
+      if (itemId) {
+        await api.patch(`/tenders/${itemId}`, payload);
       } else {
         await api.post('/tenders', payload);
       }
@@ -217,7 +218,8 @@ export default function TendersPage() {
   const togglePublished = async (item, e) => {
     e.stopPropagation();
     try {
-      await api.patch(`/tenders/${item._id}`, { isPublished: !item.isPublished });
+      const itemId = item?._id || item?.id;
+      await api.patch(`/tenders/${itemId}`, { isPublished: !item.isPublished });
       notifications.show({ color: 'green', message: 'Нийтлэх төлөв шинэчлэгдлээ' });
       reload();
     } catch (err) {
@@ -227,6 +229,7 @@ export default function TendersPage() {
 
   const confirmDelete = (item, e) => {
     if (e) e.stopPropagation();
+    const itemId = item?._id || item?.id;
     modals.openConfirmModal({
       title: t.common.confirmDeleteTitle,
       children: <Text size="sm">{t.common.confirmDeleteBody}</Text>,
@@ -234,7 +237,7 @@ export default function TendersPage() {
       confirmProps: { color: 'red' },
       onConfirm: async () => {
         try {
-          await api.delete(`/tenders/${item._id}`);
+          await api.delete(`/tenders/${itemId}`);
           notifications.show({ color: 'green', message: t.toast.deleted });
           reload();
         } catch (err) {

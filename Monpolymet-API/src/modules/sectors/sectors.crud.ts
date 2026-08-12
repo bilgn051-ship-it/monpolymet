@@ -11,6 +11,7 @@ export class SectorsService extends BaseCrudService<SectorDocument> {
     super(model);
   }
 }
+
 @Controller('sectors')
 export class SectorsController extends BaseCrudController<SectorDocument> {
   constructor(service: SectorsService) {

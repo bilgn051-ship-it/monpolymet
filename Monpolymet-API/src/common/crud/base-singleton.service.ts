@@ -20,7 +20,7 @@ export class BaseSingletonService<T> {
       .findOneAndUpdate(
         { key: this.key } as any,
         { ...dto, key: this.key },
-        { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
+        { new: true, upsert: true, runValidators: false, setDefaultsOnInsert: true },
       )
       .exec();
   }

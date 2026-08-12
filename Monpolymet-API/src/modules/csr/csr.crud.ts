@@ -5,13 +5,21 @@ import { BaseCrudService } from '../../common/crud/base-crud.service';
 import { BaseCrudController } from '../../common/crud/base-crud.controller';
 import { BaseSingletonService } from '../../common/crud/base-singleton.service';
 import { BaseSingletonController } from '../../common/crud/base-singleton.controller';
-import { CsrInitiative, CsrInitiativeDocument } from './schemas/csr-initiative.schema';
+import {
+  CsrInitiative,
+  CsrInitiativeDocument,
+} from './schemas/csr-initiative.schema';
 import { CsrStat, CsrStatDocument } from './schemas/csr-stat.schema';
-import { CsrHighlight, CsrHighlightDocument } from './schemas/csr-highlight.schema';
+import {
+  CsrHighlight,
+  CsrHighlightDocument,
+} from './schemas/csr-highlight.schema';
 
 @Injectable()
 export class CsrService extends BaseCrudService<CsrInitiativeDocument> {
-  constructor(@InjectModel(CsrInitiative.name) model: Model<CsrInitiativeDocument>) {
+  constructor(
+    @InjectModel(CsrInitiative.name) model: Model<CsrInitiativeDocument>,
+  ) {
     super(model);
   }
 }
@@ -37,7 +45,9 @@ export class CsrStatsController extends BaseCrudController<CsrStatDocument> {
 
 @Injectable()
 export class CsrHighlightService extends BaseSingletonService<CsrHighlightDocument> {
-  constructor(@InjectModel(CsrHighlight.name) model: Model<CsrHighlightDocument>) {
+  constructor(
+    @InjectModel(CsrHighlight.name) model: Model<CsrHighlightDocument>,
+  ) {
     super(model, 'csrHighlight');
   }
 }
@@ -47,3 +57,14 @@ export class CsrHighlightController extends BaseSingletonController<CsrHighlight
     super(service);
   }
 }
+
+export const CSR_PROVIDERS = [
+  CsrService,
+  CsrStatsService,
+  CsrHighlightService,
+];
+export const CSR_CONTROLLERS = [
+  CsrController,
+  CsrStatsController,
+  CsrHighlightController,
+];

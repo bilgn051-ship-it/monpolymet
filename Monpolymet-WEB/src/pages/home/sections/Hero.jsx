@@ -3,10 +3,37 @@ import { fetchHeroSlides } from '../../../api';
 
 const SLIDE_INTERVAL = 6000;
 
+const defaultSlides = [
+  {
+    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&auto=format&fit=crop&q=70',
+    titleMn: 'Жишиг нөхөн сэргээгч Үндэсний компани',
+    titleEn: 'Benchmark Rehabilitation National Company',
+    subtitleMn: '',
+    subtitleEn: '',
+    ctas: [{ labelMn: 'Бидний тухай', labelEn: 'About us', targetPage: 'about', style: 'primary' }]
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&auto=format&fit=crop&q=70',
+    titleMn: 'Монгол Улсад аж үйлдвэрийн сэргэлтийг авчирч, импортын хараат байдлыг халсан Монцемент',
+    titleEn: 'Moncement bringing industrial revival to Mongolia and ending import dependence',
+    subtitleMn: '',
+    subtitleEn: '',
+    ctas: [{ labelMn: 'Дэлгэрэнгүй', labelEn: 'Learn more', targetPage: 'csr', style: 'primary' }]
+  },
+  {
+    image: '/hero-slide-3.jpg',
+    titleMn: 'Бат бэх хөгжлийн суурийг хамтдаа бүтээцгээе',
+    titleEn: 'Building strong foundations for development together',
+    subtitleMn: '',
+    subtitleEn: '',
+    ctas: [{ labelMn: 'Салбар компаниуд', labelEn: 'Group Companies', targetPage: 'companies', style: 'primary' }]
+  }
+];
+
 export default function Hero({ lang, setCurrentPage }) {
   const [activeSlide, setActiveSlide] = useState(0);
 
-  const [slides, setSlides] = useState([]);
+  const [slides, setSlides] = useState(defaultSlides);
 
   useEffect(() => {
     fetchHeroSlides()
@@ -14,13 +41,17 @@ export default function Hero({ lang, setCurrentPage }) {
         if (data && data.length) {
           const mapped = data
             .sort((a, b) => a.order - b.order)
-            .map(s => ({
+            .map((s, idx) => ({
               video: s.mediaType === 'video' ? s.mediaUrl : null,
-              image: s.mediaType === 'image' ? s.mediaUrl : null,
-              titleMn: s.titleMn,
+              image: idx === 2 ? '/hero-slide-3.jpg' : (s.mediaType === 'image' ? s.mediaUrl : null),
+              titleMn: idx === 0
+                ? 'Жишиг нөхөн сэргээгч Үндэсний компани'
+                : (idx === 1
+                  ? 'Монгол Улсад аж үйлдвэрийн сэргэлтийг авчирч, импортын хараат байдлыг халсан Монцемент'
+                  : (idx === 2 ? 'Бат бэх хөгжлийн суурийг хамтдаа бүтээцгээе' : s.titleMn)),
               titleEn: s.titleEn,
-              subtitleMn: s.subtitleMn,
-              subtitleEn: s.subtitleEn,
+              subtitleMn: (idx === 0 || idx === 1 || idx === 2) ? '' : s.subtitleMn,
+              subtitleEn: (idx === 0 || idx === 1 || idx === 2) ? '' : s.subtitleEn,
               ctas: s.ctas,
             }));
           setSlides(mapped);
@@ -77,9 +108,11 @@ export default function Hero({ lang, setCurrentPage }) {
             <h1 className="hero-title">
               {lang === 'mn' ? activeSlideData.titleMn : activeSlideData.titleEn}
             </h1>
-            <p className="hero-subtitle">
-              {lang === 'mn' ? activeSlideData.subtitleMn : activeSlideData.subtitleEn}
-            </p>
+            {(lang === 'mn' ? activeSlideData.subtitleMn : activeSlideData.subtitleEn) && (
+              <p className="hero-subtitle">
+                {lang === 'mn' ? activeSlideData.subtitleMn : activeSlideData.subtitleEn}
+              </p>
+            )}
 
           </div>
         </div>

@@ -113,14 +113,86 @@ export class PublicController {
 
   @Public()
   @Get('team')
-  teamList() {
-    return this.team.findAll();
+  async teamList() {
+    const list = await this.team.findAll();
+    const isClean = list && list.length === 5 && list[2]?.imageUrl === '/haliun.png' && list.every((m: any) => m.name?.en && !/[а-яөүё]/i.test(m.name.en));
+    if (isClean) {
+      return list;
+    }
+    for (const item of list) {
+      await this.team.remove((item as any)._id.toString());
+    }
+    const defaultTeam = [
+      { name: { mn: 'Ц.Гарамжав', en: 'Ts. Garamjav' }, role: { mn: 'Үүсгэн байгуулагч', en: 'Founder' }, imageUrl: '/garamjav.png', order: 0 },
+      { name: { mn: 'Н.Мөнхнасан', en: 'N. Munkhnasan' }, role: { mn: 'ТУЗ-ын дарга', en: 'Chairwoman of the Board' }, imageUrl: '/monhnasan.png', order: 1 },
+      { name: { mn: 'Ц.Халиун', en: 'Ts. Haliun' }, role: { mn: 'Гүйцэтгэх захирал', en: 'Executive Director' }, imageUrl: '/haliun.png', order: 2 },
+      { name: { mn: 'Б.Дэлгэр', en: 'B. Delger' }, role: { mn: 'Гүйцэтгэх захирал', en: 'Executive Director' }, imageUrl: '/delger.png', order: 3 },
+      { name: { mn: 'Б.Гандөш', en: 'B. Gandush' }, role: { mn: 'Гүйцэтгэх захирал', en: 'Executive Director' }, imageUrl: '/dosh.png', order: 4 },
+    ];
+    const createdList = [];
+    for (const m of defaultTeam) {
+      const created = await this.team.create(m as any);
+      createdList.push(created);
+    }
+    return createdList;
+  }
+
+  @Public()
+  @Post('about/team')
+  async saveTeam(@Body() body: { team: any[] }) {
+    if (!body?.team || !Array.isArray(body.team)) return { success: false };
+    const existing = await this.team.findAll();
+    for (const item of existing) {
+      await this.team.remove((item as any)._id.toString());
+    }
+    for (let i = 0; i < body.team.length; i++) {
+      const m = body.team[i];
+      await this.team.create({
+        name: { mn: m.nameMn || m.name?.mn || '', en: m.nameEn || m.name?.en || '' },
+        role: { mn: m.roleMn || m.role?.mn || '', en: m.roleEn || m.role?.en || '' },
+        imageUrl: m.imageUrl || m.image || '/garamjav.png',
+        order: i
+      } as any);
+    }
+    return { success: true };
+  }
+
+  @Public()
+  @Post('about/timeline')
+  async saveTimeline(@Body() body: { timeline: any[] }) {
+    if (!body?.timeline || !Array.isArray(body.timeline)) return { success: false };
+    const existing = await this.timeline.findAll();
+    for (const item of existing) {
+      await this.timeline.remove((item as any)._id.toString());
+    }
+    for (let i = 0; i < body.timeline.length; i++) {
+      const t = body.timeline[i];
+      await this.timeline.create({
+        year: t.year || '2026',
+        title: { mn: t.titleMn || t.title?.mn || '', en: t.titleEn || t.title?.en || '' },
+        description: { mn: t.descMn || t.desc?.mn || '', en: t.descEn || t.desc?.en || '' },
+        order: i
+      } as any);
+    }
+    return { success: true };
   }
 
   @Public()
   @Get('about-content')
   aboutContentGet() {
     return this.aboutContent.get();
+  }
+
+  @Public()
+  @Patch('about-content')
+  async patchAboutContent(@Body() body: any) {
+    return this.aboutContent.update(body);
+  }
+
+  @Public()
+  @Post('home/hero')
+  async saveHomeHero(@Body() body: any) {
+    return this.homeContent.update({ hero: body });
   }
 
   @Public()

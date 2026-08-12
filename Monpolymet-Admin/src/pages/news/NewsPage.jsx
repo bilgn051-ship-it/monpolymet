@@ -98,7 +98,8 @@ export default function NewsPage() {
         isPublished: values.status === 'published',
         publishedAt: values.publishedAt ? new Date(values.publishedAt).toISOString() : new Date().toISOString(),
       };
-      if (editing) await api.patch(`/news/${editing._id}`, payload);
+      const itemId = editing?._id || editing?.id;
+      if (itemId) await api.patch(`/news/${itemId}`, payload);
       else await api.post('/news', payload);
       notifications.show({
         color: 'green',
@@ -113,7 +114,8 @@ export default function NewsPage() {
     }
   };
 
-  const confirmDelete = (item) =>
+  const confirmDelete = (item) => {
+    const itemId = item?._id || item?.id;
     modals.openConfirmModal({
       title: t.common.confirmDeleteTitle,
       children: <Text size="sm">{t.common.confirmDeleteBody}</Text>,
@@ -121,7 +123,7 @@ export default function NewsPage() {
       confirmProps: { color: 'red' },
       onConfirm: async () => {
         try {
-          await api.delete(`/news/${item._id}`);
+          await api.delete(`/news/${itemId}`);
           notifications.show({ color: 'green', message: t.toast.deleted });
           reload();
         } catch (err) {
@@ -133,6 +135,7 @@ export default function NewsPage() {
         }
       },
     });
+  };
 
   const filteredItems = (items || []).filter((item) => {
     const itemSt = item.status || (item.isPublished ? 'published' : 'draft');

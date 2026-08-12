@@ -38,22 +38,25 @@ export const translations = {
       introTitle: "Монполимет Групп",
       introText: "Монполимет Групп нь 1992 онд байгуулагдсанаас хойш уул уурхай, барилгын материалын үйлдвэрлэл, нөхөн сэргээлтийн чиглэлээр тасралтгүй үйл ажиллагаа явуулж буй Монгол улсын ууган бөгөөд тэргүүлэгч групп компаниудын нэг юм. Бид байгаль орчинд ээлтэй дэвшилтэт технологи, нөхөн сэргээлтийн жишиг стандартыг эх орондоо нутагшуулан ажиллаж байна.",
       visionTitle: "Алсын хараа",
-      visionText: "Эх орныхоо баялгийг байгаль орчинд ээлтэй, дэвшилтэт технологиор боловсруулан, үндэсний бүтээн байгуулалт, тогтвортой хөгжлийн түүчээ байна.",
+      visionText: "Ногоон хөгжлийг эрхэмлэн, монгол хүний оюун чадвараар үндэсний бүтээн байгуулалт, тогтвортой ирээдүйг бүтээнэ.",
       missionTitle: "Эрхэм зорилго",
       missionText: "Олон улсын стандартад нийцсэн чанартай бүтээгдэхүүн, үйлчилгээгээр хэрэглэгчдээ хангаж, нийгэм болон байгаль орчны өмнө хүлээсэн хариуцлагаа дээдлэн ажиллана.",
       valuesTitle: "Үнэт зүйлс",
+      valuesText: "Хариуцлагатай, итгэлтэй хамт олон, ёс зүйтэй хамтын ажиллагаа, байгальд ээлтэй үйлдвэрлэл, инновац, дэвшилтэт технологи",
+      mottoText: "Бат бэх хөгжлийн суурийг хамтдаа бүтээцгээе.",
       values: [
         { title: "Хариуцлага", desc: "Хийж буй ажилдаа эзэн болж, аюулгүй ажиллагааг эрхэмлэнэ." },
         { title: "Инноваци", desc: "Шинэ техник технологи, дэвшилтэт шийдлүүдийг тасралтгүй нэвтрүүлнэ." },
         { title: "Нөхөн сэргээлт", desc: "Уул уурхайн үйл ажиллагааны дараах байгалийг анхны байдлаас нь илүү дээр болгон сэргээнэ." },
         { title: "Хамтын ажиллагаа", desc: "Ажилтнууд болон түншүүдтэйгээ харилцан итгэлцэл дээр тулгуурлан хамтран хөгжинө." }
       ],
-      historyTitle: "Хөгжлийн түүх",
-      history: [
-        { year: "1992", title: "Үүсгэн байгуулалт", desc: "Монполимет ХХК үүсгэн байгуулагдаж, уул уурхайн салбарт анхны алхмаа хийв." },
-        { year: "2002", title: "Тосон Үйлдвэр", desc: "Тосон алтны шороон ордын ашиглалт, нөхөн сэргээлтийн төслийг амжилттай эхлүүлэв." },
-        { year: "2008", title: "Байгаль орчны шагнал", desc: "Байгаль орчныг хамгаалах болон нөхөн сэргээх ажлаар салбартаа манлайлж, улсын хэмжээний жишиг компани болов." },
-        { year: "2015", title: "Монцемент Төсөл", desc: "Европын Сэргээн Босголт Хөгжлийн Банкны хөрөнгө оруулалттай Монцемент цементийн үйлдвэрийг ашиглалтад оруулав." },
+      team: [
+        { name: "Ц.Гарамжав", role: "Үүсгэн байгуулагч", bio: "Монгол улсын уул уурхайн салбарын нэрт зүтгэлтэн, Эдийн засагч, Геологич инженер.", edu: "МУИС, ШУТИС - Доктор.", imageUrl: "/garamjav.png" },
+        { name: "Н.Мөнхнасан", role: "ТУЗ-ын дарга", bio: "Санхүү, хөрөнгө оруулалтын чиглэлээр мэргэшсэн. Группийн стратегийн хөгжлийг удирддаг.", edu: "АНУ-ын Сан Францискогийн Их Сургууль.", imageUrl: "/monhnasan.png" },
+        { name: "Ц.Халиун", role: "Гүйцэтгэх захирал", bio: "Группийн үйл ажиллагааны стратеги болон төслийн гүйцэтгэлийг хариуцдаг.", edu: "", imageUrl: "/haliun.png" },
+        { name: "Б.Дэлгэр", role: "Гүйцэтгэх захирал", bio: "Компанийн ерөнхий удирдлага болон өдөр тутмын үйл ажиллагааг удирдан зохион байгуулагч.", edu: "", imageUrl: "/delger.png" },
+        { name: "Б.Гандөш", role: "Гүйцэтгэх захирал", bio: "Үйлдвэрлэл, инженерчлэлийн төслүүдийн удирдлагыг хариуцдаг.", edu: "ШУТИС - Инженер.", imageUrl: "/dosh.png" }
+      ]�емент цементийн үйлдвэрийг ашиглалтад оруулав." },
         { year: "2020", title: "Дижитал Шилжилт", desc: "Компанийн дотоод удирдлага болон үйлдвэрлэлийн процессыг автоматжуулах төслийг хэрэгжүүлэв." },
         { year: "Өнөөдөр", title: "Тогтвортой Хөгжил", desc: "Олон улсын стандартыг хангасан ногоон үйлдвэрлэл, тогтвортой хөгжлийн бодлогыг амжилттай үргэлжлүүлж байна." }
       ],
@@ -61,11 +64,11 @@ export const translations = {
       ceoGreeting: "Үүсгэн байгуулагчийн мэндчилгээ",
       ceoGreetingText: "Эрхэм харилцагчид, хамтран ажиллагч түншүүд ээ, Монполимет Группийн вэбсайтаар зочилж буй танд энэ өдрийн мэнд хүргэе. Бид үүсгэн байгуулагдсан цагаасаа эхлэн эх орныхоо хөгжил дэвшилд бодит хувь нэмэр оруулахыг зорин ажиллаж ирсэн. Чанартай үйлдвэрлэл болон хариуцлагатай уул уурхайг хослуулан, ирээдүй хойчдоо ногоон байгалийг үлдээх нь бидний туйлын зорилго билээ.",
       team: [
-        { name: "Ц.Гарамжав", role: "Үүсгэн байгуулагч, ТУЗ-ийн Дарга", bio: "Монгол улсын уул уурхайн салбарын нэрт зүтгэлтэн, Эдийн засагч, Геологич инженер. Салбартаа 30 гаруй жил ажилласан туршлагатай.", edu: "МУИС - Геологийн анги, ШУТИС - Доктор.", imageUrl: "/garamjav.png" },
-        { name: "Н.Мөнхнасан", role: "Монполимет Группийн Ерөнхийлөгч", bio: "Санхүү, хөрөнгө оруулалтын чиглэлээр мэргэшсэн. Группийн стратегийн хөгжил, гадаад хамтын ажиллагааг удирддаг.", edu: "АНУ-ын Сан Францискогийн Их Сургууль - Санхүүгийн удирдлага.", imageUrl: "/monhnasan.png" },
-        { name: "Б.Дэлгэр", role: "Гүйцэтгэх захирал", bio: "Тэрээр компанийн үйл ажиллагааны ерөнхий удирдлагыг хариуцан ажиллаж, стратегийн зорилтуудыг хэрэгжүүлэх, өдөр тутмын үйл ажиллагааг жигд удирдан зохион байгуулах чиглэлд олон жилийн туршлагатай.", edu: "", imageUrl: "/delger.png" },
-        { name: "Ц.Халиун", role: "Тэргүүн дэд захирал", bio: "Группийн стратегийн төслүүд болон гадаад хамтын ажиллагааг хариуцан ажилладаг.", edu: "", imageUrl: "/haliun.png" },
-        { name: "Б.Гандөш", role: "Үйл ажиллагаа эрхэлсэн захирал", bio: "Уул уурхай, үйлдвэрлэлийн төслийн удирдлага болон өдөр тутмын үйл ажиллагааг хариуцдаг.", edu: "ШУТИС - Инженер.", imageUrl: "/dosh.png" }
+        { name: "Ц.Гарамжав", role: "Үүсгэн байгуулагч", bio: "Монгол улсын уул уурхайн салбарын нэрт зүтгэлтэн, Эдийн засагч, Геологич инженер.", edu: "МУИС, ШУТИС - Доктор.", imageUrl: "/garamjav.png" },
+        { name: "Н.Мөнхнасан", role: "ТУЗ-ын дарга", bio: "Санхүү, хөрөнгө оруулалтын чиглэлээр мэргэшсэн. Группийн стратегийн хөгжлийг удирддаг.", edu: "АНУ-ын Сан Францискогийн Их Сургууль.", imageUrl: "/monhnasan.png" },
+        { name: "Б.Дэлгэр", role: "Гүйцэтгэх захирал", bio: "Компанийн ерөнхий удирдлага болон өдөр тутмын үйл ажиллагааг удирдан зохион байгуулдаг.", edu: "", imageUrl: "/delger.png" },
+        { name: "Ц.Халиун", role: "Гүйцэтгэх захирал", bio: "Группийн үйл ажиллагааны стратеги болон төслийн гүйцэтгэлийг хариуцдаг.", edu: "", imageUrl: "/haliun.png" },
+        { name: "Б.Гандөш", role: "Гүйцэтгэх захирал", bio: "Үйлдвэрлэл, инженерчлэлийн төслүүдийн удирдлагыг хариуцдаг.", edu: "ШУТИС - Инженер.", imageUrl: "/dosh.png" }
       ]
     },
     companies: {
@@ -266,14 +269,14 @@ export const translations = {
         { year: "Today", title: "Sustainable Growth", desc: "Successfully driving green production and sustainable development principles." }
       ],
       leadershipTitle: "Greeting & Leadership Team",
-      ceoGreeting: "Message from Leadership",
-      ceoGreetingText: "Dear clients and partners, welcome to Monpolymet Group. Since our inception, we have aimed to make real contributions to our country's development. Combining high-quality production with responsible mining while preserving a green environment for future generations remains our ultimate goal.",
+      ceoGreeting: "Message from the Founder",
+      ceoGreetingText: "We prioritize the mutual development of people, nature, and society, as well as future well-being across all sectors of our operations. By utilizing natural resources sustainably, instilling professional and responsible mining principles, establishing standards for environmental restoration, and creating value-added strategic product manufacturing from extraction.\n\nMonpolymet Group's operations continue to make significant contributions to the development of Mongolian citizens, the sustainable existence of our Mother Earth, the protection of national industrial independence, the economic sovereignty of Mongolia, and the creation of social well-being.\n\nTherefore, we believe that thoughts and initiatives for our nation's development are always present in the heart of every Mongolian.",
       team: [
-        { name: "Ts.Garamjav", role: "Founder, Chairman of the Board", bio: "A prominent figure in the Mongolian mining sector, economist, and geological engineer. Over 30 years of experience in the industry.", edu: "NUM - Geology, MUST - PhD.", imageUrl: "/garamjav.png" },
-        { name: "N.Munkhnasan", role: "President of Monpolymet Group", bio: "Specialized in finance and investments. Manages the group's strategic development and foreign relations.", edu: "University of San Francisco, USA - Financial Management.", imageUrl: "/monhnasan.png" },
-        { name: "B.Delger", role: "Chief Executive Officer", bio: "He oversees general operations and manages the strategic implementation and day-to-day operations.", edu: "", imageUrl: "/delger.png" },
-        { name: "Ts.Haliun", role: "First Deputy Director", bio: "Oversees group strategic projects and international partnerships.", edu: "", imageUrl: "/haliun.png" },
-        { name: "B.Gandush", role: "Chief Operating Officer", bio: "Responsible for mining and industrial project management and operations.", edu: "MUST - Engineer.", imageUrl: "/dosh.png" }
+        { name: "Ts. Garamjav", role: "Founder", bio: "Prominent figure in Mongolian mining and industry, economist, and geological engineer.", edu: "NUM, MUST - PhD.", imageUrl: "/garamjav.png" },
+        { name: "N. Munkhnasan", role: "Chairwoman of the Board", bio: "Specialized in corporate finance and investments. Leads group strategic growth.", edu: "University of San Francisco, USA.", imageUrl: "/monhnasan.png" },
+        { name: "B. Delger", role: "Executive Director", bio: "Oversees general corporate management and day-to-day operations.", edu: "", imageUrl: "/delger.png" },
+        { name: "Ts. Haliun", role: "Executive Director", bio: "Oversees group operational strategy and project execution.", edu: "", imageUrl: "/haliun.png" },
+        { name: "B. Gandush", role: "Executive Director", bio: "Responsible for industrial engineering and project operations.", edu: "MUST - Engineering.", imageUrl: "/dosh.png" }
       ]
     },
     companies: {

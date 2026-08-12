@@ -7,6 +7,8 @@ const PATH_TO_PAGE = {
   '/about': 'about',
   '/companies': 'companies',
   '/csr': 'csr',
+  '/environment': 'hse',
+  '/hse': 'hse',
   '/news': 'news',
   '/careers': 'careers',
   '/contact': 'contact',
@@ -14,9 +16,19 @@ const PATH_TO_PAGE = {
   '/admin': 'admin',
 };
 
-const PAGE_TO_PATH = Object.fromEntries(
-  Object.entries(PATH_TO_PAGE).map(([path, page]) => [page, path])
-);
+const PAGE_TO_PATH = {
+  'home': '/',
+  'about': '/about',
+  'companies': '/companies',
+  'csr': '/csr',
+  'hse': '/hse',
+  'environment': '/hse',
+  'news': '/news',
+  'careers': '/careers',
+  'contact': '/contact',
+  'procurement': '/procurement',
+  'admin': '/admin',
+};
 
 // Resolve the current URL to a known page id, ignoring a trailing slash and
 // falling back to home for anything unrecognized.
@@ -36,17 +48,6 @@ function paramFromLocation() {
   return null;
 }
 
-/**
- * Keeps the visible page in sync with the browser URL.
- *
- * - The initial page is read from the URL, so deep links like `/about` and
- *   full-page refreshes land on the right page.
- * - Browser back/forward (popstate) restores the matching page.
- * - `navigate(id)` swaps the page and pushes the matching path so the URL
- *   always reflects what's on screen.
- *
- * Returns `[currentPage, navigate, pageParam]`.
- */
 export function usePageRouting() {
   const [currentPage, setCurrentPage] = useState(pageFromLocation);
   const [pageParam, setPageParam] = useState(paramFromLocation);
@@ -61,16 +62,19 @@ export function usePageRouting() {
   }, []);
 
   const navigate = useCallback((id, param = null) => {
-    setCurrentPage(id);
+    let cleanId = typeof id === 'string' ? id.replace(/^\//, '') : id;
+    if (cleanId === 'environment') cleanId = 'hse';
+
+    setCurrentPage(cleanId);
     setPageParam(param);
     
-    let path = PAGE_TO_PATH[id] ?? '/';
-    if (id === 'post' && param) {
+    let path = PAGE_TO_PATH[cleanId] ?? (cleanId ? `/${cleanId}` : '/');
+    if (cleanId === 'post' && param) {
       path = `/post/${param}`;
     }
     
     if (path !== window.location.pathname) {
-      window.history.pushState({ page: id, param }, '', path);
+      window.history.pushState({ page: cleanId, param }, '', path);
       window.scrollTo(0, 0);
     }
   }, []);

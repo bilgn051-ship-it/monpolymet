@@ -8,8 +8,8 @@ import { TendersController } from './tenders.controller';
   imports: [
     MongooseModule.forFeature([{ name: Tender.name, schema: TenderSchema }]),
   ],
-  controllers: [TendersController],
   providers: [TendersService],
+  controllers: [TendersController],
   exports: [TendersService],
 })
 export class TendersModule {}

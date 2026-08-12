@@ -2,39 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import '../../../styles/home-bento.css';
 import mglHeroImg from '../../../assets/mgl_hero.jpg';
 import img2 from '../../../assets/2.jpg';
-
-const CountUp = ({ end, suffix = "", isVisible }) => {
-  const countRef = useRef(null);
-
-  useEffect(() => {
-    if (!isVisible || !countRef.current) return;
-    let startTimestamp = null;
-    const duration = 2000; // 2 seconds animation
-
-    const step = (timestamp) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-
-      // easeOutExpo for a smoother finish
-      const easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      const currentCount = Math.floor(easeOut * end);
-
-      if (countRef.current) {
-        countRef.current.innerText = currentCount + suffix;
-      }
-
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      }
-    };
-
-    window.requestAnimationFrame(step);
-  }, [end, isVisible, suffix]);
-
-  return <span ref={countRef}>0{suffix}</span>;
-};
+import InteractiveTitle from '../../../components/ui/InteractiveTitle';
 
 export default function HomeStatsGrid({ lang = 'mn' }) {
+  const isMn = lang === 'mn';
   const gridRef = useRef(null);
   const [revealed, setRevealed] = useState(false);
 
@@ -53,6 +24,10 @@ export default function HomeStatsGrid({ lang = 'mn' }) {
     }
     return () => observer.disconnect();
   }, []);
+
+  const headerText = lang === 'mn'
+    ? 'Шинэ технологи, шилдэг санаа, ногоон хөгжилд суурилсан үйлдвэрлэл, бүтээн байгуулалтыг Монголдоо бүтээцгээе'
+    : 'Creating industrial development & national production based on new technology and green development in Mongolia';
 
   return (
     <section className="home-stats-grid-section container-padding" style={{ fontFamily: "'Inter', sans-serif", paddingTop: '24px', paddingBottom: '30px', borderBottom: 'none' }}>
@@ -79,7 +54,7 @@ export default function HomeStatsGrid({ lang = 'mn' }) {
       </div>
 
       <div style={{ textAlign: 'center', margin: '76px 0 100px 0', padding: '0 20px' }}>
-        <h2 className="no-underline" style={{ fontSize: '36px', lineHeight: '1.35', fontWeight: '700', color: '#000000', letterSpacing: '-0.01em', fontFamily: "'Montserrat', sans-serif", maxWidth: '1000px', margin: '0 auto' }}>
+        <h2 className="no-underline" style={{ fontSize: 'clamp(24px, 3.5vw, 36px)', lineHeight: '1.35', fontWeight: '600', color: '#0f172a', letterSpacing: '-0.02em', fontFamily: "'Montserrat', sans-serif", maxWidth: '1000px', margin: '0 auto' }}>
           {lang === 'mn' ? (
             <>Шинэ технологи, шилдэг санаа, ногоон хөгжилд суурилсан үйлдвэрлэл, бүтээн байгуулалтыг Монголдоо бүтээцгээе</>
           ) : (
@@ -105,9 +80,9 @@ export default function HomeStatsGrid({ lang = 'mn' }) {
           </div>
           <div className="bento-blue-overlap">
             <h2 className="bento-stat-huge" style={{ fontFamily: "'Inter', sans-serif" }}>
-              <CountUp end={1000} suffix="+" isVisible={revealed} />
+              1,000+
             </h2>
-            <p>Тогтвортой ажлын байр бий болгоод байна.</p>
+            <p>{isMn ? 'Тогтвортой, ээлтэй ажлын байр' : 'Sustainable & friendly jobs'}</p>
           </div>
         </article>
 
@@ -117,11 +92,11 @@ export default function HomeStatsGrid({ lang = 'mn' }) {
           <div style={{ position: 'relative', zIndex: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
             <p className="bento-sub-title">Тогтвортой хөгжил</p>
             <h2 className="bento-stat-huge" style={{ fontFamily: "'Inter', sans-serif" }}>
-              <CountUp end={24} suffix="+" isVisible={revealed} />
+              24+
             </h2>
 
             <p className="bento-quote" style={{ marginTop: 'auto', color: 'white', fontWeight: 500, fontSize: '0.95rem', lineHeight: 1.5 }}>
-              "Тэргүүний нөхөн сэргээгч, Тогтвортой хөгжлийн менежментийг нэвтрүүлэгч байгууллагаар 24 удаа тасралтгүй шалгарсан."
+              "Тэргүүний нөхөн сэргээгч, тогтвортой хөгжлийн менежментийг нэвтрүүлэгч байгууллага"
             </p>
           </div>
         </article>
@@ -132,20 +107,20 @@ export default function HomeStatsGrid({ lang = 'mn' }) {
           <article className="bento-card bento-card-lime">
             <p className="bento-sub-title">Нөхөн сэргээлт</p>
             <h2 className="bento-stat-huge" style={{ fontFamily: "'Inter', sans-serif" }}>
-              <CountUp end={700} suffix="k+" isVisible={revealed} />
+              460k+
             </h2>
-            <p>Нөхөн сэргээлтийн талбайдаа 700,000 гаруй моддыг тарьж 7 хэсэг бүхий ойн төгөл бий болгосон.</p>
+            <p>Биологийн нөхөн сэргээлт хийсэн талбайдаа 460к+ мод тарьж 8 ойн төгөл бий болгосон.</p>
           </article>
 
           {/* Bottom Dark */}
           <article className="bento-card bento-card-dark">
             <div className="bento-dark-content" style={{ justifyContent: 'flex-start', gap: '16px', alignItems: 'center' }}>
               <h2 className="bento-stat-huge" style={{ fontFamily: "'Inter', sans-serif" }}>
-                <CountUp end={21} suffix="+" isVisible={revealed} />
+                21+
               </h2>
               <span className="bento-sub-title text-muted" style={{ margin: 0 }}>Шилдэг ААН</span>
             </div>
-            <p className="bento-desc mt-2 text-muted text-sm">Монгол улсын ТОП-100 Аж ахуй нэгжээр 21 удаа шалгарсан.</p>
+            <p className="bento-desc mt-2 text-muted text-sm">Монгол Улсын ТОП100 аж ахуйн нэгж</p>
           </article>
         </div>
 
