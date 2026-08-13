@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import odLogo from '../../assets/od.png';
 import odBlueLogo from '../../assets/od-blue.png';
-import { Globe, Menu, X, ChevronDown } from 'lucide-react';
+import { Globe, Menu, X, ChevronDown, Phone, Mail, MapPin } from 'lucide-react';
 
 export default function Header({
   lang,
@@ -262,8 +262,35 @@ export default function Header({
                   )}
                 </div>
               );
-            })}
           </nav>
+
+          {/* Mobile Drawer Footer Contact Section */}
+          <div className="mobile-drawer-footer" style={{
+            marginTop: 'auto',
+            paddingTop: '20px',
+            borderTop: '1px solid #e2e8f0',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px'
+          }}>
+            <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0, fontFamily: "'Montserrat', sans-serif" }}>
+              {lang === 'mn' ? 'Холбоо барих' : 'Contact Us'}
+            </h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '13px', color: '#475569', fontFamily: "'Montserrat', sans-serif" }}>
+              <a href="tel:+97675855858" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#1e293b', fontWeight: '600', textDecoration: 'none' }}>
+                <Phone size={15} color="#2563eb" style={{ flexShrink: 0 }} />
+                <span>+976 7585 5858</span>
+              </a>
+              <a href="mailto:monpolymet@mongol.net" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#475569', textDecoration: 'none' }}>
+                <Mail size={15} color="#2563eb" style={{ flexShrink: 0 }} />
+                <span>monpolymet@mongol.net</span>
+              </a>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', color: '#64748b', fontSize: '12px', lineHeight: '1.4' }}>
+                <MapPin size={15} color="#2563eb" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <span>{lang === 'mn' ? 'МПМ Билдинг, Автозамчдын гудамж 1, Сүхбаатар дүүрэг, Улаанбаатар' : 'MPM Building, Road Workers St 1, Sukhbaatar District, Ulaanbaatar'}</span>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </>

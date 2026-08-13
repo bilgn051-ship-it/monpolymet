@@ -106,9 +106,15 @@ html, body {
 
   /* MOBILE DRAWER STYLING & TOUCH TARGETS */
   .mobile-drawer {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    overflow-y: auto !important;
     width: min(340px, 85vw) !important;
     padding: 24px 20px !important;
     box-shadow: -10px 0 30px rgba(15, 23, 42, 0.25) !important;
+    box-sizing: border-box !important;
   }
 
   .mobile-nav-link {
