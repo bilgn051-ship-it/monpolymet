@@ -7,7 +7,7 @@ try {
   const rootDir = path.resolve(__dirname, '..');
   execSync('git add .', { cwd: rootDir, encoding: 'utf8' });
   try {
-    execSync('git commit -m "fix: resolve Header.jsx mobile drawer JSX syntax error"', { cwd: rootDir, encoding: 'utf8' });
+    execSync('git commit -m "fix: replace all legacy seed and mock data across API backend and frontend i18n with exact updated content"', { cwd: rootDir, encoding: 'utf8' });
   } catch (commitErr) {
     // If working tree is clean
   }

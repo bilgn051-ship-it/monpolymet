@@ -48,10 +48,14 @@ export const translations = {
         { year: '2015', title: 'Монцемент төсөл', desc: 'Цементийн үйлдвэр ашиглалтад оров.' }
       ],
       team: [
-        { name: 'Ц.Гарамжав', role: 'Үүсгэн байгуулагч', imageUrl: '/garamjav.png' },
-        { name: 'Н.Мөнхнасан', role: 'Ерөнхий захирал', imageUrl: '/monhnasan.png' },
-        { name: 'Б.Дэлгэр', role: 'Гүйцэтгэх захирал', imageUrl: '/delger.png' },
-        { name: 'Ц.Халиун', role: 'Дэд захирал', imageUrl: '/haliun.png' }
+        { name: 'Ц.Гарамжав', role: 'Үүсгэн байгуулагч, ТУЗ-ийн Дарга', imageUrl: '/garamjav.png' },
+        { name: 'Н.Мөнхнасан', role: 'Ерөнхий Захирал', imageUrl: '/monhnasan.png' },
+        { name: 'Э.Билгүүн', role: 'Гүйцэтгэх Захирал', imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&auto=format&fit=crop&q=80' },
+        { name: 'Б.Цэцэгсүрэн', role: 'Санхүүгийн Захирал', imageUrl: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&auto=format&fit=crop&q=80' },
+        { name: 'С.Баярбат', role: 'Үйлдвэрлэл Хариуцсан Захирал', imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80' },
+        { name: 'Г.Отгонбаяр', role: 'Хүний Нөөцийн Захирал', imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80' },
+        { name: 'Д.Эрдэнэбат', role: 'Техник, Технологийн Захирал', imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&auto=format&fit=crop&q=80' },
+        { name: 'М.Батзориг', role: 'Байгаль Орчны Менежер', imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&auto=format&fit=crop&q=80' }
       ]
     },
     csr: {
