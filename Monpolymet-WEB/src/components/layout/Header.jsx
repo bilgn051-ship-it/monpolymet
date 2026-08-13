@@ -262,6 +262,7 @@ export default function Header({
                   )}
                 </div>
               );
+            })}
           </nav>
 
           {/* Mobile Drawer Footer Contact Section */}
