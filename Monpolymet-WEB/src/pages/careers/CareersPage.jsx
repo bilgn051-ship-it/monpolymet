@@ -540,7 +540,7 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
   ];
 
   const hrStages = [
-    { icon: ClipboardEdit, titleMn: 'Ажлын анкет бөглөж илгээх', titleEn: 'Submit Job Application', descMn: 'Вэб сайтаар болон онлайнаар товч анкет бөглөх', descEn: 'Fill out candidate application online' },
+    { icon: ClipboardEdit, titleMn: 'Ажлын анкет бөглөж илгээх', titleEn: 'Submit Job Application', descMn: 'Вэб сайтаар болон онлайнаар анкет бөглөх', descEn: 'Fill out candidate application online' },
     { icon: Users, titleMn: 'Анкетийн сонгон шалгаруулалт', titleEn: 'Application Screening', descMn: 'Ирүүлсэн анкеттай танилцаж шалгаруулах', descEn: 'Reviewing submitted candidate applications' },
     { icon: MessageCircle, titleMn: 'Ажлын анхан шатны ярилцлага', titleEn: 'Initial Job Interview', descMn: 'Хүний нөөцийн мэргэжилтэнтэй анхан шатны ярилцлага хийх', descEn: 'First round interview with HR specialist' },
     { icon: UserCog, titleMn: 'Ур чадварын шалгалт авах', titleEn: 'Skill Assessment Test', descMn: 'Мэргэжлийн болон ур чадварын сорил шалгалт авах', descEn: 'Professional skills and competency assessment' },
@@ -1037,7 +1037,7 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
               }}
             >
               <h3 style={{ fontSize: '24px', fontWeight: '600', color: '#0f172a', marginBottom: '12px' }}>
-                {lang === 'mn' ? 'Ажил горилогчийн товч анкет' : 'Candidate Application Form'}
+                {lang === 'mn' ? 'Ажил горилогчийн анкет' : 'Candidate Application Form'}
               </h3>
               <p style={{ fontSize: '15px', color: '#64748b', lineHeight: '1.6', marginBottom: '28px', maxWidth: '920px', margin: '0 auto 28px auto' }}>
                 {lang === 'mn'
@@ -1045,8 +1045,10 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
                   : 'Submit your application and fill out the online candidate form for open vacancies at Monpolymet Group. Application details are sent directly to mpm-hr@monpolymet.mn.'}
               </p>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-                <button
-                  onClick={() => openApplyModal()}
+                <a
+                  href="http://dbserver4.smartlogic.mn:9519/jobs"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     height: '56px',
                     padding: '0 28px',
@@ -1056,6 +1058,7 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
                     border: 'none',
                     fontSize: '15px',
                     fontWeight: '700',
+                    textDecoration: 'none',
                     cursor: 'pointer',
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -1086,8 +1089,9 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
                   }}>
                     <UserCheck size={20} color="#ffffff" />
                   </div>
-                  <span>{lang === 'mn' ? 'Ажил горилогчийн товч анкет бөглөх' : 'Fill Candidate Application Form'}</span>
-                </button>
+                  <span>{lang === 'mn' ? 'Ажил горилогчийн анкет бөглөх' : 'Fill Candidate Application Form'}</span>
+                  <ArrowUpRight size={18} style={{ flexShrink: 0 }} />
+                </a>
 
                 <a
                   href="https://www.zangia.mn/company/monpolymetgroup"
@@ -1163,7 +1167,7 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
             </button>
 
             <h3 className="cp-modal-title" style={{ fontSize: '22px', fontWeight: '800', color: '#0f172a', marginBottom: '4px', fontFamily: "'Montserrat', sans-serif" }}>
-              {lang === 'mn' ? 'Ажил горилогчийн товч анкет бөглөх' : 'Candidate Brief Application Form'}
+              {lang === 'mn' ? 'Ажил горилогчийн анкет бөглөх' : 'Candidate Application Form'}
             </h3>
             <p style={{ fontSize: '13px', color: '#16a34a', fontWeight: '600', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '6px' }}>
               <CheckCircle size={16} />

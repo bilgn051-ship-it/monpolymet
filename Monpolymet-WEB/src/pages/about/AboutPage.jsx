@@ -238,9 +238,6 @@ export default function AboutPage({ lang, t, pageMetadata }) {
     return def;
   });
 
-  const founder = teamData[0] || {};
-  const restTeam = teamData.slice(1);
-
   const marqueeTop = [
     'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=60',
     'https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?w=600&auto=format&fit=crop&q=60',
