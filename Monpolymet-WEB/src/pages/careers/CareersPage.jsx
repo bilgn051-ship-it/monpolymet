@@ -10,7 +10,8 @@ import {
 import { fetchStatCards, fetchCareersContent, submitCandidateApplication } from '../../api';
 import InteractiveTitle from '../../components/ui/InteractiveTitle';
 import zangiaLogo from '../../assets/zangia-logo.png';
-import careersHeroImg from '../../assets/careers-hero.png';
+import careersHeroImg from '../../assets/careers-hero.jpg';
+import hrBgImg from '../../assets/hr-bg.jpg';
 
 const styles = `
 .cp-wrapper {
@@ -210,7 +211,7 @@ const styles = `
   bottom: -10%;
   width: 60%;
   height: 110%;
-  background: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop') right/cover no-repeat;
+  background: url('/hr-bg.jpg') right/cover no-repeat;
   opacity: 0.5;
   mix-blend-mode: luminosity;
   border-radius: 24px;
@@ -341,7 +342,7 @@ const styles = `
 }
 .quote-image {
   flex: 1;
-  background: url('https://images.unsplash.com/photo-1541888086425-d81bb19240f5?w=800') center/cover no-repeat;
+  background: url('/careers-hero.jpg') center/cover no-repeat;
   min-height: 200px;
 }
 
@@ -1015,17 +1016,21 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
               })}
             </div>
 
-            {/* Job Applicant Application Form CTA Card under 5 stages (No Border / Clean Slate) */}
+            {/* Job Applicant Application Form CTA Card under 5 stages */}
             <div style={{
-              backgroundColor: 'transparent',
-              borderRadius: '24px',
-              padding: 'clamp(24px, 4vw, 36px) clamp(16px, 4vw, 36px) 24px clamp(16px, 4vw, 36px)',
-              border: 'none',
+              position: 'relative',
+              borderRadius: '28px',
+              padding: 'clamp(40px, 6vw, 60px) clamp(24px, 5vw, 56px)',
+              overflow: 'hidden',
+              backgroundImage: `linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(11, 26, 48, 0.82) 100%), url(${hrBgImg})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center 35%',
+              backgroundRepeat: 'no-repeat',
               textAlign: 'center',
               maxWidth: '1200px',
               margin: '40px auto 0 auto',
               transition: 'all 0.3s ease',
-              boxShadow: 'none',
+              boxShadow: '0 20px 50px rgba(15, 23, 42, 0.25)',
               boxSizing: 'border-box',
               fontFamily: "'Montserrat', sans-serif"
             }}
@@ -1036,10 +1041,10 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              <h3 style={{ fontSize: '24px', fontWeight: '600', color: '#0f172a', marginBottom: '12px' }}>
+              <h3 style={{ fontSize: 'clamp(22px, 3.5vw, 30px)', fontWeight: '700', color: '#ffffff', marginBottom: '14px', letterSpacing: '-0.01em' }}>
                 {lang === 'mn' ? 'Ажил горилогчийн анкет' : 'Candidate Application Form'}
               </h3>
-              <p style={{ fontSize: '15px', color: '#64748b', lineHeight: '1.6', marginBottom: '28px', maxWidth: '920px', margin: '0 auto 28px auto' }}>
+              <p style={{ fontSize: '15px', color: '#e2e8f0', lineHeight: '1.6', marginBottom: '32px', maxWidth: '920px', margin: '0 auto 32px auto' }}>
                 {lang === 'mn'
                   ? 'Монполимет Группийн нээлттэй ажлын байранд хүсэлт илгээж, ажилд орох анкетыг онлайнаар бөглөнө\u00A0үү. Анкетын мэдээлэл mpm-hr@monpolymet.mn хаяг руу шууд илгээгдэнэ.'
                   : 'Submit your application and fill out the online candidate form for open vacancies at Monpolymet Group. Application details are sent directly to mpm-hr@monpolymet.mn.'}
