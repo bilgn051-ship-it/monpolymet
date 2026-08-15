@@ -6,6 +6,7 @@ import { fetchTimeline, fetchAboutContent, fetchCoreValues, fetchTeam } from '..
 import CEOGreeting from '../home/sections/CEOGreeting';
 import HistoryTimeline from '../../components/ui/HistoryTimeline';
 import InteractiveTitle from '../../components/ui/InteractiveTitle';
+import aboutHeroImg from '../../assets/about-hero.jpg';
 
 export default function AboutPage({ lang, t, pageMetadata }) {
   const timelineRef = useRef(null);
@@ -264,47 +265,32 @@ export default function AboutPage({ lang, t, pageMetadata }) {
 
   return (
     <>
-      <div className="about-page-container">
-        {/* Two-row photo collage hero: edge-to-edge images scrolling right → left */}
-        <div className="about-hero-collage">
-          {/* Overlay and Title */}
-          <div className="full-bleed-banner-overlay" style={{ zIndex: 1 }}></div>
-          <div className="full-bleed-banner-container" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 2, margin: 'auto' }}>
-            <div className="full-bleed-banner-content animate-slide-up">
-              <h1 className="hero-title">
-                {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.titleMn : pageMetadata.header.titleEn) : (lang === 'mn' ? 'Бидний тухай' : 'About Us')}
-              </h1>
-              <p className="hero-subtitle">
-                {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.subtitleMn : pageMetadata.header.subtitleEn) : ''}
-              </p>
-            </div>
-          </div>
-
-          <div className="collage-row" aria-hidden="true" style={{ position: 'relative', zIndex: 0 }}>
-            <div className="collage-track collage-track-a">
-              {[0, 1, 2, 3].flatMap((rep) =>
-                marqueeTop.map((src, i) => (
-                  <div className="collage-cell" key={`t-${rep}-${i}`}>
-                    <img src={src} alt="" loading="lazy" />
-                  </div>
-                )),
-              )}
-            </div>
-          </div>
-          <div className="collage-row" aria-hidden="true" style={{ position: 'relative', zIndex: 0 }}>
-            <div className="collage-track collage-track-b">
-              {[0, 1, 2, 3].flatMap((rep) =>
-                marqueeBottom.map((src, i) => (
-                  <div className="collage-cell" key={`b-${rep}-${i}`}>
-                    <img src={src} alt="" loading="lazy" />
-                  </div>
-                )),
-              )}
-            </div>
+      {/* Full Bleed Hero Banner */}
+      <div className="full-bleed-banner" style={{
+        backgroundImage: `url(${aboutHeroImg})`,
+        backgroundPosition: 'center 38%',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: '#0f172a',
+        minHeight: '60vh',
+        imageRendering: '-webkit-optimize-contrast'
+      }}>
+        <div className="full-bleed-banner-overlay" style={{
+          background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.35) 100%)'
+        }}></div>
+        <div className="full-bleed-banner-container">
+          <div className="full-bleed-banner-content animate-slide-up">
+            <h1 className="hero-title" style={{ color: '#ffffff', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+              {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.titleMn : pageMetadata.header.titleEn) : (lang === 'mn' ? 'Бидний тухай' : 'About Us')}
+            </h1>
+            <p className="hero-subtitle" style={{ color: '#f8fafc', textShadow: '0 1px 6px rgba(0,0,0,0.5)' }}>
+              {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.subtitleMn : pageMetadata.header.subtitleEn) : ''}
+            </p>
           </div>
         </div>
+      </div>
 
-
+      <div className="about-page-container">
         {/* CEO Greeting Section moved here */}
         <CEOGreeting lang={lang} t={t} />
 
