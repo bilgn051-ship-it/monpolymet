@@ -14,20 +14,15 @@ export default function CompaniesPage({ lang = 'mn', t, pageMetadata, setCurrent
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#0f172a',
-        backgroundImage: 'radial-gradient(ellipse 80% 80% at 50% -20%, rgba(37, 99, 235, 0.22), rgba(15, 23, 42, 1))',
+        backgroundColor: '#ffffff',
         padding: '60px 20px',
         textAlign: 'center'
       }}>
         <div style={{
-          maxWidth: '600px',
+          maxWidth: '560px',
           width: '100%',
-          padding: '48px 32px',
-          borderRadius: '24px',
-          background: 'rgba(255, 255, 255, 0.03)',
-          backdropFilter: 'blur(16px)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4)'
+          padding: '40px 24px',
+          textAlign: 'center'
         }}>
           {/* Badge */}
           <div style={{
@@ -36,34 +31,33 @@ export default function CompaniesPage({ lang = 'mn', t, pageMetadata, setCurrent
             gap: '8px',
             padding: '6px 16px',
             borderRadius: '999px',
-            backgroundColor: 'rgba(37, 99, 235, 0.15)',
-            border: '1px solid rgba(59, 130, 246, 0.3)',
-            color: '#93c5fd',
+            backgroundColor: '#f1f5f9',
+            border: '1px solid #e2e8f0',
+            color: '#475569',
             fontSize: '13px',
             fontWeight: '600',
             fontFamily: "'Montserrat', sans-serif",
-            marginBottom: '28px',
+            marginBottom: '24px',
             letterSpacing: '0.02em'
           }}>
-            <Clock size={15} className="animate-spin-slow" />
+            <Clock size={14} />
             <span>{lang === 'mn' ? 'Шинэчлэлт хийгдэж байна' : 'Under Maintenance'}</span>
           </div>
 
           {/* Icon */}
           <div style={{
-            width: '76px',
-            height: '76px',
-            borderRadius: '22px',
-            backgroundColor: 'rgba(37, 99, 235, 0.12)',
-            border: '1px solid rgba(59, 130, 246, 0.25)',
+            width: '72px',
+            height: '72px',
+            borderRadius: '20px',
+            backgroundColor: '#f8fafc',
+            border: '1px solid #e2e8f0',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            margin: '0 auto 24px auto',
-            color: '#60a5fa',
-            boxShadow: '0 0 30px rgba(37, 99, 235, 0.2)'
+            margin: '0 auto 20px auto',
+            color: '#334155'
           }}>
-            <Wrench size={36} strokeWidth={1.8} />
+            <Wrench size={32} strokeWidth={1.8} />
           </div>
 
           {/* Page Title */}
@@ -71,8 +65,8 @@ export default function CompaniesPage({ lang = 'mn', t, pageMetadata, setCurrent
             fontSize: 'clamp(28px, 4vw, 36px)',
             fontWeight: '800',
             fontFamily: "'Montserrat', sans-serif",
-            color: '#ffffff',
-            margin: '0 0 12px 0',
+            color: '#0f172a',
+            margin: '0 0 10px 0',
             letterSpacing: '-0.02em'
           }}>
             {lang === 'mn' ? 'Компаниуд' : 'Companies'}
@@ -80,9 +74,9 @@ export default function CompaniesPage({ lang = 'mn', t, pageMetadata, setCurrent
 
           {/* Maintenance Notice Subtitle */}
           <p style={{
-            fontSize: 'clamp(16px, 2.5vw, 19px)',
+            fontSize: 'clamp(16px, 2.5vw, 18px)',
             fontWeight: '500',
-            color: '#94a3b8',
+            color: '#64748b',
             fontFamily: "'Inter', sans-serif",
             margin: '0'
           }}>
