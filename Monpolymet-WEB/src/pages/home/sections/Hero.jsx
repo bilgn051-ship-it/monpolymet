@@ -29,6 +29,22 @@ const defaultSlides = [
     subtitleMn: 'Байгаль орчинд ээлтэй, тогтвортой хөгжлийг түүчээлэгч Монполимет Групп',
     subtitleEn: 'Monpolymet Group, leading eco-friendly and sustainable development',
     ctas: [{ labelMn: 'Салбар компаниуд', labelEn: 'Group Companies', targetPage: 'companies', style: 'primary' }]
+  },
+  {
+    image: '/pro_hero.jpg',
+    titleMn: 'Байгаль орчинд ээлтэй дэвшилтэт техник, технологи',
+    titleEn: 'Environmentally friendly advanced technology and equipment',
+    subtitleMn: 'Олон улсын стандартад нийцсэн эко үйлдвэрлэл, ногоон хөгжил',
+    subtitleEn: 'Eco production and green development meeting international standards',
+    ctas: [{ labelMn: 'БОНС туршлага', labelEn: 'HSE Experience', targetPage: 'hse', style: 'primary' }]
+  },
+  {
+    image: '/2.jpg',
+    titleMn: 'Үндэсний үйлдвэрлэгч, бүтээн байгуулагч – Монполимет Групп',
+    titleEn: 'National Producer & Builder - Monpolymet Group',
+    subtitleMn: '30 гаруй жилийн түүхт бүтээн байгуулалт, тогтвортой хөгжил',
+    subtitleEn: 'Over 30 years of history, creation, and sustainable growth',
+    ctas: [{ labelMn: 'Тогтвортой хөгжил', labelEn: 'Sustainability', targetPage: 'csr', style: 'primary' }]
   }
 ];
 
@@ -40,10 +56,9 @@ export default function Hero({ lang, setCurrentPage }) {
   useEffect(() => {
     fetchHeroSlides()
       .then((data) => {
-        if (data && data.length > 0) {
+        if (data && data.length >= 5) {
           const mapped = data
             .sort((a, b) => a.order - b.order)
-            .slice(0, 3)
             .map((s, idx) => ({
               video: s.mediaType === 'video' ? s.mediaUrl : null,
               image: defaultSlides[idx]?.image || (s.mediaType === 'image' ? s.mediaUrl : defaultSlides[0].image),
@@ -53,7 +68,7 @@ export default function Hero({ lang, setCurrentPage }) {
               subtitleEn: s.subtitleEn || defaultSlides[idx]?.subtitleEn || '',
               ctas: s.ctas || defaultSlides[idx]?.ctas || [],
             }));
-          setSlides(mapped.length === 3 ? mapped : defaultSlides);
+          setSlides(mapped);
         } else {
           setSlides(defaultSlides);
         }
