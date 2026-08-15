@@ -10,40 +10,40 @@ const defaultSlides = [
     image: '/hero-slide-3.jpg',
     titleMn: 'Жишиг нөхөн сэргээгч Үндэсний компани',
     titleEn: 'Benchmark Rehabilitation National Company',
-    subtitleMn: 'Уул уурхай, барилгын материалын үйлдвэрлэлийн салбарын тэргүүлэгч',
-    subtitleEn: 'A leader in mining and construction-material manufacturing',
+    subtitleMn: '',
+    subtitleEn: '',
     ctas: [{ labelMn: 'Бидний тухай', labelEn: 'About us', targetPage: 'about', style: 'primary' }]
   },
   {
     image: img3,
     titleMn: 'Монгол Улсад аж үйлдвэрийн сэргэлтийг авчирч, импортын хараат байдлыг халсан Монцемент',
     titleEn: 'Moncement bringing industrial revival to Mongolia and ending import dependence',
-    subtitleMn: 'Дэвшилтэт технологи, 100% үндэсний бүтээн байгуулалт',
-    subtitleEn: 'Advanced technology, 100% national development',
+    subtitleMn: '',
+    subtitleEn: '',
     ctas: [{ labelMn: 'Дэлгэрэнгүй', labelEn: 'Learn more', targetPage: 'csr', style: 'primary' }]
   },
   {
     image: imgAa,
     titleMn: 'Бат бэх хөгжлийн суурийг хамтдаа бүтээцгээе',
     titleEn: 'Building strong foundations for development together',
-    subtitleMn: 'Байгаль орчинд ээлтэй, тогтвортой хөгжлийг түүчээлэгч Монполимет Групп',
-    subtitleEn: 'Monpolymet Group, leading eco-friendly and sustainable development',
+    subtitleMn: '',
+    subtitleEn: '',
     ctas: [{ labelMn: 'Салбар компаниуд', labelEn: 'Group Companies', targetPage: 'companies', style: 'primary' }]
   },
   {
     image: '/pro_hero.jpg',
     titleMn: 'Байгаль орчинд ээлтэй дэвшилтэт техник, технологи',
     titleEn: 'Environmentally friendly advanced technology and equipment',
-    subtitleMn: 'Олон улсын стандартад нийцсэн эко үйлдвэрлэл, ногоон хөгжил',
-    subtitleEn: 'Eco production and green development meeting international standards',
+    subtitleMn: '',
+    subtitleEn: '',
     ctas: [{ labelMn: 'БОНС туршлага', labelEn: 'HSE Experience', targetPage: 'hse', style: 'primary' }]
   },
   {
     image: '/2.jpg',
     titleMn: 'Үндэсний үйлдвэрлэгч, бүтээн байгуулагч – Монполимет Групп',
     titleEn: 'National Producer & Builder - Monpolymet Group',
-    subtitleMn: '30 гаруй жилийн түүхт бүтээн байгуулалт, тогтвортой хөгжил',
-    subtitleEn: 'Over 30 years of history, creation, and sustainable growth',
+    subtitleMn: '',
+    subtitleEn: '',
     ctas: [{ labelMn: 'Тогтвортой хөгжил', labelEn: 'Sustainability', targetPage: 'csr', style: 'primary' }]
   }
 ];
@@ -64,8 +64,8 @@ export default function Hero({ lang, setCurrentPage }) {
               image: defaultSlides[idx]?.image || (s.mediaType === 'image' ? s.mediaUrl : defaultSlides[0].image),
               titleMn: s.titleMn || defaultSlides[idx]?.titleMn || '',
               titleEn: s.titleEn || defaultSlides[idx]?.titleEn || '',
-              subtitleMn: s.subtitleMn || defaultSlides[idx]?.subtitleMn || '',
-              subtitleEn: s.subtitleEn || defaultSlides[idx]?.subtitleEn || '',
+              subtitleMn: '',
+              subtitleEn: '',
               ctas: s.ctas || defaultSlides[idx]?.ctas || [],
             }));
           setSlides(mapped);
@@ -125,13 +125,6 @@ export default function Hero({ lang, setCurrentPage }) {
                 ? ((lang === 'mn' ? activeSlideData?.titleMn?.mn : activeSlideData?.titleEn?.en) || '')
                 : ((lang === 'mn' ? activeSlideData?.titleMn : activeSlideData?.titleEn) || '')}
             </h1>
-            {(lang === 'mn' ? activeSlideData?.subtitleMn : activeSlideData?.subtitleEn) && (
-              <p className="hero-subtitle">
-                {typeof (lang === 'mn' ? activeSlideData?.subtitleMn : activeSlideData?.subtitleEn) === 'object'
-                  ? ((lang === 'mn' ? activeSlideData?.subtitleMn?.mn : activeSlideData?.subtitleEn?.en) || '')
-                  : ((lang === 'mn' ? activeSlideData?.subtitleMn : activeSlideData?.subtitleEn) || '')}
-              </p>
-            )}
           </div>
         </div>
 
