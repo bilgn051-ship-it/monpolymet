@@ -27,6 +27,22 @@ const defaultSlides = [
     subtitleMn: '',
     subtitleEn: '',
     ctas: [{ labelMn: 'Салбар компаниуд', labelEn: 'Group Companies', targetPage: 'companies', style: 'primary' }]
+  },
+  {
+    image: '/pro_hero.jpg',
+    titleMn: 'Байгаль орчинд ээлтэй дэвшилтэт техник, технологи',
+    titleEn: 'Environmentally friendly advanced technology and equipment',
+    subtitleMn: '',
+    subtitleEn: '',
+    ctas: [{ labelMn: 'БОНС туршлага', labelEn: 'HSE Experience', targetPage: 'hse', style: 'primary' }]
+  },
+  {
+    image: '/2.jpg',
+    titleMn: 'Үндэсний үйлдвэрлэгч, бүтээн байгуулагч – Монполимет Групп',
+    titleEn: 'National Producer & Builder - Monpolymet Group',
+    subtitleMn: '',
+    subtitleEn: '',
+    ctas: [{ labelMn: 'Тогтвортой хөгжил', labelEn: 'Sustainability', targetPage: 'csr', style: 'primary' }]
   }
 ];
 
@@ -38,24 +54,22 @@ export default function Hero({ lang, setCurrentPage }) {
   useEffect(() => {
     fetchHeroSlides()
       .then((data) => {
-        if (data && data.length) {
+        if (data && data.length >= 5) {
           const mapped = data
             .sort((a, b) => a.order - b.order)
             .map((s, idx) => ({
               video: s.mediaType === 'video' ? s.mediaUrl : null,
-              image: idx === 2 ? '/hero-slide-3.jpg' : (s.mediaType === 'image' ? s.mediaUrl : null),
-              titleMn: idx === 0
-                ? 'Жишиг нөхөн сэргээгч Үндэсний компани'
-                : (idx === 1
-                  ? 'Монгол Улсад аж үйлдвэрийн сэргэлтийг авчирч, импортын хараат байдлыг халсан Монцемент'
-                  : (idx === 2 ? 'Бат бэх хөгжлийн суурийг хамтдаа бүтээцгээе' : s.titleMn)),
-              titleEn: s.titleEn,
-              subtitleMn: (idx === 0 || idx === 1 || idx === 2) ? '' : s.subtitleMn,
-              subtitleEn: (idx === 0 || idx === 1 || idx === 2) ? '' : s.subtitleEn,
-              ctas: s.ctas,
+              image: s.mediaType === 'image' ? s.mediaUrl : (defaultSlides[idx]?.image || s.mediaUrl),
+              titleMn: s.titleMn || defaultSlides[idx]?.titleMn || '',
+              titleEn: s.titleEn || defaultSlides[idx]?.titleEn || '',
+              subtitleMn: s.subtitleMn || '',
+              subtitleEn: s.subtitleEn || '',
+              ctas: s.ctas || defaultSlides[idx]?.ctas || [],
             }));
           setSlides(mapped);
           setActiveSlide(0);
+        } else {
+          setSlides(defaultSlides);
         }
       })
       .catch((e) => console.error("Failed to fetch hero slides:", e));
