@@ -7,6 +7,92 @@ export default function CompaniesPage({ lang = 'mn', t, pageMetadata, setCurrent
   // Түр засварын төлөв: (true = Засвартай, false = Хуучин картуудыг буцаан харуулах)
   const isUnderMaintenance = true;
 
+  if (isUnderMaintenance) {
+    return (
+      <div style={{
+        minHeight: '75vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#0f172a',
+        backgroundImage: 'radial-gradient(ellipse 80% 80% at 50% -20%, rgba(37, 99, 235, 0.22), rgba(15, 23, 42, 1))',
+        padding: '60px 20px',
+        textAlign: 'center'
+      }}>
+        <div style={{
+          maxWidth: '600px',
+          width: '100%',
+          padding: '48px 32px',
+          borderRadius: '24px',
+          background: 'rgba(255, 255, 255, 0.03)',
+          backdropFilter: 'blur(16px)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4)'
+        }}>
+          {/* Badge */}
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '6px 16px',
+            borderRadius: '999px',
+            backgroundColor: 'rgba(37, 99, 235, 0.15)',
+            border: '1px solid rgba(59, 130, 246, 0.3)',
+            color: '#93c5fd',
+            fontSize: '13px',
+            fontWeight: '600',
+            fontFamily: "'Montserrat', sans-serif",
+            marginBottom: '28px',
+            letterSpacing: '0.02em'
+          }}>
+            <Clock size={15} className="animate-spin-slow" />
+            <span>{lang === 'mn' ? 'Шинэчлэлт хийгдэж байна' : 'Under Maintenance'}</span>
+          </div>
+
+          {/* Icon */}
+          <div style={{
+            width: '76px',
+            height: '76px',
+            borderRadius: '22px',
+            backgroundColor: 'rgba(37, 99, 235, 0.12)',
+            border: '1px solid rgba(59, 130, 246, 0.25)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 24px auto',
+            color: '#60a5fa',
+            boxShadow: '0 0 30px rgba(37, 99, 235, 0.2)'
+          }}>
+            <Wrench size={36} strokeWidth={1.8} />
+          </div>
+
+          {/* Page Title */}
+          <h1 style={{
+            fontSize: 'clamp(28px, 4vw, 36px)',
+            fontWeight: '800',
+            fontFamily: "'Montserrat', sans-serif",
+            color: '#ffffff',
+            margin: '0 0 12px 0',
+            letterSpacing: '-0.02em'
+          }}>
+            {lang === 'mn' ? 'Компаниуд' : 'Companies'}
+          </h1>
+
+          {/* Maintenance Notice Subtitle */}
+          <p style={{
+            fontSize: 'clamp(16px, 2.5vw, 19px)',
+            fontWeight: '500',
+            color: '#94a3b8',
+            fontFamily: "'Inter', sans-serif",
+            margin: '0'
+          }}>
+            {lang === 'mn' ? 'Хуудас түр засвартай байна' : 'This page is currently under maintenance'}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       {/* Full Bleed Hero Banner */}
@@ -34,99 +120,17 @@ export default function CompaniesPage({ lang = 'mn', t, pageMetadata, setCurrent
         </div>
       </div>
 
-      {isUnderMaintenance ? (
-        /* Under Maintenance / Coming Soon Content Section */
-        <div style={{ backgroundColor: '#f8fafc', padding: '90px 20px 110px 20px', minHeight: '420px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{
-            maxWidth: '780px',
-            width: '100%',
-            margin: '0 auto',
-            backgroundColor: '#ffffff',
-            borderRadius: '24px',
-            padding: 'clamp(32px, 5vw, 56px) clamp(24px, 4vw, 48px)',
-            boxShadow: '0 20px 40px -15px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(226, 232, 240, 0.8)',
-            textAlign: 'center',
-            position: 'relative',
-            overflow: 'hidden'
-          }}>
-            {/* Subtle Accent Glow */}
-            <div style={{
-              position: 'absolute',
-              top: '-60px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: '240px',
-              height: '120px',
-              background: 'radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, rgba(255,255,255,0) 70%)',
-              pointerEvents: 'none'
-            }} />
-
-            {/* Animated Badge */}
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '6px 16px',
-              borderRadius: '999px',
-              backgroundColor: '#eff6ff',
-              border: '1px solid #bfdbfe',
-              color: '#1d4ed8',
-              fontSize: '13px',
-              fontWeight: '600',
-              fontFamily: "'Montserrat', sans-serif",
-              marginBottom: '24px',
-              letterSpacing: '0.02em'
-            }}>
-              <Clock size={15} className="animate-spin-slow" />
-              <span>{lang === 'mn' ? 'Шинэчлэлт хийгдэж байна' : 'Under Maintenance / Coming Soon'}</span>
-            </div>
-
-            {/* Main Icon */}
-            <div style={{
-              width: '76px',
-              height: '76px',
-              borderRadius: '22px',
-              backgroundColor: '#f1f5f9',
-              border: '1px solid #e2e8f0',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 24px auto',
-              color: '#2563eb',
-              boxShadow: '0 8px 16px -4px rgba(37, 99, 235, 0.12)'
-            }}>
-              <Wrench size={36} strokeWidth={1.8} />
-            </div>
-
-            {/* Headline */}
-            <h2 style={{
-              fontSize: 'clamp(22px, 3vw, 28px)',
-              fontWeight: '700',
-              fontFamily: "'Montserrat', sans-serif",
-              color: '#0f172a',
-              margin: '0',
-              letterSpacing: '-0.02em'
-            }}>
-              {lang === 'mn' ? 'Хуудас түр засвартай байна' : 'Page is Under Maintenance'}
-            </h2>
-          </div>
+      <div style={{ backgroundColor: '#ffffff', padding: '60px 20px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <p style={{ fontSize: '20px', lineHeight: '1.5', color: '#334155', fontWeight: '500', fontFamily: "'Inter', sans-serif", margin: 0 }}>
+            {lang === 'mn' ? 'Монполимет групп нь 1992 онд үүсгэн байгуулагдсан. Уул уурхайн үйлдвэрлэл, байгаль орчны нөхөн сэргээлт, барилгын материал үйлдвэрлэл, барилга байгууламж, гадаад худалдааны чиглэлээр үйл ажиллагаа явуулж буй үндэсний үйлдвэрлэгч-хөрөнгө оруулагч компани юм.' : 'Monpolymet Group was established in 1992. It is a national producer-investor company operating in mining, environmental rehabilitation, building materials manufacturing, construction, and foreign trade.'}
+          </p>
         </div>
-      ) : (
-        /* Original Company Info & Carousel */
-        <>
-          <div style={{ backgroundColor: '#ffffff', padding: '60px 20px', textAlign: 'center' }}>
-            <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-              <p style={{ fontSize: '20px', lineHeight: '1.5', color: '#334155', fontWeight: '500', fontFamily: "'Inter', sans-serif", margin: 0 }}>
-                {lang === 'mn' ? 'Монполимет групп нь 1992 онд үүсгэн байгуулагдсан. Уул уурхайн үйлдвэрлэл, байгаль орчны нөхөн сэргээлт, барилгын материал үйлдвэрлэл, барилга байгууламж, гадаад худалдааны чиглэлээр үйл ажиллагаа явуулж буй үндэсний үйлдвэрлэгч-хөрөнгө оруулагч компани юм.' : 'Monpolymet Group was established in 1992. It is a national producer-investor company operating in mining, environmental rehabilitation, building materials manufacturing, construction, and foreign trade.'}
-              </p>
-            </div>
-          </div>
+      </div>
 
-          <div style={{ backgroundColor: '#ffffff', paddingBottom: '80px' }}>
-            <CompanyCarousel lang={lang} />
-          </div>
-        </>
-      )}
+      <div style={{ backgroundColor: '#ffffff', paddingBottom: '80px' }}>
+        <CompanyCarousel lang={lang} />
+      </div>
     </>
   );
 }
