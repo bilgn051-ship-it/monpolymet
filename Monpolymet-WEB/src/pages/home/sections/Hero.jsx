@@ -10,24 +10,24 @@ const defaultSlides = [
     image: '/hero-slide-3.jpg',
     titleMn: 'Жишиг нөхөн сэргээгч Үндэсний компани',
     titleEn: 'Benchmark Rehabilitation National Company',
-    subtitleMn: '',
-    subtitleEn: '',
+    subtitleMn: 'Уул уурхай, барилгын материалын үйлдвэрлэлийн салбарын тэргүүлэгч',
+    subtitleEn: 'A leader in mining and construction-material manufacturing',
     ctas: [{ labelMn: 'Бидний тухай', labelEn: 'About us', targetPage: 'about', style: 'primary' }]
   },
   {
     image: img3,
     titleMn: 'Монгол Улсад аж үйлдвэрийн сэргэлтийг авчирч, импортын хараат байдлыг халсан Монцемент',
     titleEn: 'Moncement bringing industrial revival to Mongolia and ending import dependence',
-    subtitleMn: '',
-    subtitleEn: '',
+    subtitleMn: 'Дэвшилтэт технологи, 100% үндэсний бүтээн байгуулалт',
+    subtitleEn: 'Advanced technology, 100% national development',
     ctas: [{ labelMn: 'Дэлгэрэнгүй', labelEn: 'Learn more', targetPage: 'csr', style: 'primary' }]
   },
   {
     image: imgAa,
     titleMn: 'Бат бэх хөгжлийн суурийг хамтдаа бүтээцгээе',
     titleEn: 'Building strong foundations for development together',
-    subtitleMn: '',
-    subtitleEn: '',
+    subtitleMn: 'Байгаль орчинд ээлтэй, тогтвортой хөгжлийг түүчээлэгч Монполимет Групп',
+    subtitleEn: 'Monpolymet Group, leading eco-friendly and sustainable development',
     ctas: [{ labelMn: 'Салбар компаниуд', labelEn: 'Group Companies', targetPage: 'companies', style: 'primary' }]
   }
 ];
@@ -49,15 +49,14 @@ export default function Hero({ lang, setCurrentPage }) {
               image: defaultSlides[idx]?.image || (s.mediaType === 'image' ? s.mediaUrl : defaultSlides[0].image),
               titleMn: s.titleMn || defaultSlides[idx]?.titleMn || '',
               titleEn: s.titleEn || defaultSlides[idx]?.titleEn || '',
-              subtitleMn: s.subtitleMn || '',
-              subtitleEn: s.subtitleEn || '',
+              subtitleMn: s.subtitleMn || defaultSlides[idx]?.subtitleMn || '',
+              subtitleEn: s.subtitleEn || defaultSlides[idx]?.subtitleEn || '',
               ctas: s.ctas || defaultSlides[idx]?.ctas || [],
             }));
           setSlides(mapped.length === 3 ? mapped : defaultSlides);
           setActiveSlide(0);
         } else {
           setSlides(defaultSlides);
-        }
       })
       .catch((e) => console.error("Failed to fetch hero slides:", e));
   }, []);
