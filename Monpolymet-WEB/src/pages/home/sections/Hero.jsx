@@ -5,7 +5,7 @@ const SLIDE_INTERVAL = 6000;
 
 const defaultSlides = [
   {
-    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&auto=format&fit=crop&q=70',
+    image: '/hero-slide-3.jpg',
     titleMn: 'Жишиг нөхөн сэргээгч Үндэсний компани',
     titleEn: 'Benchmark Rehabilitation National Company',
     subtitleMn: '',
@@ -21,7 +21,7 @@ const defaultSlides = [
     ctas: [{ labelMn: 'Дэлгэрэнгүй', labelEn: 'Learn more', targetPage: 'csr', style: 'primary' }]
   },
   {
-    image: '/hero-slide-3.jpg',
+    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&auto=format&fit=crop&q=70',
     titleMn: 'Бат бэх хөгжлийн суурийг хамтдаа бүтээцгээе',
     titleEn: 'Building strong foundations for development together',
     subtitleMn: '',
