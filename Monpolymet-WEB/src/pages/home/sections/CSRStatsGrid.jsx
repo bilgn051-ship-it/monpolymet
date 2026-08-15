@@ -31,12 +31,12 @@ const CountUp = ({ end, prefix = "", suffix = "", isVisible }) => {
 };
 
 const statsData = [
-  { value: 60, prefix: '', suffix: '%', titleMn: 'Биологийн нөхөн сэргээлт', subMn: 'хийсэн талбайн эзлэх хувь', titleEn: 'Biological reclamation', subEn: 'percentage of the area' },
-  { value: 16, prefix: '', suffix: 'га', titleMn: 'Цэнгэг уст нуур', subMn: 'Нөхөн сэргээлтийн хүрээнд байгуулсан', titleEn: 'Freshwater lake', subEn: 'created under reclamation' },
-  { value: 300, prefix: '', suffix: 'га', titleMn: 'Бэлчээрийн талбай', subMn: 'байгуулсан хэмжээ', titleEn: 'Pasture area', subEn: 'established size' },
-  { value: 8, prefix: '', suffix: 'га', titleMn: 'Жимс, жимсгэний мод', subMn: 'бут тарьсан талбайн хэмжээ', titleEn: 'Fruit trees', subEn: 'planted area size' },
-  { value: 40000000, prefix: '', suffix: 'кг', titleMn: 'Хүчилтөрөгч ялгаруулдаг', subMn: '/1 жилд/', titleEn: 'Oxygen produced', subEn: '/per year/' },
-  { value: 600, prefix: '+', suffix: 'га', titleMn: 'Биологийн нөхөн сэргээлт', subMn: 'Талбайд хийсэн', titleEn: 'Biological reclamation', subEn: 'done in the area' }
+  { value: 600, prefix: '', suffix: '+ га', titleMn: 'Биологийн нөхөн сэргээлт', subMn: 'талбайд хийсэн', titleEn: 'Biological reclamation', subEn: 'area completed' },
+  { value: 16, prefix: '', suffix: ' га', titleMn: 'Цэнгэг уст Тосон нуур', subMn: 'талбайд байгуулсан', titleEn: 'Freshwater Toson Lake', subEn: 'established in the area' },
+  { value: 300, prefix: '', suffix: '+ га', titleMn: 'Бэлчээрийн олон наст ургамал', subMn: 'талбайд тарьж, ургуулсан', titleEn: 'Perennial Pasture Plants', subEn: 'cultivated in the area' },
+  { value: 5, prefix: '', suffix: ' га', titleMn: 'Жимс, жимсгэнийн мод бут', subMn: 'талбайд тариалсан', titleEn: 'Fruit Trees & Berry Bushes', subEn: 'planted in the area' },
+  { value: 10000000, prefix: '', suffix: ' кг', titleMn: 'Тоосонцор бууруулдаг', subMn: '/1 жилд/', titleEn: 'Dust Reduced', subEn: '/per year/' },
+  { value: 300000, prefix: '', suffix: '+', titleMn: 'Мод тарьж ургуулсан', subMn: 'ногоон байгууламж', titleEn: 'Trees planted', subEn: 'green development' }
 ];
 
 export default function CSRStatsGrid({ lang = 'mn', data = [] }) {

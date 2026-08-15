@@ -1,15 +1,21 @@
 import React from 'react';
 import CompanyCarousel from '../../components/ui/CompanyCarousel';
+import companiesHeroImg from '../../assets/companies-hero.jpg';
 
 export default function CompaniesPage({ lang, t, pageMetadata }) {
   return (
     <>
       {/* Full Bleed Hero Banner */}
       <div className="full-bleed-banner" style={{
-        backgroundImage: `url(${pageMetadata?.header?.imageUrl || 'https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?w=1920&q=80'})`,
+        backgroundImage: `url(${pageMetadata?.header?.imageUrl || companiesHeroImg})`,
+        backgroundPosition: 'center 40%',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
         backgroundColor: '#0f172a'
       }}>
-        <div className="full-bleed-banner-overlay"></div>
+        <div className="full-bleed-banner-overlay" style={{
+          background: 'linear-gradient(to bottom, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.5) 100%)'
+        }}></div>
         <div className="full-bleed-banner-container">
           <div className="full-bleed-banner-content animate-slide-up">
             <h1 className="hero-title">

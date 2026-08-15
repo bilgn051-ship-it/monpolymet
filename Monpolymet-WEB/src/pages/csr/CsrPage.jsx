@@ -105,7 +105,7 @@ export default function CsrPage({ lang, t, pageMetadata }) {
       {/* 1. Full Bleed Hero Banner */}
       <div className="full-bleed-banner" style={{
         backgroundImage: `url(${csrHeroImg})`,
-        backgroundPosition: 'center center',
+        backgroundPosition: 'center 20%',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundColor: '#0f172a',

@@ -127,8 +127,8 @@ export default function CSRHighlight({ lang, data }) {
             wordBreak: 'normal'
           }}>
             {lang === 'mn'
-              ? (data?.subtitleMn || 'Тосонгийн ордод 931,67 га талбайд ашиглалт явуулсанаас техникийн нөхөн сэргээлтийг 743 га талбайд, биологийн нөхөн сэргээлтийг 514 га талбайд хийсэн. 100 000 гаруй мод тариалж 5,5 км урт 7 хэсэг ойн төглүүд ургуулсан бөгөөд 16 га талбайтай Тосон нуурыг бий болгоод байна.')
-              : (data?.subtitleEn || 'Reclamation works at Toson mine.')}
+              ? (data?.subtitleMn || 'Дэлхийн жишигт нийцсэн техник технологи, арга туршлагыг өөрсдийн уламжлал, мэдлэг чадвартай хослуулан эх орондоо нутагшуулж монгол хүний хөгжил, байгаль, дэлхийн тогтвортой байдал, нийгмийн сайн сайханд хувь нэмэр оруулан ажиллаж байна.')
+              : (data?.subtitleEn || 'Combining world-standard technology and practices with local expertise to contribute to human development, environmental sustainability, and social wellbeing.')}
           </p>
 
           {/* Stats */}

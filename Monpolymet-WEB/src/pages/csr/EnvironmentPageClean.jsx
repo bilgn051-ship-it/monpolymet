@@ -110,7 +110,7 @@ export default function EnvironmentPage({ lang, t, pageMetadata }) {
       {/* 1. Full Bleed Hero Banner */}
       <div className="full-bleed-banner" style={{
         backgroundImage: `url(${envHeroImg})`,
-        backgroundPosition: 'center center',
+        backgroundPosition: 'center 20%',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundColor: '#0f172a',
@@ -363,13 +363,13 @@ export default function EnvironmentPage({ lang, t, pageMetadata }) {
               }}
             >
               <div style={{ fontSize: '38px', fontWeight: '600', fontFamily: "'Montserrat', sans-serif", color: '#2563eb', marginBottom: '12px', lineHeight: '1.2' }}>
-                625га (60%)
+                600+ га
               </div>
               <div style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', fontFamily: "'Montserrat', sans-serif", marginBottom: '8px', lineHeight: '1.3' }}>
                 {isMn ? 'Биологийн нөхөн сэргээлт' : 'Biological Rehabilitation'}
               </div>
               <div style={{ fontSize: '14px', fontWeight: '500', color: '#64748b', fontFamily: "'Montserrat', sans-serif", lineHeight: '1.5' }}>
-                {isMn ? 'хийсэн талбайн эзлэх хувь' : 'Percentage of completed area'}
+                {isMn ? 'талбайд хийсэн' : 'completed area'}
               </div>
             </motion.div>
           </div>

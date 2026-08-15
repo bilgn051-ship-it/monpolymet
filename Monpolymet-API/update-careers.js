@@ -5,7 +5,7 @@ async function run() {
   const db = mongoose.connection.db;
   const res = await db.collection('careerspagecontents').updateOne(
     { key: 'careers' },
-    { $set: { 'header.imageUrl': '/careers-hero.jpg', 'whyUs.imageUrl': '/hr-bg.jpg', bannerImage: '/hr-bg.jpg' } },
+    { $set: { 'header.imageUrl': '/careers-hero.jpg', bannerImage: '/hr-bg.jpg' } },
     { upsert: true }
   );
   console.log('✅ Updated DB careerspagecontent:', res);
