@@ -69,11 +69,14 @@ export default function AboutBuilder() {
   ]);
 
   const [teamMembers, setTeamMembers] = useState([
-    { nameMn: 'Ц.Гарамжав', nameEn: 'Ts. Garamjav', roleMn: 'Үүсгэн байгуулагч', roleEn: 'Founder', imageUrl: '/garamjav.png' },
-    { nameMn: 'Н.Мөнхнасан', nameEn: 'N. Munkhnasan', roleMn: 'ТУЗ-ын дарга', roleEn: 'Chairwoman of the Board', imageUrl: '/monhnasan.png' },
-    { nameMn: 'Ц.Халиун', nameEn: 'Ts. Haliun', roleMn: 'Гүйцэтгэх захирал', roleEn: 'Executive Director', imageUrl: '/haliun.png' },
-    { nameMn: 'Б.Дэлгэр', nameEn: 'B. Delger', roleMn: 'Гүйцэтгэх захирал', roleEn: 'Executive Director', imageUrl: '/delger.png' },
-    { nameMn: 'Б.Гандөш', nameEn: 'B. Gandush', roleMn: 'Гүйцэтгэх захирал', roleEn: 'Executive Director', imageUrl: '/dosh.png' },
+    { nameMn: 'Ц.Гарамжав', nameEn: 'Garamjav Ts.', roleMn: 'Үүсгэн байгуулагч, ТУЗ-ийн Дарга', roleEn: 'Founder & Chairwoman of the Board', imageUrl: '/garamjav.png', isHidden: false },
+    { nameMn: 'Н.Мөнхнасан', nameEn: 'Munkhnasan N.', roleMn: 'Ерөнхий Захирал', roleEn: 'Chief Executive Officer', imageUrl: '/monhnasan.png', isHidden: false },
+    { nameMn: 'Ц.Халиун', nameEn: 'Haliun Ts.', roleMn: 'Гүйцэтгэх Захирал', roleEn: 'Executive Director', imageUrl: '/haliun.png', isHidden: false },
+    { nameMn: 'Б.Дэлгэр', nameEn: 'Delger B.', roleMn: 'Гүйцэтгэх Захирал', roleEn: 'Executive Director', imageUrl: '/delger.png', isHidden: false },
+    { nameMn: 'Б.Гандөш', nameEn: 'Gandush B.', roleMn: 'Гүйцэтгэх Захирал', roleEn: 'Executive Director', imageUrl: '/dosh.png', isHidden: false },
+    { nameMn: 'Б.Цэцэгсүрэн', nameEn: 'Tsetsegsuren B.', roleMn: 'Санхүүгийн Захирал', roleEn: 'Chief Financial Officer', imageUrl: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&auto=format&fit=crop&q=80', isHidden: false },
+    { nameMn: 'С.Баярбат', nameEn: 'Bayarbat S.', roleMn: 'Үйлдвэрлэл Хариуцсан Захирал', roleEn: 'VP of Operations', imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80', isHidden: false },
+    { nameMn: 'Г.Отгонбаяр', nameEn: 'Otgonbayar G.', roleMn: 'Хүний Нөөцийн Захирал', roleEn: 'Human Resources Director', imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80', isHidden: false },
   ]);
 
   useEffect(() => {

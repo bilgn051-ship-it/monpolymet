@@ -114,23 +114,35 @@ export class PublicController {
   @Public()
   @Get('team')
   async teamList() {
-    const list = await this.team.findAll();
-    if (list && list.length > 0) {
-      return list;
-    }
+    let list = await this.team.findAll();
     const defaultTeam = [
-      { name: { mn: 'Ц.Гарамжав', en: 'Ts. Garamjav' }, role: { mn: 'Үүсгэн байгуулагч', en: 'Founder' }, imageUrl: '/garamjav.png', isHidden: false, order: 0 },
-      { name: { mn: 'Н.Мөнхнасан', en: 'N. Munkhnasan' }, role: { mn: 'ТУЗ-ын дарга', en: 'Chairwoman of the Board' }, imageUrl: '/monhnasan.png', isHidden: false, order: 1 },
-      { name: { mn: 'Ц.Халиун', en: 'Ts. Haliun' }, role: { mn: 'Гүйцэтгэх захирал', en: 'Executive Director' }, imageUrl: '/haliun.png', isHidden: false, order: 2 },
-      { name: { mn: 'Б.Дэлгэр', en: 'B. Delger' }, role: { mn: 'Гүйцэтгэх захирал', en: 'Executive Director' }, imageUrl: '/delger.png', isHidden: false, order: 3 },
-      { name: { mn: 'Б.Гандөш', en: 'B. Gandush' }, role: { mn: 'Гүйцэтгэх захирал', en: 'Executive Director' }, imageUrl: '/dosh.png', isHidden: false, order: 4 },
+      { name: { mn: 'Ц.Гарамжав', en: 'Garamjav Ts.' }, role: { mn: 'Үүсгэн байгуулагч, ТУЗ-ийн Дарга', en: 'Founder & Chairwoman of the Board' }, imageUrl: '/garamjav.png', isHidden: false, order: 0 },
+      { name: { mn: 'Н.Мөнхнасан', en: 'Munkhnasan N.' }, role: { mn: 'Ерөнхий Захирал', en: 'Chief Executive Officer' }, imageUrl: '/monhnasan.png', isHidden: false, order: 1 },
+      { name: { mn: 'Ц.Халиун', en: 'Haliun Ts.' }, role: { mn: 'Гүйцэтгэх Захирал', en: 'Executive Director' }, imageUrl: '/haliun.png', isHidden: false, order: 2 },
+      { name: { mn: 'Б.Дэлгэр', en: 'Delger B.' }, role: { mn: 'Гүйцэтгэх Захирал', en: 'Executive Director' }, imageUrl: '/delger.png', isHidden: false, order: 3 },
+      { name: { mn: 'Б.Гандөш', en: 'Gandush B.' }, role: { mn: 'Гүйцэтгэх Захирал', en: 'Executive Director' }, imageUrl: '/dosh.png', isHidden: false, order: 4 },
+      { name: { mn: 'Б.Цэцэгсүрэн', en: 'Tsetsegsuren B.' }, role: { mn: 'Санхүүгийн Захирал', en: 'Chief Financial Officer' }, imageUrl: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&auto=format&fit=crop&q=80', isHidden: false, order: 5 },
+      { name: { mn: 'С.Баярбат', en: 'Bayarbat S.' }, role: { mn: 'Үйлдвэрлэл Хариуцсан Захирал', en: 'VP of Operations' }, imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80', isHidden: false, order: 6 },
+      { name: { mn: 'Г.Отгонбаяр', en: 'Otgonbayar G.' }, role: { mn: 'Хүний Нөөцийн Захирал', en: 'Human Resources Director' }, imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80', isHidden: false, order: 7 },
     ];
-    const createdList = [];
-    for (const m of defaultTeam) {
-      const created = await this.team.create(m as any);
-      createdList.push(created);
+
+    if (!list || list.length === 0) {
+      const createdList = [];
+      for (const m of defaultTeam) {
+        const created = await this.team.create(m as any);
+        createdList.push(created);
+      }
+      return createdList;
     }
-    return createdList;
+
+    if (list.length === 5) {
+      for (let i = 5; i < defaultTeam.length; i++) {
+        const created = await this.team.create(defaultTeam[i] as any);
+        list.push(created);
+      }
+    }
+
+    return list;
   }
 
   @Public()

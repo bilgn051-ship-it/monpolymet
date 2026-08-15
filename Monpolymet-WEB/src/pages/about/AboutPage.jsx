@@ -185,6 +185,21 @@ export default function AboutPage({ lang, t, pageMetadata }) {
       name: lang === 'mn' ? 'Б.Гандөш' : 'Gandush B.',
       role: lang === 'mn' ? 'Гүйцэтгэх Захирал' : 'Executive Director',
       imageUrl: '/dosh.png'
+    },
+    {
+      name: lang === 'mn' ? 'Б.Цэцэгсүрэн' : 'Tsetsegsuren B.',
+      role: lang === 'mn' ? 'Санхүүгийн Захирал' : 'Chief Financial Officer',
+      imageUrl: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&auto=format&fit=crop&q=80'
+    },
+    {
+      name: lang === 'mn' ? 'С.Баярбат' : 'Bayarbat S.',
+      role: lang === 'mn' ? 'Үйлдвэрлэл Хариуцсан Захирал' : 'VP of Operations',
+      imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80'
+    },
+    {
+      name: lang === 'mn' ? 'Г.Отгонбаяр' : 'Otgonbayar G.',
+      role: lang === 'mn' ? 'Хүний Нөөцийн Захирал' : 'Human Resources Director',
+      imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80'
     }
   ];
 
