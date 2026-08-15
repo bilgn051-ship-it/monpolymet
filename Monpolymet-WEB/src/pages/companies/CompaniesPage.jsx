@@ -16,7 +16,7 @@ export default function CompaniesPage({ lang = 'mn', t, pageMetadata, setCurrent
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundColor: '#0f172a',
-        minHeight: '55vh',
+        minHeight: '80vh',
         imageRendering: '-webkit-optimize-contrast'
       }}>
         <div className="full-bleed-banner-overlay" style={{
