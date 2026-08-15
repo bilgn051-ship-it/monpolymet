@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchHeroSlides } from '../../../api';
+import img3 from '../../../assets/3.png';
 
 const SLIDE_INTERVAL = 6000;
 
@@ -13,7 +14,7 @@ const defaultSlides = [
     ctas: [{ labelMn: 'Бидний тухай', labelEn: 'About us', targetPage: 'about', style: 'primary' }]
   },
   {
-    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&auto=format&fit=crop&q=70',
+    image: img3,
     titleMn: 'Монгол Улсад аж үйлдвэрийн сэргэлтийг авчирч, импортын хараат байдлыг халсан Монцемент',
     titleEn: 'Moncement bringing industrial revival to Mongolia and ending import dependence',
     subtitleMn: '',
