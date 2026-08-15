@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchHeroSlides } from '../../../api';
 import img3 from '../../../assets/3.png';
+import imgAa from '../../../assets/aa.png';
 
 const SLIDE_INTERVAL = 6000;
 
@@ -22,7 +23,7 @@ const defaultSlides = [
     ctas: [{ labelMn: 'Дэлгэрэнгүй', labelEn: 'Learn more', targetPage: 'csr', style: 'primary' }]
   },
   {
-    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&auto=format&fit=crop&q=70',
+    image: imgAa,
     titleMn: 'Бат бэх хөгжлийн суурийг хамтдаа бүтээцгээе',
     titleEn: 'Building strong foundations for development together',
     subtitleMn: '',
