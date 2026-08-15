@@ -122,14 +122,17 @@ export default function Hero({ lang, setCurrentPage }) {
         <div className="hero-content-overlay">
           <div className="hero-text-wrapper animate-fade-in">
             <h1 className="hero-title">
-              {lang === 'mn' ? activeSlideData.titleMn : activeSlideData.titleEn}
+              {typeof (lang === 'mn' ? activeSlideData?.titleMn : activeSlideData?.titleEn) === 'object'
+                ? ((lang === 'mn' ? activeSlideData?.titleMn?.mn : activeSlideData?.titleEn?.en) || '')
+                : ((lang === 'mn' ? activeSlideData?.titleMn : activeSlideData?.titleEn) || '')}
             </h1>
-            {(lang === 'mn' ? activeSlideData.subtitleMn : activeSlideData.subtitleEn) && (
+            {(lang === 'mn' ? activeSlideData?.subtitleMn : activeSlideData?.subtitleEn) && (
               <p className="hero-subtitle">
-                {lang === 'mn' ? activeSlideData.subtitleMn : activeSlideData.subtitleEn}
+                {typeof (lang === 'mn' ? activeSlideData?.subtitleMn : activeSlideData?.subtitleEn) === 'object'
+                  ? ((lang === 'mn' ? activeSlideData?.subtitleMn?.mn : activeSlideData?.subtitleEn?.en) || '')
+                  : ((lang === 'mn' ? activeSlideData?.subtitleMn : activeSlideData?.subtitleEn) || '')}
               </p>
             )}
-
           </div>
         </div>
 
