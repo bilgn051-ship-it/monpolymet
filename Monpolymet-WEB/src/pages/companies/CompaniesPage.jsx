@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrench, Clock, ArrowRight, Home } from 'lucide-react';
+import { Wrench, Clock } from 'lucide-react';
 import CompanyCarousel from '../../components/ui/CompanyCarousel';
 import companiesHeroImg from '../../assets/companies-hero.jpg';
 
@@ -100,93 +100,15 @@ export default function CompaniesPage({ lang = 'mn', t, pageMetadata, setCurrent
 
             {/* Headline */}
             <h2 style={{
-              fontSize: 'clamp(24px, 3.5vw, 32px)',
+              fontSize: 'clamp(22px, 3vw, 28px)',
               fontWeight: '700',
               fontFamily: "'Montserrat', sans-serif",
               color: '#0f172a',
-              margin: '0 0 16px 0',
+              margin: '0',
               letterSpacing: '-0.02em'
             }}>
               {lang === 'mn' ? 'Хуудас түр засвартай байна' : 'Page is Under Maintenance'}
             </h2>
-
-            {/* Description */}
-            <p style={{
-              fontSize: '16px',
-              lineHeight: '1.65',
-              color: '#64748b',
-              fontFamily: "'Inter', sans-serif",
-              maxWidth: '580px',
-              margin: '0 auto 36px auto'
-            }}>
-              {lang === 'mn'
-                ? 'Монполимет группын салбар болон охин компаниудын бүтэц, дэлгэрэнгүй мэдээлэл шинэчлэгдэж байна. Бид тун удахгүй шинэ агуулгаар эргэн холбогдох болно. Түр хүлээнэ үү.'
-                : 'Detailed information and structure of Monpolymet Group subsidiary companies is currently being updated. We will be back soon with updated content. Thank you for your patience.'}
-            </p>
-
-            {/* Action Buttons */}
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '14px'
-            }}>
-              <button
-                onClick={() => setCurrentPage && setCurrentPage('home')}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '12px 24px',
-                  borderRadius: '12px',
-                  backgroundColor: '#2563eb',
-                  color: '#ffffff',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  fontFamily: "'Montserrat', sans-serif",
-                  border: 'none',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  boxShadow: '0 4px 12px rgba(37, 99, 235, 0.25)'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1d4ed8'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
-              >
-                <Home size={16} />
-                <span>{lang === 'mn' ? 'Нүүр хуудас руу буцах' : 'Back to Home'}</span>
-              </button>
-
-              <button
-                onClick={() => setCurrentPage && setCurrentPage('contact')}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '12px 24px',
-                  borderRadius: '12px',
-                  backgroundColor: '#f8fafc',
-                  color: '#334155',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  fontFamily: "'Montserrat', sans-serif",
-                  border: '1px solid #cbd5e1',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#f1f5f9';
-                  e.currentTarget.style.borderColor = '#94a3b8';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#f8fafc';
-                  e.currentTarget.style.borderColor = '#cbd5e1';
-                }}
-              >
-                <span>{lang === 'mn' ? 'Холбоо барих' : 'Contact Us'}</span>
-                <ArrowRight size={16} />
-              </button>
-            </div>
           </div>
         </div>
       ) : (
