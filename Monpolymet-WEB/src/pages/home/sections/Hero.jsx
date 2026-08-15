@@ -29,22 +29,6 @@ const defaultSlides = [
     subtitleMn: '',
     subtitleEn: '',
     ctas: [{ labelMn: 'Салбар компаниуд', labelEn: 'Group Companies', targetPage: 'companies', style: 'primary' }]
-  },
-  {
-    image: '/pro_hero.jpg',
-    titleMn: 'Байгаль орчинд ээлтэй дэвшилтэт техник, технологи',
-    titleEn: 'Environmentally friendly advanced technology and equipment',
-    subtitleMn: '',
-    subtitleEn: '',
-    ctas: [{ labelMn: 'БОНС туршлага', labelEn: 'HSE Experience', targetPage: 'hse', style: 'primary' }]
-  },
-  {
-    image: '/2.jpg',
-    titleMn: 'Үндэсний үйлдвэрлэгч, бүтээн байгуулагч – Монполимет Групп',
-    titleEn: 'National Producer & Builder - Monpolymet Group',
-    subtitleMn: '',
-    subtitleEn: '',
-    ctas: [{ labelMn: 'Тогтвортой хөгжил', labelEn: 'Sustainability', targetPage: 'csr', style: 'primary' }]
   }
 ];
 
@@ -56,19 +40,20 @@ export default function Hero({ lang, setCurrentPage }) {
   useEffect(() => {
     fetchHeroSlides()
       .then((data) => {
-        if (data && data.length >= 5) {
+        if (data && data.length > 0) {
           const mapped = data
             .sort((a, b) => a.order - b.order)
+            .slice(0, 3)
             .map((s, idx) => ({
               video: s.mediaType === 'video' ? s.mediaUrl : null,
-              image: s.mediaType === 'image' ? s.mediaUrl : (defaultSlides[idx]?.image || s.mediaUrl),
+              image: defaultSlides[idx]?.image || (s.mediaType === 'image' ? s.mediaUrl : defaultSlides[0].image),
               titleMn: s.titleMn || defaultSlides[idx]?.titleMn || '',
               titleEn: s.titleEn || defaultSlides[idx]?.titleEn || '',
               subtitleMn: s.subtitleMn || '',
               subtitleEn: s.subtitleEn || '',
               ctas: s.ctas || defaultSlides[idx]?.ctas || [],
             }));
-          setSlides(mapped);
+          setSlides(mapped.length === 3 ? mapped : defaultSlides);
           setActiveSlide(0);
         } else {
           setSlides(defaultSlides);
