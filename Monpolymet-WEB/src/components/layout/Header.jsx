@@ -31,7 +31,7 @@ export default function Header({
 
   const defaultNavItems = [
     { id: 'about', label: t.nav.about, target: 'about' },
-    { id: 'companies', label: t.nav.companies, target: 'companies' },
+    // { id: 'companies', label: t.nav.companies, target: 'companies' },
     { id: 'csr', label: t.nav.csr, target: 'csr' },
     { id: 'hse', label: lang === 'mn' ? 'БОНС' : 'Environment & Rehabilitation', target: 'hse' },
     { id: 'news', label: t.nav.news, target: 'news' },

@@ -120,7 +120,7 @@ function App() {
       case 'about':
         return <AboutPage lang={lang} t={t} timeline={timeline} pageMetadata={pageMetadata} />;
       case 'companies':
-        return <CompaniesPage lang={lang} t={t} pageMetadata={pageMetadata} setCurrentPage={setCurrentPage} />;
+        return <CompaniesPage lang={lang} t={t} pageMetadata={pageMetadata} />;
       case 'csr':
         return <CsrPage lang={lang} t={t} pageMetadata={pageMetadata} />;
       case 'news':
