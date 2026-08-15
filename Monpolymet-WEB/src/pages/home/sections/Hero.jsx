@@ -54,9 +54,9 @@ export default function Hero({ lang, setCurrentPage }) {
               ctas: s.ctas || defaultSlides[idx]?.ctas || [],
             }));
           setSlides(mapped.length === 3 ? mapped : defaultSlides);
-          setActiveSlide(0);
         } else {
           setSlides(defaultSlides);
+        }
       })
       .catch((e) => console.error("Failed to fetch hero slides:", e));
   }, []);
