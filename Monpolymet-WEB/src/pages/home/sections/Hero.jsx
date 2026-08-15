@@ -38,7 +38,26 @@ export default function Hero({ lang, setCurrentPage }) {
   const [slides, setSlides] = useState(defaultSlides);
 
   useEffect(() => {
-    setSlides(defaultSlides);
+    fetchHeroSlides()
+      .then((data) => {
+        if (data && data.length > 0) {
+          const mapped = data
+            .sort((a, b) => a.order - b.order)
+            .map((s, idx) => ({
+              video: s.mediaType === 'video' ? s.mediaUrl : null,
+              image: defaultSlides[idx]?.image || (s.mediaType === 'image' ? s.mediaUrl : defaultSlides[0].image),
+              titleMn: s.titleMn || defaultSlides[idx]?.titleMn || '',
+              titleEn: s.titleEn || defaultSlides[idx]?.titleEn || '',
+              subtitleMn: '',
+              subtitleEn: '',
+              ctas: s.ctas || defaultSlides[idx]?.ctas || [],
+            }));
+          setSlides(mapped);
+        } else {
+          setSlides(defaultSlides);
+        }
+      })
+      .catch(() => setSlides(defaultSlides));
   }, []);
 
   // Auto-advance. The timer resets on every slide change (auto or manual) so the

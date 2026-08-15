@@ -34,8 +34,7 @@ const ls = (mn: string, en: string) => ({ mn, en });
 const HERO_SLIDES = [
   {
     mediaType: 'image',
-    mediaUrl:
-      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&auto=format&fit=crop&q=70',
+    mediaUrl: '/hero-slide-3.jpg',
     title: ls('Жишиг нөхөн сэргээгч Үндэсний компани', 'Benchmark Rehabilitation National Company'),
     subtitle: ls('', ''),
     ctas: [{ label: ls('Бидний тухай', 'About us'), targetPage: 'about', style: 'primary' }],
@@ -44,8 +43,7 @@ const HERO_SLIDES = [
   },
   {
     mediaType: 'image',
-    mediaUrl:
-      'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&auto=format&fit=crop&q=70',
+    mediaUrl: '/3.png',
     title: ls(
       'Монгол Улсад аж үйлдвэрийн сэргэлтийг авчирч, импортын хараат байдлыг халсан Монцемент',
       'Moncement bringing industrial revival to Mongolia and ending import dependence',
@@ -57,8 +55,7 @@ const HERO_SLIDES = [
   },
   {
     mediaType: 'image',
-    mediaUrl:
-      '/hero-slide-3.jpg',
+    mediaUrl: '/aa.png',
     title: ls(
       'Бат бэх хөгжлийн суурийг хамтдаа бүтээцгээе',
       'Building strong foundations for development together',

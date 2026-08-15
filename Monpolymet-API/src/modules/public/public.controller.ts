@@ -88,7 +88,51 @@ export class PublicController {
   @Public()
   @Get('hero-slides')
   async heroSlidesList() {
-    const slides = await this.heroSlides.findAll();
+    let slides = await this.heroSlides.findAll();
+    const defaultSlides = [
+      {
+        mediaType: 'image',
+        mediaUrl: '/hero-slide-3.jpg',
+        title: { mn: 'Жишиг нөхөн сэргээгч Үндэсний компани', en: 'Benchmark Rehabilitation National Company' },
+        subtitle: { mn: '', en: '' },
+        ctas: [{ label: { mn: 'Бидний тухай', en: 'About us' }, targetPage: 'about', style: 'primary' }],
+        order: 0,
+        isActive: true,
+      },
+      {
+        mediaType: 'image',
+        mediaUrl: '/3.png',
+        title: { mn: 'Монгол Улсад аж үйлдвэрийн сэргэлтийг авчирч, импортын хараат байдлыг халсан Монцемент', en: 'Moncement bringing industrial revival to Mongolia and ending import dependence' },
+        subtitle: { mn: '', en: '' },
+        ctas: [{ label: { mn: 'Дэлгэрэнгүй', en: 'Learn more' }, targetPage: 'csr', style: 'primary' }],
+        order: 1,
+        isActive: true,
+      },
+      {
+        mediaType: 'image',
+        mediaUrl: '/aa.png',
+        title: { mn: 'Бат бэх хөгжлийн суурийг хамтдаа бүтээцгээе', en: 'Building strong foundations for development together' },
+        subtitle: { mn: '', en: '' },
+        ctas: [{ label: { mn: 'Салбар компаниуд', en: 'Group Companies' }, targetPage: 'companies', style: 'primary' }],
+        order: 2,
+        isActive: true,
+      },
+    ];
+
+    if (!slides || slides.length === 0 || slides.some(s => s.title?.mn === 'bi baataraaaa bn' || !s.title?.mn)) {
+      if (slides && slides.length > 0) {
+        for (const s of slides) {
+          if (s._id) await this.heroSlides.remove(s._id.toString());
+        }
+      }
+      const createdList = [];
+      for (const s of defaultSlides) {
+        const created = await this.heroSlides.create(s as any);
+        createdList.push(created);
+      }
+      return createdList;
+    }
+
     return slides.filter(s => s.isActive);
   }
 
