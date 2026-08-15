@@ -115,19 +115,15 @@ export class PublicController {
   @Get('team')
   async teamList() {
     const list = await this.team.findAll();
-    const isClean = list && list.length === 5 && list[2]?.imageUrl === '/haliun.png' && list.every((m: any) => m.name?.en && !/[а-яөүё]/i.test(m.name.en));
-    if (isClean) {
+    if (list && list.length > 0) {
       return list;
     }
-    for (const item of list) {
-      await this.team.remove((item as any)._id.toString());
-    }
     const defaultTeam = [
-      { name: { mn: 'Ц.Гарамжав', en: 'Ts. Garamjav' }, role: { mn: 'Үүсгэн байгуулагч', en: 'Founder' }, imageUrl: '/garamjav.png', order: 0 },
-      { name: { mn: 'Н.Мөнхнасан', en: 'N. Munkhnasan' }, role: { mn: 'ТУЗ-ын дарга', en: 'Chairwoman of the Board' }, imageUrl: '/monhnasan.png', order: 1 },
-      { name: { mn: 'Ц.Халиун', en: 'Ts. Haliun' }, role: { mn: 'Гүйцэтгэх захирал', en: 'Executive Director' }, imageUrl: '/haliun.png', order: 2 },
-      { name: { mn: 'Б.Дэлгэр', en: 'B. Delger' }, role: { mn: 'Гүйцэтгэх захирал', en: 'Executive Director' }, imageUrl: '/delger.png', order: 3 },
-      { name: { mn: 'Б.Гандөш', en: 'B. Gandush' }, role: { mn: 'Гүйцэтгэх захирал', en: 'Executive Director' }, imageUrl: '/dosh.png', order: 4 },
+      { name: { mn: 'Ц.Гарамжав', en: 'Ts. Garamjav' }, role: { mn: 'Үүсгэн байгуулагч', en: 'Founder' }, imageUrl: '/garamjav.png', isHidden: false, order: 0 },
+      { name: { mn: 'Н.Мөнхнасан', en: 'N. Munkhnasan' }, role: { mn: 'ТУЗ-ын дарга', en: 'Chairwoman of the Board' }, imageUrl: '/monhnasan.png', isHidden: false, order: 1 },
+      { name: { mn: 'Ц.Халиун', en: 'Ts. Haliun' }, role: { mn: 'Гүйцэтгэх захирал', en: 'Executive Director' }, imageUrl: '/haliun.png', isHidden: false, order: 2 },
+      { name: { mn: 'Б.Дэлгэр', en: 'B. Delger' }, role: { mn: 'Гүйцэтгэх захирал', en: 'Executive Director' }, imageUrl: '/delger.png', isHidden: false, order: 3 },
+      { name: { mn: 'Б.Гандөш', en: 'B. Gandush' }, role: { mn: 'Гүйцэтгэх захирал', en: 'Executive Director' }, imageUrl: '/dosh.png', isHidden: false, order: 4 },
     ];
     const createdList = [];
     for (const m of defaultTeam) {
@@ -151,6 +147,7 @@ export class PublicController {
         name: { mn: m.nameMn || m.name?.mn || '', en: m.nameEn || m.name?.en || '' },
         role: { mn: m.roleMn || m.role?.mn || '', en: m.roleEn || m.role?.en || '' },
         imageUrl: m.imageUrl || m.image || '/garamjav.png',
+        isHidden: Boolean(m.isHidden),
         order: i
       } as any);
     }

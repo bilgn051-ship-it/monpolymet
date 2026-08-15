@@ -168,6 +168,15 @@ export const LIST_RESOURCES = {
       { label: 'Нэр', render: mn('name') },
       { label: 'Албан тушаал', render: mn('role') },
       {
+        label: 'Төлөв',
+        render: (item) =>
+          item.isHidden ? (
+            <Badge variant="light" color="red">Нуусан</Badge>
+          ) : (
+            <Badge variant="light" color="teal">Идэвхтэй</Badge>
+          ),
+      },
+      {
         label: 'Тэргүүн',
         render: (item) =>
           item.isFounder ? <Badge variant="light" color="brand">Тийм</Badge> : '—',
@@ -179,6 +188,7 @@ export const LIST_RESOURCES = {
       { name: 'bio', type: 'localizedArea', label: 'Намтар' },
       { name: 'education', type: 'localized', label: 'Боловсрол' },
       { name: 'imageUrl', type: 'url', label: 'Зураг (URL)', required: true, placeholder: 'https://...' },
+      { name: 'isHidden', type: 'switch', label: 'Хуудаснаас нуух (Далдлах)' },
       { name: 'isFounder', type: 'switch', label: 'Үүсгэн байгуулагч / Тэргүүн' },
       { name: 'order', type: 'number', label: 'Дараалал' },
     ],

@@ -160,25 +160,6 @@ export default function AboutPage({ lang, t, pageMetadata }) {
       descEn: h.desc,
     }));
 
-  const parsedTeam = team && team.length > 0
-    ? team.map((m, idx) => {
-      const fallback = (t.about?.team && t.about.team[idx]) ? t.about.team[idx] : {};
-      let name = (typeof m.name === 'object' ? (lang === 'mn' ? m.name?.mn : m.name?.en) : (lang === 'mn' ? m.nameMn : m.nameEn)) || (typeof m.name === 'string' ? m.name : '');
-      let role = (typeof m.role === 'object' ? (lang === 'mn' ? m.role?.mn : m.role?.en) : (lang === 'mn' ? m.roleMn : m.roleEn)) || (typeof m.role === 'string' ? m.role : '');
-
-      if (lang === 'en') {
-        if (!name || /[а-яөүё]/i.test(name)) {
-          name = fallback.name || 'Leadership';
-        }
-        if (!role || /[а-яөүё]/i.test(role)) {
-          role = fallback.role || 'Executive';
-        }
-      }
-
-      const imageUrl = m.imageUrl || m.image;
-      return { name, role, imageUrl };
-    }).filter(m => m.name && !m.name.includes('?'))
-    : (t?.about?.team || []);
   const default8Members = [
     {
       name: lang === 'mn' ? 'Ц.Гарамжав' : 'Garamjav Ts.',
@@ -191,53 +172,33 @@ export default function AboutPage({ lang, t, pageMetadata }) {
       imageUrl: '/monhnasan.png'
     },
     {
-      name: lang === 'mn' ? 'Э.Билгүүн' : 'Bilguun E.',
+      name: lang === 'mn' ? 'Ц.Халиун' : 'Haliun Ts.',
       role: lang === 'mn' ? 'Гүйцэтгэх Захирал' : 'Executive Director',
-      imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&auto=format&fit=crop&q=80'
+      imageUrl: '/haliun.png'
     },
     {
-      name: lang === 'mn' ? 'Б.Цэцэгсүрэн' : 'Tsetsegsuren B.',
-      role: lang === 'mn' ? 'Санхүүгийн Захирал' : 'Chief Financial Officer',
-      imageUrl: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&auto=format&fit=crop&q=80'
+      name: lang === 'mn' ? 'Б.Дэлгэр' : 'Delger B.',
+      role: lang === 'mn' ? 'Гүйцэтгэх Захирал' : 'Executive Director',
+      imageUrl: '/delger.png'
     },
     {
-      name: lang === 'mn' ? 'С.Баярбат' : 'Bayarbat S.',
-      role: lang === 'mn' ? 'Үйлдвэрлэл Хариуцсан Захирал' : 'VP of Operations',
-      imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80'
-    },
-    {
-      name: lang === 'mn' ? 'Г.Отгонбаяр' : 'Otgonbayar G.',
-      role: lang === 'mn' ? 'Хүний Нөөцийн Захирал' : 'Human Resources Director',
-      imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80'
-    },
-    {
-      name: lang === 'mn' ? 'Д.Эрдэнэбат' : 'Erdenebat D.',
-      role: lang === 'mn' ? 'Техник, Технологийн Захирал' : 'Chief Technology Officer',
-      imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&auto=format&fit=crop&q=80'
-    },
-    {
-      name: lang === 'mn' ? 'М.Батзориг' : 'Batzorig M.',
-      role: lang === 'mn' ? 'Байгаль Орчны Менежер' : 'Environmental Manager',
-      imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&auto=format&fit=crop&q=80'
+      name: lang === 'mn' ? 'Б.Гандөш' : 'Gandush B.',
+      role: lang === 'mn' ? 'Гүйцэтгэх Захирал' : 'Executive Director',
+      imageUrl: '/dosh.png'
     }
   ];
 
-  const teamData = default8Members.map((def, idx) => {
-    if (!team || team.length === 0) return def;
-    const dbMatch = team.find(m => {
-      const dbName = (typeof m.name === 'object' ? m.name?.mn : m.nameMn || m.name) || '';
-      return dbName.toLowerCase().includes(def.name.toLowerCase()) || def.name.toLowerCase().includes(dbName.toLowerCase());
-    });
-    if (dbMatch) {
-      const role = (typeof dbMatch.role === 'object' ? (lang === 'mn' ? dbMatch.role?.mn : dbMatch.role?.en) : (lang === 'mn' ? dbMatch.roleMn : dbMatch.roleEn)) || dbMatch.role || def.role;
-      return {
-        ...def,
-        role: role || def.role,
-        imageUrl: dbMatch.imageUrl || dbMatch.image || def.imageUrl
-      };
-    }
-    return def;
-  });
+  const teamData = (team && team.length > 0)
+    ? team
+        .filter(m => !m.isHidden)
+        .map((m, idx) => {
+          let name = (typeof m.name === 'object' ? (lang === 'mn' ? m.name?.mn : m.name?.en) : (lang === 'mn' ? m.nameMn : m.nameEn)) || (typeof m.name === 'string' ? m.name : '');
+          let role = (typeof m.role === 'object' ? (lang === 'mn' ? m.role?.mn : m.role?.en) : (lang === 'mn' ? m.roleMn : m.roleEn)) || (typeof m.role === 'string' ? m.role : '');
+          const imageUrl = m.imageUrl || m.image || '/garamjav.png';
+          return { name, role, imageUrl };
+        })
+        .filter(m => m.name && !m.name.includes('?'))
+    : default8Members;
 
   const marqueeTop = [
     'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=60',
@@ -267,23 +228,21 @@ export default function AboutPage({ lang, t, pageMetadata }) {
     <>
       {/* Full Bleed Hero Banner */}
       <div className="full-bleed-banner" style={{
-        backgroundImage: `url(${aboutHeroImg})`,
-        backgroundPosition: 'center 38%',
+        backgroundImage: `url(${pageMetadata?.header?.imageUrl || aboutHeroImg})`,
+        backgroundPosition: 'center 45%',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-        backgroundColor: '#0f172a',
-        minHeight: '60vh',
-        imageRendering: '-webkit-optimize-contrast'
+        backgroundColor: '#0f172a'
       }}>
         <div className="full-bleed-banner-overlay" style={{
-          background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.35) 100%)'
+          background: 'linear-gradient(to bottom, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.5) 100%)'
         }}></div>
         <div className="full-bleed-banner-container">
           <div className="full-bleed-banner-content animate-slide-up">
-            <h1 className="hero-title" style={{ color: '#ffffff', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+            <h1 className="hero-title">
               {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.titleMn : pageMetadata.header.titleEn) : (lang === 'mn' ? 'Бидний тухай' : 'About Us')}
             </h1>
-            <p className="hero-subtitle" style={{ color: '#f8fafc', textShadow: '0 1px 6px rgba(0,0,0,0.5)' }}>
+            <p className="hero-subtitle">
               {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.subtitleMn : pageMetadata.header.subtitleEn) : ''}
             </p>
           </div>

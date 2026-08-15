@@ -32,6 +32,9 @@ export class TeamMember {
   @Prop({ default: false })
   isFounder!: boolean;
 
+  @Prop({ default: false })
+  isHidden!: boolean;
+
   @Prop({ required: true, default: 0 })
   order!: number;
 }

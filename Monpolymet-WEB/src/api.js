@@ -275,8 +275,10 @@ export async function fetchCoreValues() {
 
 const mapTeam = (d) => ({
   id: d._id,
+  name: { mn: d.name?.mn ?? '', en: d.name?.en ?? '' },
   nameMn: d.name?.mn ?? '',
   nameEn: d.name?.en ?? '',
+  role: { mn: d.role?.mn ?? '', en: d.role?.en ?? '' },
   roleMn: d.role?.mn ?? '',
   roleEn: d.role?.en ?? '',
   bioMn: d.bio?.mn ?? '',
@@ -284,6 +286,7 @@ const mapTeam = (d) => ({
   eduMn: d.education?.mn ?? '',
   eduEn: d.education?.en ?? '',
   imageUrl: d.imageUrl,
+  isHidden: Boolean(d.isHidden),
   isFounder: d.isFounder ?? false,
   order: d.order ?? 0,
 });

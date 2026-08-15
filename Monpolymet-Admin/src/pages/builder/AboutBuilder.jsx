@@ -16,6 +16,8 @@ import {
   Title,
   ActionIcon,
   Modal,
+  Switch,
+  Tooltip,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import {
@@ -28,6 +30,10 @@ import {
   Plus,
   Trash2,
   Check,
+  Eye,
+  EyeOff,
+  ArrowUp,
+  ArrowDown,
 } from 'lucide-react';
 import { api } from '../../api/client';
 
@@ -111,11 +117,12 @@ export default function AboutBuilder() {
         setTeamMembers(
           teamRes.map((m) => ({
             id: m._id,
-            nameMn: m.name?.mn || '',
-            nameEn: m.name?.en || '',
-            roleMn: m.role?.mn || '',
-            roleEn: m.role?.en || '',
-            imageUrl: m.image || '/garamjav.png',
+            nameMn: (typeof m.name === 'object' ? m.name?.mn : m.nameMn) || m.name || '',
+            nameEn: (typeof m.name === 'object' ? m.name?.en : m.nameEn) || m.name || '',
+            roleMn: (typeof m.role === 'object' ? m.role?.mn : m.roleMn) || m.role || '',
+            roleEn: (typeof m.role === 'object' ? m.role?.en : m.roleEn) || m.role || '',
+            imageUrl: m.imageUrl || m.image || '/garamjav.png',
+            isHidden: Boolean(m.isHidden),
           }))
         );
       }
@@ -402,7 +409,12 @@ export default function AboutBuilder() {
           <Card withBorder radius="lg" padding="xl">
             <Stack gap="md">
               <Group justify="space-between">
-                <Title order={4}>Удирдлагын баг (Executive Leadership)</Title>
+                <div>
+                  <Title order={4}>Удирдлагын баг (Executive Leadership)</Title>
+                  <Text size="sm" c="dimmed">
+                    Хуудсан дээр харагдах удирдлагын багийн картуудыг засах, нуух/ил гаргах болон дарааллыг өөрчлөх
+                  </Text>
+                </div>
                 <Button
                   size="xs"
                   variant="light"
@@ -410,7 +422,7 @@ export default function AboutBuilder() {
                   onClick={() =>
                     setTeamMembers([
                       ...teamMembers,
-                      { nameMn: 'Шинэ гишүүн', nameEn: 'New Member', roleMn: 'Албан тушаал', roleEn: 'Position', imageUrl: '/dosh.png' },
+                      { nameMn: 'Шинэ гишүүн', nameEn: 'New Member', roleMn: 'Албан тушаал', roleEn: 'Position', imageUrl: '/dosh.png', isHidden: false },
                     ])
                   }
                 >
@@ -420,21 +432,98 @@ export default function AboutBuilder() {
 
               <SimpleGrid cols={{ base: 1, md: 2 }} spacing="md">
                 {teamMembers.map((member, index) => (
-                  <Paper key={index} withBorder p="md" radius="md">
+                  <Paper
+                    key={index}
+                    withBorder
+                    p="md"
+                    radius="md"
+                    style={{
+                      backgroundColor: member.isHidden ? 'var(--mantine-color-gray-0)' : undefined,
+                      borderColor: member.isHidden ? 'var(--mantine-color-red-2)' : undefined,
+                      opacity: member.isHidden ? 0.75 : 1,
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
                     <Stack gap="xs">
                       <Group justify="space-between">
                         <Group>
-                          <Image src={member.imageUrl} w={40} h={40} radius="xl" fallbackSrc="https://via.placeholder.com/40" />
-                          <Text fw={700} size="sm">{member.nameMn}</Text>
+                          <Image src={member.imageUrl} w={44} h={44} radius="xl" fallbackSrc="https://via.placeholder.com/44" />
+                          <div>
+                            <Text fw={700} size="sm">{member.nameMn || 'Нэргүй'}</Text>
+                            <Text size="xs" c="dimmed">{member.roleMn || 'Албан тушаалгүй'}</Text>
+                          </div>
                         </Group>
-                        <ActionIcon
-                          color="red"
-                          variant="light"
-                          onClick={() => setTeamMembers(teamMembers.filter((_, i) => i !== index))}
-                        >
-                          <Trash2 size={16} />
-                        </ActionIcon>
+
+                        <Group gap="xs">
+                          <Switch
+                            checked={!member.isHidden}
+                            onChange={(e) => {
+                              const next = [...teamMembers];
+                              next[index].isHidden = !e.currentTarget.checked;
+                              setTeamMembers(next);
+                            }}
+                            size="sm"
+                            color="teal"
+                            label={
+                              member.isHidden ? (
+                                <Badge color="red" variant="light" size="xs" leftSection={<EyeOff size={11} />}>
+                                  Нуусан
+                                </Badge>
+                              ) : (
+                                <Badge color="teal" variant="light" size="xs" leftSection={<Eye size={11} />}>
+                                  Харагдана
+                                </Badge>
+                              )
+                            }
+                          />
+
+                          <Tooltip label="Дээш шилжүүлэх">
+                            <ActionIcon
+                              variant="subtle"
+                              size="sm"
+                              disabled={index === 0}
+                              onClick={() => {
+                                const next = [...teamMembers];
+                                const temp = next[index - 1];
+                                next[index - 1] = next[index];
+                                next[index] = temp;
+                                setTeamMembers(next);
+                              }}
+                            >
+                              <ArrowUp size={14} />
+                            </ActionIcon>
+                          </Tooltip>
+
+                          <Tooltip label="Доош шилжүүлэх">
+                            <ActionIcon
+                              variant="subtle"
+                              size="sm"
+                              disabled={index === teamMembers.length - 1}
+                              onClick={() => {
+                                const next = [...teamMembers];
+                                const temp = next[index + 1];
+                                next[index + 1] = next[index];
+                                next[index] = temp;
+                                setTeamMembers(next);
+                              }}
+                            >
+                              <ArrowDown size={14} />
+                            </ActionIcon>
+                          </Tooltip>
+
+                          <Tooltip label="Устгах">
+                            <ActionIcon
+                              color="red"
+                              variant="light"
+                              size="sm"
+                              onClick={() => setTeamMembers(teamMembers.filter((_, i) => i !== index))}
+                            >
+                              <Trash2 size={15} />
+                            </ActionIcon>
+                          </Tooltip>
+                        </Group>
                       </Group>
+
                       <SimpleGrid cols={{ base: 1, md: 2 }}>
                         <TextInput
                           label="Нэр (Монгол)"

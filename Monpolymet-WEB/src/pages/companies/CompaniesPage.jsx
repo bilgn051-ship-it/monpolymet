@@ -7,23 +7,21 @@ export default function CompaniesPage({ lang, t, pageMetadata }) {
     <>
       {/* Full Bleed Hero Banner */}
       <div className="full-bleed-banner" style={{
-        backgroundImage: `url(${companiesHeroImg})`,
+        backgroundImage: `url(${pageMetadata?.header?.imageUrl || companiesHeroImg})`,
         backgroundPosition: 'center 40%',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-        backgroundColor: '#0f172a',
-        minHeight: '60vh',
-        imageRendering: '-webkit-optimize-contrast'
+        backgroundColor: '#0f172a'
       }}>
         <div className="full-bleed-banner-overlay" style={{
-          background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.35) 100%)'
+          background: 'linear-gradient(to bottom, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.5) 100%)'
         }}></div>
         <div className="full-bleed-banner-container">
           <div className="full-bleed-banner-content animate-slide-up">
-            <h1 className="hero-title" style={{ color: '#ffffff', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+            <h1 className="hero-title">
               {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.titleMn : pageMetadata.header.titleEn) : (lang === 'mn' ? 'Компаниуд' : 'Companies')}
             </h1>
-            <p className="hero-subtitle" style={{ color: '#f8fafc', textShadow: '0 1px 6px rgba(0,0,0,0.5)' }}>
+            <p className="hero-subtitle">
               {pageMetadata?.header ? (lang === 'mn' ? pageMetadata.header.subtitleMn : pageMetadata.header.subtitleEn) : ''}
             </p>
           </div>
