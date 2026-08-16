@@ -8,7 +8,6 @@ import {
   X, CheckCircle, Calendar, ClipboardEdit, UserCog, ClipboardCheck, UserCheck
 } from 'lucide-react';
 import { fetchStatCards, fetchCareersContent, submitCandidateApplication } from '../../api';
-import { useLocalStorageState } from '../../hooks/useLocalStorageState';
 import InteractiveTitle from '../../components/ui/InteractiveTitle';
 import zangiaLogo from '../../assets/zangia-logo.png';
 import careersHeroImg from '../../assets/careers-hero.png';
@@ -449,8 +448,8 @@ export default function CareersPage({ lang, t, onApply, pageMetadata }) {
   const [cvFile, setCvFile] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [formSuccess, setFormSuccess] = useState(false);
-  const [statCards, setStatCards] = useLocalStorageState('monpolymet_careers_stat_cards', []);
-  const [bannerContent, setBannerContent] = useLocalStorageState('monpolymet_careers_banner', null);
+  const [statCards, setStatCards] = useState([]);
+  const [bannerContent, setBannerContent] = useState(null);
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {

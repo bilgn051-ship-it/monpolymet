@@ -44,7 +44,7 @@ export default function CEOGreeting({ lang, homeContent }) {
   const imageUrl = homeContent?.ceoSection?.imageUrl !== undefined ? homeContent.ceoSection.imageUrl : '/garamjav.png';
 
   return (
-    <section id="ceo-greeting" style={{ paddingTop: '80px', paddingBottom: '80px', backgroundColor: '#ffffff', paddingLeft: '24px', paddingRight: '24px', boxSizing: 'border-box' }}>
+    <section id="ceo-greeting" style={{ paddingTop: '40px', paddingBottom: '60px', backgroundColor: '#ffffff', paddingLeft: '24px', paddingRight: '24px', boxSizing: 'border-box' }}>
       <div
         ref={containerRef}
         className={`ceo-greeting-wrapper ${revealed ? 'is-revealed' : ''}`}

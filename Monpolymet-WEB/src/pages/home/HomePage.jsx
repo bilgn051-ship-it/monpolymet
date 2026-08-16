@@ -1,21 +1,20 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Hero from './sections/Hero';
 import HomeStatsGrid from './sections/HomeStatsGrid';
 import CSRHighlight from './sections/CSRHighlight';
 import CSRStatsGrid from './sections/CSRStatsGrid';
 import NewsPreview from './sections/NewsPreview';
-import { useLocalStorageState } from '../../hooks/useLocalStorageState';
 import { fetchHomeContent, fetchStatCards, fetchCsrStats, fetchCsrHighlight } from '../../api';
 
 export default function HomePage({ lang, t, news, setCurrentPage }) {
-  const [homeContent, setHomeContent] = useLocalStorageState('monpolymet_home_content', null);
-  const [statCards, setStatCards] = useLocalStorageState('monpolymet_home_stat_cards', []);
-  const [csrStats, setCsrStats] = useLocalStorageState('monpolymet_home_csr_stats', []);
-  const [csrHighlight, setCsrHighlight] = useLocalStorageState('monpolymet_home_csr_highlight', null);
+  const [homeContent, setHomeContent] = useState(null);
+  const [statCards, setStatCards] = useState([]);
+  const [csrStats, setCsrStats] = useState([]);
+  const [csrHighlight, setCsrHighlight] = useState(null);
 
   useEffect(() => {
     fetchHomeContent()
-      .then((data) => { if (data) setHomeContent(data); })
+      .then(setHomeContent)
       .catch((e) => console.error("Failed to fetch home content:", e));
 
     fetchStatCards()
@@ -26,7 +25,7 @@ export default function HomePage({ lang, t, news, setCurrentPage }) {
 
     fetchCsrStats()
       .then((data) => {
-        if (data && data.length) setCsrStats(data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+        if (data && data.length) setCsrStats(data.sort((a, b) => a.order - b.order));
       })
       .catch((e) => console.error("Failed to fetch csr stats:", e));
 
@@ -41,7 +40,7 @@ export default function HomePage({ lang, t, news, setCurrentPage }) {
     <div className="home-view animate-fade-in">
       <Hero lang={lang} setCurrentPage={setCurrentPage} />
       <HomeStatsGrid lang={lang} setCurrentPage={setCurrentPage} statCards={statCards} />
-      <CSRHighlight lang={lang} data={csrHighlight} />
+      <CSRHighlight lang={lang} data={csrHighlight} setCurrentPage={setCurrentPage} />
       <CSRStatsGrid lang={lang} data={csrStats} />
       <NewsPreview news={news} lang={lang} t={t} setCurrentPage={setCurrentPage} />
     </div>

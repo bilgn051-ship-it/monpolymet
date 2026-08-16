@@ -92,8 +92,7 @@ a {
   flex: 1;
 }
 
-/* Offset for sticky header on subpages */
-.about-page-container,
+/* Offset for sticky header on subpages without full-bleed banners */
 .sectors-page-container,
 .csr-page-container,
 .hse-page-container,
@@ -102,6 +101,10 @@ a {
 .media-page-container,
 .admin-page-container {
   padding-top: 130px !important;
+}
+
+.about-page-container {
+  padding-top: 0 !important;
 }
 
 .news-detail-page-container {

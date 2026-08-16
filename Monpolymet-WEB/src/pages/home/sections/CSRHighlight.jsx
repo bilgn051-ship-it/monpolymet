@@ -3,7 +3,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { useRef, useState, useEffect } from 'react';
 import webVideo from '../../../assets/WEB.mp4';
 
-export default function CSRHighlight({ lang, data }) {
+export default function CSRHighlight({ lang, data, setCurrentPage }) {
   const containerRef = useRef(null);
   const [revealed, setRevealed] = useState(false);
 
@@ -170,22 +170,30 @@ export default function CSRHighlight({ lang, data }) {
           zIndex: 2,
           paddingTop: '40px'
         }}>
-          <button style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            backgroundColor: '#ffffff',
-            color: '#0f172a',
-            border: 'none',
-            borderRadius: '40px',
-            padding: '6px 6px 6px 20px',
-            fontSize: '0.9rem',
-            fontWeight: '600',
-            cursor: 'pointer',
-            transition: 'transform 0.2s ease',
-            fontFamily: "'Montserrat', sans-serif",
-            boxShadow: '0 10px 25px rgba(0,0,0,0.2)'
-          }}
+          <button
+            onClick={() => {
+              if (setCurrentPage) {
+                setCurrentPage('csr');
+              } else {
+                window.location.href = '/csr';
+              }
+            }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              backgroundColor: '#ffffff',
+              color: '#0f172a',
+              border: 'none',
+              borderRadius: '40px',
+              padding: '6px 6px 6px 20px',
+              fontSize: '0.9rem',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'transform 0.2s ease',
+              fontFamily: "'Montserrat', sans-serif",
+              boxShadow: '0 10px 25px rgba(0,0,0,0.2)'
+            }}
             onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
             onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
           >

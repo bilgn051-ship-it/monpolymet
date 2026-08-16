@@ -317,10 +317,10 @@ export default function CsrPage({ lang, t, pageMetadata }) {
         </section>
 
         {/* SECTION 3: BOTTOM SUSTAINABILITY REPORTS (ХАМГИЙН ДООР, FOOTER-ИЙН ДЭЭР) */}
-        <section style={{ backgroundColor: '#ffffff', padding: '80px 5% 90px' }}>
-          <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+        <section style={{ backgroundColor: '#ffffff', padding: '60px 5% 80px' }}>
+          <div style={{ maxWidth: '1020px', margin: '0 auto' }}>
 
-            <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
               <InteractiveTitle
                 text={isMn ? 'Тогтвортой хөгжлийн тайлан' : 'Sustainability Reports'}
                 style={{
@@ -337,8 +337,10 @@ export default function CsrPage({ lang, t, pageMetadata }) {
             {/* 3 Report Cards Grid */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: '28px'
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '24px',
+              maxWidth: '1020px',
+              margin: '0 auto'
             }}>
               {sustainabilityReports.map((report, idx) => (
                 <motion.div
@@ -350,8 +352,8 @@ export default function CsrPage({ lang, t, pageMetadata }) {
                   style={{
                     backgroundColor: '#ffffff',
                     border: '1px solid #e2e8f0',
-                    borderRadius: '24px',
-                    padding: '32px 28px',
+                    borderRadius: '20px',
+                    padding: '28px 24px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -369,19 +371,20 @@ export default function CsrPage({ lang, t, pageMetadata }) {
                     e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.03)';
                   }}
                 >
-                  <div>
+                  <div style={{ textAlign: 'center' }}>
                     <div style={{
-                      width: '52px',
-                      height: '52px',
-                      borderRadius: '16px',
+                      width: '56px',
+                      height: '56px',
+                      borderRadius: '18px',
                       background: 'linear-gradient(135deg, #010B40 0%, #001CE8 100%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       color: '#ffffff',
-                      marginBottom: '20px'
+                      margin: '0 auto 20px auto',
+                      boxShadow: '0 8px 16px rgba(0, 28, 232, 0.2)'
                     }}>
-                      <FileText size={26} color="#ffffff" />
+                      <FileText size={28} color="#ffffff" />
                     </div>
 
                     <span style={{
@@ -389,10 +392,10 @@ export default function CsrPage({ lang, t, pageMetadata }) {
                       fontWeight: '700',
                       color: '#001CE8',
                       backgroundColor: '#eff6ff',
-                      padding: '4px 12px',
+                      padding: '4px 14px',
                       borderRadius: '14px',
                       display: 'inline-block',
-                      marginBottom: '12px'
+                      marginBottom: '14px'
                     }}>
                       {report.year} • PDF {report.size}
                     </span>
