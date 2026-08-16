@@ -382,7 +382,7 @@ export default function CsrPage({ lang, t, pageMetadata }) {
                       justifyContent: 'center',
                       color: '#ffffff',
                       margin: '0 auto 20px auto',
-                      boxShadow: '0 8px 16px rgba(0, 28, 232, 0.2)'
+                      boxShadow: 'none'
                     }}>
                       <FileText size={28} color="#ffffff" />
                     </div>
