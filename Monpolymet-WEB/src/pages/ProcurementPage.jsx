@@ -6,6 +6,7 @@ import {
   ClipboardList, SearchCheck, Handshake, ShoppingCart, BadgeCheck, Upload
 } from 'lucide-react';
 import { submitSupplierRegistration, fetchTenders } from '../api';
+import { useLocalStorageState } from '../hooks/useLocalStorageState';
 import InteractiveTitle from '../components/ui/InteractiveTitle';
 import '../styles/procurement-pro.css';
 
@@ -231,12 +232,14 @@ export default function ProcurementPage({ lang = 'mn', t, procurementContent, pa
 
   const [tenderIndex, setTenderIndex] = useState(0);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
-  const [liveTenders, setLiveTenders] = useState([]);
+  const [liveTenders, setLiveTenders] = useLocalStorageState('monpolymet_procurement_tenders', []);
   const [now, setNow] = useState(new Date());
 
   useEffect(() => {
     fetchTenders()
-      .then((data) => setLiveTenders(data || []))
+      .then((data) => {
+        if (data) setLiveTenders(data);
+      })
       .catch(() => { });
   }, []);
 

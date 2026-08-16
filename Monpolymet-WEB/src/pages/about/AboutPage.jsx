@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, Compass, Award, Sparkles } from 'lucide-react';
 import { useInView } from '../../hooks/useInView';
+import { useLocalStorageState } from '../../hooks/useLocalStorageState';
 import { fetchTimeline, fetchAboutContent, fetchCoreValues, fetchTeam } from '../../api';
 import CEOGreeting from '../home/sections/CEOGreeting';
 import HistoryTimeline from '../../components/ui/HistoryTimeline';
@@ -11,11 +12,10 @@ import aboutHeroImg from '../../assets/about-hero.jpg';
 export default function AboutPage({ lang, t, pageMetadata }) {
   const timelineRef = useRef(null);
   const { ref: valuesRef } = useInView({ threshold: 0.1 });
-  // eslint-disable-next-line no-unused-vars
-  const [timeline, setTimeline] = useState([]);
-  const [aboutContent, setAboutContent] = useState(null);
-  const [team, setTeam] = useState([]);
-  const [coreValues, setCoreValues] = useState([]);
+  const [timeline, setTimeline] = useLocalStorageState('monpolymet_about_timeline', []);
+  const [aboutContent, setAboutContent] = useLocalStorageState('monpolymet_about_content', null);
+  const [team, setTeam] = useLocalStorageState('monpolymet_about_team', []);
+  const [coreValues, setCoreValues] = useLocalStorageState('monpolymet_about_core_values', []);
 
   const fallbackImages = [
     "/garamjav.png",
@@ -60,7 +60,9 @@ export default function AboutPage({ lang, t, pageMetadata }) {
       .catch((e) => console.error("Timeline fetch error:", e));
 
     fetchAboutContent()
-      .then(setAboutContent)
+      .then((data) => {
+        if (data) setAboutContent(data);
+      })
       .catch((e) => console.error("About content fetch error:", e));
 
     fetchCoreValues()
@@ -160,49 +162,6 @@ export default function AboutPage({ lang, t, pageMetadata }) {
       descEn: h.desc,
     }));
 
-  const default8Members = [
-    {
-      name: lang === 'mn' ? 'Ц.Гарамжав' : 'Garamjav Ts.',
-      role: lang === 'mn' ? 'Үүсгэн байгуулагч, ТУЗ-ийн Дарга' : 'Founder & Chairwoman of the Board',
-      imageUrl: '/garamjav.png'
-    },
-    {
-      name: lang === 'mn' ? 'Н.Мөнхнасан' : 'Munkhnasan N.',
-      role: lang === 'mn' ? 'Ерөнхий Захирал' : 'Chief Executive Officer',
-      imageUrl: '/monhnasan.png'
-    },
-    {
-      name: lang === 'mn' ? 'Ц.Халиун' : 'Haliun Ts.',
-      role: lang === 'mn' ? 'Гүйцэтгэх Захирал' : 'Executive Director',
-      imageUrl: '/haliun.png'
-    },
-    {
-      name: lang === 'mn' ? 'Б.Дэлгэр' : 'Delger B.',
-      role: lang === 'mn' ? 'Гүйцэтгэх Захирал' : 'Executive Director',
-      imageUrl: '/delger.png'
-    },
-    {
-      name: lang === 'mn' ? 'Б.Гандөш' : 'Gandush B.',
-      role: lang === 'mn' ? 'Гүйцэтгэх Захирал' : 'Executive Director',
-      imageUrl: '/dosh.png'
-    },
-    {
-      name: lang === 'mn' ? 'Б.Цэцэгсүрэн' : 'Tsetsegsuren B.',
-      role: lang === 'mn' ? 'Санхүүгийн Захирал' : 'Chief Financial Officer',
-      imageUrl: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&auto=format&fit=crop&q=80'
-    },
-    {
-      name: lang === 'mn' ? 'С.Баярбат' : 'Bayarbat S.',
-      role: lang === 'mn' ? 'Үйлдвэрлэл Хариуцсан Захирал' : 'VP of Operations',
-      imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80'
-    },
-    {
-      name: lang === 'mn' ? 'Г.Отгонбаяр' : 'Otgonbayar G.',
-      role: lang === 'mn' ? 'Хүний Нөөцийн Захирал' : 'Human Resources Director',
-      imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80'
-    }
-  ];
-
   const teamData = (team && team.length > 0)
     ? team
         .filter(m => !m.isHidden)
@@ -213,7 +172,7 @@ export default function AboutPage({ lang, t, pageMetadata }) {
           return { name, role, imageUrl };
         })
         .filter(m => m.name && !m.name.includes('?'))
-    : default8Members;
+    : [];
 
   const marqueeTop = [
     'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=60',

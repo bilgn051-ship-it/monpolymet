@@ -18,7 +18,6 @@ import { useLocalStorageState } from './hooks/useLocalStorageState';
 import { useDarkMode } from './hooks/useDarkMode';
 import { useHideHeaderOnScroll } from './hooks/useHideHeaderOnScroll';
 import { translations } from './i18n/translations.jsx';
-import { initialNews, initialJobs, initialSubmissions } from './data/mockData';
 import { fetchNews, fetchJobs, fetchSettings, fetchPages, fetchProcurementContent, submitApplication } from './api';
 import './styles/app.css';
 
@@ -31,14 +30,13 @@ function App() {
   // Applies the persisted theme to the document and provides theme state.
   const [darkMode, setDarkMode] = useDarkMode();
 
-  // News and open vacancies come live from the API (managed in the admin
-  // dashboard).
-  const [news, setNews] = useState(initialNews);
-  const [jobs, setJobs] = useState(initialJobs);
-  const [settings, setSettings] = useState(null);
-  const [timeline, setTimeline] = useState([]);
-  const [pages, setPages] = useState([]);
-  const [procurementContent, setProcurementContent] = useState(null);
+  // News and open vacancies come live from the API (with cached instant hydration)
+  const [news, setNews] = useLocalStorageState('monpolymet_news', []);
+  const [jobs, setJobs] = useLocalStorageState('monpolymet_jobs', []);
+  const [settings, setSettings] = useLocalStorageState('monpolymet_settings', null);
+  const [timeline, setTimeline] = useLocalStorageState('monpolymet_timeline', []);
+  const [pages, setPages] = useLocalStorageState('monpolymet_pages', []);
+  const [procurementContent, setProcurementContent] = useLocalStorageState('monpolymet_procurement', null);
   const [submissions, setSubmissions] = useLocalStorageState('submissions', []);
 
   useLayoutEffect(() => {
@@ -47,23 +45,35 @@ function App() {
 
   useEffect(() => {
     fetchNews()
-      .then((data) => (data && data.length) ? setNews(data) : setNews(initialNews))
-      .catch(() => setNews(initialNews));
+      .then((data) => {
+        if (data && data.length) setNews(data);
+      })
+      .catch(() => { });
     fetchJobs()
-      .then((data) => setJobs(data))
+      .then((data) => {
+        if (data) setJobs(data);
+      })
       .catch(() => { });
     fetchSettings()
-      .then((data) => setSettings(data))
+      .then((data) => {
+        if (data) setSettings(data);
+      })
       .catch(() => { });
     fetchPages()
-      .then((data) => setPages(data))
+      .then((data) => {
+        if (data && data.length) setPages(data);
+      })
       .catch(() => { });
     fetchProcurementContent()
-      .then((data) => setProcurementContent(data))
+      .then((data) => {
+        if (data) setProcurementContent(data);
+      })
       .catch(() => { });
     import('./api').then(({ fetchTimeline }) => {
       fetchTimeline()
-        .then((data) => setTimeline(data))
+        .then((data) => {
+          if (data && data.length) setTimeline(data);
+        })
         .catch(() => { });
     });
   }, []);

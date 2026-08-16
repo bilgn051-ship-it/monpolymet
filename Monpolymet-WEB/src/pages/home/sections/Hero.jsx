@@ -1,63 +1,32 @@
 import { useEffect, useState } from 'react';
 import { fetchHeroSlides } from '../../../api';
-import img3 from '../../../assets/3.png';
-import imgAa from '../../../assets/aa.png';
+import { useLocalStorageState } from '../../../hooks/useLocalStorageState';
 
 const SLIDE_INTERVAL = 6000;
 
-const defaultSlides = [
-  {
-    image: '/hero-slide-3.jpg',
-    titleMn: 'Жишиг нөхөн сэргээгч Үндэсний компани',
-    titleEn: 'Benchmark Rehabilitation National Company',
-    subtitleMn: '',
-    subtitleEn: '',
-    ctas: [{ labelMn: 'Бидний тухай', labelEn: 'About us', targetPage: 'about', style: 'primary' }]
-  },
-  {
-    image: img3,
-    titleMn: 'Монгол Улсад аж үйлдвэрийн сэргэлтийг авчирч, импортын хараат байдлыг халсан Монцемент',
-    titleEn: 'Moncement bringing industrial revival to Mongolia and ending import dependence',
-    subtitleMn: '',
-    subtitleEn: '',
-    ctas: [{ labelMn: 'Дэлгэрэнгүй', labelEn: 'Learn more', targetPage: 'csr', style: 'primary' }]
-  },
-  {
-    image: imgAa,
-    titleMn: 'Бат бэх хөгжлийн суурийг хамтдаа бүтээцгээе',
-    titleEn: 'Building strong foundations for development together',
-    subtitleMn: '',
-    subtitleEn: '',
-    ctas: [{ labelMn: 'Салбар компаниуд', labelEn: 'Group Companies', targetPage: 'companies', style: 'primary' }]
-  }
-];
-
 export default function Hero({ lang, setCurrentPage }) {
   const [activeSlide, setActiveSlide] = useState(0);
-
-  const [slides, setSlides] = useState(defaultSlides);
+  const [slides, setSlides] = useLocalStorageState('monpolymet_hero_slides', []);
 
   useEffect(() => {
     fetchHeroSlides()
       .then((data) => {
         if (data && data.length > 0) {
           const mapped = data
-            .sort((a, b) => a.order - b.order)
-            .map((s, idx) => ({
+            .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+            .map((s) => ({
               video: s.mediaType === 'video' ? s.mediaUrl : null,
-              image: defaultSlides[idx]?.image || (s.mediaType === 'image' ? s.mediaUrl : defaultSlides[0].image),
-              titleMn: s.titleMn || defaultSlides[idx]?.titleMn || '',
-              titleEn: s.titleEn || defaultSlides[idx]?.titleEn || '',
-              subtitleMn: '',
-              subtitleEn: '',
-              ctas: s.ctas || defaultSlides[idx]?.ctas || [],
+              image: s.mediaType === 'image' ? s.mediaUrl : (s.imageUrl || s.image || ''),
+              titleMn: (typeof s.titleMn === 'object' ? s.titleMn?.mn : s.titleMn) || (typeof s.title === 'object' ? s.title?.mn : s.title) || '',
+              titleEn: (typeof s.titleEn === 'object' ? s.titleEn?.en : s.titleEn) || (typeof s.title === 'object' ? s.title?.en : s.title) || '',
+              subtitleMn: s.subtitleMn || '',
+              subtitleEn: s.subtitleEn || '',
+              ctas: s.ctas || [],
             }));
           setSlides(mapped);
-        } else {
-          setSlides(defaultSlides);
         }
       })
-      .catch(() => setSlides(defaultSlides));
+      .catch((err) => console.error('Failed to fetch hero slides:', err));
   }, []);
 
   // Auto-advance. The timer resets on every slide change (auto or manual) so the
