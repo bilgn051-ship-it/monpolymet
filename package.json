@@ -2,6 +2,10 @@
   "name": "monpolymet-monorepo",
   "private": true,
   "scripts": {
+    "mongo": "cd Monpolymet-API && node start-mongo.mjs",
+    "dev:api": "cd Monpolymet-API && npm run start:dev",
+    "dev:web": "cd Monpolymet-WEB && npm run dev",
+    "dev:admin": "cd Monpolymet-Admin && npm run dev",
     "build": "cd Monpolymet-API && npm install && npm run build",
     "start": "cd Monpolymet-API && npm run start:prod"
   }
