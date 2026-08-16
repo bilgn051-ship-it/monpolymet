@@ -228,7 +228,6 @@ export default function CSRHighlight({ lang, data, setCurrentPage }) {
           color: #ffffff;
           line-height: 1.2;
           letter-spacing: -0.2px;
-          text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
         }
         .csr-stat-desc {
           font-size: 13px;
@@ -237,10 +236,9 @@ export default function CSRHighlight({ lang, data, setCurrentPage }) {
           font-family: 'Montserrat', sans-serif;
           line-height: 1.45;
           margin-top: 5px;
-          text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
         }
         .csr-stat-icon-wrapper svg {
-          filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.6));
+          display: block;
         }
         @media (max-width: 1200px) {
           .csr-stats-8-grid {
