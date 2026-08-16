@@ -60,7 +60,7 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
   }, []);
 
   return (
-    <section className="csr-stats-section container-padding" style={{ padding: '40px 0', backgroundColor: '#f8fafc' }}>
+    <section className="csr-stats-section container-padding" style={{ padding: '40px 0', backgroundColor: '#ffffff' }}>
       <style>{`
         .csr-stats-grid-container {
           display: grid;
@@ -71,7 +71,7 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
           font-size: 38px;
           font-weight: 600;
           font-family: 'Montserrat', sans-serif;
-          color: #2563eb;
+          color: #0f172a;
           margin-bottom: 12px;
           line-height: 1.2;
           word-break: normal;
@@ -105,9 +105,9 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
         {/* Centered Pill Title */}
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
           <div style={{
-            border: '1px solid var(--primary-color)',
+            border: '1px solid #e2e8f0',
             borderRadius: '24px',
-            padding: '12px 32px',
+            padding: '10px 28px',
             fontSize: '18px',
             fontWeight: '600',
             fontFamily: "'Montserrat', sans-serif",
@@ -115,7 +115,8 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
             backgroundColor: '#ffffff',
             display: 'flex',
             alignItems: 'center',
-            gap: '8px'
+            gap: '8px',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
           }}>
             {lang === 'mn' ? 'Тоон үзүүлэлтүүд' : 'Statistics'}
           </div>
@@ -127,7 +128,7 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
               key={idx}
               style={{
                 backgroundColor: '#ffffff',
-                border: '1px dashed #bfdbfe',
+                border: '1px solid #e2e8f0',
                 borderRadius: '24px',
                 padding: '36px 24px',
                 display: 'flex',
@@ -136,6 +137,7 @@ export default function CSRStatsGrid({ lang = 'mn', data = [] }) {
                 justifyContent: 'center',
                 textAlign: 'center',
                 transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
                 cursor: 'default'
               }}
               onMouseEnter={(e) => {

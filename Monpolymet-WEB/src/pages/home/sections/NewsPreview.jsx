@@ -11,7 +11,7 @@ export default function NewsPreview({ news, lang, t, setCurrentPage }) {
   const recentNews = news ? news.slice(0, 3) : [];
 
   return (
-    <section className="home-news-preview container-padding" style={{ borderTop: 'none', paddingBottom: '20px', paddingTop: '40px' }}>
+    <section className="home-news-preview container-padding" style={{ borderTop: 'none', paddingBottom: '40px', paddingTop: '40px', backgroundColor: '#ffffff' }}>
       <div className="news-section-header" style={{ justifyContent: 'center' }}>
         <h2 className="pill-badge-heading">
           {lang === 'mn' ? 'Мэдээ мэдээлэл' : 'News & Updates'}
