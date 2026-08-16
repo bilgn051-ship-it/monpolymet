@@ -228,14 +228,19 @@ export default function CSRHighlight({ lang, data, setCurrentPage }) {
           color: #ffffff;
           line-height: 1.2;
           letter-spacing: -0.3px;
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.9);
         }
         .csr-stat-desc {
           font-size: 13.5px;
-          font-weight: 400;
-          color: rgba(255, 255, 255, 0.88);
+          font-weight: 500;
+          color: #ffffff;
           font-family: 'Montserrat', sans-serif;
           line-height: 1.45;
           margin-top: 6px;
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.9);
+        }
+        .csr-stat-icon-wrapper svg {
+          filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8));
         }
         @media (max-width: 1200px) {
           .csr-stats-8-grid {
@@ -298,14 +303,14 @@ export default function CSRHighlight({ lang, data, setCurrentPage }) {
           />
         )}
 
-        {/* Gradient Overlay for high text readability */}
+        {/* Transparent Gradient Overlay - completely clear video visibility */}
         <div style={{
           position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.78) 50%, rgba(15, 23, 42, 0.65) 100%)',
+          background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.45) 100%)',
           zIndex: 1
         }}></div>
 
